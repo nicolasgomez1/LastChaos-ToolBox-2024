@@ -22,10 +22,12 @@ namespace LastChaos_ToolBox_2024
 {
 	public partial class Main : Form
 	{
+		// Global Vals
 		public Settings pSettings = new Settings();
 		public MySqlConnection mysqlConn;
+        public DataTable pItemTable = null;
 
-		public Main()
+        public Main()
 		{
 			InitializeComponent();
 
@@ -126,7 +128,7 @@ namespace LastChaos_ToolBox_2024
 				pSettings.DBCharset = GetValueFromLine(strArray[6]);
 
 				// Others Settings
-				pSettings.DefaultEditNation = GetValueFromLine(strArray[7]);
+				pSettings.DefaultEditNation = GetValueFromLine(strArray[7]).ToLower();
 
 				PrintLog("Settings load finished.");
 			}
@@ -135,6 +137,8 @@ namespace LastChaos_ToolBox_2024
 				PrintLog($"{pSettings.SettingsFile} not exist.");
 			}
 		}
+		// General Help Functions
+		// TODO: ...
 
 		// Database Functions
 		public DataTable QuerySelect(string strCharset, string strQuery)
@@ -221,11 +225,6 @@ namespace LastChaos_ToolBox_2024
 					Application.Exit();
 				}
 			}
-		}
-
-		private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
-		{
-
 		}
 	}
 }
