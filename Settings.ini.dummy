@@ -1,0 +1,8 @@
+DBHost=127.0.0.1
+DBUsername=tools
+DBPassword=iddqd
+DBAuth=lc_auth
+DBData=lc_data
+DBUser=lc_user
+DBCharset=utf8
+Main_Lang=USA

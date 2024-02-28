@@ -18,8 +18,5 @@ namespace LastChaos_ToolBox_2024
 			Application.SetCompatibleTextRenderingDefault(false);
 			Application.Run(new Main());
 		}
-
-        [System.Runtime.InteropServices.DllImport("kernel32.dll")]
-        private static extern bool AllocConsole();
     }
 }

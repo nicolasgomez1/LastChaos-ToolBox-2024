@@ -152,10 +152,9 @@ namespace LastChaos_ToolBox_2024
 				mysqlConnection.Open();
 
 				MySqlCommand mysqlCommand = new MySqlCommand(strQuery, mysqlConnection);
-				MySqlDataReader mysqlReader = mysqlCommand.ExecuteReader();
-			
+
 				DataTable pTable = new DataTable();
-				pTable.Load(mysqlReader);
+				pTable.Load(mysqlCommand.ExecuteReader());
 
 				mysqlConnection.Close();
 

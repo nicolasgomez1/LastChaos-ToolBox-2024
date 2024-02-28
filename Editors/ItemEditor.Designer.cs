@@ -1,4 +1,7 @@
-﻿namespace LastChaos_ToolBox_2024.Editors
+﻿using System.Drawing;
+using System.Windows.Forms;
+
+namespace LastChaos_ToolBox_2024.Editors
 {
     partial class ItemEditor
     {
@@ -29,8 +32,22 @@
         private void InitializeComponent()
         {
             this.btnReload = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.BtnAddNew = new System.Windows.Forms.Button();
             this.MainList = new System.Windows.Forms.ListBox();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btnOthers = new System.Windows.Forms.Button();
+            this.btnCrafting = new System.Windows.Forms.Button();
+            this.btnGeneral = new System.Windows.Forms.Button();
+            this.btnUpdate = new System.Windows.Forms.Button();
+            this.GeneralPanel = new System.Windows.Forms.Panel();
+            this.cbEnable = new System.Windows.Forms.CheckBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.tbID = new System.Windows.Forms.TextBox();
+            this.BtnCopy = new System.Windows.Forms.Button();
+            this.btnDelete = new System.Windows.Forms.Button();
+            this.CraftingPanel = new System.Windows.Forms.Panel();
+            this.groupBox1.SuspendLayout();
+            this.GeneralPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnReload
@@ -41,7 +58,7 @@
             this.btnReload.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
             this.btnReload.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnReload.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-            this.btnReload.Location = new System.Drawing.Point(12, 563);
+            this.btnReload.Location = new System.Drawing.Point(12, 565);
             this.btnReload.Name = "btnReload";
             this.btnReload.Size = new System.Drawing.Size(60, 23);
             this.btnReload.TabIndex = 3;
@@ -49,20 +66,21 @@
             this.btnReload.UseVisualStyleBackColor = true;
             this.btnReload.Click += new System.EventHandler(this.Insert_Click);
             // 
-            // button1
+            // BtnAddNew
             // 
-            this.button1.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(85)))), ((int)(((byte)(76)))));
-            this.button1.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
-            this.button1.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-            this.button1.Location = new System.Drawing.Point(406, 12);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(100, 23);
-            this.button1.TabIndex = 4;
-            this.button1.Text = "Select";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.Update_Click);
+            this.BtnAddNew.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.BtnAddNew.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(85)))), ((int)(((byte)(76)))));
+            this.BtnAddNew.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+            this.BtnAddNew.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
+            this.BtnAddNew.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BtnAddNew.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.BtnAddNew.Location = new System.Drawing.Point(78, 565);
+            this.BtnAddNew.Name = "BtnAddNew";
+            this.BtnAddNew.Size = new System.Drawing.Size(60, 23);
+            this.BtnAddNew.TabIndex = 4;
+            this.BtnAddNew.Text = "Add New";
+            this.BtnAddNew.UseVisualStyleBackColor = true;
+            this.BtnAddNew.Click += new System.EventHandler(this.Update_Click);
             // 
             // MainList
             // 
@@ -74,23 +92,193 @@
             this.MainList.FormattingEnabled = true;
             this.MainList.Location = new System.Drawing.Point(12, 12);
             this.MainList.Name = "MainList";
-            this.MainList.Size = new System.Drawing.Size(258, 535);
+            this.MainList.Size = new System.Drawing.Size(258, 548);
             this.MainList.TabIndex = 7;
             this.MainList.SelectedIndexChanged += new System.EventHandler(this.MainList_SelectedIndexChanged);
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Controls.Add(this.btnUpdate);
+            this.groupBox1.Controls.Add(this.CraftingPanel);
+            this.groupBox1.Controls.Add(this.btnOthers);
+            this.groupBox1.Controls.Add(this.btnCrafting);
+            this.groupBox1.Controls.Add(this.btnGeneral);
+            this.groupBox1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.groupBox1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.groupBox1.Location = new System.Drawing.Point(276, 6);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(1212, 582);
+            this.groupBox1.TabIndex = 8;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Item Data";
+            // 
+            // btnOthers
+            // 
+            this.btnOthers.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(85)))), ((int)(((byte)(76)))));
+            this.btnOthers.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+            this.btnOthers.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
+            this.btnOthers.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnOthers.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.btnOthers.Location = new System.Drawing.Point(138, 19);
+            this.btnOthers.Name = "btnOthers";
+            this.btnOthers.Size = new System.Drawing.Size(60, 23);
+            this.btnOthers.TabIndex = 12;
+            this.btnOthers.Text = "Others";
+            this.btnOthers.UseVisualStyleBackColor = true;
+            // 
+            // btnCrafting
+            // 
+            this.btnCrafting.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(85)))), ((int)(((byte)(76)))));
+            this.btnCrafting.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+            this.btnCrafting.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
+            this.btnCrafting.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCrafting.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.btnCrafting.Location = new System.Drawing.Point(72, 19);
+            this.btnCrafting.Name = "btnCrafting";
+            this.btnCrafting.Size = new System.Drawing.Size(60, 23);
+            this.btnCrafting.TabIndex = 11;
+            this.btnCrafting.Text = "Crafting";
+            this.btnCrafting.UseVisualStyleBackColor = true;
+            this.btnCrafting.Click += new System.EventHandler(this.btnCrafting_Click);
+            // 
+            // btnGeneral
+            // 
+            this.btnGeneral.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(85)))), ((int)(((byte)(76)))));
+            this.btnGeneral.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+            this.btnGeneral.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
+            this.btnGeneral.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnGeneral.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.btnGeneral.Location = new System.Drawing.Point(6, 19);
+            this.btnGeneral.Name = "btnGeneral";
+            this.btnGeneral.Size = new System.Drawing.Size(60, 23);
+            this.btnGeneral.TabIndex = 10;
+            this.btnGeneral.Text = "General";
+            this.btnGeneral.UseVisualStyleBackColor = true;
+            this.btnGeneral.Click += new System.EventHandler(this.btnGeneral_Click);
+            // 
+            // btnUpdate
+            // 
+            this.btnUpdate.Enabled = false;
+            this.btnUpdate.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(85)))), ((int)(((byte)(76)))));
+            this.btnUpdate.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+            this.btnUpdate.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
+            this.btnUpdate.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnUpdate.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.btnUpdate.Location = new System.Drawing.Point(1146, 19);
+            this.btnUpdate.Name = "btnUpdate";
+            this.btnUpdate.Size = new System.Drawing.Size(60, 23);
+            this.btnUpdate.TabIndex = 9;
+            this.btnUpdate.Text = "Update";
+            this.btnUpdate.UseVisualStyleBackColor = true;
+            // 
+            // GeneralPanel
+            // 
+            this.GeneralPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.GeneralPanel.Controls.Add(this.cbEnable);
+            this.GeneralPanel.Controls.Add(this.label1);
+            this.GeneralPanel.Controls.Add(this.tbID);
+            this.GeneralPanel.Location = new System.Drawing.Point(282, 54);
+            this.GeneralPanel.Name = "GeneralPanel";
+            this.GeneralPanel.Size = new System.Drawing.Size(986, 528);
+            this.GeneralPanel.TabIndex = 0;
+            // 
+            // cbEnable
+            // 
+            this.cbEnable.AutoSize = true;
+            this.cbEnable.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.cbEnable.Location = new System.Drawing.Point(89, 1);
+            this.cbEnable.Name = "cbEnable";
+            this.cbEnable.Size = new System.Drawing.Size(59, 17);
+            this.cbEnable.TabIndex = 13;
+            this.cbEnable.Text = "Enable";
+            this.cbEnable.UseVisualStyleBackColor = true;
+            this.cbEnable.CheckedChanged += new System.EventHandler(this.cbEnable_CheckedChanged);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.label1.Location = new System.Drawing.Point(2, 2);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(18, 13);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "ID";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // tbID
+            // 
+            this.tbID.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+            this.tbID.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tbID.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.tbID.Location = new System.Drawing.Point(26, 0);
+            this.tbID.Name = "tbID";
+            this.tbID.Size = new System.Drawing.Size(57, 20);
+            this.tbID.TabIndex = 0;
+            this.tbID.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.tbID.TextChanged += new System.EventHandler(this.tbID_TextChanged);
+            // 
+            // BtnCopy
+            // 
+            this.BtnCopy.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.BtnCopy.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(85)))), ((int)(((byte)(76)))));
+            this.BtnCopy.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+            this.BtnCopy.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
+            this.BtnCopy.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BtnCopy.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.BtnCopy.Location = new System.Drawing.Point(144, 565);
+            this.BtnCopy.Name = "BtnCopy";
+            this.BtnCopy.Size = new System.Drawing.Size(60, 23);
+            this.BtnCopy.TabIndex = 10;
+            this.BtnCopy.Text = "Copy";
+            this.BtnCopy.UseVisualStyleBackColor = true;
+            // 
+            // btnDelete
+            // 
+            this.btnDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnDelete.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(85)))), ((int)(((byte)(76)))));
+            this.btnDelete.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+            this.btnDelete.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
+            this.btnDelete.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnDelete.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.btnDelete.Location = new System.Drawing.Point(210, 566);
+            this.btnDelete.Name = "btnDelete";
+            this.btnDelete.Size = new System.Drawing.Size(60, 23);
+            this.btnDelete.TabIndex = 11;
+            this.btnDelete.Text = "Delete";
+            this.btnDelete.UseVisualStyleBackColor = true;
+            // 
+            // CraftingPanel
+            // 
+            this.CraftingPanel.Location = new System.Drawing.Point(998, 476);
+            this.CraftingPanel.Name = "CraftingPanel";
+            this.CraftingPanel.Size = new System.Drawing.Size(200, 100);
+            this.CraftingPanel.TabIndex = 14;
             // 
             // ItemEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
-            this.ClientSize = new System.Drawing.Size(1498, 598);
+            this.ClientSize = new System.Drawing.Size(1500, 600);
+            this.Controls.Add(this.btnDelete);
+            this.Controls.Add(this.BtnCopy);
             this.Controls.Add(this.MainList);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.BtnAddNew);
             this.Controls.Add(this.btnReload);
+            this.Controls.Add(this.GeneralPanel);
+            this.Controls.Add(this.groupBox1);
             this.Icon = global::LastChaos_ToolBox_2024.Properties.Resources.NG;
+            this.MinimumSize = new System.Drawing.Size(1500, 600);
             this.Name = "ItemEditor";
-            this.Text = "ItemEditor";
+            this.Text = "Item Editor";
             this.Load += new System.EventHandler(this.ItemEditor_Load);
+            this.groupBox1.ResumeLayout(false);
+            this.GeneralPanel.ResumeLayout(false);
+            this.GeneralPanel.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -98,7 +286,19 @@
         #endregion
 
         private System.Windows.Forms.Button btnReload;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button BtnAddNew;
         private System.Windows.Forms.ListBox MainList;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private TextBox tbID;
+        private Button btnUpdate;
+        private Button BtnCopy;
+        private Button btnDelete;
+        private Button btnGeneral;
+        private Button btnCrafting;
+        private Button btnOthers;
+        private Label label1;
+        private Panel GeneralPanel;
+        private CheckBox cbEnable;
+        private Panel CraftingPanel;
     }
 }
