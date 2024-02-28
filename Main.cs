@@ -20,7 +20,8 @@ namespace LastChaos_ToolBox_2024
 {
     public partial class Main : Form
     {
-        private static Settings pSettings { get; } = new Settings();
+        //private static Settings pSettings { get; } = new Settings();
+        public Settings pSettings { get; } = new Settings();
 
         public Main()
         {
@@ -70,7 +71,7 @@ namespace LastChaos_ToolBox_2024
         {
             PrintLog($"TEST:{pSettings.DBHost}");
 
-            ItemEditor pItemEditor = new ItemEditor();
+            ItemEditor pItemEditor = new ItemEditor(this);
             pItemEditor.Show();
         }
 
@@ -91,13 +92,13 @@ namespace LastChaos_ToolBox_2024
         public class Settings {
             public string SettingsFile = "Settings.ini";
 
-            public string DBHost = "";
-            public string DBUsername = "";
-            public string DBPassword = ""; 
-            public string DBAuth = ""; 
-            public string DBData = "";
-            public string DBUser = "";
-            public string DBCharset = "utf8";
+            public string DBHost { get; set; } = "";
+            public string DBUsername { get; set; } = "";
+            public string DBPassword { get; set; } = ""; 
+            public string DBAuth { get; set; } = ""; 
+            public string DBData { get; set; } = "";
+            public string DBUser { get; set; } = "";
+            public string DBCharset { get; set; } = "utf8";
         }
     }
 }

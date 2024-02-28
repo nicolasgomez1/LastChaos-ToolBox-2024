@@ -12,9 +12,17 @@ namespace LastChaos_ToolBox_2024.Editors
 {
     public partial class ItemEditor : Form
     {
-        public ItemEditor()
+        private Main pMainForm;
+
+        public ItemEditor(Main mainForm)
         {
             InitializeComponent();
+            pMainForm = mainForm;
+        }
+
+        private void Reload_Click(object sender, EventArgs e)
+        {
+            Main.PrintLog($"{pMainForm.pSettings.DBHost}");
         }
     }
 }
