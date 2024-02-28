@@ -28,7 +28,7 @@ namespace LastChaos_ToolBox_2024.Editors
 
 		private void Insert_Click(object sender, EventArgs e)
 		{
-			bool bReturn = pMain.QueryUpdateInsert("utf8", "INSERT INTO lc_data_nov.t_clientversion (a_min, a_max) VALUES('0', '9999')");
+			bool bReturn = pMain.QueryUpdateInsert("utf8", "INSERT INTO lc_data_nov.t_clientversion (a_min, a_max) VALUES('0', '9199')");
 
 			if (bReturn)
 				pMain.PrintLog("suc");
@@ -38,8 +38,7 @@ namespace LastChaos_ToolBox_2024.Editors
 
 		private void Update_Click(object sender, EventArgs e)
 		{
-			// TODO: This func is not working...
-			DataTable pData = pMain.QuerySelect("utf8", "SELECT a_min, a_max FROM lc_data_nov.t_clientversion;");
+			DataTable pData = pMain.QuerySelect("utf8", "SELECT * FROM lc_data_nov.t_clientversion;");
 
 			if (pData != null)
 			{
@@ -47,7 +46,7 @@ namespace LastChaos_ToolBox_2024.Editors
 				{
 					foreach (DataColumn col in pData.Columns)
 					{
-						Console.Write(row[col] + "\t");
+						Console.Write(col.ColumnName + " " +row[col] + "\t");
 					}
 
 					Console.WriteLine();

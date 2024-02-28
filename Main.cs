@@ -17,7 +17,6 @@ using System.Configuration;
 
 // Editors
 using LastChaos_ToolBox_2024.Editors;
-using System.Data.SqlClient;
 
 namespace LastChaos_ToolBox_2024
 {
@@ -140,27 +139,25 @@ namespace LastChaos_ToolBox_2024
 		// Database Functions
 		public DataTable QuerySelect(string strCharset, string strQuery)
 		{
-			//strQuery.Replace("'", "\\'").Replace("\\", "\\\\").Replace("'", "\\'");
-
 			try
 			{
 				string strConnect = $"SERVER={pSettings.DBHost};DATABASE={pSettings.DBData};UID={pSettings.DBUsername};PASSWORD={pSettings.DBPassword};CHARSET=" + strCharset;
-                
+				
 				MySqlConnection mysqlConnection = new MySqlConnection(strConnect);
 				mysqlConnection.Open();
 
 				MySqlCommand mysqlCommand = new MySqlCommand(strQuery, mysqlConnection);
 				MySqlDataReader mysqlReader = mysqlCommand.ExecuteReader();
-                
-                DataTable pTable = new DataTable();
-                pTable.Load(mysqlReader);
+			
+				DataTable pTable = new DataTable();
+				pTable.Load(mysqlReader);
 
 				mysqlConnection.Close();
 
 				PrintLog("MySql Query (CharSet: " + strCharset + ")\n" + strQuery + "\nExecute successfully.");
 
 				return pTable;
-            }
+			}
 			catch (Exception ex)
 			{
 				PrintLog($"MySql Query (CharSet: {strCharset})\n{strQuery}\nFail > {ex.Message}");
@@ -171,9 +168,7 @@ namespace LastChaos_ToolBox_2024
 
 		public bool QueryUpdateInsert(string strCharset, string strQuery)
 		{
-			//strQuery.Replace("'", "\\'").Replace("\\", "\\\\").Replace("'", "\\'");
-
-			try
+            try
 			{
 				string strConnect = $"SERVER={pSettings.DBHost};DATABASE={pSettings.DBData};UID={pSettings.DBUsername};PASSWORD={pSettings.DBPassword};CHARSET=" + strCharset;
 
