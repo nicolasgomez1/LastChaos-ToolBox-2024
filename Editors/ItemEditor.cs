@@ -10,24 +10,49 @@ using System.Windows.Forms;
 
 namespace LastChaos_ToolBox_2024.Editors
 {
-    public partial class ItemEditor : Form
-    {
-        private Main pMainForm;
+	public partial class ItemEditor : Form
+	{
+		private Main pMain;
 
-        public ItemEditor(Main mainForm)
-        {
-            InitializeComponent();
-            pMainForm = mainForm;
-        }
+		public ItemEditor(Main mainForm)
+		{
+			InitializeComponent();
 
-        /*private void Reload_Click(object sender, EventArgs e)
-        {
-            Main.PrintLog($"{pMainForm.pSettings.DBHost}");
-        }*/
+			pMain = mainForm;
+		}
 
-        private void ItemEditor_Load(object sender, EventArgs e)
-        {
+		private void ItemEditor_Load(object sender, EventArgs e)
+		{
+			// TODO: preload all item data 
+		}
 
-        }
-    }
+		private void Insert_Click(object sender, EventArgs e)
+		{
+			bool bReturn = pMain.QueryUpdateInsert("utf8", "INSERT INTO lc_data_nov.t_clientversion (a_min, a_max) VALUES('0', '9999')");
+
+			if (bReturn)
+				pMain.PrintLog("suc");
+			else
+				pMain.PrintLog("failed");
+		}
+
+		private void Update_Click(object sender, EventArgs e)
+		{
+			// TODO: This func is not working...
+			DataTable pData = pMain.QuerySelect("utf8", "SELECT a_min, a_max FROM lc_data_nov.t_clientversion;");
+
+			if (pData != null)
+			{
+				foreach (DataRow row in pData.Rows)
+				{
+					foreach (DataColumn col in pData.Columns)
+					{
+						Console.Write(row[col] + "\t");
+					}
+
+					Console.WriteLine();
+				}
+			}
+		}
+	}
 }
