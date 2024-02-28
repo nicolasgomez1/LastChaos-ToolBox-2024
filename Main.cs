@@ -17,67 +17,46 @@ using System.Configuration;
 
 // Editors
 using LastChaos_ToolBox_2024.Editors;
-using System.Data.SqlClient;
 
 namespace LastChaos_ToolBox_2024
 {
     public partial class Main : Form
     {
         public Settings pSettings { get; } = new Settings();
+        public MySqlConnection mysqlConn;
 
         public Main()
         {
             InitializeComponent();
+
+            Assembly pAssembly = Assembly.GetAssembly(typeof(Main));
+            this.Text = $"{pAssembly.GetName().Name} Build: {pAssembly.GetName().Version.Revision}";
         }
 
         private void Main_Load(object sender, EventArgs e)
         {
-            PrintLog("Starting settings load...");
+            LoadSettings();
+            ConnectToDatabase();
+        }
 
-            if (File.Exists(pSettings.SettingsFile))
-            {
-                string[] strArray = File.ReadAllLines(pSettings.SettingsFile);
-
-                // Database Settings
-                pSettings.DBHost = GetValueFromLine(strArray[0]);
-                pSettings.DBUsername = GetValueFromLine(strArray[1]);
-                pSettings.DBPassword = GetValueFromLine(strArray[2]);
-                pSettings.DBAuth = GetValueFromLine(strArray[3]);
-                pSettings.DBData = GetValueFromLine(strArray[4]);
-                pSettings.DBUser = GetValueFromLine(strArray[5]);
-                pSettings.DBCharset = GetValueFromLine(strArray[6]);
-
-                // Others Settings
-                pSettings.DefaultEditNation = GetValueFromLine(strArray[7]);
-
-                PrintLog("Settings load finished.");
-
-                try
-                {
-                    MySqlConnection mysqlConn = new MySqlConnection($"SERVER={pSettings.DBHost};DATABASE={pSettings.DBData};UID={pSettings.DBUsername};PASSWORD={pSettings.DBPassword};CHARSET={pSettings.DBCharset}");
-                    mysqlConn.Open();
-
-                    PrintLog("MySQL > Connected successfully.");
-                }
-                catch (Exception ex)
-                {
-                    PrintLog($"MySQL > {ex.Message}");
-                }
-            }
-            else
-            {
-                PrintLog($"{pSettings.SettingsFile} not exist.");
-            }
+        private void ReloadSettings_Click(object sender, EventArgs e)
+        {
+            LoadSettings();
         }
 
         private void Reconnect_Click(object sender, EventArgs e)
         {
+            if (mysqlConn.State == ConnectionState.Open)
+            {
+                PrintLog("MySQL > Closing existing connection.");
+                mysqlConn.Close();
+            }
 
+            ConnectToDatabase();
         }
+
         private void ItemEditor_Click(object sender, EventArgs e)
         {
-            PrintLog($"TEST:{pSettings.DBHost}");
-
             ItemEditor pItemEditor = new ItemEditor(this);
             pItemEditor.Show();
         }
@@ -124,6 +103,61 @@ namespace LastChaos_ToolBox_2024
             public string DBCharset = "utf8";
 
             public string DefaultEditNation = "USA";
+        }
+
+        void LoadSettings()
+        {
+            PrintLog("Starting settings load...");
+
+            if (File.Exists(pSettings.SettingsFile))
+            {
+                string[] strArray = File.ReadAllLines(pSettings.SettingsFile);
+
+                // Database Settings
+                pSettings.DBHost = GetValueFromLine(strArray[0]);
+                pSettings.DBUsername = GetValueFromLine(strArray[1]);
+                pSettings.DBPassword = GetValueFromLine(strArray[2]);
+                pSettings.DBAuth = GetValueFromLine(strArray[3]);
+                pSettings.DBData = GetValueFromLine(strArray[4]);
+                pSettings.DBUser = GetValueFromLine(strArray[5]);
+                pSettings.DBCharset = GetValueFromLine(strArray[6]);
+
+                // Others Settings
+                pSettings.DefaultEditNation = GetValueFromLine(strArray[7]);
+
+                PrintLog("Settings load finished.");
+            }
+            else
+            {
+                PrintLog($"{pSettings.SettingsFile} not exist.");
+            }
+        }
+
+        void ConnectToDatabase()
+        {
+            try
+            {
+                mysqlConn = new MySqlConnection($"SERVER={pSettings.DBHost};DATABASE={pSettings.DBData};UID={pSettings.DBUsername};PASSWORD={pSettings.DBPassword};CHARSET={pSettings.DBCharset}");
+
+                mysqlConn.Open();
+
+                PrintLog("MySQL > Connected successfully.");
+            }
+            catch (Exception ex)
+            {
+                PrintLog($"MySQL > {ex.Message}");
+
+                DialogResult result = MessageBox.Show($"{ex.Message}\n\nWould you like to retry the connection?", "MySQL > It was not possible to connect to your Database Server.", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+
+                if (result == DialogResult.Yes)
+                {
+                    ConnectToDatabase();
+                }
+                else
+                {
+                    Application.Exit();
+                }
+            }
         }
     }
 }
