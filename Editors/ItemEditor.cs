@@ -8,11 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace LastChaos_ToolBox_2024
+namespace LastChaos_ToolBox_2024.Editors
 {
-    public partial class Form1 : Form
+    public partial class ItemEditor : Form
     {
-        public Form1()
+        public ItemEditor()
         {
             InitializeComponent();
         }
