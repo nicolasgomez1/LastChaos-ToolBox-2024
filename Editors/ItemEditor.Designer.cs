@@ -28,33 +28,22 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.Reload = new System.Windows.Forms.Button();
             this.SuspendLayout();
-            // 
-            // Reload
-            // 
-            this.Reload.Location = new System.Drawing.Point(12, 415);
-            this.Reload.Name = "Reload";
-            this.Reload.Size = new System.Drawing.Size(75, 23);
-            this.Reload.TabIndex = 0;
-            this.Reload.Text = "Reload";
-            this.Reload.UseVisualStyleBackColor = true;
-            this.Reload.Click += new System.EventHandler(this.Reload_Click);
             // 
             // ItemEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.Reload);
+            this.Icon = global::LastChaos_ToolBox_2024.Properties.Resources.NG;
             this.Name = "ItemEditor";
             this.Text = "ItemEditor";
+            this.Load += new System.EventHandler(this.ItemEditor_Load);
             this.ResumeLayout(false);
 
         }
 
         #endregion
-
-        private System.Windows.Forms.Button Reload;
     }
 }

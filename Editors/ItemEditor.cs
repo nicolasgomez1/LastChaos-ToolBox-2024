@@ -20,9 +20,14 @@ namespace LastChaos_ToolBox_2024.Editors
             pMainForm = mainForm;
         }
 
-        private void Reload_Click(object sender, EventArgs e)
+        /*private void Reload_Click(object sender, EventArgs e)
         {
             Main.PrintLog($"{pMainForm.pSettings.DBHost}");
+        }*/
+
+        private void ItemEditor_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

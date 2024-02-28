@@ -22,7 +22,7 @@ namespace LastChaos_ToolBox_2024
 {
     public partial class Main : Form
     {
-        public Settings pSettings { get; } = new Settings();
+        public Settings pSettings = new Settings();
         public MySqlConnection mysqlConn;
 
         public Main()
@@ -83,9 +83,9 @@ namespace LastChaos_ToolBox_2024
 
             string strLog = $"{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff")} [{Path.GetFileName(stackFrame.GetFileName())} : {stackFrame.GetFileLineNumber()} : {stackFrame.GetMethod().Name}] > {strMsg}";
 
-            using (StreamWriter sw = File.AppendText("Logs.log"))
+            using (StreamWriter pStreamWriter = File.AppendText("Logs.log"))
             {
-                sw.WriteLine(strLog);
+                pStreamWriter.WriteLine(strLog);
             }
 
             Debug.WriteLine(strLog);
