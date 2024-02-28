@@ -23,8 +23,10 @@ namespace LastChaos_ToolBox_2024.Editors
 
 		private async void ItemEditor_Load(object sender, EventArgs e)
 		{
-			// Load t_item to memory
-			if (pMain.pItemTable == null)
+            var progressDialog = new ProgressDialog("Please Wait...");
+
+            // Load t_item to memory
+            if (pMain.pItemTable == null)
 			{
 				pMain.pItemTable = await Task.Run(() =>
 				{
@@ -44,18 +46,24 @@ namespace LastChaos_ToolBox_2024.Editors
 				// TODO: Fill ListBox with items names and ids
 				foreach (DataRow pRow in pMain.pItemTable.Rows)
 				{
-					MainList.Items.Add(pRow["a_index"] + " - " + pRow["a_name_" + pMain.pSettings.DefaultEditNation]);
+                    MainList.Items.Add(new ListBoxItem
+                    {
+                        ID = Convert.ToInt32(pRow["a_index"]),
+                        Text = pRow["a_index"] + " - " + pRow["a_name_" + pMain.pSettings.DefaultEditNation].ToString()
+                    });
 
-					/*foreach (DataColumn col in pMain.pItemTable.Columns)
+                    /*foreach (DataColumn col in pMain.pItemTable.Columns)
 					{
 						Console.Write(col.ColumnName + " " + row[col] + "\t");
 					}*/
-				}
+                }
 
 				// TODO: Finally StartListBox Update again
 				MainList.EndUpdate();
 			}
-		}
+
+            progressDialog.Close();
+        }
 
 		private void Insert_Click(object sender, EventArgs e)
 		{
@@ -92,5 +100,16 @@ namespace LastChaos_ToolBox_2024.Editors
 		{
 
 		}
-	}
+
+        public class ListBoxItem
+        {
+            public int ID { get; set; }
+            public string Text { get; set; }
+
+            public override string ToString()
+            {
+                return Text;
+            }
+        }
+    }
 }

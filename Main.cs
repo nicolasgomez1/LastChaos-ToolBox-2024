@@ -25,9 +25,9 @@ namespace LastChaos_ToolBox_2024
 		// Global Vals
 		public Settings pSettings = new Settings();
 		public MySqlConnection mysqlConn;
-        public DataTable pItemTable = null;
+		public DataTable pItemTable = null;
 
-        public Main()
+		public Main()
 		{
 			InitializeComponent();
 
@@ -59,6 +59,7 @@ namespace LastChaos_ToolBox_2024
 
 		private void ItemEditor_Click(object sender, EventArgs e)
 		{
+			// TODO: NOTE: ¿Limitar la cantidad de editores de un mismo tipo que se pueden abrir?
 			ItemEditor pItemEditor = new ItemEditor(this);
 			pItemEditor.Show();
 		}
@@ -172,7 +173,7 @@ namespace LastChaos_ToolBox_2024
 
 		public bool QueryUpdateInsert(string strCharset, string strQuery)
 		{
-            try
+			try
 			{
 				string strConnect = $"SERVER={pSettings.DBHost};DATABASE={pSettings.DBData};UID={pSettings.DBUsername};PASSWORD={pSettings.DBPassword};CHARSET=" + strCharset;
 
