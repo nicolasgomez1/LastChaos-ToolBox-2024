@@ -107,7 +107,9 @@ namespace LastChaos_ToolBox_2024
 
                 ReturnValues[0] = strSelectedFile.Replace(pStrBtnType, "");
 
-                Image pImage = Image.FromFile(pStrBtnType + "\\" + strSelectedFile + ".png");
+                string strPathCompose = pStrBtnType + "\\" + strSelectedFile + ".png";
+
+                Image pImage = Image.FromFile(strPathCompose);
                 if (pImage != null)
                 {
                     if (pImage.Width == 512 && pImage.Height == 512)
@@ -122,7 +124,11 @@ namespace LastChaos_ToolBox_2024
                     }
 
                     pbImageViewer.Image = pImage;
-                }   // TODO: NOTE: print error?
+                }
+                else
+                {
+                    pMain.PrintLog("Icon Picker > Something went wrong while try load: " + strPathCompose);
+                }
             }
         }
 

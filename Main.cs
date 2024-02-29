@@ -14,9 +14,12 @@ using System.Reflection;
 using System.Net.NetworkInformation;
 using System.IO;
 using System.Configuration;
+using IniParser;
+using IniParser.Model;
 
 // Editors
 using LastChaos_ToolBox_2024.Editors;
+using System.Runtime.InteropServices;
 
 namespace LastChaos_ToolBox_2024
 {
@@ -26,13 +29,28 @@ namespace LastChaos_ToolBox_2024
 		public Settings pSettings = new Settings();
 		public MySqlConnection mysqlConn;
 		public DataTable pItemTable = null;
+        public class Settings
+        {
+            public string SettingsFile = "Settings.ini";
+
+            public string DBHost = "";
+            public string DBUsername = "";
+            public string DBPassword = "";
+            public string DBAuth = "";
+            public string DBData = "";
+            public string DBUser = "";
+            public string DBCharset = "utf8";
+            public string DefaultEditNation = "USA";
+
+            public string ClientPath = "";
+        }
 
         public Main()
 		{
 			InitializeComponent();
 
 			Assembly pAssembly = Assembly.GetAssembly(typeof(Main));
-			this.Text = $"{pAssembly.GetName().Name} Build: {pAssembly.GetName().Version.Revision}";
+			this.Text = pAssembly.GetName().Name + " Build: " + pAssembly.GetName().Version.Revision;
 		}
 
 		private void Main_Load(object sender, EventArgs e)
@@ -41,10 +59,7 @@ namespace LastChaos_ToolBox_2024
 			ConnectToDatabase();
 		}
 
-		private void ReloadSettings_Click(object sender, EventArgs e)
-		{
-			LoadSettings();
-		}
+		private void ReloadSettings_Click(object sender, EventArgs e) { LoadSettings(); }
 
 		private void Reconnect_Click(object sender, EventArgs e)
 		{
@@ -97,26 +112,29 @@ namespace LastChaos_ToolBox_2024
 #endif
 		}
 
-		public class Settings {
-			public string SettingsFile = "Settings.ini";
-
-			public string DBHost = "";
-			public string DBUsername = "";
-			public string DBPassword = ""; 
-			public string DBAuth = ""; 
-			public string DBData = "";
-			public string DBUser = "";
-			public string DBCharset = "utf8";
-
-			public string DefaultEditNation = "USA";
-		}
-
         void LoadSettings()
 		{
 			PrintLog("Starting settings load...");
 
 			if (File.Exists(pSettings.SettingsFile))
 			{
+#if true
+				FileIniDataParser pParser = new FileIniDataParser();
+				IniData pData = pParser.ReadFile(pSettings.SettingsFile);
+
+                // Database Settings
+                pSettings.DBHost = pData["Database"]["Host"];
+                pSettings.DBUsername = pData["Database"]["Username"];
+                pSettings.DBPassword = pData["Database"]["Password"];
+                pSettings.DBAuth = pData["Database"]["Auth"];
+                pSettings.DBData = pData["Database"]["Data"];
+                pSettings.DBUser = pData["Database"]["User"];
+                pSettings.DBCharset = pData["Database"]["Charset"];
+                pSettings.DefaultEditNation = pData["Database"]["Main_Lang"];
+
+                // General Settings
+                pSettings.ClientPath = pData["General"]["ClientPath"];
+#else
 				string[] strArray = File.ReadAllLines(pSettings.SettingsFile);
 
 				// Database Settings
@@ -131,7 +149,9 @@ namespace LastChaos_ToolBox_2024
 				// Others Settings
 				pSettings.DefaultEditNation = GetValueFromLine(strArray[7]).ToLower();
 
-				PrintLog("Settings load finished.");
+                pSettings.ClientPath = GetValueFromLine(strArray[8]);
+#endif
+                PrintLog("Settings load finished.");
 			}
 			else
 			{

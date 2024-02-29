@@ -1,8 +1,12 @@
-DBHost=127.0.0.1
-DBUsername=tools
-DBPassword=iddqd
-DBAuth=lc_auth
-DBData=lc_data
-DBUser=lc_user
-DBCharset=utf8
+[Database]
+Host=127.0.0.1
+Username=tools
+Password=iddqd
+Auth=lc_auth
+Data=lc_data
+User=lc_user
+Charset=utf8
 Main_Lang=USA
+
+[General]
+ClientPath=D:\Documents\LastChaos Files\SourceBinLibs\CCB+

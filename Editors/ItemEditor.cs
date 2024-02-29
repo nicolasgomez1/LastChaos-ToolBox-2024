@@ -18,7 +18,8 @@ namespace LastChaos_ToolBox_2024.Editors
         private bool bUnsavedChanges = false;
         private ListBoxItem pLastSelected;
         private System.Windows.Forms.ToolTip pToolTip;
-        
+        DataRow pTempRow;
+
         public ItemEditor(Main mainForm)
 		{
             this.FormClosing += ItemEditor_FormClosing;
@@ -117,18 +118,18 @@ namespace LastChaos_ToolBox_2024.Editors
                     // TODO: Load data from table to UI
                     int nItemID = pSelectedItem.ID;
 
-					DataRow pRow = pMain.pItemTable.Select("a_index = " + nItemID)[0];
-
+					pTempRow = pMain.pItemTable.Select("a_index = " + nItemID)[0];
+                    pMain.pItemTable.Select("a_index = " + nItemID)[0] = pTempRow;
                     tbID.Text = nItemID.ToString();
 
-                    if (pRow["a_enable"].ToString() == "1")
+                    if (pTempRow["a_enable"].ToString() == "1")
                         cbEnable.Checked = true;
                     else
                         cbEnable.Checked = false;
 
-                    string strTexID = pRow["a_texture_id"].ToString();
-                    string strTexRow = pRow["a_texture_row"].ToString();
-                    string strTexCol = pRow["a_texture_col"].ToString();
+                    string strTexID = pTempRow["a_texture_id"].ToString();
+                    string strTexRow = pTempRow["a_texture_row"].ToString();
+                    string strTexCol = pTempRow["a_texture_col"].ToString();
 
                     Image pIcon = pMain.GetIcon("ItemBtn", strTexID, Convert.ToInt32(strTexRow), Convert.ToInt32(strTexCol));
                     if (pIcon != null)
@@ -206,7 +207,7 @@ namespace LastChaos_ToolBox_2024.Editors
        
         private void tbID_TextChanged(object sender, EventArgs e) { if (bUserAction) bUnsavedChanges = true; }
         private void cbEnable_CheckedChanged(object sender, EventArgs e) { if (bUserAction) bUnsavedChanges = true; }
-
+        
         private void pbIcon_Click(object sender, EventArgs e)
         {
             IconPicker pIconSelector = new IconPicker(pMain, "ItemBtn");
@@ -219,12 +220,26 @@ namespace LastChaos_ToolBox_2024.Editors
             Image pIcon = pMain.GetIcon("ItemBtn", strArray[0], Convert.ToInt32(strArray[1]), Convert.ToInt32(strArray[2]));
             if (pIcon != null)
             {
+                if (bUserAction)
+                    bUnsavedChanges = true;
+
+                pTempRow["a_texture_id"] = strArray[0];
+                pTempRow["a_texture_row"] = strArray[1];
+                pTempRow["a_texture_col"] = strArray[2];
+
                 pbIcon.Image = pIcon;
 
                 pToolTip = new ToolTip();
-                pToolTip.SetToolTip(pbIcon, "FILE: " + strArray[0] + " ROW: " + strArray[1] + " COL: " + strArray[2
-                    ]);
+                pToolTip.SetToolTip(pbIcon, "FILE: " + strArray[0] + " ROW: " + strArray[1] + " COL: " + strArray[2]);
             }
+        }
+
+        private void tbName_TextChanged(object sender, EventArgs e) { if (bUserAction) bUnsavedChanges = true; }
+        private void tbDescription_TextChanged(object sender, EventArgs e) { if (bUserAction) bUnsavedChanges = true; }
+        private void tbSMC_TextChanged(object sender, EventArgs e) {
+            // TODO: Explore directory dialog
+            if (bUserAction)
+                bUnsavedChanges = true;
         }
     }
 }
