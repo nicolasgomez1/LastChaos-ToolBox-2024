@@ -35,11 +35,12 @@ namespace LastChaos_ToolBox_2024.Editors
             this.BtnAddNew = new System.Windows.Forms.Button();
             this.MainList = new System.Windows.Forms.ListBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btnUpdate = new System.Windows.Forms.Button();
             this.btnOthers = new System.Windows.Forms.Button();
             this.btnCrafting = new System.Windows.Forms.Button();
             this.btnGeneral = new System.Windows.Forms.Button();
-            this.btnUpdate = new System.Windows.Forms.Button();
             this.GeneralPanel = new System.Windows.Forms.Panel();
+            this.pbIcon = new System.Windows.Forms.PictureBox();
             this.cbEnable = new System.Windows.Forms.CheckBox();
             this.label1 = new System.Windows.Forms.Label();
             this.tbID = new System.Windows.Forms.TextBox();
@@ -48,6 +49,7 @@ namespace LastChaos_ToolBox_2024.Editors
             this.CraftingPanel = new System.Windows.Forms.Panel();
             this.groupBox1.SuspendLayout();
             this.GeneralPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbIcon)).BeginInit();
             this.SuspendLayout();
             // 
             // btnReload
@@ -61,7 +63,7 @@ namespace LastChaos_ToolBox_2024.Editors
             this.btnReload.Location = new System.Drawing.Point(12, 565);
             this.btnReload.Name = "btnReload";
             this.btnReload.Size = new System.Drawing.Size(60, 23);
-            this.btnReload.TabIndex = 3;
+            this.btnReload.TabIndex = 1;
             this.btnReload.Text = "Reload";
             this.btnReload.UseVisualStyleBackColor = true;
             this.btnReload.Click += new System.EventHandler(this.Insert_Click);
@@ -77,7 +79,7 @@ namespace LastChaos_ToolBox_2024.Editors
             this.BtnAddNew.Location = new System.Drawing.Point(78, 565);
             this.BtnAddNew.Name = "BtnAddNew";
             this.BtnAddNew.Size = new System.Drawing.Size(60, 23);
-            this.BtnAddNew.TabIndex = 4;
+            this.BtnAddNew.TabIndex = 2;
             this.BtnAddNew.Text = "Add New";
             this.BtnAddNew.UseVisualStyleBackColor = true;
             this.BtnAddNew.Click += new System.EventHandler(this.Update_Click);
@@ -93,7 +95,7 @@ namespace LastChaos_ToolBox_2024.Editors
             this.MainList.Location = new System.Drawing.Point(12, 12);
             this.MainList.Name = "MainList";
             this.MainList.Size = new System.Drawing.Size(258, 548);
-            this.MainList.TabIndex = 7;
+            this.MainList.TabIndex = 0;
             this.MainList.SelectedIndexChanged += new System.EventHandler(this.MainList_SelectedIndexChanged);
             // 
             // groupBox1
@@ -101,8 +103,8 @@ namespace LastChaos_ToolBox_2024.Editors
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox1.Controls.Add(this.btnUpdate);
             this.groupBox1.Controls.Add(this.CraftingPanel);
+            this.groupBox1.Controls.Add(this.btnUpdate);
             this.groupBox1.Controls.Add(this.btnOthers);
             this.groupBox1.Controls.Add(this.btnCrafting);
             this.groupBox1.Controls.Add(this.btnGeneral);
@@ -115,6 +117,22 @@ namespace LastChaos_ToolBox_2024.Editors
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Item Data";
             // 
+            // btnUpdate
+            // 
+            this.btnUpdate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnUpdate.Enabled = false;
+            this.btnUpdate.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(85)))), ((int)(((byte)(76)))));
+            this.btnUpdate.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+            this.btnUpdate.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
+            this.btnUpdate.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnUpdate.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.btnUpdate.Location = new System.Drawing.Point(1146, 19);
+            this.btnUpdate.Name = "btnUpdate";
+            this.btnUpdate.Size = new System.Drawing.Size(60, 23);
+            this.btnUpdate.TabIndex = 999;
+            this.btnUpdate.Text = "Update";
+            this.btnUpdate.UseVisualStyleBackColor = true;
+            // 
             // btnOthers
             // 
             this.btnOthers.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(85)))), ((int)(((byte)(76)))));
@@ -125,7 +143,7 @@ namespace LastChaos_ToolBox_2024.Editors
             this.btnOthers.Location = new System.Drawing.Point(138, 19);
             this.btnOthers.Name = "btnOthers";
             this.btnOthers.Size = new System.Drawing.Size(60, 23);
-            this.btnOthers.TabIndex = 12;
+            this.btnOthers.TabIndex = 7;
             this.btnOthers.Text = "Others";
             this.btnOthers.UseVisualStyleBackColor = true;
             // 
@@ -139,7 +157,7 @@ namespace LastChaos_ToolBox_2024.Editors
             this.btnCrafting.Location = new System.Drawing.Point(72, 19);
             this.btnCrafting.Name = "btnCrafting";
             this.btnCrafting.Size = new System.Drawing.Size(60, 23);
-            this.btnCrafting.TabIndex = 11;
+            this.btnCrafting.TabIndex = 6;
             this.btnCrafting.Text = "Crafting";
             this.btnCrafting.UseVisualStyleBackColor = true;
             this.btnCrafting.Click += new System.EventHandler(this.btnCrafting_Click);
@@ -154,30 +172,16 @@ namespace LastChaos_ToolBox_2024.Editors
             this.btnGeneral.Location = new System.Drawing.Point(6, 19);
             this.btnGeneral.Name = "btnGeneral";
             this.btnGeneral.Size = new System.Drawing.Size(60, 23);
-            this.btnGeneral.TabIndex = 10;
+            this.btnGeneral.TabIndex = 5;
             this.btnGeneral.Text = "General";
             this.btnGeneral.UseVisualStyleBackColor = true;
             this.btnGeneral.Click += new System.EventHandler(this.btnGeneral_Click);
-            // 
-            // btnUpdate
-            // 
-            this.btnUpdate.Enabled = false;
-            this.btnUpdate.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(85)))), ((int)(((byte)(76)))));
-            this.btnUpdate.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
-            this.btnUpdate.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
-            this.btnUpdate.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnUpdate.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-            this.btnUpdate.Location = new System.Drawing.Point(1146, 19);
-            this.btnUpdate.Name = "btnUpdate";
-            this.btnUpdate.Size = new System.Drawing.Size(60, 23);
-            this.btnUpdate.TabIndex = 9;
-            this.btnUpdate.Text = "Update";
-            this.btnUpdate.UseVisualStyleBackColor = true;
             // 
             // GeneralPanel
             // 
             this.GeneralPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
+            this.GeneralPanel.Controls.Add(this.pbIcon);
             this.GeneralPanel.Controls.Add(this.cbEnable);
             this.GeneralPanel.Controls.Add(this.label1);
             this.GeneralPanel.Controls.Add(this.tbID);
@@ -186,6 +190,18 @@ namespace LastChaos_ToolBox_2024.Editors
             this.GeneralPanel.Size = new System.Drawing.Size(986, 528);
             this.GeneralPanel.TabIndex = 0;
             // 
+            // pbIcon
+            // 
+            this.pbIcon.BackgroundImage = global::LastChaos_ToolBox_2024.Properties.Resources.DefaultIcon;
+            this.pbIcon.ErrorImage = null;
+            this.pbIcon.InitialImage = null;
+            this.pbIcon.Location = new System.Drawing.Point(154, 3);
+            this.pbIcon.Name = "pbIcon";
+            this.pbIcon.Size = new System.Drawing.Size(32, 32);
+            this.pbIcon.TabIndex = 13;
+            this.pbIcon.TabStop = false;
+            this.pbIcon.Click += new System.EventHandler(this.pbIcon_Click);
+            // 
             // cbEnable
             // 
             this.cbEnable.AutoSize = true;
@@ -193,7 +209,7 @@ namespace LastChaos_ToolBox_2024.Editors
             this.cbEnable.Location = new System.Drawing.Point(89, 1);
             this.cbEnable.Name = "cbEnable";
             this.cbEnable.Size = new System.Drawing.Size(59, 17);
-            this.cbEnable.TabIndex = 13;
+            this.cbEnable.TabIndex = 9;
             this.cbEnable.Text = "Enable";
             this.cbEnable.UseVisualStyleBackColor = true;
             this.cbEnable.CheckedChanged += new System.EventHandler(this.cbEnable_CheckedChanged);
@@ -217,7 +233,7 @@ namespace LastChaos_ToolBox_2024.Editors
             this.tbID.Location = new System.Drawing.Point(26, 0);
             this.tbID.Name = "tbID";
             this.tbID.Size = new System.Drawing.Size(57, 20);
-            this.tbID.TabIndex = 0;
+            this.tbID.TabIndex = 8;
             this.tbID.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.tbID.TextChanged += new System.EventHandler(this.tbID_TextChanged);
             // 
@@ -232,7 +248,7 @@ namespace LastChaos_ToolBox_2024.Editors
             this.BtnCopy.Location = new System.Drawing.Point(144, 565);
             this.BtnCopy.Name = "BtnCopy";
             this.BtnCopy.Size = new System.Drawing.Size(60, 23);
-            this.BtnCopy.TabIndex = 10;
+            this.BtnCopy.TabIndex = 3;
             this.BtnCopy.Text = "Copy";
             this.BtnCopy.UseVisualStyleBackColor = true;
             // 
@@ -247,16 +263,16 @@ namespace LastChaos_ToolBox_2024.Editors
             this.btnDelete.Location = new System.Drawing.Point(210, 566);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(60, 23);
-            this.btnDelete.TabIndex = 11;
+            this.btnDelete.TabIndex = 4;
             this.btnDelete.Text = "Delete";
             this.btnDelete.UseVisualStyleBackColor = true;
             // 
             // CraftingPanel
             // 
-            this.CraftingPanel.Location = new System.Drawing.Point(998, 476);
+            this.CraftingPanel.Location = new System.Drawing.Point(998, 109);
             this.CraftingPanel.Name = "CraftingPanel";
             this.CraftingPanel.Size = new System.Drawing.Size(200, 100);
-            this.CraftingPanel.TabIndex = 14;
+            this.CraftingPanel.TabIndex = 9;
             // 
             // ItemEditor
             // 
@@ -279,6 +295,7 @@ namespace LastChaos_ToolBox_2024.Editors
             this.groupBox1.ResumeLayout(false);
             this.GeneralPanel.ResumeLayout(false);
             this.GeneralPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbIcon)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -299,6 +316,7 @@ namespace LastChaos_ToolBox_2024.Editors
         private Label label1;
         private Panel GeneralPanel;
         private CheckBox cbEnable;
+        private PictureBox pbIcon;
         private Panel CraftingPanel;
     }
 }

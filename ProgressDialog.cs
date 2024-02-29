@@ -6,17 +6,18 @@ namespace LastChaos_ToolBox_2024
 {
 	public class ProgressDialog : IDisposable
 	{
-		private Form dialogForm;
+		private Form pDialogForm;
 
-        public ProgressDialog(string strMsg)
+        public ProgressDialog(string strMsg, Form pParentForm)
         {
-            dialogForm = new Form();
-            dialogForm.FormBorderStyle = FormBorderStyle.None;
-            dialogForm.StartPosition = FormStartPosition.CenterScreen;
-            dialogForm.ControlBox = false;
-            dialogForm.Size = new Size(200, 70);
-            dialogForm.TopMost = true;
-            dialogForm.BackColor = Color.FromArgb(60, 56, 54);
+            pDialogForm = new Form();
+            pDialogForm.FormBorderStyle = FormBorderStyle.None;
+            pDialogForm.StartPosition = FormStartPosition.Manual;
+            pDialogForm.ControlBox = false;
+            pDialogForm.Size = new Size(200, 70);
+            pDialogForm.TopMost = true;
+            pDialogForm.BackColor = Color.FromArgb(60, 56, 54);
+            pDialogForm.Location = new Point((int)pParentForm.Location.X + (pParentForm.Width - pDialogForm.Width) / 2, (int)pParentForm.Location.Y + (pParentForm.Height - pDialogForm.Height) / 2);
 
             var panel = new Panel();
             panel.Dock = DockStyle.Fill;
@@ -30,18 +31,18 @@ namespace LastChaos_ToolBox_2024
             label.Font = new Font(label.Font.FontFamily, 12);
 
             panel.Controls.Add(label);
-            dialogForm.Controls.Add(panel);
+            pDialogForm.Controls.Add(panel);
 
-            dialogForm.Show();
+            pDialogForm.Show();
         }
 
         public void Close()
 		{
-			if (dialogForm != null && !dialogForm.IsDisposed)
+			if (pDialogForm != null && !pDialogForm.IsDisposed)
 			{
-				dialogForm.Invoke((MethodInvoker)delegate
+                pDialogForm.Invoke((MethodInvoker)delegate
 				{
-					dialogForm.Close();
+                    pDialogForm.Close();
 				});
 			}
 		}

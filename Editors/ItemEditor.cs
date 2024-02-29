@@ -17,7 +17,8 @@ namespace LastChaos_ToolBox_2024.Editors
         private bool bUserAction = false;
         private bool bUnsavedChanges = false;
         private ListBoxItem pLastSelected;
-
+        private System.Windows.Forms.ToolTip pToolTip;
+        
         public ItemEditor(Main mainForm)
 		{
             this.FormClosing += ItemEditor_FormClosing;
@@ -27,11 +28,27 @@ namespace LastChaos_ToolBox_2024.Editors
             pMain = mainForm;
 		}
 
-		private async void ItemEditor_Load(object sender, EventArgs e)
-		{
-			var progressDialog = new ProgressDialog("Please Wait...");
+        public class ListBoxItem
+        {
+            public int ID { get; set; }
+            public string Text { get; set; }
 
-			// Load t_item to memory
+            public override string ToString()
+            {
+                return Text;
+            }
+        }
+
+        private async void ItemEditor_Load(object sender, EventArgs e)
+		{
+            foreach (Control control in this.Controls)
+            {
+                if (control is Label)
+                    ((Label)control).TabStop = false;
+            }
+
+            var progressDialog = new ProgressDialog("Please Wait...", this);
+
 			if (pMain.pItemTable == null)
 			{
 				pMain.pItemTable = await Task.Run(() =>
@@ -43,13 +60,10 @@ namespace LastChaos_ToolBox_2024.Editors
 
 			if (pMain.pItemTable != null)
 			{
-				// TODO: Clean ListBox
 				MainList.Items.Clear();
 
-				// TODO: Stop ListBox Update
 				MainList.BeginUpdate();
 
-				// TODO: Fill ListBox with items names and ids
 				foreach (DataRow pRow in pMain.pItemTable.Rows)
 				{
 					MainList.Items.Add(new ListBoxItem
@@ -59,25 +73,24 @@ namespace LastChaos_ToolBox_2024.Editors
 					}); ;
 				}
 
-				// TODO: Finally StartListBox Update again
 				MainList.EndUpdate();
 			}
 
 			progressDialog.Close();
 		}
 
-		private void ItemEditor_FormClosing(object sender, FormClosingEventArgs e)
-		{
+        private void ItemEditor_FormClosing(object sender, FormClosingEventArgs e)
+        {
             if (bUnsavedChanges)
             {
                 DialogResult pDialogReturn = MessageBox.Show("You have unapplied changes. Are you sure you want to exit?", "Item Editor", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
 
                 if (pDialogReturn == DialogResult.No)
-					e.Cancel = true;
+                    e.Cancel = true;
             }
         }
 
-		private void ChangePanel(Panel pPanel)
+        private void ChangePanel(Panel pPanel)
 		{
 			if (pPanel == GeneralPanel)
 			{
@@ -110,15 +123,25 @@ namespace LastChaos_ToolBox_2024.Editors
 
                     if (pRow["a_enable"].ToString() == "1")
                         cbEnable.Checked = true;
-					else
+                    else
                         cbEnable.Checked = false;
 
+                    string strTexID = pRow["a_texture_id"].ToString();
+                    string strTexRow = pRow["a_texture_row"].ToString();
+                    string strTexCol = pRow["a_texture_col"].ToString();
 
+                    Image pIcon = pMain.GetIcon("ItemBtn", strTexID, Convert.ToInt32(strTexRow), Convert.ToInt32(strTexCol));
+                    if (pIcon != null)
+                    {
+                        pbIcon.Image = pIcon;
+
+                        pToolTip = new ToolTip();
+                        pToolTip.SetToolTip(pbIcon, "FILE: " + strTexID + " ROW: " + strTexRow + " COL: " + strTexCol);
+                    }
 
                     // NOTE: Finally set update button enable and enable user action check
                     bUserAction = true;
-
-					btnUpdate.Enabled = true;
+                    btnUpdate.Enabled = true;
                 }
             }
 
@@ -163,7 +186,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			   pMain.PrintLog("suc");
 		   else
 			   pMain.PrintLog("failed");
-
+            -------
             DataTable pData = pMain.QuerySelect("utf8", "SELECT * FROM lc_data_nov.t_clientversion;");
 
 			if (pData != null)
@@ -180,28 +203,28 @@ namespace LastChaos_ToolBox_2024.Editors
 
         private void btnGeneral_Click(object sender, EventArgs e) { ChangePanel(GeneralPanel); }
         private void btnCrafting_Click(object sender, EventArgs e) { ChangePanel(CraftingPanel); }
+       
+        private void tbID_TextChanged(object sender, EventArgs e) { if (bUserAction) bUnsavedChanges = true; }
+        private void cbEnable_CheckedChanged(object sender, EventArgs e) { if (bUserAction) bUnsavedChanges = true; }
 
-        private void tbID_TextChanged(object sender, EventArgs e)
-		{
-			if (bUserAction)
-				bUnsavedChanges = true;
-		}
-
-        private void cbEnable_CheckedChanged(object sender, EventArgs e)
+        private void pbIcon_Click(object sender, EventArgs e)
         {
-            if (bUserAction)
-                bUnsavedChanges = true;
+            IconPicker pIconSelector = new IconPicker(pMain, "ItemBtn");
+
+            if (pIconSelector.ShowDialog() != DialogResult.OK)
+                return;
+
+            string[] strArray = pIconSelector.ReturnValues;
+
+            Image pIcon = pMain.GetIcon("ItemBtn", strArray[0], Convert.ToInt32(strArray[1]), Convert.ToInt32(strArray[2]));
+            if (pIcon != null)
+            {
+                pbIcon.Image = pIcon;
+
+                pToolTip = new ToolTip();
+                pToolTip.SetToolTip(pbIcon, "FILE: " + strArray[0] + " ROW: " + strArray[1] + " COL: " + strArray[2
+                    ]);
+            }
         }
-
-        public class ListBoxItem
-		{
-			public int ID { get; set; }
-			public string Text { get; set; }
-
-            public override string ToString()
-			{
-				return Text;
-			}
-		}
     }
 }

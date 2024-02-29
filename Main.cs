@@ -27,7 +27,7 @@ namespace LastChaos_ToolBox_2024
 		public MySqlConnection mysqlConn;
 		public DataTable pItemTable = null;
 
-		public Main()
+        public Main()
 		{
 			InitializeComponent();
 
@@ -111,7 +111,7 @@ namespace LastChaos_ToolBox_2024
 			public string DefaultEditNation = "USA";
 		}
 
-		void LoadSettings()
+        void LoadSettings()
 		{
 			PrintLog("Starting settings load...");
 
@@ -138,11 +138,36 @@ namespace LastChaos_ToolBox_2024
 				PrintLog($"{pSettings.SettingsFile} not exist.");
 			}
 		}
-		// General Help Functions
-		// TODO: ...
 
-		// Database Functions
-		public DataTable QuerySelect(string strCharset, string strQuery)
+        // General Help Functions
+        public Bitmap GetIcon(string BtnType, string nImage, int nRow, int nCol)
+        {
+			string strComposePath = BtnType + "/" + BtnType + nImage + ".png";
+
+			if (File.Exists(strComposePath))
+			{
+				// NOTE: Load png to memory
+				Image pImage = Image.FromFile(strComposePath);
+				// NOTE: Create new Bitmap
+				Bitmap pBitmap = new Bitmap(32, 32);
+				// NOTE: Generate Bitmap content
+				Graphics pGraphics = Graphics.FromImage((Image)pBitmap);
+				pGraphics.DrawImage(pImage, 0, 0, (new Rectangle(nCol * 32, nRow * 32, 32, 32)), GraphicsUnit.Pixel);
+				// NOTE: Free it
+				pGraphics.Dispose();
+
+				return pBitmap;
+			}
+			else
+			{
+				PrintLog("Error while trying to get Icon. Path: " + strComposePath);
+
+                return null;
+            }
+        }
+
+        // Database Functions
+        public DataTable QuerySelect(string strCharset, string strQuery)
 		{
 			try
 			{
@@ -226,5 +251,5 @@ namespace LastChaos_ToolBox_2024
 				}
 			}
 		}
-	}
+    }
 }
