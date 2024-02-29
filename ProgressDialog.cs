@@ -8,7 +8,7 @@ namespace LastChaos_ToolBox_2024
 	{
 		private Form pDialogForm;
 
-        public ProgressDialog(string strMsg, Form pParentForm)
+        public ProgressDialog(Form pParentForm, string strMsg)
         {
             pDialogForm = new Form();
             pDialogForm.FormBorderStyle = FormBorderStyle.None;
@@ -41,9 +41,9 @@ namespace LastChaos_ToolBox_2024
 			if (pDialogForm != null && !pDialogForm.IsDisposed)
 			{
                 pDialogForm.Invoke((MethodInvoker)delegate
-				{
+                {
                     pDialogForm.Close();
-				});
+                });
 			}
 		}
 

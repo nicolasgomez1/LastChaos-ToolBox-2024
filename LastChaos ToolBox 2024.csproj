@@ -123,6 +123,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Definitions.cs" />
     <Compile Include="Editors\ItemEditor.cs">
       <SubType>Form</SubType>
     </Compile>

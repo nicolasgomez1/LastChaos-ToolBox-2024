@@ -16,10 +16,7 @@ using System.IO;
 using System.Configuration;
 using IniParser;
 using IniParser.Model;
-
-// Editors
 using LastChaos_ToolBox_2024.Editors;
-using System.Runtime.InteropServices;
 
 namespace LastChaos_ToolBox_2024
 {
@@ -43,6 +40,7 @@ namespace LastChaos_ToolBox_2024
             public string DefaultEditNation = "USA";
 
             public string ClientPath = "";
+			public string[] NationSupported;
         }
 
         public Main()
@@ -130,10 +128,17 @@ namespace LastChaos_ToolBox_2024
                 pSettings.DBData = pData["Database"]["Data"];
                 pSettings.DBUser = pData["Database"]["User"];
                 pSettings.DBCharset = pData["Database"]["Charset"];
-                pSettings.DefaultEditNation = pData["Database"]["Main_Lang"];
+                pSettings.DefaultEditNation = pData["Database"]["Main_Lang"].ToLower();
 
                 // General Settings
                 pSettings.ClientPath = pData["General"]["ClientPath"];
+
+				string[] strArrayNations = pData["General"]["NationSupported"].Split(',');
+
+                pSettings.NationSupported = new string[strArrayNations.Length];
+
+                for (int i = 0; i < strArrayNations.Length; i++)
+                    pSettings.NationSupported[i] = strArrayNations[i];
 #else
 				string[] strArray = File.ReadAllLines(pSettings.SettingsFile);
 
