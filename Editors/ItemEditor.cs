@@ -102,12 +102,17 @@ namespace LastChaos_ToolBox_2024.Editors
 
 			ProgressDialog progressDialog = new ProgressDialog(this, "Please Wait...");
 
-			bool bRequestNeeded = false;
+            /****************************************/
+            /* NOTE: Esto se tendría que replicar en cada herramienta que se cree de ahora en más.
+             * Definir todas las columnas necesarias para el funcionamiento de la herramienta en cuestión.
+             * Posteriormente verificar si la tabla pMain.pItemTable está vacía. Si es así directamente ejecutar la Query.
+             * De lo contrario inteligentemente verificar que columnas requeridas no están presentes en pMain.pItemTable para posteriormente obtenerlas y cargarlas.
+             */
+            bool bRequestNeeded = false;
 			List<string> listQueryCompose = new List<string>
 			{
-				"a_index", "a_enable", "a_texture_id", "a_texture_row", "a_texture_col", "a_file_smc", "a_weight", "a_price",
-				"a_level", "a_level2", "a_durability", "a_fame", "a_max_use", "a_type_idx", "a_subtype_idx", "a_wearing",
-				"a_quest_trigger_ids", "a_quest_trigger_count", "a_rvr_value", "a_rvr_grade"
+				"a_index", "a_enable", "a_texture_id", "a_texture_row", "a_texture_col", "a_file_smc", "a_weight", "a_price", "a_level", "a_level2", "a_durability",
+				"a_fame", "a_max_use", "a_type_idx", "a_subtype_idx", "a_wearing", "a_quest_trigger_ids", "a_quest_trigger_count", "a_rvr_value", "a_rvr_grade"
 			};
 
 			for (int i = 0; i < pMain.pSettings.NationSupported.Length; i++)
@@ -118,7 +123,7 @@ namespace LastChaos_ToolBox_2024.Editors
 				listQueryCompose.Add("a_descr_" + strNation);
 			}
 
-			if (pMain.pItemTable == null)
+            if (pMain.pItemTable == null)
 			{
 				bRequestNeeded = true;
 			}
@@ -140,8 +145,9 @@ namespace LastChaos_ToolBox_2024.Editors
 					return pMain.QuerySelect("utf8", $"SELECT {string.Join(",", listQueryCompose)} FROM {pMain.pSettings.DBData}.t_item ORDER BY a_index;");
 				});
 			}
+            /****************************************/
 
-			if (pMain.pItemTable != null)
+            if (pMain.pItemTable != null)
 			{
 				MainList.Items.Clear();
 
@@ -772,13 +778,13 @@ namespace LastChaos_ToolBox_2024.Editors
 				string strColumnName = column.ColumnName;
 				object objColumnValue = pTempRow[column];
 
-				// TODO: Compose query to update values in db server
+                // TODO: Compose query to update values in db server
 
-				// NOTE: Esto puede ser util mas adelante: Verifica si la columna existe en la tabla principal
-				/*if (!pMain.pItemTable.Columns.Contains("column_name"))
-					pMain.pItemTable.Columns.Add("column_name", column.DataType);*/	// En este caso, crea una nueva columna y le define el tipo de dato a contener. Pero podria ser util cuando cree más herramientas, para poder detectar si existen x columnas, y podes hacer un select unicamente de las faltantes
+                // NOTE: Esto puede ser étil más adelante. Verifica si la columna existe en la tabla principal
+                /*if (!pMain.pItemTable.Columns.Contains("column_name"))
+					pMain.pItemTable.Columns.Add("column_name", column.DataType);*/
 
-				pMain.pItemTable.Rows[nRowIndex][strColumnName] = objColumnValue;
+                pMain.pItemTable.Rows[nRowIndex][strColumnName] = objColumnValue;
 			}
 		}
 	}
