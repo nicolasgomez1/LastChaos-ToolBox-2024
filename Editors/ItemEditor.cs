@@ -102,20 +102,42 @@ namespace LastChaos_ToolBox_2024.Editors
 
 			ProgressDialog progressDialog = new ProgressDialog(this, "Please Wait...");
 
+			bool bRequestNeeded = false;
+			List<string> listQueryCompose = new List<string>
+			{
+				"a_index", "a_enable", "a_texture_id", "a_texture_row", "a_texture_col", "a_file_smc", "a_weight", "a_price",
+				"a_level", "a_level2", "a_durability", "a_fame", "a_max_use", "a_type_idx", "a_subtype_idx", "a_wearing",
+				"a_quest_trigger_ids", "a_quest_trigger_count", "a_rvr_value", "a_rvr_grade"
+			};
+
+			for (int i = 0; i < pMain.pSettings.NationSupported.Length; i++)
+			{
+				string strNation = pMain.pSettings.NationSupported[i].ToLower();
+
+				listQueryCompose.Add("a_name_" + strNation);
+				listQueryCompose.Add("a_descr_" + strNation);
+			}
+
 			if (pMain.pItemTable == null)
+			{
+				bRequestNeeded = true;
+			}
+			else
+			{
+				for (int i = listQueryCompose.Count - 1; i >= 0; i--)
+				{
+					if (!pMain.pItemTable.Columns.Contains(listQueryCompose[i]))
+						bRequestNeeded = true;
+					else
+						listQueryCompose.RemoveAt(i);
+				}
+			}
+
+			if (bRequestNeeded)
 			{
 				pMain.pItemTable = await Task.Run(() =>
 				{
-					string strSqlCompose = "a_index, a_enable, a_texture_id, a_texture_row, a_texture_col, a_file_smc, a_weight, a_price, a_level, a_level2, a_durability, a_fame, a_max_use, a_type_idx, a_subtype_idx, a_wearing, a_quest_trigger_ids, a_quest_trigger_count, a_rvr_value, a_rvr_grade";
-
-					for (int i = 0; i < pMain.pSettings.NationSupported.Length; i++)
-					{
-						string strNation = pMain.pSettings.NationSupported[i].ToLower();
-
-						strSqlCompose += ", a_name_" + strNation + ", a_descr_" + strNation;
-					}
-
-					return pMain.QuerySelect("utf8", $"SELECT {strSqlCompose} FROM {pMain.pSettings.DBData}.t_item ORDER BY a_index;");
+					return pMain.QuerySelect("utf8", $"SELECT {string.Join(",", listQueryCompose)} FROM {pMain.pSettings.DBData}.t_item ORDER BY a_index;");
 				});
 			}
 
@@ -435,7 +457,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			   pMain.PrintLog("suc");
 		   else
 			   pMain.PrintLog("failed");
-			-------
+			/////
 			DataTable pData = pMain.QuerySelect("utf8", "SELECT * FROM lc_data_nov.t_clientversion;");
 
 			if (pData != null)
@@ -461,9 +483,7 @@ namespace LastChaos_ToolBox_2024.Editors
 		}
 
 		private void btnGeneral_Click(object sender, EventArgs e) { ChangePanel(GeneralPanel); }
-
 		private void btnCrafting_Click(object sender, EventArgs e) { ChangePanel(CraftingPanel); }
-
 		private void btnOthers_Click(object sender, EventArgs e) { ChangePanel(OthersPanel); }
 
 		private void cbEnable_CheckedChanged(object sender, EventArgs e)
@@ -754,7 +774,11 @@ namespace LastChaos_ToolBox_2024.Editors
 
 				// TODO: Compose query to update values in db server
 
-                pMain.pItemTable.Rows[nRowIndex][strColumnName] = objColumnValue;
+				// NOTE: Esto puede ser util mas adelante: Verifica si la columna existe en la tabla principal
+				/*if (!pMain.pItemTable.Columns.Contains("column_name"))
+					pMain.pItemTable.Columns.Add("column_name", column.DataType);*/	// En este caso, crea una nueva columna y le define el tipo de dato a contener. Pero podria ser util cuando cree más herramientas, para poder detectar si existen x columnas, y podes hacer un select unicamente de las faltantes
+
+				pMain.pItemTable.Rows[nRowIndex][strColumnName] = objColumnValue;
 			}
 		}
 	}
