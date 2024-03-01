@@ -42,11 +42,15 @@ namespace LastChaos_ToolBox_2024.Editors
             this.OthersPanel = new System.Windows.Forms.Panel();
             this.CraftingPanel = new System.Windows.Forms.Panel();
             this.GeneralPanel = new System.Windows.Forms.Panel();
+            this.label22 = new System.Windows.Forms.Label();
+            this.btnClassFlag = new System.Windows.Forms.Button();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.label19 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.tbEffectDamage = new System.Windows.Forms.TextBox();
+            this.tbEffectAttack = new System.Windows.Forms.TextBox();
+            this.label21 = new System.Windows.Forms.Label();
             this.label20 = new System.Windows.Forms.Label();
+            this.label19 = new System.Windows.Forms.Label();
+            this.tbEffectNormal = new System.Windows.Forms.TextBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.cbRvRGradeSelector = new System.Windows.Forms.ComboBox();
             this.label18 = new System.Windows.Forms.Label();
@@ -245,6 +249,8 @@ namespace LastChaos_ToolBox_2024.Editors
             // 
             this.GeneralPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
+            this.GeneralPanel.Controls.Add(this.label22);
+            this.GeneralPanel.Controls.Add(this.btnClassFlag);
             this.GeneralPanel.Controls.Add(this.groupBox5);
             this.GeneralPanel.Controls.Add(this.groupBox4);
             this.GeneralPanel.Controls.Add(this.label16);
@@ -280,63 +286,113 @@ namespace LastChaos_ToolBox_2024.Editors
             this.GeneralPanel.Size = new System.Drawing.Size(1200, 528);
             this.GeneralPanel.TabIndex = 0;
             // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.label22.Location = new System.Drawing.Point(546, 43);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(55, 13);
+            this.label22.TabIndex = 1025;
+            this.label22.Text = "Class Flag";
+            this.label22.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // btnClassFlag
+            // 
+            this.btnClassFlag.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnClassFlag.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(85)))), ((int)(((byte)(76)))));
+            this.btnClassFlag.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+            this.btnClassFlag.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
+            this.btnClassFlag.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnClassFlag.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.btnClassFlag.Location = new System.Drawing.Point(607, 38);
+            this.btnClassFlag.Name = "btnClassFlag";
+            this.btnClassFlag.Size = new System.Drawing.Size(44, 23);
+            this.btnClassFlag.TabIndex = 1000;
+            this.btnClassFlag.UseVisualStyleBackColor = true;
+            this.btnClassFlag.Click += new System.EventHandler(this.btnClassFlag_Click);
+            // 
             // groupBox5
             // 
-            this.groupBox5.Controls.Add(this.label19);
-            this.groupBox5.Controls.Add(this.textBox1);
-            this.groupBox5.Controls.Add(this.textBox2);
+            this.groupBox5.Controls.Add(this.tbEffectDamage);
+            this.groupBox5.Controls.Add(this.tbEffectAttack);
+            this.groupBox5.Controls.Add(this.label21);
             this.groupBox5.Controls.Add(this.label20);
+            this.groupBox5.Controls.Add(this.label19);
+            this.groupBox5.Controls.Add(this.tbEffectNormal);
             this.groupBox5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-            this.groupBox5.Location = new System.Drawing.Point(301, 220);
+            this.groupBox5.Location = new System.Drawing.Point(0, 269);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(200, 52);
+            this.groupBox5.Size = new System.Drawing.Size(196, 96);
             this.groupBox5.TabIndex = 1023;
             this.groupBox5.TabStop = false;
-            this.groupBox5.Text = "Quest Trigger Data";
+            this.groupBox5.Text = "Effects Data";
             // 
-            // label19
+            // tbEffectDamage
             // 
-            this.label19.AutoSize = true;
-            this.label19.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-            this.label19.Location = new System.Drawing.Point(6, 26);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(18, 13);
-            this.label19.TabIndex = 1006;
-            this.label19.Text = "ID";
-            this.label19.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.tbEffectDamage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+            this.tbEffectDamage.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tbEffectDamage.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.tbEffectDamage.Location = new System.Drawing.Point(53, 69);
+            this.tbEffectDamage.Name = "tbEffectDamage";
+            this.tbEffectDamage.Size = new System.Drawing.Size(136, 20);
+            this.tbEffectDamage.TabIndex = 1011;
+            this.tbEffectDamage.TextChanged += new System.EventHandler(this.tbEffectDamage_TextChanged);
             // 
-            // textBox1
+            // tbEffectAttack
             // 
-            this.textBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
-            this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-            this.textBox1.Location = new System.Drawing.Point(30, 22);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(57, 20);
-            this.textBox1.TabIndex = 1007;
-            this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.tbEffectAttack.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+            this.tbEffectAttack.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tbEffectAttack.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.tbEffectAttack.Location = new System.Drawing.Point(53, 43);
+            this.tbEffectAttack.Name = "tbEffectAttack";
+            this.tbEffectAttack.Size = new System.Drawing.Size(136, 20);
+            this.tbEffectAttack.TabIndex = 1010;
+            this.tbEffectAttack.TextChanged += new System.EventHandler(this.tbEffectAttack_TextChanged);
             // 
-            // textBox2
+            // label21
             // 
-            this.textBox2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
-            this.textBox2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-            this.textBox2.Location = new System.Drawing.Point(134, 22);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(57, 20);
-            this.textBox2.TabIndex = 1009;
-            this.textBox2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.label21.AutoSize = true;
+            this.label21.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.label21.Location = new System.Drawing.Point(4, 73);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(47, 13);
+            this.label21.TabIndex = 1009;
+            this.label21.Text = "Damage";
+            this.label21.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // label20
             // 
             this.label20.AutoSize = true;
             this.label20.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-            this.label20.Location = new System.Drawing.Point(93, 26);
+            this.label20.Location = new System.Drawing.Point(9, 47);
             this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(35, 13);
+            this.label20.Size = new System.Drawing.Size(38, 13);
             this.label20.TabIndex = 1008;
-            this.label20.Text = "Count";
+            this.label20.Text = "Attack";
             this.label20.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.label19.Location = new System.Drawing.Point(7, 21);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(40, 13);
+            this.label19.TabIndex = 1006;
+            this.label19.Text = "Normal";
+            this.label19.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // tbEffectNormal
+            // 
+            this.tbEffectNormal.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+            this.tbEffectNormal.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tbEffectNormal.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.tbEffectNormal.Location = new System.Drawing.Point(53, 17);
+            this.tbEffectNormal.Name = "tbEffectNormal";
+            this.tbEffectNormal.Size = new System.Drawing.Size(137, 20);
+            this.tbEffectNormal.TabIndex = 1007;
+            this.tbEffectNormal.TextChanged += new System.EventHandler(this.tbEffectNormal_TextChanged);
             // 
             // groupBox4
             // 
@@ -970,9 +1026,13 @@ namespace LastChaos_ToolBox_2024.Editors
         private ComboBox cbRvRValueSelector;
         private GroupBox groupBox5;
         private Label label19;
-        private TextBox textBox1;
-        private TextBox textBox2;
-        private Label label20;
+        private TextBox tbEffectNormal;
         private TextBox tbSearch;
+        private TextBox tbEffectDamage;
+        private TextBox tbEffectAttack;
+        private Label label21;
+        private Label label20;
+        private Button btnClassFlag;
+        private Label label22;
     }
 }

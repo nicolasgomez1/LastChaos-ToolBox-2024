@@ -205,5 +205,21 @@ namespace Definitions
                 }
             }
         };
+
+        public static string[] ItemClass =
+        {
+            // Standards
+            "Titan",
+            "Knight",
+            "Helaer",
+            "Mage",
+            "Rogue",
+            "Sorcerer",
+            "Nightshadow",
+            "Ex-Rogue",
+            "Arch-Mage",
+            "Pet",
+            "APet"
+        };
     }
 }

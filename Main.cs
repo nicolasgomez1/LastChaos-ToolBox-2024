@@ -13,6 +13,7 @@ using System.IO;
 using IniParser;
 using IniParser.Model;
 using LastChaos_ToolBox_2024.Editors;
+using Definitions;
 
 namespace LastChaos_ToolBox_2024
 {
@@ -24,7 +25,7 @@ namespace LastChaos_ToolBox_2024
 		public DataTable pItemTable = null;
 		private string strWindowsTitle;
 
-        public class Settings
+		public class Settings
 		{
 			public string SettingsFile = "Settings.ini";
 
@@ -47,24 +48,24 @@ namespace LastChaos_ToolBox_2024
 
 			Assembly pAssembly = Assembly.GetAssembly(typeof(Main));
 
-            this.Text = strWindowsTitle = pAssembly.GetName().Name + " Build: " + pAssembly.GetName().Version.Revision;
+			this.Text = strWindowsTitle = pAssembly.GetName().Name + " Build: " + pAssembly.GetName().Version.Revision;
 		}
 
 		private void Main_Load(object sender, EventArgs e)
 		{
 #if DEBUG
-            Monitor.Start();
+			Monitor.Start();
 #endif
-            LoadSettings();
+			LoadSettings();
 			ConnectToDatabase();
 		}
 
-        private void monitor_Tick(object sender, EventArgs e)
-        {
-            this.Text = strWindowsTitle + " (Ram Usage: " + (GC.GetTotalMemory(true) / 1024) + "KB's)";
-        }
+		private void monitor_Tick(object sender, EventArgs e)
+		{
+			this.Text = strWindowsTitle + " (Ram Usage: " + (GC.GetTotalMemory(true) / 1024) + "KB's)";
+		}
 
-        private void ReloadSettings_Click(object sender, EventArgs e) { LoadSettings(); }
+		private void ReloadSettings_Click(object sender, EventArgs e) { LoadSettings(); }
 
 		private void Reconnect_Click(object sender, EventArgs e)
 		{
@@ -96,9 +97,9 @@ namespace LastChaos_ToolBox_2024
 			else
 			{
 				PrintLog("Settings file is corrupted or wrong formed.", Color.Red);
-                return "";
-            }
-        }
+				return "";
+			}
+		}
 
 		public void PrintLog(string strMsg, Color? ColorMsg = null)
 		{
@@ -111,21 +112,21 @@ namespace LastChaos_ToolBox_2024
 				pStreamWriter.WriteLine(strLog);
 			}
 
-            rtbConsole.Invoke((MethodInvoker)delegate
-            {
-                int nStartPos = rtbConsole.TextLength;
-                rtbConsole.AppendText(strLog + Environment.NewLine);
-                int nEndPos = rtbConsole.TextLength;
+			rtbConsole.Invoke((MethodInvoker)delegate
+			{
+				int nStartPos = rtbConsole.TextLength;
+				rtbConsole.AppendText(strLog + Environment.NewLine);
+				int nEndPos = rtbConsole.TextLength;
 
-                rtbConsole.Select(nStartPos, nEndPos - nStartPos);
-                rtbConsole.SelectionColor = ColorMsg ?? Color.FromArgb(208, 203, 148);
-                rtbConsole.SelectionLength = 0;
+				rtbConsole.Select(nStartPos, nEndPos - nStartPos);
+				rtbConsole.SelectionColor = ColorMsg ?? Color.FromArgb(208, 203, 148);
+				rtbConsole.SelectionLength = 0;
 
-                rtbConsole.ScrollToCaret();
-            });
-        }
+				rtbConsole.ScrollToCaret();
+			});
+		}
 
-        void LoadSettings()
+		void LoadSettings()
 		{
 			PrintLog("Starting settings load...");
 
@@ -154,7 +155,7 @@ namespace LastChaos_ToolBox_2024
 				for (int i = 0; i < strArrayNations.Length; i++)
 					pSettings.NationSupported[i] = strArrayNations[i];
 
-				PrintLog("Settings load finished.");
+				PrintLog("Settings load finished.", Color.Lime);
 			}
 			else
 			{
@@ -169,19 +170,19 @@ namespace LastChaos_ToolBox_2024
 
 			if (File.Exists(strComposePath))
 			{
-                using (Image pImage = Image.FromFile(strComposePath))
-                {
-                    // NOTE: Create new Bitmap
-                    Bitmap pBitmap = new Bitmap(32, 32);
-                    // NOTE: Generate Bitmap content
-                    using (Graphics pGraphics = Graphics.FromImage((Image)pBitmap))
-                    {
-                        pGraphics.DrawImage(pImage, 0, 0, (new Rectangle(nCol * 32, nRow * 32, 32, 32)), GraphicsUnit.Pixel);
-                    }
+				using (Image pImage = Image.FromFile(strComposePath))
+				{
+					// NOTE: Create new Bitmap
+					Bitmap pBitmap = new Bitmap(32, 32);
+					// NOTE: Generate Bitmap content
+					using (Graphics pGraphics = Graphics.FromImage((Image)pBitmap))
+					{
+						pGraphics.DrawImage(pImage, 0, 0, (new Rectangle(nCol * 32, nRow * 32, 32, 32)), GraphicsUnit.Pixel);
+					}
 
-                    return pBitmap;
-                }
-            }
+					return pBitmap;
+				}
+			}
 			else
 			{
 				PrintLog("Error while trying to get Icon. Path: " + strComposePath, Color.Red);
@@ -208,7 +209,7 @@ namespace LastChaos_ToolBox_2024
 
 						mysqlConnection.Close();
 
-						PrintLog("MySql Query (Charset: " + strCharset + ")\n" + strQuery + "\nExecute successfully.");
+						PrintLog("MySql Query (Charset: " + strCharset + ")\n" + strQuery + "\nExecute successfully.", Color.Lime);
 
 						return pTable;
 					}
@@ -238,7 +239,7 @@ namespace LastChaos_ToolBox_2024
 
 						mysqlConnection.Close();
 
-						PrintLog("MySql Query (Charset: " + strCharset + ")\n" + strQuery + "\nExecute successfully.");
+						PrintLog("MySql Query (Charset: " + strCharset + ")\n" + strQuery + "\nExecute successfully.", Color.Lime);
 
 						return true;
 					}
@@ -246,9 +247,9 @@ namespace LastChaos_ToolBox_2024
 			}
 			catch(Exception ex)
 			{
-                PrintLog($"MySql Query (Charset: {strCharset})\n{strQuery}\nFail > {ex.Message}", Color.Red);
+				PrintLog($"MySql Query (Charset: {strCharset})\n{strQuery}\nFail > {ex.Message}", Color.Red);
 
-                return false;
+				return false;
 			}
 		}
 
@@ -264,7 +265,7 @@ namespace LastChaos_ToolBox_2024
 
 				mysqlConn.Open();
 
-				PrintLog("MySQL > Connected successfully.");
+				PrintLog("MySQL > Connected successfully.", Color.Lime);
 			}
 			catch (Exception ex)
 			{
@@ -278,5 +279,5 @@ namespace LastChaos_ToolBox_2024
 					Application.Exit();
 			}
 		}
-    }
+	}
 }

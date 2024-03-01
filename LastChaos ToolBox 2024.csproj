@@ -130,6 +130,12 @@
     <Compile Include="Editors\ItemEditor.Designer.cs">
       <DependentUpon>ItemEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="Pickers\FlagPicker.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Pickers\FlagPicker.Designer.cs">
+      <DependentUpon>FlagPicker.cs</DependentUpon>
+    </Compile>
     <Compile Include="Pickers\IconPicker.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -147,6 +153,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Editors\ItemEditor.resx">
       <DependentUpon>ItemEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pickers\FlagPicker.resx">
+      <DependentUpon>FlagPicker.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Pickers\IconPicker.resx">
       <DependentUpon>IconPicker.cs</DependentUpon>

@@ -16,10 +16,9 @@ namespace LastChaos_ToolBox_2024
     {
         private Main pMain;
         private double dX, dY, dIconSize;
-        public string pStrBtnType;
+        private string pStrBtnType;
         public string[] ReturnValues = new string[] { "0", "0", "0" };
         private System.Windows.Forms.ToolTip pToolTip;
-
         public IconPicker(Main mainForm, String strBtnType)
         {
             InitializeComponent();
@@ -127,7 +126,7 @@ namespace LastChaos_ToolBox_2024
                 }
                 else
                 {
-                    pMain.PrintLog("Icon Picker > Something went wrong while try load: " + strPathCompose);
+                    pMain.PrintLog("Icon Picker > Something went wrong while try load: " + strPathCompose, Color.Red);
                 }
             }
         }

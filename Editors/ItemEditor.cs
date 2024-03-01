@@ -66,7 +66,6 @@ namespace LastChaos_ToolBox_2024.Editors
 			}
 
 			cbNationSelector.EndUpdate();
-
 			/****************************************/
 			cbTypeSelector.Items.Clear();
 
@@ -77,8 +76,6 @@ namespace LastChaos_ToolBox_2024.Editors
 
 			cbTypeSelector.EndUpdate();
 			/****************************************/
-
-			/****************************************/
 			cbWearingPositionSelector.Items.Clear();
 
 			cbWearingPositionSelector.BeginUpdate();
@@ -87,8 +84,6 @@ namespace LastChaos_ToolBox_2024.Editors
 				cbWearingPositionSelector.Items.Add(strWearingPos);
 
 			cbWearingPositionSelector.EndUpdate();
-			/****************************************/
-
 			/****************************************/
 			cbRvRValueSelector.Items.Clear();
 
@@ -99,26 +94,25 @@ namespace LastChaos_ToolBox_2024.Editors
 
 			cbRvRValueSelector.EndUpdate();
 			/****************************************/
-
 			ProgressDialog progressDialog = new ProgressDialog(this, "Please Wait...");
-
-            /****************************************/
-            /* NOTE: Esto se tendría que replicar en cada herramienta que se cree de ahora en más.
-             * Definir todas las columnas necesarias para el funcionamiento de la herramienta en cuestión.
-             * Posteriormente verificar si la tabla pMain.pItemTable está vacía. Si es así directamente ejecutar la Query.
-             * De lo contrario inteligentemente verificar que columnas requeridas no están presentes en pMain.pItemTable para posteriormente obtenerlas y cargarlas.
-             */
-            bool bRequestNeeded = false;
+			/****************************************/
+			/* NOTE: Esto se tendría que replicar en cada herramienta que se cree de ahora en más.
+			 * Definir todas las columnas necesarias para el funcionamiento de la herramienta en cuestión.
+			 * Posteriormente verificar si la tabla pMain.pItemTable está vacía. Si es así directamente ejecutar la Query.
+			 * De lo contrario inteligentemente verificar que columnas requeridas no están presentes en pMain.pItemTable para posteriormente obtenerlas y cargarlas.
+			 */
+			bool bRequestNeeded = false;
 
 			// NOTE: Aquí se definen las columnas generales que son requeridas por la Herramienta en cuestión.
 			List<string> listQueryCompose = new List<string>
 			{
-				"a_enable", "a_texture_id", "a_texture_row", "a_texture_col", "a_file_smc", "a_weight", "a_price", "a_level", "a_level2", "a_durability", "a_fame",
-				"a_max_use", "a_type_idx", "a_subtype_idx", "a_wearing", "a_quest_trigger_ids", "a_quest_trigger_count", "a_rvr_value", "a_rvr_grade"
+				"a_enable", "a_texture_id", "a_texture_row", "a_texture_col", "a_file_smc", "a_weight", "a_price", "a_level", "a_level2", "a_durability",
+				"a_fame", "a_max_use", "a_type_idx", "a_subtype_idx", "a_wearing", "a_quest_trigger_ids", "a_quest_trigger_count", "a_rvr_value",
+				"a_rvr_grade", "a_effect_name", "a_attack_effect_name", "a_damage_effect_name", "a_job_flag"
 			};
 
-            // NOTE: Esto sirve para solicitar únicamente las columnas asociadas a los idiomas definidos en General -> NationSupported.
-            for (int i = 0; i < pMain.pSettings.NationSupported.Length; i++)
+			// NOTE: Esto sirve para solicitar únicamente las columnas asociadas a los idiomas definidos en General -> NationSupported.
+			for (int i = 0; i < pMain.pSettings.NationSupported.Length; i++)
 			{
 				string strNation = pMain.pSettings.NationSupported[i].ToLower();
 
@@ -126,8 +120,8 @@ namespace LastChaos_ToolBox_2024.Editors
 				listQueryCompose.Add("a_descr_" + strNation);
 			}
 
-            // NOTE: Aquí se verificará si la Tabla global requerida por la Herramienta está vacía. Si es así se ejecutará la petición con todas las columnas directamente.
-            if (pMain.pItemTable == null)
+			// NOTE: Aquí se verificará si la Tabla global requerida por la Herramienta está vacía. Si es así se ejecutará la petición con todas las columnas directamente.
+			if (pMain.pItemTable == null)
 			{
 				bRequestNeeded = true;
 			}
@@ -142,21 +136,20 @@ namespace LastChaos_ToolBox_2024.Editors
 				}
 			}
 
-            // NOTE: Aquí se definirán las columnas que son necesarias para identificar las filas. Estas columnas serán solicitadas en la petición sin importar si están presentes en la Tabla global.
-            listQueryCompose.Add("a_index");
+			// NOTE: Aquí se definirán las columnas que son necesarias para identificar las filas. Estas columnas serán solicitadas en la petición sin importar si están presentes en la Tabla global.
+			listQueryCompose.Add("a_index");
 
-            if (bRequestNeeded)
+			if (bRequestNeeded)
 			{
 				pMain.pItemTable = await Task.Run(() =>
 				{
-                    // TODO: Acá tengo 2 opciones, o hago 2 peticiones, una con utf8 y otra para los textos en distintos idiomas.
+					// TODO: Acá tengo 2 opciones, o hago 2 peticiones, una con utf8 y otra para los textos en distintos idiomas.
 					// NOTE: Posible problema, se podrían hacer peticiones con algunas variaciones en el orden o rangos, no sé como se comportaría si sistema en dicho caso.
-                    return pMain.QuerySelect(pMain.pSettings.DBCharset, $"SELECT {string.Join(",", listQueryCompose)} FROM {pMain.pSettings.DBData}.t_item ORDER BY a_index;");
+					return pMain.QuerySelect(pMain.pSettings.DBCharset, $"SELECT {string.Join(",", listQueryCompose)} FROM {pMain.pSettings.DBData}.t_item ORDER BY a_index;");
 				});
 			}
-            /****************************************/
-
-            if (pMain.pItemTable != null)
+			/****************************************/
+			if (pMain.pItemTable != null)
 			{
 				MainList.Items.Clear();
 
@@ -224,34 +217,25 @@ namespace LastChaos_ToolBox_2024.Editors
 				pToolTip = new ToolTip();
 				pToolTip.SetToolTip(pbIcon, "FILE: " + strTexID + " ROW: " + strTexRow + " COL: " + strTexCol);
 			}
-
 			/****************************************/
 			tbSMC.Text = pTempRow["a_file_smc"].ToString();
-
+			
 			pToolTip = new ToolTip();
 			pToolTip.SetToolTip(tbSMC, "Double Click to edit");
 			/****************************************/
-
 			tbMaxStack.Text = pTempRow["a_weight"].ToString();
-
 			tbPrice.Text = pTempRow["a_price"].ToString();
-
 			tbMinLevel.Text = pTempRow["a_level"].ToString();
-
 			tbMaxLevel.Text = pTempRow["a_level2"].ToString();
-
 			tbDurability.Text = pTempRow["a_durability"].ToString();
-
 			tbFame.Text = pTempRow["a_fame"].ToString();
-
 			tbMaxUse.Text = pTempRow["a_max_use"].ToString();
-
+			/****************************************/
 			string strNation = cbNationSelector.SelectedItem.ToString().ToLower();
 
 			tbName.Text = pTempRow["a_name_" + strNation].ToString();
-
 			tbDescription.Text = pTempRow["a_descr_" + strNation].ToString();
-
+			/****************************************/
 			int nType = Convert.ToInt32(pTempRow["a_type_idx"]);
 
 			if (nType < 0 || nType > Defs.ItemTypesNSubTypes.Keys.Count)
@@ -282,11 +266,10 @@ namespace LastChaos_ToolBox_2024.Editors
 				}
 			}
 
-			int nWearinPosition = Convert.ToInt32(pTempRow["a_wearing"]);
+			int nWearingPosition = Convert.ToInt32(pTempRow["a_wearing"]);
 
-			if (nWearinPosition < -1 || nWearinPosition > Defs.ItemWearingPositions.Length)
+			if (nWearingPosition < -1 || nWearingPosition > Defs.ItemWearingPositions.Length)
 			{
-				cbWearingPositionSelector.Items.Clear();
 				cbWearingPositionSelector.Enabled = false;
 				cbWearingPositionSelector.Text = "";
 
@@ -294,16 +277,18 @@ namespace LastChaos_ToolBox_2024.Editors
 			}
 			else
 			{
-				if (nWearinPosition == -1)
-					nWearinPosition = 0;
+				if (nWearingPosition == -1)
+					nWearingPosition = 0;
 				else
-					nWearinPosition++;
+					nWearingPosition++;
 
-				cbWearingPositionSelector.SelectedIndex = nWearinPosition;
+				cbWearingPositionSelector.Enabled = true;
+				cbWearingPositionSelector.SelectedIndex = nWearingPosition;
 			}
 
-			tbQuestTriggerID.Text = pTempRow["a_quest_trigger_ids"].ToString();
+			btnClassFlag.Text = pTempRow["a_job_flag"].ToString();
 
+			tbQuestTriggerID.Text = pTempRow["a_quest_trigger_ids"].ToString();
 			tbQuestTriggerCount.Text = pTempRow["a_quest_trigger_count"].ToString();
 
 			int nRvRValue = Convert.ToInt32(pTempRow["a_rvr_value"]);
@@ -326,6 +311,12 @@ namespace LastChaos_ToolBox_2024.Editors
 					cbRvRGradeSelector.SelectedIndex = Convert.ToInt32(pTempRow["a_rvr_grade"]);
 				}
 			}
+
+			tbEffectNormal.Text = pTempRow["a_effect_name"].ToString();
+			tbEffectAttack.Text = pTempRow["a_attack_effect_name"].ToString();
+			tbEffectDamage.Text = pTempRow["a_damage_effect_name"].ToString();
+
+			// TODO: Seguir agregando mierdas
 
 			bUserAction = true;
 			btnUpdate.Enabled = true;
@@ -518,27 +509,35 @@ namespace LastChaos_ToolBox_2024.Editors
 
 		private void pbIcon_Click(object sender, EventArgs e)
 		{
-			IconPicker pIconSelector = new IconPicker(pMain, "ItemBtn");
-
-			if (pIconSelector.ShowDialog() != DialogResult.OK)
-				return;
-
-			string[] strArray = pIconSelector.ReturnValues;
-
-			Image pIcon = pMain.GetIcon("ItemBtn", strArray[0], Convert.ToInt32(strArray[1]), Convert.ToInt32(strArray[2]));
-			if (pIcon != null)
+			if (bUserAction)
 			{
-				if (bUserAction)
+				/* Args:
+				 *	Main<Pointer to Main Form>
+				 *	String<name the image type>
+				 *	Returns:
+				 *		String<array of 3 elements>
+				 */
+				IconPicker pIconSelector = new IconPicker(pMain, "ItemBtn");
+
+				if (pIconSelector.ShowDialog() != DialogResult.OK)
+					return;
+
+				string[] strArray = pIconSelector.ReturnValues;
+				/****************************************/
+				Image pIcon = pMain.GetIcon("ItemBtn", strArray[0], Convert.ToInt32(strArray[1]), Convert.ToInt32(strArray[2]));
+				if (pIcon != null)
+				{
+					pTempRow["a_texture_id"] = strArray[0];
+					pTempRow["a_texture_row"] = strArray[1];
+					pTempRow["a_texture_col"] = strArray[2];
+
+					pbIcon.Image = pIcon;
+
+					pToolTip = new ToolTip();
+					pToolTip.SetToolTip(pbIcon, "FILE: " + strArray[0] + " ROW: " + strArray[1] + " COL: " + strArray[2]);
+
 					bUnsavedChanges = true;
-
-				pTempRow["a_texture_id"] = strArray[0];
-				pTempRow["a_texture_row"] = strArray[1];
-				pTempRow["a_texture_col"] = strArray[2];
-
-				pbIcon.Image = pIcon;
-
-				pToolTip = new ToolTip();
-				pToolTip.SetToolTip(pbIcon, "FILE: " + strArray[0] + " ROW: " + strArray[1] + " COL: " + strArray[2]);
+				}
 			}
 		}
 
@@ -717,6 +716,32 @@ namespace LastChaos_ToolBox_2024.Editors
 			}
 		}
 
+		private void btnClassFlag_Click(object sender, EventArgs e)
+		{
+			if (bUserAction)
+			{
+				/* Args:
+				 *	Main<Pointer to Main Form>
+				 *	String array with flag names<Flags Array>
+				 *	Int<Flag>
+				 *	Returns:
+				 *		Int<composed Flag>
+				 */
+				FlagPicker pFlagSelector = new FlagPicker(pMain, Defs.ItemClass, Convert.ToInt32(btnClassFlag.Text.ToString()));
+
+				if (pFlagSelector.ShowDialog() != DialogResult.OK)
+					return;
+
+				string strFlag = pFlagSelector.ReturnValues.ToString();
+				/****************************************/
+				btnClassFlag.Text = strFlag;
+
+                pTempRow["a_job_flag"] = strFlag;
+
+                bUnsavedChanges = true;
+			}
+		}
+
 		private void tbQuestTriggerID_TextChanged(object sender, EventArgs e)
 		{
 			if (bUserAction)
@@ -774,6 +799,36 @@ namespace LastChaos_ToolBox_2024.Editors
 			}
 		}
 
+		private void tbEffectNormal_TextChanged(object sender, EventArgs e)
+		{
+			if (bUserAction)
+			{
+				pTempRow["a_effect_name"] = tbEffectNormal.ToString();
+
+				bUnsavedChanges = true;
+			}
+		}
+
+		private void tbEffectAttack_TextChanged(object sender, EventArgs e)
+		{
+			if (bUserAction)
+			{
+				pTempRow["a_attack_effect_name"] = tbEffectAttack.ToString();
+
+				bUnsavedChanges = true;
+			}
+		}
+
+		private void tbEffectDamage_TextChanged(object sender, EventArgs e)
+		{
+			if (bUserAction)
+			{
+				pTempRow["a_damage_effect_name"] = tbEffectDamage.ToString();
+
+				bUnsavedChanges = true;
+			}
+		}
+
 		private void btnUpdate_Click(object sender, EventArgs e)
 		{
 			DataRow[] pRow = pMain.pItemTable.Select("a_index = " + Convert.ToInt32(tbID.Text));
@@ -785,13 +840,13 @@ namespace LastChaos_ToolBox_2024.Editors
 				string strColumnName = column.ColumnName;
 				object objColumnValue = pTempRow[column];
 
-                // TODO: Compose query to update values in db server
+				// TODO: Compose query to update values in db server
 
-                // NOTE: Esto puede ser útil más adelante. Verifica si la columna existe en la tabla principal.
-                /*if (!pMain.pItemTable.Columns.Contains("column_name"))
+				// NOTE: Esto puede ser útil más adelante. Verifica si la columna existe en la tabla principal.
+				/*if (!pMain.pItemTable.Columns.Contains("column_name"))
 					pMain.pItemTable.Columns.Add("column_name", column.DataType);*/
 
-                pMain.pItemTable.Rows[nRowIndex][strColumnName] = objColumnValue;
+				pMain.pItemTable.Rows[nRowIndex][strColumnName] = objColumnValue;
 			}
 		}
 	}
