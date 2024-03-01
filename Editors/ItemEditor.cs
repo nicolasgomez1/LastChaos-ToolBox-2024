@@ -58,7 +58,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			for (int i = 0; i < pMain.pSettings.NationSupported.Length; i++)
 			{
 				string strNation = pMain.pSettings.NationSupported[i];
-				
+
 				cbNationSelector.Items.Add(pMain.pSettings.NationSupported[i]);
 
 				if (pMain.pSettings.NationSupported[i].ToLower() == pMain.pSettings.DefaultEditNation)
@@ -153,6 +153,147 @@ namespace LastChaos_ToolBox_2024.Editors
 			}
 		}
 
+		void LoadItemData(int nItemID)
+		{
+			bUserAction = false;
+
+			// Clear Selections
+			cbTypeSelector.SelectedIndex = -1;
+			cbSubTypeSelector.SelectedIndex = -1;
+			cbWearingPositionSelector.SelectedIndex = -1;
+
+			// Replicate struct in temp row
+			pTempRow = pMain.pItemTable.NewRow();
+			// Copy data from main table to temp one
+			pTempRow.ItemArray = (object[])pMain.pItemTable.Select("a_index = " + nItemID)[0].ItemArray.Clone();
+
+			// Load data to UI
+			tbID.Text = nItemID.ToString();
+
+			if (pTempRow["a_enable"].ToString() == "1")
+				cbEnable.Checked = true;
+			else
+				cbEnable.Checked = false;
+
+			string strTexID = pTempRow["a_texture_id"].ToString();
+			string strTexRow = pTempRow["a_texture_row"].ToString();
+			string strTexCol = pTempRow["a_texture_col"].ToString();
+
+			Image pIcon = pMain.GetIcon("ItemBtn", strTexID, Convert.ToInt32(strTexRow), Convert.ToInt32(strTexCol));
+			if (pIcon != null)
+			{
+				pbIcon.Image = pIcon;
+
+				pToolTip = new ToolTip();
+				pToolTip.SetToolTip(pbIcon, "FILE: " + strTexID + " ROW: " + strTexRow + " COL: " + strTexCol);
+			}
+
+			/****************************************/
+			tbSMC.Text = pTempRow["a_file_smc"].ToString();
+
+			pToolTip = new ToolTip();
+			pToolTip.SetToolTip(tbSMC, "Double Click to edit");
+			/****************************************/
+
+			tbMaxStack.Text = pTempRow["a_weight"].ToString();
+
+			tbPrice.Text = pTempRow["a_price"].ToString();
+
+			tbMinLevel.Text = pTempRow["a_level"].ToString();
+
+			tbMaxLevel.Text = pTempRow["a_level2"].ToString();
+
+			tbDurability.Text = pTempRow["a_durability"].ToString();
+
+			tbFame.Text = pTempRow["a_fame"].ToString();
+
+			tbMaxUse.Text = pTempRow["a_max_use"].ToString();
+
+			string strNation = cbNationSelector.SelectedItem.ToString().ToLower();
+
+			tbName.Text = pTempRow["a_name_" + strNation].ToString();
+
+			tbDescription.Text = pTempRow["a_descr_" + strNation].ToString();
+
+			int nType = Convert.ToInt32(pTempRow["a_type_idx"]);
+
+			if (nType < 0 || nType > Defs.ItemTypesNSubTypes.Keys.Count)
+			{
+				cbTypeSelector.Items.Clear();
+				cbTypeSelector.Enabled = false;
+				cbTypeSelector.Text = "";
+
+				pMain.PrintLog("Item Editor > Item: " + nItemID + " Error: a_type_idx out of range");
+			}
+			else
+			{
+				cbTypeSelector.SelectedIndex = nType;
+
+				int nSubType = Convert.ToInt32(pTempRow["a_subtype_idx"]);
+
+				if (nSubType < 0 || nSubType > Defs.ItemTypesNSubTypes[Defs.ItemTypesNSubTypes.Keys.ElementAt(nType)].Count)
+				{
+					cbSubTypeSelector.Items.Clear();
+					cbSubTypeSelector.Enabled = false;
+					cbSubTypeSelector.Text = "";
+
+					pMain.PrintLog("Item Editor > Item: " + nItemID + " Error: a_subtype_idx out of range");
+				}
+				else
+				{
+					cbSubTypeSelector.SelectedIndex = nSubType;
+				}
+			}
+
+			int nWearinPosition = Convert.ToInt32(pTempRow["a_wearing"]);
+
+			if (nWearinPosition < -1 || nWearinPosition > Defs.ItemWearingPositions.Length)
+			{
+				cbWearingPositionSelector.Items.Clear();
+				cbWearingPositionSelector.Enabled = false;
+				cbWearingPositionSelector.Text = "";
+
+				pMain.PrintLog("Item Editor > Item: " + nItemID + " Error: a_wearing out of range");
+			}
+			else
+			{
+				if (nWearinPosition == -1)
+					nWearinPosition = 0;
+				else
+					nWearinPosition++;
+
+				cbWearingPositionSelector.SelectedIndex = nWearinPosition;
+			}
+
+			tbQuestTriggerID.Text = pTempRow["a_quest_trigger_ids"].ToString();
+
+			tbQuestTriggerCount.Text = pTempRow["a_quest_trigger_count"].ToString();
+
+			int nRvRValue = Convert.ToInt32(pTempRow["a_rvr_value"]);
+			if (nRvRValue > Defs.SyndicateTypesNGrades.Keys.Count)
+			{
+				pMain.PrintLog("Item Editor > Item: " + nItemID + " Error: a_rvr_value out of range");
+			}
+			else
+			{
+				cbRvRValueSelector.SelectedIndex = nRvRValue;
+
+				if (nRvRValue == 0)
+				{
+					cbRvRGradeSelector.Items.Clear();
+					cbRvRGradeSelector.Enabled = false;
+					cbRvRGradeSelector.Text = "";
+				}
+				else
+				{
+					cbRvRGradeSelector.SelectedIndex = Convert.ToInt32(pTempRow["a_rvr_grade"]);
+				}
+			}
+
+			bUserAction = true;
+			btnUpdate.Enabled = true;
+		}
+
 		private void ChangePanel(Panel pPanel)
 		{
 			if (pPanel == GeneralPanel)
@@ -206,7 +347,7 @@ namespace LastChaos_ToolBox_2024.Editors
 						if (MainList.GetItemText(MainList.Items[i]).IndexOf(strStringToSearch, StringComparison.OrdinalIgnoreCase) != -1 && i > nSearchPosition)
 						{
 							MainList.SetSelected(i, true);
-							
+
 							nSearchPosition = i;
 
 							bFoundLast = true;
@@ -214,12 +355,12 @@ namespace LastChaos_ToolBox_2024.Editors
 							break;
 						}
 					}
-					
+
 					if (!bFoundLast)
 						nSearchPosition = 1;
 				}
 
-				int nSelected = MainList.SelectedIndex; 
+				int nSelected = MainList.SelectedIndex;
 
 				if (nSelected != -1)
 				{
@@ -243,172 +384,35 @@ namespace LastChaos_ToolBox_2024.Editors
 		private void MainList_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			ListBoxItem pSelectedItem = (ListBoxItem)MainList.SelectedItem;
-			
-			void LoadItemData() {
-				if (pSelectedItem != null)
-				{
-					bUserAction = false;
 
-					// Clear Selections
-                    cbTypeSelector.SelectedIndex = -1;
-					cbSubTypeSelector.SelectedIndex = -1;
-					cbWearingPositionSelector.SelectedIndex = -1;
-
-                    // Load
-                    int nItemID = pSelectedItem.ID;
-
-					pTempRow = pMain.pItemTable.Select("a_index = " + nItemID)[0];
-
-					tbID.Text = nItemID.ToString();
-
-					if (pTempRow["a_enable"].ToString() == "1")
-						cbEnable.Checked = true;
-					else
-						cbEnable.Checked = false;
-
-					string strTexID = pTempRow["a_texture_id"].ToString();
-					string strTexRow = pTempRow["a_texture_row"].ToString();
-					string strTexCol = pTempRow["a_texture_col"].ToString();
-
-					Image pIcon = pMain.GetIcon("ItemBtn", strTexID, Convert.ToInt32(strTexRow), Convert.ToInt32(strTexCol));
-					if (pIcon != null)
-					{
-						pbIcon.Image = pIcon;
-
-						pToolTip = new ToolTip();
-						pToolTip.SetToolTip(pbIcon, "FILE: " + strTexID + " ROW: " + strTexRow + " COL: " + strTexCol);
-					}
-
-					/****************************************/
-					tbSMC.Text = pTempRow["a_file_smc"].ToString();
-					
-					pToolTip = new ToolTip();
-					pToolTip.SetToolTip(tbSMC, "Double Click to edit");
-					/****************************************/
-
-					tbMaxStack.Text = pTempRow["a_weight"].ToString();
-
-					tbPrice.Text = pTempRow["a_price"].ToString();
-
-					tbMinLevel.Text = pTempRow["a_level"].ToString();
-
-					tbMaxLevel.Text = pTempRow["a_level2"].ToString();
-
-					tbDurability.Text = pTempRow["a_durability"].ToString();
-
-					tbFame.Text = pTempRow["a_fame"].ToString();
-
-					tbMaxUse.Text = pTempRow["a_max_use"].ToString();
-
-					string strNation = cbNationSelector.SelectedItem.ToString().ToLower();
-
-					tbName.Text = pTempRow["a_name_" + strNation].ToString();
-
-					tbDescription.Text = pTempRow["a_descr_" + strNation].ToString();
-
-					int nType = Convert.ToInt32(pTempRow["a_type_idx"]);
-
-					if (nType < 0 || nType > Defs.ItemTypesNSubTypes.Keys.Count)
-					{
-						cbTypeSelector.Items.Clear();
-						cbTypeSelector.Enabled = false;
-						cbTypeSelector.Text = "";
-
-						pMain.PrintLog("Item Editor > Item: " + nItemID + " Error: a_type_idx out of range");
-					}
-					else
-					{
-						cbTypeSelector.SelectedIndex = nType;
-
-						int nSubType = Convert.ToInt32(pTempRow["a_subtype_idx"]);
-
-						if (nSubType < 0 || nSubType > Defs.ItemTypesNSubTypes[Defs.ItemTypesNSubTypes.Keys.ElementAt(nType)].Count)
-						{
-							cbSubTypeSelector.Items.Clear();
-							cbSubTypeSelector.Enabled = false;
-							cbSubTypeSelector.Text = "";
-
-							pMain.PrintLog("Item Editor > Item: " + nItemID + " Error: a_subtype_idx out of range");
-						}
-						else
-						{
-							cbSubTypeSelector.SelectedIndex = nSubType;
-						}
-					}
-
-					int nWearinPosition = Convert.ToInt32(pTempRow["a_wearing"]);
-
-					if (nWearinPosition < -1 || nWearinPosition > Defs.ItemWearingPositions.Length)
-					{
-						cbWearingPositionSelector.Items.Clear();
-						cbWearingPositionSelector.Enabled = false;
-						cbWearingPositionSelector.Text = "";
-
-						pMain.PrintLog("Item Editor > Item: " + nItemID + " Error: a_wearing out of range");
-					}
-					else
-					{
-						if (nWearinPosition == -1)
-							nWearinPosition = 0;
-						else
-							nWearinPosition++;
-
-						cbWearingPositionSelector.SelectedIndex = nWearinPosition;
-					}
-
-					tbQuestTriggerID.Text = pTempRow["a_quest_trigger_ids"].ToString();
-
-					tbQuestTriggerCount.Text = pTempRow["a_quest_trigger_count"].ToString();
-
-					int nRvRValue = Convert.ToInt32(pTempRow["a_rvr_value"]);
-					if (nRvRValue > Defs.SyndicateTypesNGrades.Keys.Count)
-					{
-						pMain.PrintLog("Item Editor > Item: " + nItemID + " Error: a_rvr_value out of range");
-					}
-					else
-					{
-						cbRvRValueSelector.SelectedIndex = nRvRValue;
-
-						if (nRvRValue == 0)
-						{
-							cbRvRGradeSelector.Items.Clear();
-							cbRvRGradeSelector.Enabled = false;
-							cbRvRGradeSelector.Text = "";
-						}
-						else
-						{
-							cbRvRGradeSelector.SelectedIndex = Convert.ToInt32(pTempRow["a_rvr_grade"]);
-						}
-					}
-
-					bUserAction = true;
-					btnUpdate.Enabled = true;
-				}
-			}
-
-			if (bUnsavedChanges)
+			if (pSelectedItem != null)
 			{
-				DialogResult pDialogReturn = MessageBox.Show("There are unapplied changes, Do you want to discard them?", "Item Editor", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+				int nItemID = pSelectedItem.ID;
 
-				if (pDialogReturn == DialogResult.Yes)
+				if (bUnsavedChanges)
 				{
-					bUnsavedChanges = false;
+					DialogResult pDialogReturn = MessageBox.Show("There are unapplied changes, Do you want to discard them?", "Item Editor", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
 
-					LoadItemData();
+					if (pDialogReturn == DialogResult.Yes)
+					{
+						bUnsavedChanges = false;
+
+						LoadItemData(nItemID);
+					}
+					else
+					{
+						MainList.SelectedIndexChanged -= MainList_SelectedIndexChanged;
+						MainList.SelectedItem = pLastSelected;
+						MainList.SelectedIndexChanged += MainList_SelectedIndexChanged;
+					}
 				}
 				else
 				{
-					MainList.SelectedIndexChanged -= MainList_SelectedIndexChanged;
-					MainList.SelectedItem = pLastSelected;
-					MainList.SelectedIndexChanged += MainList_SelectedIndexChanged;
+					LoadItemData(nItemID);
 				}
-			}
-			else
-			{
-				LoadItemData();
-			}
 
-			pLastSelected = pSelectedItem;
+				pLastSelected = pSelectedItem;
+			}
 		}
 
 		private void btnReload_Click(object sender, EventArgs e)
@@ -422,7 +426,7 @@ namespace LastChaos_ToolBox_2024.Editors
 
 			ItemEditor_Load(sender, e);
 		}
-		
+
 		private void btnAddNew_Click(object sender, EventArgs e)
 		{
 			/*bool bReturn = pMain.QueryUpdateInsert("utf8", "INSERT INTO lc_data_nov.t_clientversion (a_min, a_max) VALUES('0', '9199')");
@@ -457,9 +461,9 @@ namespace LastChaos_ToolBox_2024.Editors
 		}
 
 		private void btnGeneral_Click(object sender, EventArgs e) { ChangePanel(GeneralPanel); }
-		
+
 		private void btnCrafting_Click(object sender, EventArgs e) { ChangePanel(CraftingPanel); }
-		
+
 		private void btnOthers_Click(object sender, EventArgs e) { ChangePanel(OthersPanel); }
 
 		private void cbEnable_CheckedChanged(object sender, EventArgs e)
@@ -605,7 +609,7 @@ namespace LastChaos_ToolBox_2024.Editors
 				tbName.Text = pTempRow["a_name_" + strNation].ToString();
 
 				tbDescription.Text = pTempRow["a_descr_" + strNation].ToString();
-				
+
 				bUserAction = true;
 			}
 		}
@@ -739,7 +743,19 @@ namespace LastChaos_ToolBox_2024.Editors
 
 		private void btnUpdate_Click(object sender, EventArgs e)
 		{
-			// TODO: pMain.pItemTable.Select("a_index = " + nItemID)[0] = pTempRow;
+			DataRow[] pRow = pMain.pItemTable.Select("a_index = " + Convert.ToInt32(tbID.Text));
+
+			int nRowIndex = pMain.pItemTable.Rows.IndexOf(pRow[0]);
+
+			foreach (DataColumn column in pTempRow.Table.Columns)
+			{
+				string strColumnName = column.ColumnName;
+				object objColumnValue = pTempRow[column];
+
+				// TODO: Compose query to update values in db server
+
+                pMain.pItemTable.Rows[nRowIndex][strColumnName] = objColumnValue;
+			}
 		}
 	}
 }
