@@ -9,7 +9,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Definitions;
+using Definitions;	// NOTE: This contains all hardcoded definitions.
 
 namespace LastChaos_ToolBox_2024.Editors
 {
@@ -149,7 +149,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			{
 				pMain.pItemTable = await Task.Run(() =>
 				{
-                    // TODO: Acá tengo 2 opciones, o hago 2 peticiones, una con utf8 y el resto segundo el idioma o busco si hay un charset que soporte la mayoría.
+                    // TODO: Acá tengo 2 opciones, o hago 2 peticiones, una con utf8 y otra para los textos en distintos idiomas.
 					// NOTE: Posible problema, se podrían hacer peticiones con algunas variaciones en el orden o rangos, no sé como se comportaría si sistema en dicho caso.
                     return pMain.QuerySelect(pMain.pSettings.DBCharset, $"SELECT {string.Join(",", listQueryCompose)} FROM {pMain.pSettings.DBData}.t_item ORDER BY a_index;");
 				});
@@ -260,7 +260,7 @@ namespace LastChaos_ToolBox_2024.Editors
 				cbTypeSelector.Enabled = false;
 				cbTypeSelector.Text = "";
 
-				pMain.PrintLog("Item Editor > Item: " + nItemID + " Error: a_type_idx out of range");
+				pMain.PrintLog("Item Editor > Item: " + nItemID + " Error: a_type_idx out of range", Color.Red);
 			}
 			else
 			{
@@ -274,7 +274,7 @@ namespace LastChaos_ToolBox_2024.Editors
 					cbSubTypeSelector.Enabled = false;
 					cbSubTypeSelector.Text = "";
 
-					pMain.PrintLog("Item Editor > Item: " + nItemID + " Error: a_subtype_idx out of range");
+					pMain.PrintLog("Item Editor > Item: " + nItemID + " Error: a_subtype_idx out of range", Color.Red);
 				}
 				else
 				{
@@ -290,7 +290,7 @@ namespace LastChaos_ToolBox_2024.Editors
 				cbWearingPositionSelector.Enabled = false;
 				cbWearingPositionSelector.Text = "";
 
-				pMain.PrintLog("Item Editor > Item: " + nItemID + " Error: a_wearing out of range");
+				pMain.PrintLog("Item Editor > Item: " + nItemID + " Error: a_wearing out of range", Color.Red);
 			}
 			else
 			{
@@ -309,7 +309,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			int nRvRValue = Convert.ToInt32(pTempRow["a_rvr_value"]);
 			if (nRvRValue > Defs.SyndicateTypesNGrades.Keys.Count)
 			{
-				pMain.PrintLog("Item Editor > Item: " + nItemID + " Error: a_rvr_value out of range");
+				pMain.PrintLog("Item Editor > Item: " + nItemID + " Error: a_rvr_value out of range", Color.Red);
 			}
 			else
 			{
@@ -675,8 +675,6 @@ namespace LastChaos_ToolBox_2024.Editors
 
 			if (nType != -1)
 			{
-				pMain.PrintLog("cbTypeSelector_SelectedIndexChanged: " + nType);
-
 				cbSubTypeSelector.Enabled = false;
 
 				cbSubTypeSelector.Items.Clear();

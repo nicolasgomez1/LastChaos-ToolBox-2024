@@ -58,7 +58,7 @@ namespace LastChaos_ToolBox_2024
             }
             else
             {
-                pMain.PrintLog("Icon Picker > Folder: " + pStrBtnType + " not exist.");
+                pMain.PrintLog("Icon Picker > Folder: " + pStrBtnType + " not exist.", Color.Red);
             }
 
             cbFileSelector.EndUpdate();
