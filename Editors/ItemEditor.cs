@@ -109,13 +109,16 @@ namespace LastChaos_ToolBox_2024.Editors
              * De lo contrario inteligentemente verificar que columnas requeridas no están presentes en pMain.pItemTable para posteriormente obtenerlas y cargarlas.
              */
             bool bRequestNeeded = false;
+
+			// NOTE: Aquí se definen las columnas generales que son requeridas por la Herramienta en cuestión.
 			List<string> listQueryCompose = new List<string>
 			{
-				"a_index", "a_enable", "a_texture_id", "a_texture_row", "a_texture_col", "a_file_smc", "a_weight", "a_price", "a_level", "a_level2", "a_durability",
-				"a_fame", "a_max_use", "a_type_idx", "a_subtype_idx", "a_wearing", "a_quest_trigger_ids", "a_quest_trigger_count", "a_rvr_value", "a_rvr_grade"
+				"a_enable", "a_texture_id", "a_texture_row", "a_texture_col", "a_file_smc", "a_weight", "a_price", "a_level", "a_level2", "a_durability", "a_fame",
+				"a_max_use", "a_type_idx", "a_subtype_idx", "a_wearing", "a_quest_trigger_ids", "a_quest_trigger_count", "a_rvr_value", "a_rvr_grade"
 			};
 
-			for (int i = 0; i < pMain.pSettings.NationSupported.Length; i++)
+            // NOTE: Esto sirve para solicitar únicamente las columnas asociadas a los idiomas definidos en General -> NationSupported.
+            for (int i = 0; i < pMain.pSettings.NationSupported.Length; i++)
 			{
 				string strNation = pMain.pSettings.NationSupported[i].ToLower();
 
@@ -123,6 +126,7 @@ namespace LastChaos_ToolBox_2024.Editors
 				listQueryCompose.Add("a_descr_" + strNation);
 			}
 
+            // NOTE: Aquí se verificará si la Tabla global requerida por la Herramienta está vacía. Si es así se ejecutará la petición con todas las columnas directamente.
             if (pMain.pItemTable == null)
 			{
 				bRequestNeeded = true;
@@ -138,11 +142,16 @@ namespace LastChaos_ToolBox_2024.Editors
 				}
 			}
 
-			if (bRequestNeeded)
+            // NOTE: Aquí se definirán las columnas que son necesarias para identificar las filas. Estas columnas serán solicitadas en la petición sin importar si están presentes en la Tabla global.
+            listQueryCompose.Add("a_index");
+
+            if (bRequestNeeded)
 			{
 				pMain.pItemTable = await Task.Run(() =>
 				{
-					return pMain.QuerySelect("utf8", $"SELECT {string.Join(",", listQueryCompose)} FROM {pMain.pSettings.DBData}.t_item ORDER BY a_index;");
+                    // TODO: Acá tengo 2 opciones, o hago 2 peticiones, una con utf8 y el resto segundo el idioma o busco si hay un charset que soporte la mayoría.
+					// NOTE: Posible problema, se podrían hacer peticiones con algunas variaciones en el orden o rangos, no sé como se comportaría si sistema en dicho caso.
+                    return pMain.QuerySelect(pMain.pSettings.DBCharset, $"SELECT {string.Join(",", listQueryCompose)} FROM {pMain.pSettings.DBData}.t_item ORDER BY a_index;");
 				});
 			}
             /****************************************/
@@ -158,7 +167,7 @@ namespace LastChaos_ToolBox_2024.Editors
 					MainList.Items.Add(new ListBoxItem
 					{
 						ID = Convert.ToInt32(pRow["a_index"]),
-						Text = pRow["a_index"] + " - " + pRow["a_name_" + pMain.pSettings.DefaultEditNation].ToString(),
+						Text = pRow["a_index"] + " - " + pRow["a_name_" + pMain.pSettings.DefaultEditNation].ToString()
 					});
 				}
 
@@ -780,7 +789,7 @@ namespace LastChaos_ToolBox_2024.Editors
 
                 // TODO: Compose query to update values in db server
 
-                // NOTE: Esto puede ser étil más adelante. Verifica si la columna existe en la tabla principal
+                // NOTE: Esto puede ser útil más adelante. Verifica si la columna existe en la tabla principal.
                 /*if (!pMain.pItemTable.Columns.Contains("column_name"))
 					pMain.pItemTable.Columns.Add("column_name", column.DataType);*/
 
