@@ -230,5 +230,50 @@ namespace Definitions
             "Pet",
             "APet"
         };
+
+        public static string[] ItemFlag =
+        {
+            // Standards
+            "Count",
+            "Drop",
+            "Upgrade",
+            "Exchange",
+            "Trade (Sell In NPC)",
+            "Not Delete",
+            "Made",
+            "Mix",
+            "Cash",
+            "Lord",
+            "No Stash",
+            "Change",
+            "Composite",
+            "Duplication",
+            "Lent",
+            "Rare",
+            "ABS",
+            "Not Reform",
+            "Zone Move Delete",
+            "Origin (Purple Seals)",
+            "Trigger",
+            "Raid Special",
+            "Quest",
+            "Box (LuckyDraw Box)",
+            "Not TradeAgent",
+            "Durability",
+            "Costume 2",
+            "Socket",
+            "Seller",
+            "Castillan",
+            "Lets Party",
+            "Non RvR",
+            "Quest Give",
+            "Toggle",
+            "Compose",
+            "Not Single",
+            "Invisible Custom",
+            // NicolasG Custom
+            "Money Ticket",
+            "Party Teleport"
+        };
     }
 }

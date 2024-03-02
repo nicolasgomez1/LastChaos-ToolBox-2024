@@ -4,7 +4,7 @@ using System.Drawing;
 
 namespace LastChaos_ToolBox_2024
 {
-	public class ProgressDialog : IDisposable
+	public class ProgressDialog
 	{
 		private Form pDialogForm;
         private Label pLabel;

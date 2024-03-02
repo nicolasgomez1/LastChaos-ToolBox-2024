@@ -47,7 +47,7 @@
             this.btnUnCheckAll.Name = "btnUnCheckAll";
             this.btnUnCheckAll.Size = new System.Drawing.Size(206, 23);
             this.btnUnCheckAll.TabIndex = 9;
-            this.btnUnCheckAll.Text = "UnCheck All";
+            this.btnUnCheckAll.Text = "Uncheck All";
             this.btnUnCheckAll.UseVisualStyleBackColor = true;
             this.btnUnCheckAll.Click += new System.EventHandler(this.btnUnCheckAll_Click);
             // 

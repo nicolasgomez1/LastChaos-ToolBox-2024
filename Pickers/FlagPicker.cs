@@ -17,11 +17,11 @@ namespace LastChaos_ToolBox_2024
     /* Args:
      *	Main<Pointer to Main Form>
      *	String array with flag names<Flags Array>
-     *	Int<Flag>
+     *	Long<Flag>
      *	Returns:
-     *		Int<composed Flag>
+     *		Longs<composed Flag>
      */
-    /*FlagPicker pFlagSelector = new FlagPicker(pMain, Defs.ItemClass, Convert.ToInt32(btnClassFlag.Text.ToString()));
+    /*FlagPicker pFlagSelector = new FlagPicker(pMain, Defs.ItemClass, Convert.ToInt32(btnFlag.Text.ToString()));
 
     if (pFlagSelector.ShowDialog() != DialogResult.OK)
 		 return;
@@ -32,10 +32,10 @@ namespace LastChaos_ToolBox_2024
 	{
 		private Main pMain;
 		private string[] pStrArrayFlag;
-		private int pNFlag;
-		public int ReturnValues = 0;
+		private long pNFlag;
+		public long ReturnValues = 0;
 
-		public FlagPicker(Main mainForm, string[] strArray, int nFlag)
+		public FlagPicker(Main mainForm, string[] strArray, long nFlag)
 		{
 			InitializeComponent();
 
@@ -58,7 +58,7 @@ namespace LastChaos_ToolBox_2024
 			{
 				clbFlagList.Items.Add(i + " - " + pStrArrayFlag[i]);
 
-				clbFlagList.SetItemChecked(i, (pNFlag & 1 << i) > 0);
+				clbFlagList.SetItemChecked(i, (pNFlag & 1L << i) > 0);
 			}
 
 			clbFlagList.EndUpdate();
@@ -80,12 +80,12 @@ namespace LastChaos_ToolBox_2024
 
 		private void clbFlagList_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			int nFlag = 0;
+			long nFlag = 0;
 
 			for (int i = 0; i < clbFlagList.Items.Count; ++i)
 			{
 				if (clbFlagList.GetItemChecked(i))
-					nFlag += 1 << i;
+					nFlag += 1L << i;
 			}
 
 			tbFlag.Text = nFlag.ToString();
