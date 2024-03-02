@@ -23,7 +23,7 @@ namespace LastChaos_ToolBox_2024.Editors
 		private ListBoxItem pLastSelected;
 		private System.Windows.Forms.ToolTip pToolTip;
 		private DataRow pTempRow;
-		private int nSearchPosition = 1;
+		private int nSearchPosition = 0;
 		private string[] strArrayZones;
 		private Dictionary<Control, ToolTip> pToolTips = new Dictionary<Control, ToolTip>();
 
@@ -157,8 +157,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			{
 				pMain.pItemTable = await Task.Run(() =>
 				{
-					// TODO: Acá tengo 2 opciones, o hago 2 peticiones, una con utf8 y otra para los textos en distintos idiomas.
-					// NOTE: Posible problema, se podrían hacer peticiones con algunas variaciones en el orden o rangos, no sé como se comportaría si sistema en dicho caso.
+					// NOTE: Posible problema: Se podrían hacer peticiones con algunas variaciones en el orden o rangos, no sé como se comportaría si sistema en dicho caso.
 					return pMain.QuerySelect(pMain.pSettings.DBCharset, $"SELECT {string.Join(",", listQueryCompose)} FROM {pMain.pSettings.DBData}.t_item ORDER BY a_index;");
 				});
 			}
@@ -263,13 +262,16 @@ namespace LastChaos_ToolBox_2024.Editors
 		{
 			bUserAction = false;
 
-			// Clear Selections
+			// Clear Selections & Others
 			cbTypeSelector.SelectedIndex = -1;
 			cbSubTypeSelector.SelectedIndex = -1;
 			cbWearingPositionSelector.SelectedIndex = -1;
 
-			// Replicate struct in temp row
-			pTempRow = pMain.pItemTable.NewRow();
+            foreach (var toolTip in pToolTips.Values)
+                toolTip.Dispose();
+            /****************************************/
+            // Replicate struct in temp row
+            pTempRow = pMain.pItemTable.NewRow();
 			// Copy data from main table to temp one
 			pTempRow.ItemArray = (object[])pMain.pItemTable.Select("a_index = " + nItemID)[0].ItemArray.Clone();
 
@@ -486,30 +488,13 @@ namespace LastChaos_ToolBox_2024.Editors
 			}
 		}
 
-		private void tbSearch_TextChanged(object sender, EventArgs e)
-		{
-			string strStringToSearch = tbSearch.Text;
-
-			for (int i = 0; i < MainList.Items.Count; i++)
-			{
-				if (MainList.GetItemText(MainList.Items[i]).IndexOf(strStringToSearch, StringComparison.OrdinalIgnoreCase) != -1)
-				{
-					MainList.SetSelected(nSearchPosition, true);
-
-					nSearchPosition = i;
-
-					break;
-				}
-			}
-		}
-
 		private void tbSearch_KeyDown(object sender, KeyEventArgs e)
 		{
+			// TODO: BUG: Cuando se selecciona el ultimo match posible y se vuelve a presionar ENTER
 			if (e.KeyCode == Keys.Enter)
 			{
 				void Search()
 				{
-					bool bFoundLast = false;
 					string strStringToSearch = tbSearch.Text;
 
 					for (int i = 0; i < MainList.Items.Count; i++)
@@ -520,15 +505,22 @@ namespace LastChaos_ToolBox_2024.Editors
 
 							nSearchPosition = i;
 
-							bFoundLast = true;
-
-							break;
+							return;
 						}
-					}
+                    }
 
-					if (!bFoundLast)
-						nSearchPosition = 1;
-				}
+                    for (int i = 0; i <= nSearchPosition; i++)
+                    {
+                        if (MainList.GetItemText(MainList.Items[i]).IndexOf(strStringToSearch, StringComparison.OrdinalIgnoreCase) != -1)
+                        {
+                            MainList.SetSelected(i, true);
+
+                            nSearchPosition = i;
+
+                            return;
+                        }
+                    }
+                }
 
 				int nSelected = MainList.SelectedIndex;
 
@@ -537,14 +529,8 @@ namespace LastChaos_ToolBox_2024.Editors
 					if (nSelected < nSearchPosition)
 						nSearchPosition = nSelected;
 
-					Search();
-				}
-				else
-				{
-					nSearchPosition = 1;
-
-					Search();
-				}
+                    Search();
+                }
 
 				e.Handled = true;
 				e.SuppressKeyPress = true;
@@ -587,7 +573,7 @@ namespace LastChaos_ToolBox_2024.Editors
 
 		private void btnReload_Click(object sender, EventArgs e)
 		{
-			nSearchPosition = 1;
+			nSearchPosition = 0;
 
 			pMain.pItemTable.Dispose();
 			pMain.pItemTable = null;

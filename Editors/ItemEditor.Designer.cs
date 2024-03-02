@@ -1016,7 +1016,6 @@ namespace LastChaos_ToolBox_2024.Editors
             this.tbSearch.Name = "tbSearch";
             this.tbSearch.Size = new System.Drawing.Size(258, 20);
             this.tbSearch.TabIndex = 1025;
-            this.tbSearch.TextChanged += new System.EventHandler(this.tbSearch_TextChanged);
             this.tbSearch.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tbSearch_KeyDown);
             // 
             // ItemEditor
