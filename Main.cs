@@ -23,6 +23,8 @@ namespace LastChaos_ToolBox_2024
 		public Settings pSettings = new Settings();
 		public MySqlConnection mysqlConn;
 		public DataTable pItemTable = null;
+		public DataTable pZoneTable = null;
+		
 		private string strWindowsTitle;
 
 		public class Settings

@@ -12,6 +12,19 @@ using System.Windows.Forms;
 
 namespace LastChaos_ToolBox_2024
 {
+    /* Args:
+     *	Main<Pointer to Main Form>
+     *	String<name the image type>
+     *	Returns:
+     *		String<array of 3 elements>
+     */
+    /*IconPicker pIconSelector = new IconPicker(pMain, "ItemBtn");
+
+	if (pIconSelector.ShowDialog() != DialogResult.OK)
+	    return;
+
+	string[] strArray = pIconSelector.ReturnValues;*/
+    /****************************************/
     public partial class IconPicker : Form
     {
         private Main pMain;

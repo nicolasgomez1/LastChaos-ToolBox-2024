@@ -7,6 +7,7 @@ namespace LastChaos_ToolBox_2024
 	public class ProgressDialog : IDisposable
 	{
 		private Form pDialogForm;
+        private Label pLabel;
 
         public ProgressDialog(Form pParentForm, string strMsg)
         {
@@ -23,17 +24,36 @@ namespace LastChaos_ToolBox_2024
             panel.Dock = DockStyle.Fill;
             panel.BorderStyle = BorderStyle.FixedSingle;
 
-            var label = new Label();
-            label.Text = strMsg;
-            label.Dock = DockStyle.Fill;
-            label.TextAlign = ContentAlignment.MiddleCenter;
-            label.ForeColor = Color.FromArgb(208, 203, 148);
-            label.Font = new Font(label.Font.FontFamily, 12);
+            pLabel = new Label();
+            pLabel.Text = strMsg;
+            pLabel.Dock = DockStyle.Fill;
+            pLabel.TextAlign = ContentAlignment.MiddleCenter;
+            pLabel.ForeColor = Color.FromArgb(208, 203, 148);
+            pLabel.Font = new Font(pLabel.Font.FontFamily, 12);
 
-            panel.Controls.Add(label);
+            panel.Controls.Add(pLabel);
             pDialogForm.Controls.Add(panel);
 
             pDialogForm.Show();
+
+            ResizeForm();
+        }
+
+        private void ResizeForm()
+        {
+            const int iMargin = 10;
+
+            pDialogForm.Size = new Size((int)pLabel.CreateGraphics().MeasureString(pLabel.Text, pLabel.Font).Width + 2 * iMargin, pDialogForm.Height);
+        }
+
+        public void UpdateText(string strText)
+        {
+            pLabel.Invoke((MethodInvoker)delegate
+            {
+                pLabel.Text = strText;
+
+                ResizeForm();
+            });
         }
 
         public void Close()
@@ -45,11 +65,6 @@ namespace LastChaos_ToolBox_2024
                     pDialogForm.Close();
                 });
 			}
-		}
-
-		public void Dispose()
-		{
-			Close();
 		}
     }
 }

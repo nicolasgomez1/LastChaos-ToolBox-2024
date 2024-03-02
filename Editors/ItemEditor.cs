@@ -67,6 +67,15 @@ namespace LastChaos_ToolBox_2024.Editors
 
 			cbNationSelector.EndUpdate();
 			/****************************************/
+			cbCastleType.Items.Clear();
+
+			cbCastleType.BeginUpdate();
+
+			foreach (string strCastleType in Defs.ItemCastleTypes)
+				cbCastleType.Items.Add(strCastleType);
+
+			cbCastleType.EndUpdate();
+			/****************************************/
 			cbTypeSelector.Items.Clear();
 
 			cbTypeSelector.BeginUpdate();
@@ -94,7 +103,7 @@ namespace LastChaos_ToolBox_2024.Editors
 
 			cbRvRValueSelector.EndUpdate();
 			/****************************************/
-			ProgressDialog progressDialog = new ProgressDialog(this, "Please Wait...");
+			ProgressDialog progressDialog = new ProgressDialog(this, "Loading Items Data, Please Wait...");
 			/****************************************/
 			/* NOTE: Esto se tendría que replicar en cada herramienta que se cree de ahora en más.
 			 * Definir todas las columnas necesarias para el funcionamiento de la herramienta en cuestión.
@@ -103,15 +112,15 @@ namespace LastChaos_ToolBox_2024.Editors
 			 */
 			bool bRequestNeeded = false;
 
-			// NOTE: Aquí se definen las columnas generales que son requeridas por la Herramienta en cuestión.
+			// Aquí se definen las columnas generales que son requeridas por la Herramienta en cuestión.
 			List<string> listQueryCompose = new List<string>
 			{
 				"a_enable", "a_texture_id", "a_texture_row", "a_texture_col", "a_file_smc", "a_weight", "a_price", "a_level", "a_level2", "a_durability",
 				"a_fame", "a_max_use", "a_type_idx", "a_subtype_idx", "a_wearing", "a_quest_trigger_ids", "a_quest_trigger_count", "a_rvr_value",
-				"a_rvr_grade", "a_effect_name", "a_attack_effect_name", "a_damage_effect_name", "a_job_flag"
-			};
+				"a_rvr_grade", "a_effect_name", "a_attack_effect_name", "a_damage_effect_name", "a_castle_war", "a_job_flag", "a_zone_flag"
+            };
 
-			// NOTE: Esto sirve para solicitar únicamente las columnas asociadas a los idiomas definidos en General -> NationSupported.
+			// Esto sirve para solicitar únicamente las columnas asociadas a los idiomas definidos en General -> NationSupported.
 			for (int i = 0; i < pMain.pSettings.NationSupported.Length; i++)
 			{
 				string strNation = pMain.pSettings.NationSupported[i].ToLower();
@@ -120,7 +129,7 @@ namespace LastChaos_ToolBox_2024.Editors
 				listQueryCompose.Add("a_descr_" + strNation);
 			}
 
-			// NOTE: Aquí se verificará si la Tabla global requerida por la Herramienta está vacía. Si es así se ejecutará la petición con todas las columnas directamente.
+			// Aquí se verificará si la Tabla global requerida por la Herramienta está vacía. Si es así se ejecutará la petición directamente.
 			if (pMain.pItemTable == null)
 			{
 				bRequestNeeded = true;
@@ -136,9 +145,10 @@ namespace LastChaos_ToolBox_2024.Editors
 				}
 			}
 
-			// NOTE: Aquí se definirán las columnas que son necesarias para identificar las filas. Estas columnas serán solicitadas en la petición sin importar si están presentes en la Tabla global.
+			// Aquí se definirán las columnas que son necesarias para identificar las filas. Éstas columnas serán solicitadas en la petición sin importar si están presentes en la Tabla global.
 			listQueryCompose.Add("a_index");
-
+			
+			// Request to t_item data if needed
 			if (bRequestNeeded)
 			{
 				pMain.pItemTable = await Task.Run(() =>
@@ -148,8 +158,48 @@ namespace LastChaos_ToolBox_2024.Editors
 					return pMain.QuerySelect(pMain.pSettings.DBCharset, $"SELECT {string.Join(",", listQueryCompose)} FROM {pMain.pSettings.DBData}.t_item ORDER BY a_index;");
 				});
 			}
-			/****************************************/
-			if (pMain.pItemTable != null)
+            /****************************************/
+            progressDialog.UpdateText("Loading Zones Data, Please Wait...");
+
+            // Reset vals and load t_zonedata data if needed
+            bRequestNeeded = false;
+            listQueryCompose.Clear();
+
+            // Aquí se definen las columnas requeridas para ésta Herramienta.
+            listQueryCompose = new List<string>
+            {
+                "a_name"
+            };
+
+            // Aquí se verificará si la Tabla global requerida por la Herramienta está vacía. Si es así se ejecutará la petición directamente.
+            if (pMain.pZoneTable == null)
+            {
+                bRequestNeeded = true;
+            }
+            else
+            {
+                for (int i = listQueryCompose.Count - 1; i >= 0; i--)
+                {
+                    if (!pMain.pItemTable.Columns.Contains(listQueryCompose[i]))
+                        bRequestNeeded = true;
+                    else
+                        listQueryCompose.RemoveAt(i);
+                }
+            }
+
+            // Aquí se definirán las columnas que son necesarias para identificar las filas. Éstas columnas serán solicitadas en la petición sin importar si están presentes en la Tabla global.
+            listQueryCompose.Add("a_zone_index");
+
+            // Request to t_zonedata if needed
+            if (bRequestNeeded)
+            {
+                pMain.pZoneTable = await Task.Run(() =>
+                {
+                    return pMain.QuerySelect(pMain.pSettings.DBCharset, $"SELECT {string.Join(",", listQueryCompose)} FROM {pMain.pSettings.DBData}.t_zonedata ORDER BY a_zone_index;");
+                });
+            }
+            /****************************************/
+            if (pMain.pItemTable != null)
 			{
 				MainList.Items.Clear();
 
@@ -170,7 +220,13 @@ namespace LastChaos_ToolBox_2024.Editors
 			}
 
 			progressDialog.Close();
-		}
+
+            pToolTip = new ToolTip();
+            pToolTip.SetToolTip(btnReload, "Reload Items Data from Database");
+
+			btnReload.Enabled = true;
+            btnAddNew.Enabled = true;
+        }
 
 		private void ItemEditor_FormClosing(object sender, FormClosingEventArgs e)
 		{
@@ -199,13 +255,13 @@ namespace LastChaos_ToolBox_2024.Editors
 
 			// Load data to UI
 			tbID.Text = nItemID.ToString();
-
-			if (pTempRow["a_enable"].ToString() == "1")
+            /****************************************/
+            if (pTempRow["a_enable"].ToString() == "1")
 				cbEnable.Checked = true;
 			else
 				cbEnable.Checked = false;
-
-			string strTexID = pTempRow["a_texture_id"].ToString();
+            /****************************************/
+            string strTexID = pTempRow["a_texture_id"].ToString();
 			string strTexRow = pTempRow["a_texture_row"].ToString();
 			string strTexCol = pTempRow["a_texture_col"].ToString();
 
@@ -219,7 +275,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			}
 			/****************************************/
 			tbSMC.Text = pTempRow["a_file_smc"].ToString();
-			
+
 			pToolTip = new ToolTip();
 			pToolTip.SetToolTip(tbSMC, "Double Click to edit");
 			/****************************************/
@@ -230,13 +286,24 @@ namespace LastChaos_ToolBox_2024.Editors
 			tbDurability.Text = pTempRow["a_durability"].ToString();
 			tbFame.Text = pTempRow["a_fame"].ToString();
 			tbMaxUse.Text = pTempRow["a_max_use"].ToString();
-			/****************************************/
-			string strNation = cbNationSelector.SelectedItem.ToString().ToLower();
+            /****************************************/
+            string strNation = cbNationSelector.SelectedItem.ToString().ToLower();
 
 			tbName.Text = pTempRow["a_name_" + strNation].ToString();
 			tbDescription.Text = pTempRow["a_descr_" + strNation].ToString();
 			/****************************************/
-			int nType = Convert.ToInt32(pTempRow["a_type_idx"]);
+			int nCastleType = Convert.ToInt32(pTempRow["a_castle_war"]);
+
+			if (nCastleType < 0 || nCastleType > Defs.ItemCastleTypes.Length)
+				pMain.PrintLog("Item Editor > Item: " + nItemID + " Error: a_castle_war out of range", Color.Red);
+			else
+				cbCastleType.SelectedIndex = nCastleType;
+            /****************************************/
+            btnClassFlag.Text = pTempRow["a_job_flag"].ToString();
+
+            btnAllowedZoneFlag.Text = pTempRow["a_zone_flag"].ToString();
+            /****************************************/
+            int nType = Convert.ToInt32(pTempRow["a_type_idx"]);
 
 			if (nType < 0 || nType > Defs.ItemTypesNSubTypes.Keys.Count)
 			{
@@ -265,8 +332,8 @@ namespace LastChaos_ToolBox_2024.Editors
 					cbSubTypeSelector.SelectedIndex = nSubType;
 				}
 			}
-
-			int nWearingPosition = Convert.ToInt32(pTempRow["a_wearing"]);
+            /****************************************/
+            int nWearingPosition = Convert.ToInt32(pTempRow["a_wearing"]);
 
 			if (nWearingPosition < -1 || nWearingPosition > Defs.ItemWearingPositions.Length)
 			{
@@ -285,10 +352,8 @@ namespace LastChaos_ToolBox_2024.Editors
 				cbWearingPositionSelector.Enabled = true;
 				cbWearingPositionSelector.SelectedIndex = nWearingPosition;
 			}
-
-			btnClassFlag.Text = pTempRow["a_job_flag"].ToString();
-
-			tbQuestTriggerID.Text = pTempRow["a_quest_trigger_ids"].ToString();
+            /****************************************/
+            tbQuestTriggerID.Text = pTempRow["a_quest_trigger_ids"].ToString();
 			tbQuestTriggerCount.Text = pTempRow["a_quest_trigger_count"].ToString();
 
 			int nRvRValue = Convert.ToInt32(pTempRow["a_rvr_value"]);
@@ -311,16 +376,20 @@ namespace LastChaos_ToolBox_2024.Editors
 					cbRvRGradeSelector.SelectedIndex = Convert.ToInt32(pTempRow["a_rvr_grade"]);
 				}
 			}
-
-			tbEffectNormal.Text = pTempRow["a_effect_name"].ToString();
+            /****************************************/
+            tbEffectNormal.Text = pTempRow["a_effect_name"].ToString();
 			tbEffectAttack.Text = pTempRow["a_attack_effect_name"].ToString();
 			tbEffectDamage.Text = pTempRow["a_damage_effect_name"].ToString();
+            /****************************************/
+            // TODO: Seguir agregando mierdas
 
-			// TODO: Seguir agregando mierdas
-
-			bUserAction = true;
+            bUserAction = true;
+			
 			btnUpdate.Enabled = true;
-		}
+
+            BtnCopy.Enabled = true;
+            btnDelete.Enabled = true;
+        }
 
 		private void ChangePanel(Panel pPanel)
 		{
@@ -632,7 +701,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			}
 		}
 
-		private void cbNationSelector_SelectedIndexChanged(object sender, EventArgs e)
+        private void cbNationSelector_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			if (bUserAction)
 			{
@@ -668,7 +737,74 @@ namespace LastChaos_ToolBox_2024.Editors
 			}
 		}
 
-		private void cbTypeSelector_SelectedIndexChanged(object sender, EventArgs e)
+		private void cbCastleType_SelectedIndexChanged(object sender, EventArgs e)
+		{
+            int nType = cbTypeSelector.SelectedIndex;
+
+			if (nType != -1)
+			{
+				if (bUserAction)
+				{
+					pTempRow["a_castle_war"] = nType;
+
+                    bUnsavedChanges = true;
+                }
+			}
+		}
+
+        private void btnClassFlag_Click(object sender, EventArgs e)
+        {
+            if (bUserAction)
+            {
+                /* Args:
+				 *	Main<Pointer to Main Form>
+				 *	String array with flag names<Flags Array>
+				 *	Int<Flag>
+				 *	Returns:
+				 *		Int<composed Flag>
+				 */
+                FlagPicker pFlagSelector = new FlagPicker(pMain, Defs.ItemClass, Convert.ToInt32(btnClassFlag.Text.ToString()));
+
+                if (pFlagSelector.ShowDialog() != DialogResult.OK)
+                    return;
+
+                string strFlag = pFlagSelector.ReturnValues.ToString();
+                /****************************************/
+                btnClassFlag.Text = strFlag;
+
+                pTempRow["a_job_flag"] = strFlag;
+
+                bUnsavedChanges = true;
+            }
+        }
+
+        private void btnAllowedZoneFlag_Click(object sender, EventArgs e)
+        {
+            if (bUserAction)
+            {
+                /* Args:
+				 *	Main<Pointer to Main Form>
+				 *	String array with flag names<Flags Array>
+				 *	Int<Flag>
+				 *	Returns:
+				 *		Int<composed Flag>
+				 */
+                FlagPicker pFlagSelector = new FlagPicker(pMain, Defs.ItemClass, Convert.ToInt32(btnAllowedZoneFlag.Text.ToString()));
+
+                if (pFlagSelector.ShowDialog() != DialogResult.OK)
+                    return;
+
+                string strFlag = pFlagSelector.ReturnValues.ToString();
+                /****************************************/
+                btnAllowedZoneFlag.Text = strFlag;
+
+                pTempRow["a_zone_flag"] = strFlag;
+
+                bUnsavedChanges = true;
+            }
+        }
+
+        private void cbTypeSelector_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			int nType = cbTypeSelector.SelectedIndex;
 
@@ -713,32 +849,6 @@ namespace LastChaos_ToolBox_2024.Editors
 				pTempRow["a_wearing"] = cbWearingPositionSelector.SelectedIndex.ToString();
 
 				bUnsavedChanges = true;
-			}
-		}
-
-		private void btnClassFlag_Click(object sender, EventArgs e)
-		{
-			if (bUserAction)
-			{
-				/* Args:
-				 *	Main<Pointer to Main Form>
-				 *	String array with flag names<Flags Array>
-				 *	Int<Flag>
-				 *	Returns:
-				 *		Int<composed Flag>
-				 */
-				FlagPicker pFlagSelector = new FlagPicker(pMain, Defs.ItemClass, Convert.ToInt32(btnClassFlag.Text.ToString()));
-
-				if (pFlagSelector.ShowDialog() != DialogResult.OK)
-					return;
-
-				string strFlag = pFlagSelector.ReturnValues.ToString();
-				/****************************************/
-				btnClassFlag.Text = strFlag;
-
-                pTempRow["a_job_flag"] = strFlag;
-
-                bUnsavedChanges = true;
 			}
 		}
 
@@ -849,5 +959,5 @@ namespace LastChaos_ToolBox_2024.Editors
 				pMain.pItemTable.Rows[nRowIndex][strColumnName] = objColumnValue;
 			}
 		}
-	}
+    }
 }

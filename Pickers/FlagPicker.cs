@@ -14,7 +14,21 @@ using System.Windows.Forms;
 
 namespace LastChaos_ToolBox_2024
 {
-	public partial class FlagPicker : Form
+    /* Args:
+     *	Main<Pointer to Main Form>
+     *	String array with flag names<Flags Array>
+     *	Int<Flag>
+     *	Returns:
+     *		Int<composed Flag>
+     */
+    /*FlagPicker pFlagSelector = new FlagPicker(pMain, Defs.ItemClass, Convert.ToInt32(btnClassFlag.Text.ToString()));
+
+    if (pFlagSelector.ShowDialog() != DialogResult.OK)
+		 return;
+
+    string strFlag = pFlagSelector.ReturnValues.ToString();*/
+    /****************************************/
+    public partial class FlagPicker : Form
 	{
 		private Main pMain;
 		private string[] pStrArrayFlag;

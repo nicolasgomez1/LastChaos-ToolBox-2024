@@ -32,7 +32,7 @@ namespace LastChaos_ToolBox_2024.Editors
         private void InitializeComponent()
         {
             this.btnReload = new System.Windows.Forms.Button();
-            this.BtnAddNew = new System.Windows.Forms.Button();
+            this.btnAddNew = new System.Windows.Forms.Button();
             this.MainList = new System.Windows.Forms.ListBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btnUpdate = new System.Windows.Forms.Button();
@@ -42,6 +42,10 @@ namespace LastChaos_ToolBox_2024.Editors
             this.OthersPanel = new System.Windows.Forms.Panel();
             this.CraftingPanel = new System.Windows.Forms.Panel();
             this.GeneralPanel = new System.Windows.Forms.Panel();
+            this.label24 = new System.Windows.Forms.Label();
+            this.btnAllowedZoneFlag = new System.Windows.Forms.Button();
+            this.cbCastleType = new System.Windows.Forms.ComboBox();
+            this.label23 = new System.Windows.Forms.Label();
             this.label22 = new System.Windows.Forms.Label();
             this.btnClassFlag = new System.Windows.Forms.Button();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
@@ -108,6 +112,7 @@ namespace LastChaos_ToolBox_2024.Editors
             // btnReload
             // 
             this.btnReload.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnReload.Enabled = false;
             this.btnReload.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(85)))), ((int)(((byte)(76)))));
             this.btnReload.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
             this.btnReload.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
@@ -121,21 +126,22 @@ namespace LastChaos_ToolBox_2024.Editors
             this.btnReload.UseVisualStyleBackColor = true;
             this.btnReload.Click += new System.EventHandler(this.btnReload_Click);
             // 
-            // BtnAddNew
+            // btnAddNew
             // 
-            this.BtnAddNew.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.BtnAddNew.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(85)))), ((int)(((byte)(76)))));
-            this.BtnAddNew.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
-            this.BtnAddNew.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
-            this.BtnAddNew.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BtnAddNew.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-            this.BtnAddNew.Location = new System.Drawing.Point(78, 565);
-            this.BtnAddNew.Name = "BtnAddNew";
-            this.BtnAddNew.Size = new System.Drawing.Size(60, 23);
-            this.BtnAddNew.TabIndex = 2;
-            this.BtnAddNew.Text = "Add New";
-            this.BtnAddNew.UseVisualStyleBackColor = true;
-            this.BtnAddNew.Click += new System.EventHandler(this.btnAddNew_Click);
+            this.btnAddNew.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnAddNew.Enabled = false;
+            this.btnAddNew.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(85)))), ((int)(((byte)(76)))));
+            this.btnAddNew.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+            this.btnAddNew.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
+            this.btnAddNew.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnAddNew.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.btnAddNew.Location = new System.Drawing.Point(78, 565);
+            this.btnAddNew.Name = "btnAddNew";
+            this.btnAddNew.Size = new System.Drawing.Size(60, 23);
+            this.btnAddNew.TabIndex = 2;
+            this.btnAddNew.Text = "Add New";
+            this.btnAddNew.UseVisualStyleBackColor = true;
+            this.btnAddNew.Click += new System.EventHandler(this.btnAddNew_Click);
             // 
             // MainList
             // 
@@ -249,6 +255,10 @@ namespace LastChaos_ToolBox_2024.Editors
             // 
             this.GeneralPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
+            this.GeneralPanel.Controls.Add(this.label24);
+            this.GeneralPanel.Controls.Add(this.btnAllowedZoneFlag);
+            this.GeneralPanel.Controls.Add(this.cbCastleType);
+            this.GeneralPanel.Controls.Add(this.label23);
             this.GeneralPanel.Controls.Add(this.label22);
             this.GeneralPanel.Controls.Add(this.btnClassFlag);
             this.GeneralPanel.Controls.Add(this.groupBox5);
@@ -286,15 +296,63 @@ namespace LastChaos_ToolBox_2024.Editors
             this.GeneralPanel.Size = new System.Drawing.Size(1200, 528);
             this.GeneralPanel.TabIndex = 0;
             // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.label24.Location = new System.Drawing.Point(555, 45);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(72, 13);
+            this.label24.TabIndex = 1029;
+            this.label24.Text = "Allowed Zone";
+            this.label24.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // btnAllowedZoneFlag
+            // 
+            this.btnAllowedZoneFlag.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnAllowedZoneFlag.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(85)))), ((int)(((byte)(76)))));
+            this.btnAllowedZoneFlag.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+            this.btnAllowedZoneFlag.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
+            this.btnAllowedZoneFlag.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnAllowedZoneFlag.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.btnAllowedZoneFlag.Location = new System.Drawing.Point(633, 40);
+            this.btnAllowedZoneFlag.Name = "btnAllowedZoneFlag";
+            this.btnAllowedZoneFlag.Size = new System.Drawing.Size(105, 23);
+            this.btnAllowedZoneFlag.TabIndex = 1028;
+            this.btnAllowedZoneFlag.UseVisualStyleBackColor = true;
+            this.btnAllowedZoneFlag.Click += new System.EventHandler(this.btnAllowedZoneFlag_Click);
+            // 
+            // cbCastleType
+            // 
+            this.cbCastleType.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+            this.cbCastleType.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.cbCastleType.FormattingEnabled = true;
+            this.cbCastleType.Location = new System.Drawing.Point(321, 41);
+            this.cbCastleType.Name = "cbCastleType";
+            this.cbCastleType.Size = new System.Drawing.Size(100, 21);
+            this.cbCastleType.TabIndex = 1027;
+            this.cbCastleType.SelectedIndexChanged += new System.EventHandler(this.cbCastleType_SelectedIndexChanged);
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.label23.Location = new System.Drawing.Point(252, 45);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(63, 13);
+            this.label23.TabIndex = 1026;
+            this.label23.Text = "Castle Type";
+            this.label23.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
             // label22
             // 
             this.label22.AutoSize = true;
             this.label22.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-            this.label22.Location = new System.Drawing.Point(546, 43);
+            this.label22.Location = new System.Drawing.Point(427, 45);
             this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(55, 13);
+            this.label22.Size = new System.Drawing.Size(72, 13);
             this.label22.TabIndex = 1025;
-            this.label22.Text = "Class Flag";
+            this.label22.Text = "Allowed Class";
             this.label22.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // btnClassFlag
@@ -305,7 +363,7 @@ namespace LastChaos_ToolBox_2024.Editors
             this.btnClassFlag.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
             this.btnClassFlag.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnClassFlag.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-            this.btnClassFlag.Location = new System.Drawing.Point(607, 38);
+            this.btnClassFlag.Location = new System.Drawing.Point(505, 40);
             this.btnClassFlag.Name = "btnClassFlag";
             this.btnClassFlag.Size = new System.Drawing.Size(44, 23);
             this.btnClassFlag.TabIndex = 1000;
@@ -483,7 +541,7 @@ namespace LastChaos_ToolBox_2024.Editors
             this.groupBox3.Controls.Add(this.tbQuestTriggerCount);
             this.groupBox3.Controls.Add(this.label9);
             this.groupBox3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-            this.groupBox3.Location = new System.Drawing.Point(251, 129);
+            this.groupBox3.Location = new System.Drawing.Point(164, 187);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(200, 52);
             this.groupBox3.TabIndex = 1022;
@@ -679,9 +737,9 @@ namespace LastChaos_ToolBox_2024.Editors
             this.cbWearingPositionSelector.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
             this.cbWearingPositionSelector.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
             this.cbWearingPositionSelector.FormattingEnabled = true;
-            this.cbWearingPositionSelector.Location = new System.Drawing.Point(340, 93);
+            this.cbWearingPositionSelector.Location = new System.Drawing.Point(340, 122);
             this.cbWearingPositionSelector.Name = "cbWearingPositionSelector";
-            this.cbWearingPositionSelector.Size = new System.Drawing.Size(148, 21);
+            this.cbWearingPositionSelector.Size = new System.Drawing.Size(142, 21);
             this.cbWearingPositionSelector.TabIndex = 16;
             this.cbWearingPositionSelector.SelectedIndexChanged += new System.EventHandler(this.cbWearingPositionSelector_SelectedIndexChanged);
             // 
@@ -689,7 +747,7 @@ namespace LastChaos_ToolBox_2024.Editors
             // 
             this.label7.AutoSize = true;
             this.label7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-            this.label7.Location = new System.Drawing.Point(248, 97);
+            this.label7.Location = new System.Drawing.Point(248, 126);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(87, 13);
             this.label7.TabIndex = 1005;
@@ -702,7 +760,7 @@ namespace LastChaos_ToolBox_2024.Editors
             this.cbSubTypeSelector.Enabled = false;
             this.cbSubTypeSelector.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
             this.cbSubTypeSelector.FormattingEnabled = true;
-            this.cbSubTypeSelector.Location = new System.Drawing.Point(311, 66);
+            this.cbSubTypeSelector.Location = new System.Drawing.Point(311, 95);
             this.cbSubTypeSelector.Name = "cbSubTypeSelector";
             this.cbSubTypeSelector.Size = new System.Drawing.Size(229, 21);
             this.cbSubTypeSelector.TabIndex = 15;
@@ -712,7 +770,7 @@ namespace LastChaos_ToolBox_2024.Editors
             // 
             this.label6.AutoSize = true;
             this.label6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-            this.label6.Location = new System.Drawing.Point(252, 70);
+            this.label6.Location = new System.Drawing.Point(252, 99);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(53, 13);
             this.label6.TabIndex = 1003;
@@ -724,7 +782,7 @@ namespace LastChaos_ToolBox_2024.Editors
             this.cbTypeSelector.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
             this.cbTypeSelector.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
             this.cbTypeSelector.FormattingEnabled = true;
-            this.cbTypeSelector.Location = new System.Drawing.Point(311, 39);
+            this.cbTypeSelector.Location = new System.Drawing.Point(311, 68);
             this.cbTypeSelector.Name = "cbTypeSelector";
             this.cbTypeSelector.Size = new System.Drawing.Size(229, 21);
             this.cbTypeSelector.TabIndex = 14;
@@ -734,7 +792,7 @@ namespace LastChaos_ToolBox_2024.Editors
             // 
             this.label5.AutoSize = true;
             this.label5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-            this.label5.Location = new System.Drawing.Point(274, 43);
+            this.label5.Location = new System.Drawing.Point(274, 72);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(31, 13);
             this.label5.TabIndex = 1001;
@@ -888,6 +946,7 @@ namespace LastChaos_ToolBox_2024.Editors
             // BtnCopy
             // 
             this.BtnCopy.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.BtnCopy.Enabled = false;
             this.BtnCopy.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(85)))), ((int)(((byte)(76)))));
             this.BtnCopy.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
             this.BtnCopy.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
@@ -904,6 +963,7 @@ namespace LastChaos_ToolBox_2024.Editors
             // btnDelete
             // 
             this.btnDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnDelete.Enabled = false;
             this.btnDelete.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(85)))), ((int)(((byte)(76)))));
             this.btnDelete.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
             this.btnDelete.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
@@ -941,7 +1001,7 @@ namespace LastChaos_ToolBox_2024.Editors
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.BtnCopy);
             this.Controls.Add(this.MainList);
-            this.Controls.Add(this.BtnAddNew);
+            this.Controls.Add(this.btnAddNew);
             this.Controls.Add(this.btnReload);
             this.Controls.Add(this.GeneralPanel);
             this.Controls.Add(this.groupBox1);
@@ -970,7 +1030,7 @@ namespace LastChaos_ToolBox_2024.Editors
         #endregion
 
         private System.Windows.Forms.Button btnReload;
-        private System.Windows.Forms.Button BtnAddNew;
+        private System.Windows.Forms.Button btnAddNew;
         private System.Windows.Forms.ListBox MainList;
         private System.Windows.Forms.GroupBox groupBox1;
         private TextBox tbID;
@@ -1034,5 +1094,9 @@ namespace LastChaos_ToolBox_2024.Editors
         private Label label20;
         private Button btnClassFlag;
         private Label label22;
+        private Label label23;
+        private ComboBox cbCastleType;
+        private Label label24;
+        private Button btnAllowedZoneFlag;
     }
 }

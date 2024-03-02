@@ -206,6 +206,15 @@ namespace Definitions
             }
         };
 
+        public static string[] ItemCastleTypes =
+        {
+            // Standards
+            "Done",
+            "All",
+            "Merac",
+            "Dratan"
+        };
+
         public static string[] ItemClass =
         {
             // Standards
