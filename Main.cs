@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -12,11 +14,7 @@ using System.IO;
 using IniParser;
 using IniParser.Model;
 using LastChaos_ToolBox_2024.Editors;
-using Definitions;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using System.Drawing.Imaging;
-using System.Linq;
+
 
 namespace LastChaos_ToolBox_2024
 {
@@ -113,9 +111,7 @@ namespace LastChaos_ToolBox_2024
             string strLog = $"{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff")} [{Path.GetFileName(stackFrame.GetFileName())} : {stackFrame.GetFileLineNumber()} : {stackFrame.GetMethod().Name}] > {strMsg}";
 
             using (StreamWriter pStreamWriter = File.AppendText("Logs.log"))
-            {
                 pStreamWriter.WriteLine(strLog);
-            }
 
             rtbConsole.Invoke((MethodInvoker)delegate
             {
@@ -133,7 +129,7 @@ namespace LastChaos_ToolBox_2024
 
         void LoadSettings()
         {
-            PrintLog("Starting settings load...");
+            PrintLog("Loading Settings...");
 
             if (File.Exists(pSettings.SettingsFile))
             {
@@ -164,7 +160,7 @@ namespace LastChaos_ToolBox_2024
             }
             else
             {
-                PrintLog($"{pSettings.SettingsFile} not exist.", Color.Red);
+                PrintLog($"Settings load failed ({pSettings.SettingsFile} not exist).", Color.Red);
             }
         }
 
@@ -177,13 +173,11 @@ namespace LastChaos_ToolBox_2024
             {
                 using (Image pImage = Image.FromFile(strComposePath))
                 {
-                    // NOTE: Create new Bitmap
+                    // Create new Bitmap
                     Bitmap pBitmap = new Bitmap(32, 32);
-                    // NOTE: Generate Bitmap content
+                    // Generate Bitmap content
                     using (Graphics pGraphics = Graphics.FromImage((Image)pBitmap))
-                    {
                         pGraphics.DrawImage(pImage, 0, 0, (new Rectangle(nCol * 32, nRow * 32, 32, 32)), GraphicsUnit.Pixel);
-                    }
 
                     return pBitmap;
                 }
@@ -283,21 +277,6 @@ namespace LastChaos_ToolBox_2024
                 else
                     Application.Exit();
             }
-        }
-
-        RenderDialog pItemEditor;
-        private void button4_Click(object sender, EventArgs e)
-        {
-            pItemEditor = new RenderDialog();
-            pItemEditor.Show();
-
-            pItemEditor.SetModel("D:\\Documents\\LastChaos Files\\SourceBinLibs\\CCB+\\Data\\Item\\Common\\ITEM_treasure02.smc", "small");
-
-        }
-
-        private void button5_Click(object sender, EventArgs e)
-        {
-            pItemEditor.SetModel("D:\\Documents\\LastChaos Files\\SourceBinLibs\\CCB+\\Data\\Monster\\compra\\compra.smc", "big");
         }
     }
 }

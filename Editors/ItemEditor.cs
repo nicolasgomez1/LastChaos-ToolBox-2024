@@ -26,8 +26,9 @@ namespace LastChaos_ToolBox_2024.Editors
 		private int nSearchPosition = 0;
 		private string[] strArrayZones;
 		private Dictionary<Control, ToolTip> pToolTips = new Dictionary<Control, ToolTip>();
+        private RenderDialog pRenderDialog;
 
-		public ItemEditor(Main mainForm)
+        public ItemEditor(Main mainForm)
 		{
 			this.FormClosing += ItemEditor_FormClosing;
 
@@ -254,7 +255,7 @@ namespace LastChaos_ToolBox_2024.Editors
 				{
 					foreach (var toolTip in pToolTips.Values)
 						toolTip.Dispose();
-                }
+				}
 			}
 		}
 
@@ -267,11 +268,11 @@ namespace LastChaos_ToolBox_2024.Editors
 			cbSubTypeSelector.SelectedIndex = -1;
 			cbWearingPositionSelector.SelectedIndex = -1;
 
-            foreach (var toolTip in pToolTips.Values)
-                toolTip.Dispose();
-            /****************************************/
-            // Replicate struct in temp row
-            pTempRow = pMain.pItemTable.NewRow();
+			foreach (var toolTip in pToolTips.Values)
+				toolTip.Dispose();
+			/****************************************/
+			// Replicate struct in temp row
+			pTempRow = pMain.pItemTable.NewRow();
 			// Copy data from main table to temp one
 			pTempRow.ItemArray = (object[])pMain.pItemTable.Select("a_index = " + nItemID)[0].ItemArray.Clone();
 
@@ -294,16 +295,29 @@ namespace LastChaos_ToolBox_2024.Editors
 
 				pToolTip = new ToolTip();
 				pToolTip.SetToolTip(pbIcon, "FILE: " + strTexID + " ROW: " + strTexRow + " COL: " + strTexCol);
+
 				pToolTips[pbIcon] = pToolTip;
 			}
 			/****************************************/
-			tbSMC.Text = pTempRow["a_file_smc"].ToString();
+			string strSMCPath = pTempRow["a_file_smc"].ToString();
+
+            tbSMC.Text = strSMCPath;
 
 			pToolTip = new ToolTip();
 			pToolTip.SetToolTip(tbSMC, "Double Click to edit");
 			pToolTips[tbSMC] = pToolTip;
 			/****************************************/
-			tbMaxStack.Text = pTempRow["a_weight"].ToString();
+			if (pRenderDialog == null || pRenderDialog.IsDisposed)
+				pRenderDialog = new RenderDialog(pMain);
+
+			if (!pRenderDialog.Visible)
+				pRenderDialog.Show();
+
+            int nWearingPosition = Convert.ToInt32(pTempRow["a_wearing"]);
+
+            pRenderDialog.SetModel(pMain.pSettings.ClientPath + "\\" + strSMCPath, "small", nWearingPosition);
+            /****************************************/
+            tbMaxStack.Text = pTempRow["a_weight"].ToString();
 
 			tbPrice.Text = pTempRow["a_price"].ToString();
 
@@ -328,28 +342,26 @@ namespace LastChaos_ToolBox_2024.Editors
 				pMain.PrintLog("Item Editor > Item: " + nItemID + " Error: a_castle_war out of range", Color.Red);
 			else
 				cbCastleType.SelectedIndex = nCastleType;
-            /****************************************/
-            int nWearingPosition = Convert.ToInt32(pTempRow["a_wearing"]);
+			/****************************************/
+			if (nWearingPosition < -1 || nWearingPosition > Defs.ItemWearingPositions.Length)
+			{
+				cbWearingPositionSelector.Enabled = false;
+				cbWearingPositionSelector.Text = "";
 
-            if (nWearingPosition < -1 || nWearingPosition > Defs.ItemWearingPositions.Length)
-            {
-                cbWearingPositionSelector.Enabled = false;
-                cbWearingPositionSelector.Text = "";
+				pMain.PrintLog("Item Editor > Item: " + nItemID + " Error: a_wearing out of range", Color.Red);
+			}
+			else
+			{
+				if (nWearingPosition == -1)
+					nWearingPosition = 0;
+				else
+					nWearingPosition++;
 
-                pMain.PrintLog("Item Editor > Item: " + nItemID + " Error: a_wearing out of range", Color.Red);
-            }
-            else
-            {
-                if (nWearingPosition == -1)
-                    nWearingPosition = 0;
-                else
-                    nWearingPosition++;
-
-                cbWearingPositionSelector.Enabled = true;
-                cbWearingPositionSelector.SelectedIndex = nWearingPosition;
-            }
-            /****************************************/
-            btnClassFlag.Text = pTempRow["a_job_flag"].ToString();
+				cbWearingPositionSelector.Enabled = true;
+				cbWearingPositionSelector.SelectedIndex = nWearingPosition;
+			}
+			/****************************************/
+			btnClassFlag.Text = pTempRow["a_job_flag"].ToString();
 
 			string strTooltip = "";
 			long nFlag = Convert.ToInt32(pTempRow["a_job_flag"]);
@@ -363,9 +375,9 @@ namespace LastChaos_ToolBox_2024.Editors
 			pToolTip = new ToolTip();
 			pToolTip.SetToolTip(btnClassFlag, strTooltip);
 			pToolTips[btnClassFlag] = pToolTip;
-            /****************************************/
-            // NOTE: This is not compatible with original database/source. I changed this to work with a system it has been developed.
-            string strFlag = pTempRow["a_zone_flag"].ToString();
+			/****************************************/
+			// NOTE: This is not compatible with original database/source. I changed this to work with a system it has been developed.
+			string strFlag = pTempRow["a_zone_flag"].ToString();
 
 			btnAllowedZoneFlag.Text = strFlag;
 
@@ -485,20 +497,20 @@ namespace LastChaos_ToolBox_2024.Editors
 
 							return;
 						}
-                    }
+					}
 
-                    for (int i = 0; i <= nSearchPosition; i++)
-                    {
-                        if (MainList.GetItemText(MainList.Items[i]).IndexOf(strStringToSearch, StringComparison.OrdinalIgnoreCase) != -1)
-                        {
-                            MainList.SetSelected(i, true);
+					for (int i = 0; i <= nSearchPosition; i++)
+					{
+						if (MainList.GetItemText(MainList.Items[i]).IndexOf(strStringToSearch, StringComparison.OrdinalIgnoreCase) != -1)
+						{
+							MainList.SetSelected(i, true);
 
-                            nSearchPosition = i;
+							nSearchPosition = i;
 
-                            return;
-                        }
-                    }
-                }
+							return;
+						}
+					}
+				}
 
 				int nSelected = MainList.SelectedIndex;
 
@@ -507,8 +519,8 @@ namespace LastChaos_ToolBox_2024.Editors
 					if (nSelected < nSearchPosition)
 						nSearchPosition = nSelected;
 
-                    Search();
-                }
+					Search();
+				}
 
 				e.Handled = true;
 				e.SuppressKeyPress = true;
@@ -630,8 +642,8 @@ namespace LastChaos_ToolBox_2024.Editors
 					pbIcon.Image = pIcon;
 
 					pToolTips[pbIcon].SetToolTip(pbIcon, "FILE: " + strArray[0] + " ROW: " + strArray[1] + " COL: " + strArray[2]);
-                    
-                    bUnsavedChanges = true;
+					
+					bUnsavedChanges = true;
 				}
 			}
 		}
@@ -830,7 +842,7 @@ namespace LastChaos_ToolBox_2024.Editors
 						strTooltip += pMain.pZoneTable.Rows[i]["a_name"] + "\n";
 				}
 
-                pToolTips[btnAllowedZoneFlag].SetToolTip(btnAllowedZoneFlag, strTooltip);
+				pToolTips[btnAllowedZoneFlag].SetToolTip(btnAllowedZoneFlag, strTooltip);
 
 				pTempRow["a_zone_flag"] = strFlag;
 
@@ -860,7 +872,7 @@ namespace LastChaos_ToolBox_2024.Editors
 						strTooltip += Defs.ItemFlag[i] + "\n";
 				}
 
-                pToolTips[btnItemFlag].SetToolTip(btnItemFlag, strTooltip);
+				pToolTips[btnItemFlag].SetToolTip(btnItemFlag, strTooltip);
 
 				pTempRow["a_flag"] = strFlag;
 

@@ -59,6 +59,7 @@
             this.MinimizeBox = false;
             this.Name = "RenderDialog";
             this.Text = "Render";
+            this.TopMost = true;
             this.Load += new System.EventHandler(this.RenderDialog_Load);
             this.ResumeLayout(false);
 

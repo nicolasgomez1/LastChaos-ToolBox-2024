@@ -14,78 +14,87 @@ using SlimDX;
 using SlimDX.Direct3D9;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Runtime.InteropServices.ComTypes;
 
 namespace LastChaos_ToolBox_2024
 {
 	public partial class RenderDialog : Form, IDisposable
 	{
+        private static Main pMain;
         private tMeshContainer pMeshContainer = new tMeshContainer();
-        public static tMeshContainer pMesh;
-        private readonly ASCIIEncoding _Enc = new ASCIIEncoding();
-        public Direct3D pDirect3D;
-        public Device pDevice;
-        public List<tMesh> pModels;
-        public float fZoom, fUpDown, fRotation;
-        public tTexture pLCTexture;
-        private Vector3 vecCameraPosition = new Vector3(0.0f, -2.0f, 4f);
+		public static tMeshContainer pMesh;
+		private readonly ASCIIEncoding pEnc = new ASCIIEncoding();
+		public Direct3D pDirect3D;
+		public Device pDevice;
+		public List<tMesh> pModel;
+		public float fZoom, fUpDown, fRotation;
+		public tTexture pLCTexture;
+		private Vector3 vecCameraPosition = new Vector3(0.0f, -2.0f, 4f);
 		private Vector3 vecEntityPosition = new Vector3(0f, 0.0f, 0.0f);
+		private static string pstrFilePath;
 
-        public RenderDialog() { InitializeComponent(); }
+		public RenderDialog(Main mainForm)
+		{
+			InitializeComponent();
+			pMain = mainForm;
+		}
 
-        private void RenderDialog_Load(object sender, EventArgs e)
-        {
-            timerRender.Start();
+		private void RenderDialog_Load(object sender, EventArgs e)
+		{
+			timerRender.Start();
 
-            panel3DView.MouseWheel += panel3DView_Zoom;
-            this.FormClosing += RenderDialog_FormClosing;
+			panel3DView.MouseWheel += panel3DView_Zoom;
+			this.FormClosing += RenderDialog_FormClosing;
 
-            InitializeDevice();
-        }
+			InitializeDevice();
+		}
 
-        private void DisposeModels()
-        {
-            if (pModels != null)
-            {
-                foreach (var model in pModels)
-                    model.Dispose();
+		private void DisposeModels()
+		{
+			if (pModel != null)
+			{
+				foreach (var model in pModel)
+					model.Dispose();
 
-                pModels.Clear();
-            }
-        }
+				pModel.Clear();
+			}
 
-		public void SetModel(string strFilePath, string strEntityDistance)
+			pDirect3D.Dispose();
+		}
+
+		public void SetModel(string strFilePath, string strEntityDistance, int nWearingPosition)
 		{
 			DisposeModels();
 
 			if (strEntityDistance == "small")
-                fUpDown = -0.345f;
+				fUpDown = -0.345f;
 			else if (strEntityDistance == "big")
-                fUpDown = -1.5f;
+				fUpDown = -1.5f;
 
-			MakeLCModels(strFilePath);
+			pstrFilePath = strFilePath;
+
+            CameraPositioning();
+
+			MakeLCModels(strFilePath, nWearingPosition);
 		}
 
-        private void RenderDialog_FormClosing(object sender, FormClosingEventArgs e)
+		private void RenderDialog_FormClosing(object sender, FormClosingEventArgs e)
 		{
-			if (pModels != null)
+			if (pModel != null)
 			{
-				foreach (var model in pModels)
+				foreach (var model in pModel)
 					model?.Dispose();
 
-				pModels = null;
+				pModel = null;
 			}
 
 			pDevice?.Dispose();
 			pDevice = null;
 
-			pMeshContainer?.Dispose();
 			pMeshContainer = null;
+		}
 
-            pDirect3D.Dispose();
-
-        }
-
-        private void panel3DView_Zoom(object sender, MouseEventArgs e)
+		private void panel3DView_Zoom(object sender, MouseEventArgs e)
 		{
 			if (Control.ModifierKeys.HasFlag(Keys.Control))
 			{
@@ -171,7 +180,7 @@ namespace LastChaos_ToolBox_2024
 		{
 			public static tTexture lcTex;
 
-			public static texFormat GetFormat()
+            public static texFormat GetFormat()
 			{
 				texFormat texFormat = texFormat.UNKNOWN;
 
@@ -266,14 +275,61 @@ namespace LastChaos_ToolBox_2024
 				fileStream.Close();
 			}
 
-			private static void ReadFRMC(tTexture lcTex, BinaryReader b)
+            /*private static void ReadFRMC(tTexture lcTex, BinaryReader b)
 			{
 				lcTex.imageData = new byte[(int)lcTex.Header.MipMap][];
 				for (int index = 0; (long)index < (long)lcTex.Header.MipMap; ++index)
 					lcTex.imageData[index] = b.ReadBytes(b.ReadInt32());
-			}
+			}*/
+            private static void ReadFRMC(tTexture lcTex, BinaryReader b)
+            {
+                try
+                {
+                    int mipMapCount = (int)lcTex.Header.MipMap;
 
-			private static void ReadFRMS(tTexture lcTex, BinaryReader b)
+                    if (mipMapCount >= 0)
+                    {
+                        lcTex.imageData = new byte[mipMapCount][];
+
+                        for (int index = 0; index < mipMapCount; ++index)
+                        {
+                            if (b.BaseStream.Length - b.BaseStream.Position >= sizeof(int))
+                            {
+                                int mipMapSize = b.ReadInt32();
+
+                                if (mipMapSize >= 0 && b.BaseStream.Length - b.BaseStream.Position >= mipMapSize)
+                                {
+                                    lcTex.imageData[index] = b.ReadBytes(mipMapSize);
+                                }
+                                else
+                                {
+                                    pMain.PrintLog("Render Dialog > Mipmap size out of range of index: " + index + " (SMC: " + pstrFilePath + ").",  Color.Red);
+                                    lcTex.imageData = null;
+                                    break;
+                                }
+                            }
+                            else
+                            {
+                                pMain.PrintLog("Render Dialog > Index of Mipmap out of range (SMC: " + pstrFilePath + ").", Color.Red);
+                                lcTex.imageData = null;
+                                break;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        pMain.PrintLog("Render Dialog > Mipmap number out of range (SMC: " + pstrFilePath + ").", Color.Red);
+                        lcTex.imageData = null;
+                    }
+                }
+                catch (Exception e)
+                {
+                    pMain.PrintLog("Render Dialog > " + e.Message + "(SMC: " + pstrFilePath + ").", Color.Red);
+                    lcTex.imageData = null;
+                }
+            }
+
+            private static void ReadFRMS(tTexture lcTex, BinaryReader b)
 			{
 				int num = (int)lcTex.Header.Width * (int)lcTex.Header.Height;
 				int count = (int)lcTex.Header.Bits == 0 || (int)lcTex.Header.Bits == 2 ? num * 3 : num * 4;
@@ -317,7 +373,7 @@ namespace LastChaos_ToolBox_2024
 			}
 		}
 
-        public struct smcObject
+		public struct smcObject
 		{
 			public string Name;
 			public string Texture;
@@ -563,12 +619,9 @@ namespace LastChaos_ToolBox_2024
 
 			}
 		}
-		public class tMeshContainer : IDisposable
+		public class tMeshContainer
 		{
-			public Mesh MeshData { get; private set; }
-			public Texture TexData { get; private set; }
-
-			internal static LCMeshReader pMesh;
+			private static LCMeshReader pMesh;
 			public byte[] FileName { get; set; }
 			public string FilePath { get; set; }
 			public tHeaderInfo HeaderInfo { get; set; }
@@ -581,12 +634,6 @@ namespace LastChaos_ToolBox_2024
 			public uint Value1 { get; set; }
 			public tVertex3f[] Vertices { get; set; }
 			public tMeshJointWeights[] Weights { get; set; }
-
-			public void Dispose()
-			{
-				MeshData?.Dispose();
-				TexData?.Dispose();
-			}
 		}
 
 		public class LCMeshReader
@@ -908,8 +955,8 @@ namespace LastChaos_ToolBox_2024
 		private void CameraPositioning()
 		{
 			pDevice.SetTransform(TransformState.Projection, Matrix.PerspectiveFovLH(100f, 1f, 1f, 100f));
-			pDevice.SetTransform(TransformState.View, Matrix.LookAtLH(vecCameraPosition, vecEntityPosition, Vector3.UnitY));
-			pDevice.SetTransform(TransformState.World, Matrix.RotationYawPitchRoll(0.0f, 0.0f, 0.0f));
+
+			fZoom = fRotation = 0.0f;
 		}
 
 		private static SlimDX.Direct3D9.Format ConvFormat(texFormat tFormat)
@@ -976,23 +1023,25 @@ namespace LastChaos_ToolBox_2024
 			{
 				Tex.ReadFile(FileName);
 				SlimDX.Direct3D9.Format imageFormat = ConvFormat(Tex.GetFormat());
-				texture = BuildTexture(Tex.lcTex.imageData[0], imageFormat, (int)Tex.lcTex.Header.Width, (int)Tex.lcTex.Header.Height);
-			}
+               
+				//texture = BuildTexture(Tex.lcTex.imageData[0], imageFormat, (int)Tex.lcTex.Header.Width, (int)Tex.lcTex.Header.Height);
+                if (Tex.lcTex.imageData != null && Tex.lcTex.imageData.Length > 0 && Tex.lcTex.imageData[0] != null)
+                    texture = BuildTexture(Tex.lcTex.imageData[0], imageFormat, (int)Tex.lcTex.Header.Width, (int)Tex.lcTex.Header.Height);
+                else
+                    pMain.PrintLog("Render Dialog > imageData is empty or null (SMC: " + pstrFilePath + ").", Color.Red);
+            }
 
 			return texture;
 		}
 
-		private class CustomVertex
+		public struct PositionNormalTextured
 		{
-			public struct PositionNormalTextured
-			{
-				public Vector3 Position;
-				public Vector3 Normal;
-				public Vector2 Texture;
-			}
+			public Vector3 Position;
+			public Vector3 Normal;
+			public Vector2 Texture;
 		}
 
-		private void MakeLCModels(string SMCFile)
+		/*private void MakeLCModels(string SMCFile)
 		{
 			List<float> source1 = new List<float>();
 			List<float> source2 = new List<float>();
@@ -1000,7 +1049,7 @@ namespace LastChaos_ToolBox_2024
 			List<float> floatList1 = new List<float>();
 			List<float> floatList2 = new List<float>();
 			List<float> floatList3 = new List<float>();
-			pModels = new List<tMesh>();
+			pModel = new List<tMesh>();
 
 			List<smcMesh> source4 = SMCReader.ReadFile(SMCFile);
 
@@ -1020,7 +1069,7 @@ namespace LastChaos_ToolBox_2024
 						int toVert = (int)pMesh.Objects[index2].ToVert;
 						int faceCount = (int)pMesh.Objects[index2].FaceCount;
 						short[] faces = pMesh.Objects[index2].GetFaces();
-						CustomVertex.PositionNormalTextured[] data = new CustomVertex.PositionNormalTextured[toVert];
+						PositionNormalTextured[] data = new PositionNormalTextured[toVert];
 						int fromVert = (int)pMesh.Objects[index2].FromVert;
 
 						for (int index3 = 0; (long)index3 < (long)pMesh.Objects[index2].ToVert; ++index3)
@@ -1040,20 +1089,20 @@ namespace LastChaos_ToolBox_2024
 							++fromVert;
 						}
 
-						VertexBuffer vertexBuffer = new VertexBuffer(pDevice, ((IEnumerable<CustomVertex.PositionNormalTextured>)data).Count<CustomVertex.PositionNormalTextured>() * 32, Usage.None, VertexFormat.PositionNormal | VertexFormat.Texture1, Pool.Default);
+						VertexBuffer vertexBuffer = new VertexBuffer(pDevice, ((IEnumerable<PositionNormalTextured>)data).Count<PositionNormalTextured>() * 32, Usage.None, VertexFormat.PositionNormal | VertexFormat.Texture1, Pool.Default);
 
-						Mesh mesh = new Mesh(pDevice, ((IEnumerable<short>)faces).Count<short>() / 3, ((IEnumerable<CustomVertex.PositionNormalTextured>)data).Count<CustomVertex.PositionNormalTextured>(), MeshFlags.Managed, VertexFormat.PositionNormal | VertexFormat.Texture1);
+						Mesh mesh = new Mesh(pDevice, ((IEnumerable<short>)faces).Count<short>() / 3, ((IEnumerable<PositionNormalTextured>)data).Count<PositionNormalTextured>(), MeshFlags.Managed, VertexFormat.PositionNormal | VertexFormat.Texture1);
 						DataStream dataStream1;
 
-						using (dataStream1 = mesh.VertexBuffer.Lock(0, ((IEnumerable<CustomVertex.PositionNormalTextured>)data).Count<CustomVertex.PositionNormalTextured>() * 32, LockFlags.None))
+						using (dataStream1 = mesh.VertexBuffer.Lock(0, ((IEnumerable<PositionNormalTextured>)data).Count<PositionNormalTextured>() * 32, LockFlags.None))
 						{
-							dataStream1.WriteRange<CustomVertex.PositionNormalTextured>(data);
+							dataStream1.WriteRange<PositionNormalTextured>(data);
 							mesh.VertexBuffer.Unlock();
 						}
 
-                        vertexBuffer.Dispose();
+						vertexBuffer.Dispose();
 
-                        DataStream dataStream2;
+						DataStream dataStream2;
 						using (dataStream2 = mesh.IndexBuffer.Lock(0, ((IEnumerable<short>)faces).Count<short>() * 2, LockFlags.None))
 						{
 							dataStream2.WriteRange<short>(faces);
@@ -1062,12 +1111,12 @@ namespace LastChaos_ToolBox_2024
 
 						if ((uint)((IEnumerable<tMeshJointWeights>)pMesh.Weights).Count<tMeshJointWeights>() > 0U)
 						{
-							string[] strArray = new string[((IEnumerable<tMeshJointWeights>)pMesh.Weights).Count<tMeshJointWeights>()];
+                            string[] strArray = new string[((IEnumerable<tMeshJointWeights>)pMesh.Weights).Count<tMeshJointWeights>()];
 							List<int>[] intListArray = new List<int>[((IEnumerable<tMeshJointWeights>)pMesh.Weights).Count<tMeshJointWeights>()];
 							List<float>[] floatListArray = new List<float>[((IEnumerable<tMeshJointWeights>)pMesh.Weights).Count<tMeshJointWeights>()];
 							for (int index3 = 0; index3 < ((IEnumerable<tMeshJointWeights>)pMesh.Weights).Count<tMeshJointWeights>(); ++index3)
 							{
-								strArray[index3] = _Enc.GetString(pMesh.Weights[index3].JointName);
+								strArray[index3] = pEnc.GetString(pMesh.Weights[index3].JointName);
 								intListArray[index3] = new List<int>();
 								floatListArray[index3] = new List<float>();
 
@@ -1078,37 +1127,155 @@ namespace LastChaos_ToolBox_2024
 								}
 							}
 
-							mesh.SkinInfo = new SkinInfo(((IEnumerable<CustomVertex.PositionNormalTextured>)data).Count<CustomVertex.PositionNormalTextured>(), VertexFormat.PositionNormal | VertexFormat.Texture1, (int)pMesh.HeaderInfo.JointCount);
+							mesh.SkinInfo = new SkinInfo(((IEnumerable<PositionNormalTextured>)data).Count<PositionNormalTextured>(), VertexFormat.PositionNormal | VertexFormat.Texture1, (int)pMesh.HeaderInfo.JointCount);
 
-							for (int bone = 0; bone < ((IEnumerable<List<int>>)intListArray).Count<List<int>>(); ++bone)
+                            for (int bone = 0; bone < ((IEnumerable<List<int>>)intListArray).Count<List<int>>(); ++bone)
 							{
 								mesh.SkinInfo.SetBoneName(bone, strArray[bone]);
+
 								mesh.SkinInfo.SetBoneInfluence(bone, intListArray[bone].ToArray(), floatListArray[bone].ToArray());
 							}
 
                             mesh.SkinInfo.Dispose();
-                        }
+						}
 
 						mesh.GenerateAdjacency(0.5f);
 						mesh.ComputeNormals();
 						Texture texture = (Texture)null;
-						string objName = _Enc.GetString(pMesh.Objects[index2].Textures[0].InternalName);
+						string objName = pEnc.GetString(pMesh.Objects[index2].Textures[0].InternalName);
 						int index5 = source4[index1].Object.FindIndex((Predicate<smcObject>)(x => x.Name.Equals(objName)));
 						if (index5 != -1)
 							texture = GetTextureFromFile(source4[index1].Object[index5].Texture);
 
-						pModels.Add(new tMesh(mesh, texture));
-                    }
+						pModel.Add(new tMesh(mesh, texture));
+					}
 				}
 			}
 
 			fZoom = ((IEnumerable<float>)new float[3] { source1.Max(), source2.Max(), source3.Max() }).Max() * 3f;
+		}*/
+		private void MakeLCModels(string SMCFile, int nWearingPosition)
+		{
+			List<smcMesh> list = SMCReader.ReadFile(SMCFile);
+			pModel = new List<tMesh>();
+
+			for (int i = 0; i < list.Count<smcMesh>(); i++)
+			{
+				bool flag = (nWearingPosition != 0 ||
+				!list[i].FileName.Contains("_hair_000")) && (nWearingPosition != 1 ||
+				!list[i].FileName.Contains("_bu_000")) && (nWearingPosition != 3 ||
+				!list[i].FileName.Contains("_bd_000")) && (nWearingPosition != 5 ||
+				!list[i].FileName.Contains("_hn_000")) && (nWearingPosition != 6 ||
+				!list[i].FileName.Contains("_ft_000"));
+				
+				if (flag && LCMeshReader.ReadFile(list[i].FileName))
+				{
+					for (int j = 0; j < pMesh.Objects.Count<tMeshObject>(); j++)
+					{
+						int toVert = (int)pMesh.Objects[j].ToVert;
+						short[] faces = pMesh.Objects[j].GetFaces();
+						PositionNormalTextured[] array = new PositionNormalTextured[toVert];
+						int num3 = (int)pMesh.Objects[j].FromVert;
+						int k = 0;
+
+						while ((long)k < (long)((ulong)pMesh.Objects[j].ToVert))
+						{
+							array[k].Position = new Vector3(pMesh.Vertices[num3].X, pMesh.Vertices[num3].Y, pMesh.Vertices[num3].Z);
+							array[k].Normal = new Vector3(pMesh.Normals[num3].X, pMesh.Normals[num3].Y, pMesh.Normals[num3].Z);
+							
+							try
+							{
+								array[k].Texture = new Vector2(pMesh.UVMaps[0].Coords[num3].U, pMesh.UVMaps[0].Coords[num3].V);
+							}
+							catch
+							{
+								array[k].Texture = new Vector2(0f, 0f);
+							}
+
+							num3++;
+							k++;
+						}
+
+						new VertexBuffer(pDevice, array.Count<PositionNormalTextured>() * 32, Usage.None, VertexFormat.Position | VertexFormat.Texture1 | VertexFormat.Normal, Pool.Default);
+						Mesh mesh = new Mesh(pDevice, faces.Count<short>() / 3, array.Count<PositionNormalTextured>(), MeshFlags.Managed, VertexFormat.Position | VertexFormat.Texture1 | VertexFormat.Normal);
+						DataStream dataStream2;
+						DataStream dataStream = dataStream2 = mesh.VertexBuffer.Lock(0, array.Count<PositionNormalTextured>() * 32, LockFlags.None);
+						
+						try
+						{
+							dataStream.WriteRange<PositionNormalTextured>(array);
+							mesh.VertexBuffer.Unlock();
+						}
+						finally
+						{
+							if (dataStream2 != null)
+								((IDisposable)dataStream2).Dispose();
+						}
+
+						DataStream dataStream3;
+						dataStream = (dataStream3 = mesh.IndexBuffer.Lock(0, faces.Count<short>() * 2, LockFlags.None));
+						
+						try
+						{
+							dataStream.WriteRange<short>(faces);
+							mesh.IndexBuffer.Unlock();
+						}
+						finally
+						{
+							if (dataStream3 != null)
+								((IDisposable)dataStream3).Dispose();
+						}
+
+						if (pMesh.Weights.Count<tMeshJointWeights>() != 0)
+						{
+							string[] array2 = new string[pMesh.Weights.Count<tMeshJointWeights>()];
+							List<int>[] array3 = new List<int>[pMesh.Weights.Count<tMeshJointWeights>()];
+							List<float>[] array4 = new List<float>[pMesh.Weights.Count<tMeshJointWeights>()];
+							
+							for (int l = 0; l < pMesh.Weights.Count<tMeshJointWeights>(); l++)
+							{
+								array2[l] = pEnc.GetString(pMesh.Weights[l].JointName);
+								array3[l] = new List<int>();
+								array4[l] = new List<float>();
+
+								for (int m = 0; m < pMesh.Weights[l].WeightsMap.Count<tMeshWeightsMap>(); m++)
+								{
+									array3[l].Add(pMesh.Weights[l].WeightsMap[m].Index);
+									array4[l].Add(pMesh.Weights[l].WeightsMap[m].Weight);
+								}
+							}
+							mesh.SkinInfo = new SkinInfo(array.Count<PositionNormalTextured>(), VertexFormat.Position | VertexFormat.Texture1 | VertexFormat.Normal, (int)pMesh.HeaderInfo.JointCount);
+                            for (k = 0; k < array3.Count<List<int>>(); k++)
+                            {
+                                mesh.SkinInfo.SetBoneName(k, array2[k]);
+
+                                if (array3[k].Count > 0 && array4[k].Count > 0)
+                                    mesh.SkinInfo.SetBoneInfluence(k, array3[k].ToArray(), array4[k].ToArray());
+                                else
+                                    pMain.PrintLog("Render Dialog > some list is empty (i thing, who knows jeje MLGHackxor360RezaSpoon123-321... I need sleep dude) (SMC: " + pstrFilePath + ").", Color.Red);
+                            }
+                        }
+
+						mesh.GenerateAdjacency(0.5f);
+						mesh.ComputeNormals();
+						Texture texture = null;
+						int num4 = list[i].Object.FindIndex((smcObject x) => x.Name.Equals(pEnc.GetString(pMesh.Objects[j].Textures[0].InternalName)));
+						
+						if (num4 != -1)
+							texture = GetTextureFromFile(list[i].Object[num4].Texture);
+
+						pModel.Add(new tMesh(mesh, texture));
+					}
+				}
+			}
+
+			fZoom = 4f;
 		}
-		
-		private void InitializeDevice()
+
+        private void InitializeDevice()
 		{
 			pDirect3D = new Direct3D();
-            Direct3D direct3D = pDirect3D;
+			Direct3D direct3D = pDirect3D;
 			int adapter = 0;
 			int num1 = 1;
 			IntPtr handle1 = Handle;
@@ -1150,15 +1317,16 @@ namespace LastChaos_ToolBox_2024
 			pDevice.SetTransform(TransformState.View, Matrix.LookAtLH(vecCameraPosition, vecEntityPosition, Vector3.UnitY));
 			pDevice.SetTransform(TransformState.World, Matrix.RotationYawPitchRoll(fRotation, 3.1f, 0.0f));
 
-			if (pModels != null)
+			if (pModel != null)
 			{
-				for (int index = 0; index < pModels.Count<tMesh>(); ++index)
+				for (int index = 0; index < pModel.Count<tMesh>(); ++index)
 				{
-					if (pModels[index].TexData != null)
-						pDevice.SetTexture(0, (BaseTexture)pModels[index].TexData);
+					if (pModel[index].TexData != null)
+						pDevice.SetTexture(0, (BaseTexture)pModel[index].TexData);
 
-					for (int subset = 0; subset < 1000; ++subset)
-						pModels[index].MeshData.DrawSubset(subset);
+					//for (int subset = 0; subset < 1; ++subset)
+					//     pModel[index].MeshData.DrawSubset(subset);
+					pModel[index].MeshData.DrawSubset(0);
 				}
 			}
 
