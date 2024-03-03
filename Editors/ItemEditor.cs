@@ -328,8 +328,28 @@ namespace LastChaos_ToolBox_2024.Editors
 				pMain.PrintLog("Item Editor > Item: " + nItemID + " Error: a_castle_war out of range", Color.Red);
 			else
 				cbCastleType.SelectedIndex = nCastleType;
-			/****************************************/
-			btnClassFlag.Text = pTempRow["a_job_flag"].ToString();
+            /****************************************/
+            int nWearingPosition = Convert.ToInt32(pTempRow["a_wearing"]);
+
+            if (nWearingPosition < -1 || nWearingPosition > Defs.ItemWearingPositions.Length)
+            {
+                cbWearingPositionSelector.Enabled = false;
+                cbWearingPositionSelector.Text = "";
+
+                pMain.PrintLog("Item Editor > Item: " + nItemID + " Error: a_wearing out of range", Color.Red);
+            }
+            else
+            {
+                if (nWearingPosition == -1)
+                    nWearingPosition = 0;
+                else
+                    nWearingPosition++;
+
+                cbWearingPositionSelector.Enabled = true;
+                cbWearingPositionSelector.SelectedIndex = nWearingPosition;
+            }
+            /****************************************/
+            btnClassFlag.Text = pTempRow["a_job_flag"].ToString();
 
 			string strTooltip = "";
 			long nFlag = Convert.ToInt32(pTempRow["a_job_flag"]);
@@ -343,9 +363,9 @@ namespace LastChaos_ToolBox_2024.Editors
 			pToolTip = new ToolTip();
 			pToolTip.SetToolTip(btnClassFlag, strTooltip);
 			pToolTips[btnClassFlag] = pToolTip;
-			/****************************************/
-			// NOTE: This is not compatible with original database/source. I changed this to work with a system it has been developed.
-			string strFlag = pTempRow["a_zone_flag"].ToString();
+            /****************************************/
+            // NOTE: This is not compatible with original database/source. I changed this to work with a system it has been developed.
+            string strFlag = pTempRow["a_zone_flag"].ToString();
 
 			btnAllowedZoneFlag.Text = strFlag;
 
@@ -409,26 +429,6 @@ namespace LastChaos_ToolBox_2024.Editors
 				}
 			}
 			/****************************************/
-			int nWearingPosition = Convert.ToInt32(pTempRow["a_wearing"]);
-
-			if (nWearingPosition < -1 || nWearingPosition > Defs.ItemWearingPositions.Length)
-			{
-				cbWearingPositionSelector.Enabled = false;
-				cbWearingPositionSelector.Text = "";
-
-				pMain.PrintLog("Item Editor > Item: " + nItemID + " Error: a_wearing out of range", Color.Red);
-			}
-			else
-			{
-				if (nWearingPosition == -1)
-					nWearingPosition = 0;
-				else
-					nWearingPosition++;
-
-				cbWearingPositionSelector.Enabled = true;
-				cbWearingPositionSelector.SelectedIndex = nWearingPosition;
-			}
-			/****************************************/
 			tbQuestTriggerID.Text = pTempRow["a_quest_trigger_ids"].ToString();
 			tbQuestTriggerCount.Text = pTempRow["a_quest_trigger_count"].ToString();
 
@@ -464,28 +464,6 @@ namespace LastChaos_ToolBox_2024.Editors
 
 			BtnCopy.Enabled = true;
 			btnDelete.Enabled = true;
-		}
-
-		private void ChangePanel(Panel pPanel)
-		{
-			if (pPanel == GeneralPanel)
-			{
-				CraftingPanel.Visible = false;
-				OthersPanel.Visible = false;
-				GeneralPanel.Visible = true;
-			}
-			else if (pPanel == CraftingPanel)
-			{
-				GeneralPanel.Visible = false;
-				OthersPanel.Visible = false;
-				CraftingPanel.Visible = true;
-			}
-			else if (pPanel == OthersPanel)
-			{
-				GeneralPanel.Visible = false;
-				CraftingPanel.Visible = false;
-				OthersPanel.Visible = true;
-			}
 		}
 
 		private void tbSearch_KeyDown(object sender, KeyEventArgs e)
@@ -615,10 +593,6 @@ namespace LastChaos_ToolBox_2024.Editors
 		{
 			// TODO:
 		}
-
-		private void btnGeneral_Click(object sender, EventArgs e) { ChangePanel(GeneralPanel); }
-		private void btnCrafting_Click(object sender, EventArgs e) { ChangePanel(CraftingPanel); }
-		private void btnOthers_Click(object sender, EventArgs e) { ChangePanel(OthersPanel); }
 
 		private void cbEnable_CheckedChanged(object sender, EventArgs e)
 		{

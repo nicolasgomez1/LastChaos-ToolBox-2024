@@ -1,14 +1,13 @@
-[Database]
-Host=127.0.0.1
-Username=tools
-Password=iddqd
-Auth=lc_auth
-Data=lc_data
-User=lc_user
+[Settings]
+MySQLHost=127.0.0.1
+MySQLUsername=tools
+MySQLPassword=iddqd
+MySQLDBAuth=lc_auth
+MySQLDBData=lc_data
+MySQLDBUser=lc_user
 Charset=utf8
-Main_Lang=USA
-
-[General]
+; This is the suffix that will be used by default for the different tools. For example, depending on the subfix defined here, the names that will appear in the tool lists will be selected.
+Nation=USA
 ClientPath=D:\Documents\LastChaos Files\SourceBinLibs\CCB+
 ; Here the suffixes of the nations that will be requested when making a select and everything consequent are defined.
 ; In my case I eliminated everything related to the rest of the nations, so I only load these 3, but in a more generic case, more could be added.

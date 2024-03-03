@@ -6,7 +6,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Diagnostics;
-using SlimDX.Direct3D9;
 using MySql.Data.MySqlClient;
 using System.Reflection;
 using System.IO;
@@ -14,272 +13,291 @@ using IniParser;
 using IniParser.Model;
 using LastChaos_ToolBox_2024.Editors;
 using Definitions;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using System.Drawing.Imaging;
+using System.Linq;
 
 namespace LastChaos_ToolBox_2024
 {
-	public partial class Main : Form
-	{
-		// Global Vals
-		public Settings pSettings = new Settings();
-		public MySqlConnection mysqlConn;
-		public DataTable pItemTable = null;
-		public DataTable pZoneTable = null;
-		
-		private string strWindowsTitle;
+    public partial class Main : Form
+    {
+        // Global Vals
+        public Settings pSettings = new Settings();
+        public MySqlConnection mysqlConn;
+        public DataTable pItemTable = null;
+        public DataTable pZoneTable = null;
 
-		public class Settings
-		{
-			public string SettingsFile = "Settings.ini";
+        private string strWindowsTitle;
 
-			public string DBHost = "";
-			public string DBUsername = "";
-			public string DBPassword = "";
-			public string DBAuth = "";
-			public string DBData = "";
-			public string DBUser = "";
-			public string DBCharset = "utf8";
-			public string DefaultEditNation = "USA";
+        public class Settings
+        {
+            public string SettingsFile = "Settings.ini";
 
-			public string ClientPath = "";
-			public string[] NationSupported;
-		}
+            public string DBHost = "";
+            public string DBUsername = "";
+            public string DBPassword = "";
+            public string DBAuth = "";
+            public string DBData = "";
+            public string DBUser = "";
+            public string DBCharset = "utf8";
+            public string DefaultEditNation = "USA";
 
-		public Main()
-		{
-			InitializeComponent();
+            public string ClientPath = "";
+            public string[] NationSupported;
+        }
 
-			Assembly pAssembly = Assembly.GetAssembly(typeof(Main));
+        public Main()
+        {
+            InitializeComponent();
 
-			this.Text = strWindowsTitle = pAssembly.GetName().Name + " Build: " + pAssembly.GetName().Version.Revision;
-		}
+            Assembly pAssembly = Assembly.GetAssembly(typeof(Main));
 
-		private void Main_Load(object sender, EventArgs e)
-		{
+            this.Text = strWindowsTitle = pAssembly.GetName().Name + " Build: " + pAssembly.GetName().Version.Revision;
+        }
+
+        private void Main_Load(object sender, EventArgs e)
+        {
 #if DEBUG
-			Monitor.Start();
+            Monitor.Start();
 #endif
-			LoadSettings();
-			ConnectToDatabase();
-		}
+            LoadSettings();
+            ConnectToDatabase();
+        }
 
-		private void monitor_Tick(object sender, EventArgs e)
-		{
-			this.Text = strWindowsTitle + " (Ram Usage: " + (GC.GetTotalMemory(true) / 1024) + "KB's)";
-		}
+        private void monitor_Tick(object sender, EventArgs e)
+        {
+            this.Text = strWindowsTitle + " (Ram Usage: " + (GC.GetTotalMemory(true) / 1024) + "KB's)";
+        }
 
-		private void ReloadSettings_Click(object sender, EventArgs e) { LoadSettings(); }
+        private void ReloadSettings_Click(object sender, EventArgs e) { LoadSettings(); }
 
-		private void Reconnect_Click(object sender, EventArgs e)
-		{
-			if (mysqlConn.State == ConnectionState.Open)
-			{
-				PrintLog("MySQL > Closing existing connection.");
+        private void Reconnect_Click(object sender, EventArgs e)
+        {
+            if (mysqlConn.State == ConnectionState.Open)
+            {
+                PrintLog("MySQL > Closing existing connection.");
 
-				mysqlConn.Close();
-			}
+                mysqlConn.Close();
+            }
 
-			ConnectToDatabase();
-		}
+            ConnectToDatabase();
+        }
 
-		private void ItemEditor_Click(object sender, EventArgs e)
-		{
-			// TODO: NOTE: ¿Limitar la cantidad de editores de un mismo tipo que se pueden abrir?
-			ItemEditor pItemEditor = new ItemEditor(this);
-			pItemEditor.Show();
-		}
+        private void ItemEditor_Click(object sender, EventArgs e)
+        {
+            // TODO: NOTE: ¿Limitar la cantidad de editores de un mismo tipo que se pueden abrir?
+            ItemEditor pItemEditor = new ItemEditor(this);
+            pItemEditor.Show();
+        }
 
-		private string GetValueFromLine(string strString)
-		{
-			string[] strArray = strString.Split('=');
+        private string GetValueFromLine(string strString)
+        {
+            string[] strArray = strString.Split('=');
 
-			if (strArray.Length >= 2)
-			{
-				return strArray[1].Trim();
-			}
-			else
-			{
-				PrintLog("Settings file is corrupted or wrong formed.", Color.Red);
-				return "";
-			}
-		}
+            if (strArray.Length >= 2)
+            {
+                return strArray[1].Trim();
+            }
+            else
+            {
+                PrintLog("Settings file is corrupted or wrong formed.", Color.Red);
+                return "";
+            }
+        }
 
-		public void PrintLog(string strMsg, Color? ColorMsg = null)
-		{
-			StackFrame stackFrame = new StackFrame(1, true);
+        public void PrintLog(string strMsg, Color? ColorMsg = null)
+        {
+            StackFrame stackFrame = new StackFrame(1, true);
 
-			string strLog = $"{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff")} [{Path.GetFileName(stackFrame.GetFileName())} : {stackFrame.GetFileLineNumber()} : {stackFrame.GetMethod().Name}] > {strMsg}";
+            string strLog = $"{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff")} [{Path.GetFileName(stackFrame.GetFileName())} : {stackFrame.GetFileLineNumber()} : {stackFrame.GetMethod().Name}] > {strMsg}";
 
-			using (StreamWriter pStreamWriter = File.AppendText("Logs.log"))
-			{
-				pStreamWriter.WriteLine(strLog);
-			}
+            using (StreamWriter pStreamWriter = File.AppendText("Logs.log"))
+            {
+                pStreamWriter.WriteLine(strLog);
+            }
 
-			rtbConsole.Invoke((MethodInvoker)delegate
-			{
-				int nStartPos = rtbConsole.TextLength;
-				rtbConsole.AppendText(strLog + Environment.NewLine);
-				int nEndPos = rtbConsole.TextLength;
+            rtbConsole.Invoke((MethodInvoker)delegate
+            {
+                int nStartPos = rtbConsole.TextLength;
+                rtbConsole.AppendText(strLog + Environment.NewLine);
+                int nEndPos = rtbConsole.TextLength;
 
-				rtbConsole.Select(nStartPos, nEndPos - nStartPos);
-				rtbConsole.SelectionColor = ColorMsg ?? Color.FromArgb(208, 203, 148);
-				rtbConsole.SelectionLength = 0;
+                rtbConsole.Select(nStartPos, nEndPos - nStartPos);
+                rtbConsole.SelectionColor = ColorMsg ?? Color.FromArgb(208, 203, 148);
+                rtbConsole.SelectionLength = 0;
 
-				rtbConsole.ScrollToCaret();
-			});
-		}
+                rtbConsole.ScrollToCaret();
+            });
+        }
 
-		void LoadSettings()
-		{
-			PrintLog("Starting settings load...");
+        void LoadSettings()
+        {
+            PrintLog("Starting settings load...");
 
-			if (File.Exists(pSettings.SettingsFile))
-			{
-				FileIniDataParser pParser = new FileIniDataParser();
-				IniData pData = pParser.ReadFile(pSettings.SettingsFile);
+            if (File.Exists(pSettings.SettingsFile))
+            {
+                FileIniDataParser pParser = new FileIniDataParser();
+                IniData pData = pParser.ReadFile(pSettings.SettingsFile);
 
-				// Database Settings
-				pSettings.DBHost = pData["Database"]["Host"];
-				pSettings.DBUsername = pData["Database"]["Username"];
-				pSettings.DBPassword = pData["Database"]["Password"];
-				pSettings.DBAuth = pData["Database"]["Auth"];
-				pSettings.DBData = pData["Database"]["Data"];
-				pSettings.DBUser = pData["Database"]["User"];
-				pSettings.DBCharset = pData["Database"]["Charset"];
-				pSettings.DefaultEditNation = pData["Database"]["Main_Lang"].ToLower();
+                // Database Settings
+                pSettings.DBHost = pData["Settings"]["MySQLHost"];
+                pSettings.DBUsername = pData["Settings"]["MySQLUsername"];
+                pSettings.DBPassword = pData["Settings"]["MySQLPassword"];
+                pSettings.DBAuth = pData["Settings"]["MySQLDBAuth"];
+                pSettings.DBData = pData["Settings"]["MySQLDBData"];
+                pSettings.DBUser = pData["Settings"]["MySQLDBUser"];
+                pSettings.DBCharset = pData["Settings"]["Charset"];
+                pSettings.DefaultEditNation = pData["Settings"]["Nation"].ToLower();
 
-				// General Settings
-				pSettings.ClientPath = pData["General"]["ClientPath"];
+                // General Settings
+                pSettings.ClientPath = pData["Settings"]["ClientPath"];
 
-				string[] strArrayNations = pData["General"]["NationSupported"].Split(',');
+                string[] strArrayNations = pData["Settings"]["NationSupported"].Split(',');
 
-				pSettings.NationSupported = new string[strArrayNations.Length];
+                pSettings.NationSupported = new string[strArrayNations.Length];
 
-				for (int i = 0; i < strArrayNations.Length; i++)
-					pSettings.NationSupported[i] = strArrayNations[i];
+                for (int i = 0; i < strArrayNations.Length; i++)
+                    pSettings.NationSupported[i] = strArrayNations[i];
 
-				PrintLog("Settings load finished.", Color.Lime);
-			}
-			else
-			{
-				PrintLog($"{pSettings.SettingsFile} not exist.", Color.Red);
-			}
-		}
+                PrintLog("Settings load finished.", Color.Lime);
+            }
+            else
+            {
+                PrintLog($"{pSettings.SettingsFile} not exist.", Color.Red);
+            }
+        }
 
-		// General Help Functions
-		public Bitmap GetIcon(string BtnType, string nImage, int nRow, int nCol)
-		{
-			string strComposePath = BtnType + "/" + BtnType + nImage + ".png";
+        // General Help Functions
+        public Bitmap GetIcon(string BtnType, string nImage, int nRow, int nCol)
+        {
+            string strComposePath = BtnType + "/" + BtnType + nImage + ".png";
 
-			if (File.Exists(strComposePath))
-			{
-				using (Image pImage = Image.FromFile(strComposePath))
-				{
-					// NOTE: Create new Bitmap
-					Bitmap pBitmap = new Bitmap(32, 32);
-					// NOTE: Generate Bitmap content
-					using (Graphics pGraphics = Graphics.FromImage((Image)pBitmap))
-					{
-						pGraphics.DrawImage(pImage, 0, 0, (new Rectangle(nCol * 32, nRow * 32, 32, 32)), GraphicsUnit.Pixel);
-					}
+            if (File.Exists(strComposePath))
+            {
+                using (Image pImage = Image.FromFile(strComposePath))
+                {
+                    // NOTE: Create new Bitmap
+                    Bitmap pBitmap = new Bitmap(32, 32);
+                    // NOTE: Generate Bitmap content
+                    using (Graphics pGraphics = Graphics.FromImage((Image)pBitmap))
+                    {
+                        pGraphics.DrawImage(pImage, 0, 0, (new Rectangle(nCol * 32, nRow * 32, 32, 32)), GraphicsUnit.Pixel);
+                    }
 
-					return pBitmap;
-				}
-			}
-			else
-			{
-				PrintLog("Error while trying to get Icon. Path: " + strComposePath, Color.Red);
+                    return pBitmap;
+                }
+            }
+            else
+            {
+                PrintLog("Error while trying to get Icon. Path: " + strComposePath, Color.Red);
 
-				return null;
-			}
-		}
+                return null;
+            }
+        }
 
-		// Database Functions
-		public DataTable QuerySelect(string strCharset, string strQuery)
-		{
-			try
-			{
-				string strConnect = $"SERVER={pSettings.DBHost};DATABASE={pSettings.DBData};UID={pSettings.DBUsername};PASSWORD={pSettings.DBPassword};CHARSET=" + strCharset;
+        // Database Functions
+        public DataTable QuerySelect(string strCharset, string strQuery)
+        {
+            try
+            {
+                string strConnect = $"SERVER={pSettings.DBHost};DATABASE={pSettings.DBData};UID={pSettings.DBUsername};PASSWORD={pSettings.DBPassword};CHARSET=" + strCharset;
 
-				using (MySqlConnection mysqlConnection = new MySqlConnection(strConnect))
-				{
-					mysqlConnection.Open();
+                using (MySqlConnection mysqlConnection = new MySqlConnection(strConnect))
+                {
+                    mysqlConnection.Open();
 
-					using (MySqlCommand mysqlCommand = new MySqlCommand(strQuery, mysqlConnection))
-					{
-						DataTable pTable = new DataTable();
-						pTable.Load(mysqlCommand.ExecuteReader());
+                    using (MySqlCommand mysqlCommand = new MySqlCommand(strQuery, mysqlConnection))
+                    {
+                        DataTable pTable = new DataTable();
+                        pTable.Load(mysqlCommand.ExecuteReader());
 
-						mysqlConnection.Close();
+                        mysqlConnection.Close();
 
-						PrintLog("MySql Query (Charset: " + strCharset + ")\n" + strQuery + "\nExecute successfully.", Color.Lime);
+                        PrintLog("MySql Query (Charset: " + strCharset + ")\n" + strQuery + "\nExecute successfully.", Color.Lime);
 
-						return pTable;
-					}
-				}
-			}
-			catch (Exception ex)
-			{
-				PrintLog($"MySql Query (Charset: {strCharset})\n{strQuery}\nFail > {ex.Message}", Color.Red);
+                        return pTable;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                PrintLog($"MySql Query (Charset: {strCharset})\n{strQuery}\nFail > {ex.Message}", Color.Red);
 
-				return null;
-			}
-		}
+                return null;
+            }
+        }
 
-		public bool QueryUpdateInsert(string strCharset, string strQuery)
-		{
-			try
-			{
-				string strConnect = $"SERVER={pSettings.DBHost};DATABASE={pSettings.DBData};UID={pSettings.DBUsername};PASSWORD={pSettings.DBPassword};CHARSET=" + strCharset;
-				
-				using (MySqlConnection mysqlConnection = new MySqlConnection(strConnect))
-				{
-					mysqlConnection.Open();
+        public bool QueryUpdateInsert(string strCharset, string strQuery)
+        {
+            try
+            {
+                string strConnect = $"SERVER={pSettings.DBHost};DATABASE={pSettings.DBData};UID={pSettings.DBUsername};PASSWORD={pSettings.DBPassword};CHARSET=" + strCharset;
 
-					using (MySqlCommand mysqlCommand = new MySqlCommand(strQuery, mysqlConnection))
-					{
-						mysqlCommand.ExecuteReader();
+                using (MySqlConnection mysqlConnection = new MySqlConnection(strConnect))
+                {
+                    mysqlConnection.Open();
 
-						mysqlConnection.Close();
+                    using (MySqlCommand mysqlCommand = new MySqlCommand(strQuery, mysqlConnection))
+                    {
+                        mysqlCommand.ExecuteReader();
 
-						PrintLog("MySql Query (Charset: " + strCharset + ")\n" + strQuery + "\nExecute successfully.", Color.Lime);
+                        mysqlConnection.Close();
 
-						return true;
-					}
-				}
-			}
-			catch(Exception ex)
-			{
-				PrintLog($"MySql Query (Charset: {strCharset})\n{strQuery}\nFail > {ex.Message}", Color.Red);
+                        PrintLog("MySql Query (Charset: " + strCharset + ")\n" + strQuery + "\nExecute successfully.", Color.Lime);
 
-				return false;
-			}
-		}
+                        return true;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                PrintLog($"MySql Query (Charset: {strCharset})\n{strQuery}\nFail > {ex.Message}", Color.Red);
 
-		void ConnectToDatabase()
-		{
-			try
-			{
-				string strConnect = $"SERVER={pSettings.DBHost};DATABASE={pSettings.DBData};UID={pSettings.DBUsername};PASSWORD={pSettings.DBPassword};CHARSET={pSettings.DBCharset}";
-			   
-				mysqlConn = new MySqlConnection(strConnect);
+                return false;
+            }
+        }
 
-				PrintLog("MySQL > Trying to connect to Database (" + strConnect + ")");
+        void ConnectToDatabase()
+        {
+            try
+            {
+                string strConnect = $"SERVER={pSettings.DBHost};DATABASE={pSettings.DBData};UID={pSettings.DBUsername};PASSWORD={pSettings.DBPassword};CHARSET={pSettings.DBCharset}";
 
-				mysqlConn.Open();
+                mysqlConn = new MySqlConnection(strConnect);
 
-				PrintLog("MySQL > Connected successfully.", Color.Lime);
-			}
-			catch (Exception ex)
-			{
-				PrintLog($"MySQL > {ex.Message}", Color.Red);
+                PrintLog("MySQL > Trying to connect to Database (" + strConnect + ")");
 
-				DialogResult pDialogReturn = MessageBox.Show($"{ex.Message}\n\nWould you like to retry the connection?", "MySQL > It was not possible to connect to your Database Server.", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+                mysqlConn.Open();
 
-				if (pDialogReturn == DialogResult.Yes)
-					ConnectToDatabase();
-				else
-					Application.Exit();
-			}
-		}
-	}
+                PrintLog("MySQL > Connected successfully.", Color.Lime);
+            }
+            catch (Exception ex)
+            {
+                PrintLog($"MySQL > {ex.Message}", Color.Red);
+
+                DialogResult pDialogReturn = MessageBox.Show($"{ex.Message}\n\nWould you like to retry the connection?", "MySQL > It was not possible to connect to your Database Server.", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+
+                if (pDialogReturn == DialogResult.Yes)
+                    ConnectToDatabase();
+                else
+                    Application.Exit();
+            }
+        }
+
+        RenderDialog pItemEditor;
+        private void button4_Click(object sender, EventArgs e)
+        {
+            pItemEditor = new RenderDialog();
+            pItemEditor.Show();
+
+            pItemEditor.SetModel("D:\\Documents\\LastChaos Files\\SourceBinLibs\\CCB+\\Data\\Item\\Common\\ITEM_treasure02.smc", "small");
+
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            pItemEditor.SetModel("D:\\Documents\\LastChaos Files\\SourceBinLibs\\CCB+\\Data\\Monster\\compra\\compra.smc", "big");
+        }
+    }
 }
