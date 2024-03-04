@@ -39,20 +39,201 @@ namespace LastChaos_ToolBox_2024.Editors
 			pMain = mainForm;
 		}
 
-        public class ListBoxItem
-        {
-            public int ID { get; set; }
-            public string Text { get; set; }
+		public class ListBoxItem
+		{
+			public int ID { get; set; }
+			public string Text { get; set; }
 
-            public override string ToString()
+			public override string ToString()
+			{
+				return Text;
+			}
+		}
+
+		private async Task LoadItemDataAsync()
+		{
+            bool bRequestNeeded = false;
+
+            // Aquí se definen las columnas generales que son requeridas por la Herramienta en cuestión.
+            HashSet<string> listQueryCompose = new HashSet<string>	//List<string> listQueryCompose = new List<string>
             {
-                return Text;
+                "a_enable", "a_texture_id", "a_texture_row", "a_texture_col", "a_file_smc", "a_weight", "a_price", "a_level", "a_level2", "a_durability", "a_fame",
+                "a_max_use", "a_grade", "a_type_idx", "a_subtype_idx", "a_wearing", "a_rvr_value", "a_rvr_grade", "a_effect_name", "a_attack_effect_name",
+                "a_damage_effect_name", "a_castle_war", "a_job_flag", "a_zone_flag", "a_flag", "a_origin_variation1", "a_origin_variation2", "a_origin_variation3",
+                "a_origin_variation4", "a_origin_variation5", "a_origin_variation6", "a_set_0", "a_set_1", "a_set_2", "a_set_3", "a_set_4", "a_num_0", "a_num_1",
+                "a_num_2", "a_num_3", "a_num_4", "a_need_sskill", "a_need_sskill_level", "a_need_sskill2", "a_need_sskill_level2"
+            };
+
+            // Esto sirve para solicitar únicamente las columnas asociadas a los idiomas definidos en General -> NationSupported.
+            for (int i = 0; i < pMain.pSettings.NationSupported.Length; i++)
+            {
+                string strNation = pMain.pSettings.NationSupported[i].ToLower();
+
+                listQueryCompose.Add("a_name_" + strNation);
+                listQueryCompose.Add("a_descr_" + strNation);
+            }
+
+            // Aquí se verificará si la Tabla global requerida por la Herramienta está vacía. Si es así se ejecutará la petición directamente.
+            if (pMain.pItemTable == null)
+            {
+                bRequestNeeded = true;
+            }
+            else
+            {
+                /*for (int i = listQueryCompose.Count - 1; i >= 0; i--)
+				{
+					if (!pMain.pItemTable.Columns.Contains(listQueryCompose[i]))
+						bRequestNeeded = true;
+					else
+						listQueryCompose.RemoveAt(i);
+				}*/
+                foreach (var column in listQueryCompose.ToList())
+                {
+                    if (!pMain.pItemTable.Columns.Contains(column))
+                        bRequestNeeded = true;
+                    else
+                        listQueryCompose.Remove(column);
+                }
+            }
+
+            // Request to t_item data if needed
+            if (bRequestNeeded)
+            {
+                pMain.pItemTable = await Task.Run(() =>
+                {
+                    // NOTE: Posible problema: Se podrían hacer peticiones con algunas variaciones en el orden o rangos, no sé como se comportaría si sistema en dicho caso.
+                    return pMain.QuerySelect(pMain.pSettings.DBCharset, $"SELECT a_index, {string.Join(",", listQueryCompose)} FROM {pMain.pSettings.DBData}.t_item ORDER BY a_index;");
+                });
+            }
+        }
+
+        private async Task LoadZoneDataAsync()
+		{
+            bool bRequestNeeded = false;
+
+            // Aquí se definen las columnas generales que son requeridas por la Herramienta en cuestión.
+            HashSet<string> listQueryCompose = new HashSet<string> { "a_name" };	//listQueryCompose = new List<string> { "a_name" };
+
+            // Aquí se verificará si la Tabla global requerida por la Herramienta está vacía. Si es así se ejecutará la petición directamente.
+            if (pMain.pZoneTable == null)
+            {
+                bRequestNeeded = true;
+            }
+            else
+            {
+                /*for (int i = listQueryCompose.Count - 1; i >= 0; i--)
+				{
+					if (!pMain.pZoneTable.Columns.Contains(listQueryCompose[i]))
+						bRequestNeeded = true;
+					else
+						listQueryCompose.RemoveAt(i);
+				}*/
+                foreach (var column in listQueryCompose.ToList())
+                {
+                    if (!pMain.pZoneTable.Columns.Contains(column))
+                        bRequestNeeded = true;
+                    else
+                        listQueryCompose.Remove(column);
+                }
+            }
+
+            // Request to t_zonedata if needed
+            if (bRequestNeeded)
+            {
+                pMain.pZoneTable = await Task.Run(() =>
+                {
+                    return pMain.QuerySelect(pMain.pSettings.DBCharset, $"SELECT a_zone_index, {string.Join(",", listQueryCompose)} FROM {pMain.pSettings.DBData}.t_zonedata ORDER BY a_zone_index;");
+                });
+            }
+        }
+
+		private async Task LoadSkillDataAsync()
+		{
+            bool bRequestNeeded = false;
+
+            // Aquí se definen las columnas generales que son requeridas por la Herramienta en cuestión.
+            HashSet<string> listQueryCompose = new HashSet<string> { "a_name_" + pMain.pSettings.WorkLocale };	//listQueryCompose = new List<string> { "a_name_" + pMain.pSettings.WorkLocale };
+
+            // Aquí se verificará si la Tabla global requerida por la Herramienta está vacía. Si es así se ejecutará la petición directamente.
+            if (pMain.pSkillTable == null)
+            {
+                bRequestNeeded = true;
+            }
+            else
+            {
+                /*for (int i = listQueryCompose.Count - 1; i >= 0; i--)
+				{
+					if (!pMain.pSkillTable.Columns.Contains(listQueryCompose[i]))
+						bRequestNeeded = true;
+					else
+						listQueryCompose.RemoveAt(i);
+				}*/
+                foreach (var column in listQueryCompose.ToList())
+                {
+                    if (!pMain.pZoneTable.Columns.Contains(column))
+                        bRequestNeeded = true;
+                    else
+                        listQueryCompose.Remove(column);
+                }
+            }
+
+            // Request to t_skill if needed
+            if (bRequestNeeded)
+            {
+                pMain.pSkillTable = await Task.Run(() =>
+                {
+                    return pMain.QuerySelect(pMain.pSettings.DBCharset, $"SELECT a_index, {string.Join(",", listQueryCompose)} FROM {pMain.pSettings.DBData}.t_skill ORDER BY a_index;");
+                });
+
+                // Populate pSkillLevelTable
+                // NOTE: En Lua yo ejecutaba una Query e iba agregando manualmente todas las claves, además de una subtabla para almacenar los skillslevels. Basicamente hacia una petición de niveles cada vez que iteraba por un skill, cosa poco eficiente. Para intentar mejorar eso haré una unica gran petición y cargaré todo en una segunda tabla.
+
+                // Reset vals and load t_skilllevel data if needed
+                bRequestNeeded = false;
+                listQueryCompose.Clear();
+
+                // Aquí se definen las columnas requeridas para ésta Herramienta.
+                listQueryCompose = new HashSet<string> { "a_level", "a_dummypower" };// listQueryCompose = new List<string> { "a_level", "a_dummypower" };
+
+                // Aquí se verificará si la Tabla global requerida por la Herramienta está vacía. Si es así se ejecutará la petición directamente.
+                if (pMain.pSkillLevelTable == null)
+                {
+                    bRequestNeeded = true;
+                }
+                else
+                {
+                    /*for (int i = listQueryCompose.Count - 1; i >= 0; i--)
+					{
+						if (!pMain.pSkillLevelTable.Columns.Contains(listQueryCompose[i]))
+							bRequestNeeded = true;
+						else
+							listQueryCompose.RemoveAt(i);
+					}*/
+                    foreach (var column in listQueryCompose.ToList())
+                    {
+                        if (!pMain.pSkillLevelTable.Columns.Contains(column))
+                            bRequestNeeded = true;
+                        else
+                            listQueryCompose.Remove(column);
+                    }
+                }
+
+                // Request to t_skill if needed
+                if (bRequestNeeded)
+                {
+                    pMain.pSkillLevelTable = await Task.Run(() =>
+                    {
+                        return pMain.QuerySelect(pMain.pSettings.DBCharset, $"SELECT a_index, {string.Join(",", listQueryCompose)} FROM {pMain.pSettings.DBData}.t_skilllevel ORDER BY a_index;");
+                    });
+                }
             }
         }
 
         private async void ItemEditor_LoadAsync(object sender, EventArgs e)
 		{
-			foreach (Control control in this.Controls)
+            ProgressDialog pProgressDialog = new ProgressDialog(this, "Loading Data, Please Wait...");
+
+            foreach (Control control in this.Controls)
 			{
 				if (control is Label)
 					((Label)control).TabStop = false;
@@ -114,165 +295,15 @@ namespace LastChaos_ToolBox_2024.Editors
 			Stopwatch stopwatch = new Stopwatch();
 			stopwatch.Start();
 #endif
-			// Populate pItemTable
-			ProgressDialog progressDialog = new ProgressDialog(this, "Loading Items Data, Please Wait...");
-
-			bool bRequestNeeded = false;
-
-			// Aquí se definen las columnas generales que son requeridas por la Herramienta en cuestión.
-			List<string> listQueryCompose = new List<string>
-			{
-				"a_enable", "a_texture_id", "a_texture_row", "a_texture_col", "a_file_smc", "a_weight", "a_price", "a_level", "a_level2", "a_durability", "a_fame",
-				"a_max_use", "a_grade", "a_type_idx", "a_subtype_idx", "a_wearing", "a_rvr_value", "a_rvr_grade", "a_effect_name", "a_attack_effect_name",
-				"a_damage_effect_name", "a_castle_war", "a_job_flag", "a_zone_flag", "a_flag", "a_origin_variation1", "a_origin_variation2", "a_origin_variation3",
-				"a_origin_variation4", "a_origin_variation5", "a_origin_variation6", "a_set_0", "a_set_1", "a_set_2", "a_set_3", "a_set_4", "a_num_0", "a_num_1",
-				"a_num_2", "a_num_3", "a_num_4", "a_need_sskill", "a_need_sskill_level", "a_need_sskill2", "a_need_sskill_level2"
-			};
-
-			// Esto sirve para solicitar únicamente las columnas asociadas a los idiomas definidos en General -> NationSupported.
-			for (int i = 0; i < pMain.pSettings.NationSupported.Length; i++)
-			{
-				string strNation = pMain.pSettings.NationSupported[i].ToLower();
-
-				listQueryCompose.Add("a_name_" + strNation);
-				listQueryCompose.Add("a_descr_" + strNation);
-			}
-
-			// Aquí se verificará si la Tabla global requerida por la Herramienta está vacía. Si es así se ejecutará la petición directamente.
-			if (pMain.pItemTable == null)
-			{
-				bRequestNeeded = true;
-			}
-			else
-			{
-				for (int i = listQueryCompose.Count - 1; i >= 0; i--)
-				{
-					if (!pMain.pItemTable.Columns.Contains(listQueryCompose[i]))
-						bRequestNeeded = true;
-					else
-						listQueryCompose.RemoveAt(i);
-				}
-			}
-
-			// Request to t_item data if needed
-			if (bRequestNeeded)
-			{
-				pMain.pItemTable = await Task.Run(() =>
-				{
-					// NOTE: Posible problema: Se podrían hacer peticiones con algunas variaciones en el orden o rangos, no sé como se comportaría si sistema en dicho caso.
-					return pMain.QuerySelect(pMain.pSettings.DBCharset, $"SELECT a_index, {string.Join(",", listQueryCompose)} FROM {pMain.pSettings.DBData}.t_item ORDER BY a_index;");
-				});
-			}
-
-			// Populate pZoneTable
-			progressDialog.UpdateText("Loading Zones Data, Please Wait...");
-
-			// Reset vals and load t_zonedata data if needed
-			bRequestNeeded = false;
-			listQueryCompose.Clear();
-
-			// Aquí se definen las columnas requeridas para ésta Herramienta.
-			listQueryCompose = new List<string> { "a_name" };
-
-			// Aquí se verificará si la Tabla global requerida por la Herramienta está vacía. Si es así se ejecutará la petición directamente.
-			if (pMain.pZoneTable == null)
-			{
-				bRequestNeeded = true;
-			}
-			else
-			{
-				for (int i = listQueryCompose.Count - 1; i >= 0; i--)
-				{
-					if (!pMain.pZoneTable.Columns.Contains(listQueryCompose[i]))
-						bRequestNeeded = true;
-					else
-						listQueryCompose.RemoveAt(i);
-				}
-			}
-
-			// Request to t_zonedata if needed
-			if (bRequestNeeded)
-			{
-				pMain.pZoneTable = await Task.Run(() =>
-				{
-					return pMain.QuerySelect(pMain.pSettings.DBCharset, $"SELECT a_zone_index, {string.Join(",", listQueryCompose)} FROM {pMain.pSettings.DBData}.t_zonedata ORDER BY a_zone_index;");
-				});
-			}
-
-			// Populate pSkillTable
-			progressDialog.UpdateText("Loading Skills Data, Please Wait...");
-
-			// Reset vals and load t_skill & t_skilllevel data if needed
-			bRequestNeeded = false;
-			listQueryCompose.Clear();
-
-			// Aquí se definen las columnas requeridas para ésta Herramienta.
-			listQueryCompose = new List<string> { "a_name_" + pMain.pSettings.WorkLocale };
-
-			// Aquí se verificará si la Tabla global requerida por la Herramienta está vacía. Si es así se ejecutará la petición directamente.
-			if (pMain.pSkillTable == null)
-			{
-				bRequestNeeded = true;
-			}
-			else
-			{
-				for (int i = listQueryCompose.Count - 1; i >= 0; i--)
-				{
-					if (!pMain.pSkillTable.Columns.Contains(listQueryCompose[i]))
-						bRequestNeeded = true;
-					else
-						listQueryCompose.RemoveAt(i);
-				}
-			}
-
-			// Request to t_skill if needed
-			if (bRequestNeeded)
-			{
-				pMain.pSkillTable = await Task.Run(() =>
-				{
-					return pMain.QuerySelect(pMain.pSettings.DBCharset, $"SELECT a_index, {string.Join(",", listQueryCompose)} FROM {pMain.pSettings.DBData}.t_skill ORDER BY a_index;");
-				});
-
-				// Populate pSkillLevelTable
-				// NOTE: En Lua yo ejecutaba una Query e iba agregando manualmente todas las claves, además de una subtabla para almacenar los skillslevels. Basicamente hacia una petición de niveles cada vez que iteraba por un skill, cosa poco eficiente. Para intentar mejorar eso haré una unica gran petición y cargaré todo en una segunda tabla.
-
-				// Reset vals and load t_skilllevel data if needed
-				bRequestNeeded = false;
-				listQueryCompose.Clear();
-
-				// Aquí se definen las columnas requeridas para ésta Herramienta.
-				listQueryCompose = new List<string> { "a_level", "a_dummypower" };
-
-				// Aquí se verificará si la Tabla global requerida por la Herramienta está vacía. Si es así se ejecutará la petición directamente.
-				if (pMain.pSkillLevelTable == null)
-				{
-					bRequestNeeded = true;
-				}
-				else
-				{
-					for (int i = listQueryCompose.Count - 1; i >= 0; i--)
-					{
-						if (!pMain.pSkillLevelTable.Columns.Contains(listQueryCompose[i]))
-							bRequestNeeded = true;
-						else
-							listQueryCompose.RemoveAt(i);
-					}
-				}
-
-				// Request to t_skill if needed
-				if (bRequestNeeded)
-				{
-					pMain.pSkillLevelTable = await Task.Run(() =>
-					{
-						return pMain.QuerySelect(pMain.pSettings.DBCharset, $"SELECT a_index, {string.Join(",", listQueryCompose)} FROM {pMain.pSettings.DBData}.t_skilllevel ORDER BY a_index;");
-					});
-				}
-			}
+            await Task.WhenAll(
+				LoadItemDataAsync(),    // Populate pItemTable
+                LoadZoneDataAsync(),    // Populate pZoneTable
+                LoadSkillDataAsync()    // Populate pSkillTable & pSkillLevelTable
+            );
 #if DEBUG
-			stopwatch.Stop();
+            stopwatch.Stop();
 			pMain.PrintLog($"Data load took: {stopwatch.ElapsedMilliseconds} ms", Color.CornflowerBlue);
 #endif
-			// NOTE: Definitivamente no fué código más legible... robert martin must wake up sweating at night
 			/****************************************/
 			if (pMain.pItemTable != null)
 			{
@@ -310,7 +341,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			btnReload.Enabled = true;
 			btnAddNew.Enabled = true;
 
-			progressDialog.Close();
+			pProgressDialog.Close();
 		}
 
 		private void ItemEditor_FormClosing(object sender, FormClosingEventArgs e)
