@@ -42,9 +42,9 @@ namespace LastChaos_ToolBox_2024
 		{
 			timerRender.Start();
 
+            this.FormClosing += RenderDialog_FormClosing;
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
             panel3DView.MouseWheel += panel3DView_Zoom;
-			this.FormClosing += RenderDialog_FormClosing;
 
 			InitializeDevice();
 		}
@@ -1173,23 +1173,27 @@ namespace LastChaos_ToolBox_2024
 							k++;
 						}
 
-						new VertexBuffer(pDevice, array.Count<PositionNormalTextured>() * 32, Usage.None, VertexFormat.Position | VertexFormat.Texture1 | VertexFormat.Normal, Pool.Default);
+						//new VertexBuffer(pDevice, array.Count<PositionNormalTextured>() * 32, Usage.None, VertexFormat.Position | VertexFormat.Texture1 | VertexFormat.Normal, Pool.Default);
+
 						Mesh mesh = new Mesh(pDevice, faces.Count<short>() / 3, array.Count<PositionNormalTextured>(), MeshFlags.Managed, VertexFormat.Position | VertexFormat.Texture1 | VertexFormat.Normal);
+
 						DataStream dataStream2;
 						DataStream dataStream = dataStream2 = mesh.VertexBuffer.Lock(0, array.Count<PositionNormalTextured>() * 32, LockFlags.None);
-						
-						try
+                        
+                        try
 						{
 							dataStream.WriteRange<PositionNormalTextured>(array);
 							mesh.VertexBuffer.Unlock();
-						}
+                        }
 						finally
 						{
 							if (dataStream2 != null)
 								((IDisposable)dataStream2).Dispose();
-						}
 
-						DataStream dataStream3;
+                            mesh.VertexBuffer.Dispose();	// TEST
+                        }
+
+                        DataStream dataStream3;
 						dataStream = (dataStream3 = mesh.IndexBuffer.Lock(0, faces.Count<short>() * 2, LockFlags.None));
 						
 						try
@@ -1201,7 +1205,9 @@ namespace LastChaos_ToolBox_2024
 						{
 							if (dataStream3 != null)
 								((IDisposable)dataStream3).Dispose();
-						}
+
+							mesh.IndexBuffer.Dispose();	// TEST
+                        }
 
 						if (pMesh.Weights.Count<tMeshJointWeights>() != 0)
 						{
@@ -1221,7 +1227,9 @@ namespace LastChaos_ToolBox_2024
 									array4[l].Add(pMesh.Weights[l].WeightsMap[m].Weight);
 								}
 							}
+
 							mesh.SkinInfo = new SkinInfo(array.Count<PositionNormalTextured>(), VertexFormat.Position | VertexFormat.Texture1 | VertexFormat.Normal, (int)pMesh.HeaderInfo.JointCount);
+
                             for (k = 0; k < array3.Count<List<int>>(); k++)
                             {
                                 mesh.SkinInfo.SetBoneName(k, array2[k]);
@@ -1229,12 +1237,15 @@ namespace LastChaos_ToolBox_2024
                                 if (array3[k].Count > 0 && array4[k].Count > 0)
                                     mesh.SkinInfo.SetBoneInfluence(k, array3[k].ToArray(), array4[k].ToArray());
                                 else
-                                    pMain.PrintLog("Render Dialog > some list is empty (i thing, who knows jeje MLGHackxor360RezaSpoon123-321... I need sleep dude) (SMC: " + pstrFilePath + ").", Color.Red);
+                                    pMain.PrintLog("Render Dialog > Some list is empty (i thing, who knows jeje MLGHackxor360RezaSpoon123-321... I need sleep dude) (SMC: " + pstrFilePath + ").", Color.Red);
                             }
+
+                            mesh.SkinInfo.Dispose();	// TEST
                         }
 
 						mesh.GenerateAdjacency(0.5f);
 						mesh.ComputeNormals();
+
 						Texture texture = null;
 						int num4 = list[i].Object.FindIndex((smcObject x) => x.Name.Equals(pEnc.GetString(pMesh.Objects[j].Textures[0].InternalName)));
 						

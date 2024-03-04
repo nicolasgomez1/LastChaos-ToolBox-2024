@@ -56,13 +56,8 @@ namespace LastChaos_ToolBox_2024
 
         public void Close()
 		{
-			if (pDialogForm != null && !pDialogForm.IsDisposed)
-			{
-                pDialogForm.Invoke((MethodInvoker)delegate
-                {
-                    pDialogForm.Close();
-                });
-			}
+            if (pDialogForm != null && !pDialogForm.IsDisposed)
+                pDialogForm.Invoke((MethodInvoker)delegate { pDialogForm.Close(); });
 		}
     }
 }

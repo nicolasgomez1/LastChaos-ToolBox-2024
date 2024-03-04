@@ -19,6 +19,8 @@ namespace LastChaos_ToolBox_2024
 {
     public partial class Main : Form
     {
+        private string strWindowsTitle;
+
         // Global Vals
         public Settings pSettings = new Settings();
         public MySqlConnection mysqlConn;
@@ -26,8 +28,6 @@ namespace LastChaos_ToolBox_2024
         public DataTable pZoneTable = null;
         public DataTable pSkillTable = null;
         public DataTable pSkillLevelTable = null;
-
-        private string strWindowsTitle;
 
         public class Settings
         {
@@ -350,7 +350,7 @@ namespace LastChaos_ToolBox_2024
             {
                 PrintLog($"MySQL > {ex.Message}", Color.Red);
 
-                DialogResult pDialogReturn = MessageBox.Show($"{ex.Message}\n\nWould you like to retry the connection?", "LastChaos ToolBox 2024", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+                DialogResult pDialogReturn = MessageBox.Show($"{ex.Message}\n\nWould you like to retry the connection?", "LastChaos ToolBox", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
 
                 if (pDialogReturn == DialogResult.Yes)
                     ConnectToDatabase();

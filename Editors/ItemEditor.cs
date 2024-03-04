@@ -34,7 +34,7 @@ namespace LastChaos_ToolBox_2024.Editors
 		{
 			this.FormClosing += ItemEditor_FormClosing;
 
-			InitializeComponent();
+            InitializeComponent();
 
 			pMain = mainForm;
 		}
@@ -152,7 +152,10 @@ namespace LastChaos_ToolBox_2024.Editors
             bool bRequestNeeded = false;
 
             // Aquí se definen las columnas generales que son requeridas por la Herramienta en cuestión.
-            HashSet<string> listQueryCompose = new HashSet<string> { "a_name_" + pMain.pSettings.WorkLocale };	//listQueryCompose = new List<string> { "a_name_" + pMain.pSettings.WorkLocale };
+            HashSet<string> listQueryCompose = new HashSet<string> {
+				"a_name_" + pMain.pSettings.WorkLocale, "a_client_description_" + pMain.pSettings.WorkLocale, "a_client_icon_texid", "a_client_icon_row", "a_client_icon_col"
+
+            };	//listQueryCompose = new List<string> { "a_name_" + pMain.pSettings.WorkLocale };
 
             // Aquí se verificará si la Tabla global requerida por la Herramienta está vacía. Si es así se ejecutará la petición directamente.
             if (pMain.pSkillTable == null)
@@ -223,7 +226,7 @@ namespace LastChaos_ToolBox_2024.Editors
                 {
                     pMain.pSkillLevelTable = await Task.Run(() =>
                     {
-                        return pMain.QuerySelect(pMain.pSettings.DBCharset, $"SELECT a_index, {string.Join(",", listQueryCompose)} FROM {pMain.pSettings.DBData}.t_skilllevel ORDER BY a_index;");
+                        return pMain.QuerySelect(pMain.pSettings.DBCharset, $"SELECT a_index, {string.Join(",", listQueryCompose)} FROM {pMain.pSettings.DBData}.t_skilllevel ORDER BY a_level");
                     });
                 }
             }
@@ -346,20 +349,30 @@ namespace LastChaos_ToolBox_2024.Editors
 
 		private void ItemEditor_FormClosing(object sender, FormClosingEventArgs e)
 		{
+			void Clear()
+			{
+                foreach (var toolTip in pToolTips.Values)
+                    toolTip.Dispose();
+
+                if (pRenderDialog != null)
+                    pRenderDialog.Close();
+
+				pTempRow = null;
+            }
+
 			if (bUnsavedChanges)
 			{
 				DialogResult pDialogReturn = MessageBox.Show("You have unsaved changes. Do you want to discard them and exit?", "Item Editor", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
 
 				if (pDialogReturn == DialogResult.No)
-				{
 					e.Cancel = true;
-				}
 				else
-				{
-					foreach (var toolTip in pToolTips.Values)
-						toolTip.Dispose();
-				}
+					Clear();
 			}
+			else
+			{
+				Clear();
+            }
 		}
 
 		private void LoadItemData(int nItemID)
@@ -602,24 +615,29 @@ namespace LastChaos_ToolBox_2024.Editors
 			// Crafting
 			int iSkillNeededID = Convert.ToInt32(pTempRow["a_need_sskill"]);
 			string strSkillName = iSkillNeededID.ToString();
+            DataRow pSkillData = pMain.pSkillTable.AsEnumerable().FirstOrDefault(row => row.Field<int>("a_indeX") == iSkillNeededID);
 
-			if (iSkillNeededID != -1)
-				strSkillName = iSkillNeededID + " - " + pMain.pSkillTable.Rows[iSkillNeededID]["a_name_" + pMain.pSettings.WorkLocale];
+            if (iSkillNeededID != -1)
+				strSkillName = iSkillNeededID + " - " + pSkillData["a_name_" + pMain.pSettings.WorkLocale];
 
 			btnSkill1RequiredID.Text = strSkillName;
 			tbSkill1RequiredLevel.Text = pTempRow["a_need_sskill_level"].ToString();
 
 			iSkillNeededID = Convert.ToInt32(pTempRow["a_need_sskill2"]);
 			strSkillName = iSkillNeededID.ToString();
+            pSkillData = pMain.pSkillTable.AsEnumerable().FirstOrDefault(row => row.Field<int>("a_indeX") == iSkillNeededID);
 
-			if (iSkillNeededID != -1)
-				strSkillName = iSkillNeededID + " - " + pMain.pSkillTable.Rows[iSkillNeededID]["a_name_" + pMain.pSettings.WorkLocale];
+            if (iSkillNeededID != -1)
+                strSkillName = iSkillNeededID + " - " + pSkillData["a_name_" + pMain.pSettings.WorkLocale];
 
-			btnSkill2RequiredID.Text = strSkillName;
+            btnSkill2RequiredID.Text = strSkillName;
 			tbSkill2RequiredLevel.Text = pTempRow["a_need_sskill_level2"].ToString();
-			/****************************************/
-			/****************************************/
-			bUserAction = true;
+
+			pSkillData = null;
+            /****************************************/
+			// TODO: agregar más gilada
+            /****************************************/
+            bUserAction = true;
 
 			btnUpdate.Enabled = true;
 
@@ -1140,9 +1158,9 @@ namespace LastChaos_ToolBox_2024.Editors
 		{
 			if (bUserAction)
 			{
-				pTempRow["a_effect_name"] = tbEffectNormal.ToString();
+				pTempRow["a_effect_name"] = tbEffectNormal.Text;
 
-				bUnsavedChanges = true;
+                bUnsavedChanges = true;
 			}
 		}
 
@@ -1150,9 +1168,9 @@ namespace LastChaos_ToolBox_2024.Editors
 		{
 			if (bUserAction)
 			{
-				pTempRow["a_attack_effect_name"] = tbEffectAttack.ToString();
+				pTempRow["a_attack_effect_name"] = tbEffectAttack.Text;
 
-				bUnsavedChanges = true;
+                bUnsavedChanges = true;
 			}
 		}
 
@@ -1160,9 +1178,9 @@ namespace LastChaos_ToolBox_2024.Editors
 		{
 			if (bUserAction)
 			{
-				pTempRow["a_damage_effect_name"] = tbEffectDamage.ToString();
+				pTempRow["a_damage_effect_name"] = tbEffectDamage.Text;
 
-				bUnsavedChanges = true;
+                bUnsavedChanges = true;
 			}
 		}
 
@@ -1170,9 +1188,9 @@ namespace LastChaos_ToolBox_2024.Editors
 		{
 			if (bUserAction)
 			{
-				pTempRow["a_origin_variation1"] = tbVariation1.ToString();
+				pTempRow["a_origin_variation1"] = tbVariation1.Text;
 
-				bUnsavedChanges = true;
+                bUnsavedChanges = true;
 			}
 		}
 
@@ -1180,9 +1198,9 @@ namespace LastChaos_ToolBox_2024.Editors
 		{
 			if (bUserAction)
 			{
-				pTempRow["a_origin_variation2"] = tbVariation2.ToString();
+				pTempRow["a_origin_variation2"] = tbVariation2.Text;
 
-				bUnsavedChanges = true;
+                bUnsavedChanges = true;
 			}
 		}
 
@@ -1190,9 +1208,9 @@ namespace LastChaos_ToolBox_2024.Editors
 		{
 			if (bUserAction)
 			{
-				pTempRow["a_origin_variation3"] = tbVariation3.ToString();
+				pTempRow["a_origin_variation3"] = tbVariation3.Text;
 
-				bUnsavedChanges = true;
+                bUnsavedChanges = true;
 			}
 		}
 
@@ -1200,9 +1218,9 @@ namespace LastChaos_ToolBox_2024.Editors
 		{
 			if (bUserAction)
 			{
-				pTempRow["a_origin_variation4"] = tbVariation4.ToString();
+				pTempRow["a_origin_variation4"] = tbVariation4.Text;
 
-				bUnsavedChanges = true;
+                bUnsavedChanges = true;
 			}
 		}
 
@@ -1210,9 +1228,9 @@ namespace LastChaos_ToolBox_2024.Editors
 		{
 			if (bUserAction)
 			{
-				pTempRow["a_origin_variation5"] = tbVariation5.ToString();
+				pTempRow["a_origin_variation5"] = tbVariation5.Text;
 
-				bUnsavedChanges = true;
+                bUnsavedChanges = true;
 			}
 		}
 
@@ -1220,9 +1238,9 @@ namespace LastChaos_ToolBox_2024.Editors
 		{
 			if (bUserAction)
 			{
-				pTempRow["a_origin_variation6"] = tbVariation6.ToString();
+				pTempRow["a_origin_variation6"] = tbVariation6.Text;
 
-				bUnsavedChanges = true;
+                bUnsavedChanges = true;
 			}
 		}
 
@@ -1230,9 +1248,9 @@ namespace LastChaos_ToolBox_2024.Editors
 		{
 			if (bUserAction)
 			{
-				pTempRow["a_set_0"] = tbSet0.ToString();
+				pTempRow["a_set_0"] = tbSet0.Text;
 
-				bUnsavedChanges = true;
+                bUnsavedChanges = true;
 			}
 		}
 
@@ -1240,9 +1258,9 @@ namespace LastChaos_ToolBox_2024.Editors
 		{
 			if (bUserAction)
 			{
-				pTempRow["a_set_1"] = tbSet1.ToString();
+				pTempRow["a_set_1"] = tbSet1.Text;
 
-				bUnsavedChanges = true;
+                bUnsavedChanges = true;
 			}
 		}
 
@@ -1250,9 +1268,9 @@ namespace LastChaos_ToolBox_2024.Editors
 		{
 			if (bUserAction)
 			{
-				pTempRow["a_set_2"] = tbSet2.ToString();
+				pTempRow["a_set_2"] = tbSet2.Text;
 
-				bUnsavedChanges = true;
+                bUnsavedChanges = true;
 			}
 		}
 
@@ -1260,9 +1278,9 @@ namespace LastChaos_ToolBox_2024.Editors
 		{
 			if (bUserAction)
 			{
-				pTempRow["a_set_3"] = tbSet3.ToString();
+				pTempRow["a_set_3"] = tbSet3.Text;
 
-				bUnsavedChanges = true;
+                bUnsavedChanges = true;
 			}
 		}
 
@@ -1270,9 +1288,9 @@ namespace LastChaos_ToolBox_2024.Editors
 		{
 			if (bUserAction)
 			{
-				pTempRow["a_set_4"] = tbSet4.ToString();
+				pTempRow["a_set_4"] = tbSet4.Text;
 
-				bUnsavedChanges = true;
+                bUnsavedChanges = true;
 			}
 		}
 
@@ -1280,9 +1298,9 @@ namespace LastChaos_ToolBox_2024.Editors
 		{
 			if (bUserAction)
 			{
-				pTempRow["a_num_0"] = tbOption0.ToString();
+				pTempRow["a_num_0"] = tbOption0.Text;
 
-				bUnsavedChanges = true;
+                bUnsavedChanges = true;
 			}
 		}
 
@@ -1290,9 +1308,9 @@ namespace LastChaos_ToolBox_2024.Editors
 		{
 			if (bUserAction)
 			{
-				pTempRow["a_num_1"] = tbOption1.ToString();
+				pTempRow["a_num_1"] = tbOption1.Text;
 
-				bUnsavedChanges = true;
+                bUnsavedChanges = true;
 			}
 		}
 
@@ -1300,9 +1318,9 @@ namespace LastChaos_ToolBox_2024.Editors
 		{
 			if (bUserAction)
 			{
-				pTempRow["a_num_2"] = tbOption2.ToString();
+				pTempRow["a_num_2"] = tbOption2.Text;
 
-				bUnsavedChanges = true;
+                bUnsavedChanges = true;
 			}
 		}
 
@@ -1310,9 +1328,9 @@ namespace LastChaos_ToolBox_2024.Editors
 		{
 			if (bUserAction)
 			{
-				pTempRow["a_num_3"] = tbOption3.ToString();
+				pTempRow["a_num_3"] = tbOption3.Text;
 
-				bUnsavedChanges = true;
+                bUnsavedChanges = true;
 			}
 		}
 
@@ -1320,9 +1338,9 @@ namespace LastChaos_ToolBox_2024.Editors
 		{
 			if (bUserAction)
 			{
-				pTempRow["a_num_4"] = tbOption4.ToString();
+				pTempRow["a_num_4"] = tbOption4.Text;
 
-				bUnsavedChanges = true;
+                bUnsavedChanges = true;
 			}
 		}
 
@@ -1333,21 +1351,23 @@ namespace LastChaos_ToolBox_2024.Editors
 				string strIDColumn = "a_need_sskill";
 				string strLevelColumn = "a_need_sskill_level";
 
-				SkillPicker pSkillSelector = new SkillPicker(pMain, this, new int[] { Convert.ToInt32(pTempRow[strIDColumn]), Convert.ToInt32(pTempRow[strLevelColumn]) });
+				SkillPicker pSkillSelector = new SkillPicker(pMain, this, new object[] { Convert.ToInt32(pTempRow[strIDColumn]), pTempRow[strLevelColumn].ToString() });
 
 				if (pSkillSelector.ShowDialog() != DialogResult.OK)
 					return;
 
-				int iSkillNeededID = pSkillSelector.ReturnValues[0];
-				string strSkillName = iSkillNeededID.ToString();
+				int iSkillNeededID = Convert.ToInt32(pSkillSelector.ReturnValues[0]);
+				string strSkillLevelNeeded = pSkillSelector.ReturnValues[1].ToString();
+                string strSkillName = iSkillNeededID.ToString();
 
 				if (iSkillNeededID != -1)
 					strSkillName = iSkillNeededID + " - " + pMain.pSkillTable.Rows[iSkillNeededID]["a_name_" + pMain.pSettings.WorkLocale];
 
 				btnSkill1RequiredID.Text = strSkillName;
+                tbSkill1RequiredLevel.Text = strSkillLevelNeeded;
 
 				pTempRow[strIDColumn] = iSkillNeededID.ToString();
-				pTempRow[strLevelColumn] = pSkillSelector.ReturnValues[1].ToString();
+				pTempRow[strLevelColumn] = strSkillLevelNeeded;
 
 				bUnsavedChanges = true;
 			}
@@ -1357,46 +1377,48 @@ namespace LastChaos_ToolBox_2024.Editors
 		{
 			if (bUserAction)
 			{
-				pTempRow["a_need_sskill_level"] = tbSkill1RequiredLevel.ToString();
+				pTempRow["a_need_sskill_level"] = tbSkill1RequiredLevel.Text;
 
-				bUnsavedChanges = true;
+                bUnsavedChanges = true;
 			}
 		}
 
 		private void btnSkill2RequiredID_Click(object sender, EventArgs e)
+        {
+            if (bUserAction)
+            {
+                string strIDColumn = "a_need_sskill";
+                string strLevelColumn = "a_need_sskill_level";
+
+                SkillPicker pSkillSelector = new SkillPicker(pMain, this, new object[] { Convert.ToInt32(pTempRow[strIDColumn]), pTempRow[strLevelColumn].ToString() });
+
+                if (pSkillSelector.ShowDialog() != DialogResult.OK)
+                    return;
+
+                int iSkillNeededID = Convert.ToInt32(pSkillSelector.ReturnValues[0]);
+                string strSkillLevelNeeded = pSkillSelector.ReturnValues[1].ToString();
+                string strSkillName = iSkillNeededID.ToString();
+
+                if (iSkillNeededID != -1)
+                    strSkillName = iSkillNeededID + " - " + pMain.pSkillTable.Rows[iSkillNeededID]["a_name_" + pMain.pSettings.WorkLocale];
+
+                btnSkill2RequiredID.Text = strSkillName;
+                tbSkill2RequiredLevel.Text = strSkillLevelNeeded;
+
+                pTempRow[strIDColumn] = iSkillNeededID.ToString();
+                pTempRow[strLevelColumn] = strSkillLevelNeeded;
+
+                bUnsavedChanges = true;
+            }
+        }
+
+        private void tbSkill2RequiredLevel_TextChanged(object sender, EventArgs e)
 		{
 			if (bUserAction)
 			{
-				string strIDColumn = "a_need_sskill2";
-				string strLevelColumn = "a_need_sskill_level2";
+				pTempRow["a_need_sskill_level2"] = tbSkill2RequiredLevel.Text;
 
-				SkillPicker pSkillSelector = new SkillPicker(pMain, this, new int[] { Convert.ToInt32(pTempRow[strIDColumn]), Convert.ToInt32(pTempRow[strLevelColumn]) });
-
-				if (pSkillSelector.ShowDialog() != DialogResult.OK)
-					return;
-
-				int iSkillNeededID = pSkillSelector.ReturnValues[0];
-				string strSkillName = iSkillNeededID.ToString();
-
-				if (iSkillNeededID != -1)
-					strSkillName = iSkillNeededID + " - " + pMain.pSkillTable.Rows[iSkillNeededID]["a_name_" + pMain.pSettings.WorkLocale];
-
-				btnSkill1RequiredID.Text = strSkillName;
-
-				pTempRow[strIDColumn] = iSkillNeededID.ToString();
-				pTempRow[strLevelColumn] = pSkillSelector.ReturnValues[1].ToString();
-
-				bUnsavedChanges = true;
-			}
-		}
-
-		private void tbSkill2RequiredLevel_TextChanged(object sender, EventArgs e)
-		{
-			if (bUserAction)
-			{
-				pTempRow["a_need_sskill_level2"] = tbSkill2RequiredLevel.ToString();
-
-				bUnsavedChanges = true;
+                bUnsavedChanges = true;
 			}
 		}
 

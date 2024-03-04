@@ -20,7 +20,7 @@ namespace LastChaos_ToolBox_2024
 	 *	Form<Parent Form to center the Window>
 	 *	Int array with default Skill ID and Level to select<Skill data Array>
 	 * Returns:
-	 *		Int<Array of 2 elements>
+	 *		Array<Int<Skill ID>, String<Skill Level>>
 	// Call and receive implementation
 	SkillPicker pSkillSelector = new SkillPicker(pMain, this, new int[] { Convert.ToInt32(pTempRow[strIDColumn]), Convert.ToInt32(pTempRow[strLevelColumn]) });
 
@@ -33,17 +33,16 @@ namespace LastChaos_ToolBox_2024
 	{
 		private Form pParentForm;
 		private Main pMain;
-        private bool bUserAction = false;
         private int nSearchPosition = 0;
-		public int[] ReturnValues = { 0, 0 };
+        public object[] ReturnValues = new object[2];
 
-		public SkillPicker(Main mainForm, Form ParentForm, int[] iArray)
+        public SkillPicker(Main mainForm, Form ParentForm, object[] iArray)
 		{
 			InitializeComponent();
 
 			this.FormBorderStyle = FormBorderStyle.FixedSingle;
 
-			pMain = mainForm;
+            pMain = mainForm;
             pParentForm = ParentForm;
             ReturnValues = iArray;
 		}
@@ -59,11 +58,9 @@ namespace LastChaos_ToolBox_2024
             }
         }
 
-        private async void FlagPicker_LoadAsync(object sender, EventArgs e)
+        private async void SkillPicker_LoadAsync(object sender, EventArgs e)
 		{
 			this.Location = new Point((int)pParentForm.Location.X + (pParentForm.Width - this.Width) / 2, (int)pParentForm.Location.Y + (pParentForm.Height - this.Height) / 2);
-
-            bUserAction = false;
 
             if (pMain.pSkillTable != null && pMain.pSkillLevelTable != null)
 			{
@@ -71,27 +68,33 @@ namespace LastChaos_ToolBox_2024
 
                 MainList.BeginUpdate();
 
+                int nOriginalSkillID = Convert.ToInt32(ReturnValues[0]);
+
                 foreach (DataRow pRow in pMain.pSkillTable.Rows)
                 {
+                    int nSkillID = Convert.ToInt32(pRow["a_index"]);
+
                     MainList.Items.Add(new ListBoxItem
                     {
-                        ID = Convert.ToInt32(pRow["a_index"]),
+                        ID = nSkillID,
                         Text = pRow["a_index"] + " - " + pRow["a_name_" + pMain.pSettings.WorkLocale].ToString()
                     });
+
+                    if (nSkillID == nOriginalSkillID)
+                        MainList.SelectedIndex = MainList.Items.Count - 1;
                 }
 
-                MainList.SelectedIndex = 0;
+                //MainList.SelectedIndex = 0;
 
                 MainList.EndUpdate();
             }
-
-            bUserAction = true;
         }
 
         private void tbSearch_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
+                //MessageBox.Show("There are unsaved changes. If you proceed, your changes will be discarded.\nDo you want to continue?", "Item Editor", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
                 void Search()
                 {
                     string strStringToSearch = tbSearch.Text;
@@ -138,15 +141,68 @@ namespace LastChaos_ToolBox_2024
 
         private void MainList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (bUserAction)
-            {
-                ListBoxItem pSelectedItem = (ListBoxItem)MainList.SelectedItem;
+            ListBoxItem pSelectedItem = (ListBoxItem)MainList.SelectedItem;
 
-                if (pSelectedItem != null)
+            if (pSelectedItem != null)
+            {
+                cbLevelSelector.Enabled = false;
+                btnSelect.Enabled = false;
+
+                cbLevelSelector.Items.Clear();
+
+                cbLevelSelector.BeginUpdate();
+
+                int nItemID = pSelectedItem.ID;
+
+                DataRow pRowSkill = pMain.pSkillTable.Select("a_index = " + nItemID).FirstOrDefault();
+
+                Image pIcon = pMain.GetIcon("SkillBtn", pRowSkill["a_client_icon_texid"].ToString(), Convert.ToInt32(pRowSkill["a_client_icon_row"]), Convert.ToInt32(pRowSkill["a_client_icon_col"]));
+                if (pIcon != null)
+                    pbIcon.Image = pIcon;
+
+                tbDescription.Text = pRowSkill["a_client_description_" + pMain.pSettings.WorkLocale].ToString();
+
+                string strOriginalSkillLevel = ReturnValues[1].ToString();
+                List<DataRow> pRowsSkillLevel = pMain.pSkillLevelTable.AsEnumerable().Where(row => row.Field<int>("a_index") == nItemID).ToList();
+
+                foreach (var pRowSkillLevel in pRowsSkillLevel)
                 {
-                    int nItemID = pSelectedItem.ID;
-                    // TODO: All code related to skill & skill level selection. Also adds a icon and description aside of the main list
+                    string strSkillLevel = pRowSkillLevel["a_level"].ToString();
+                    
+                    cbLevelSelector.Items.Add("Level: " + strSkillLevel + " - Power: " + pRowSkillLevel["a_dummypower"].ToString());
+
+                    if (strOriginalSkillLevel == strSkillLevel)
+                        cbLevelSelector.SelectedIndex = cbLevelSelector.Items.Count - 1;
                 }
+
+                if (cbLevelSelector.SelectedIndex == -1)
+                    cbLevelSelector.SelectedIndex = 0;
+
+                cbLevelSelector.EndUpdate();
+
+                cbLevelSelector.Enabled = true;
+                btnSelect.Enabled = true;
+            }
+        }
+
+        private void btnSelect_Click(object sender, EventArgs e)
+        {
+            ListBoxItem pSelectedItem = (ListBoxItem)MainList.SelectedItem;
+            int nSelectedSkillLevel = cbLevelSelector.SelectedIndex;
+
+            if (pSelectedItem != null && nSelectedSkillLevel != -1)
+            {
+                cbLevelSelector.Enabled = false;
+
+                cbLevelSelector.Items.Clear();
+
+                cbLevelSelector.BeginUpdate();
+
+                DialogResult = DialogResult.OK;
+
+                ReturnValues = new object[] { pSelectedItem.ID, (nSelectedSkillLevel + 1).ToString() };
+
+                Close();
             }
         }
 
@@ -154,7 +210,7 @@ namespace LastChaos_ToolBox_2024
         {
             DialogResult = DialogResult.OK;
 
-            ReturnValues = new[] { -1, 0 };
+            ReturnValues = new object[] { -1, "0" };
 
             Close();
         }
