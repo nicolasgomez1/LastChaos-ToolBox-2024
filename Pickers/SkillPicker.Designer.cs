@@ -57,7 +57,7 @@
             this.tbSearch.Name = "tbSearch";
             this.tbSearch.Size = new System.Drawing.Size(280, 20);
             this.tbSearch.TabIndex = 1026;
-            this.tbSearch.TextChanged += new System.EventHandler(this.tbSearch_TextChanged);
+            this.tbSearch.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tbSearch_KeyDown);
             // 
             // MainList
             // 
@@ -87,7 +87,7 @@
             this.MinimizeBox = false;
             this.Name = "SkillPicker";
             this.Text = "Skill Picker";
-            this.Load += new System.EventHandler(this.FlagPicker_Load);
+            this.Load += new System.EventHandler(this.FlagPicker_LoadAsync);
             this.ResumeLayout(false);
             this.PerformLayout();
 

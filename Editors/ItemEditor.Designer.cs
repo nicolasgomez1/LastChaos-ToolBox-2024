@@ -215,7 +215,8 @@ namespace LastChaos_ToolBox_2024.Editors
             // 
             // btnUpdate
             // 
-            this.btnUpdate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnUpdate.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.btnUpdate.Enabled = false;
             this.btnUpdate.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(85)))), ((int)(((byte)(76)))));
             this.btnUpdate.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
@@ -322,9 +323,10 @@ namespace LastChaos_ToolBox_2024.Editors
             this.btnSkill2RequiredID.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
             this.btnSkill2RequiredID.Location = new System.Drawing.Point(107, 42);
             this.btnSkill2RequiredID.Name = "btnSkill2RequiredID";
-            this.btnSkill2RequiredID.Size = new System.Drawing.Size(50, 23);
+            this.btnSkill2RequiredID.Size = new System.Drawing.Size(135, 23);
             this.btnSkill2RequiredID.TabIndex = 1046;
             this.btnSkill2RequiredID.UseVisualStyleBackColor = true;
+            this.btnSkill2RequiredID.Click += new System.EventHandler(this.btnSkill2RequiredID_Click);
             // 
             // btnSkill1RequiredID
             // 
@@ -335,15 +337,16 @@ namespace LastChaos_ToolBox_2024.Editors
             this.btnSkill1RequiredID.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
             this.btnSkill1RequiredID.Location = new System.Drawing.Point(107, 16);
             this.btnSkill1RequiredID.Name = "btnSkill1RequiredID";
-            this.btnSkill1RequiredID.Size = new System.Drawing.Size(50, 23);
+            this.btnSkill1RequiredID.Size = new System.Drawing.Size(135, 23);
             this.btnSkill1RequiredID.TabIndex = 1038;
             this.btnSkill1RequiredID.UseVisualStyleBackColor = true;
+            this.btnSkill1RequiredID.Click += new System.EventHandler(this.btnSkill1RequiredID_Click);
             // 
             // label43
             // 
             this.label43.AutoSize = true;
             this.label43.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-            this.label43.Location = new System.Drawing.Point(163, 47);
+            this.label43.Location = new System.Drawing.Point(248, 47);
             this.label43.Name = "label43";
             this.label43.Size = new System.Drawing.Size(33, 13);
             this.label43.TabIndex = 1044;
@@ -355,11 +358,12 @@ namespace LastChaos_ToolBox_2024.Editors
             this.tbSkill2RequiredLevel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
             this.tbSkill2RequiredLevel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tbSkill2RequiredLevel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-            this.tbSkill2RequiredLevel.Location = new System.Drawing.Point(202, 43);
+            this.tbSkill2RequiredLevel.Location = new System.Drawing.Point(287, 43);
             this.tbSkill2RequiredLevel.Name = "tbSkill2RequiredLevel";
             this.tbSkill2RequiredLevel.Size = new System.Drawing.Size(40, 20);
             this.tbSkill2RequiredLevel.TabIndex = 1045;
             this.tbSkill2RequiredLevel.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.tbSkill2RequiredLevel.TextChanged += new System.EventHandler(this.tbSkill2RequiredLevel_TextChanged);
             // 
             // label44
             // 
@@ -376,7 +380,7 @@ namespace LastChaos_ToolBox_2024.Editors
             // 
             this.label42.AutoSize = true;
             this.label42.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-            this.label42.Location = new System.Drawing.Point(163, 21);
+            this.label42.Location = new System.Drawing.Point(248, 21);
             this.label42.Name = "label42";
             this.label42.Size = new System.Drawing.Size(33, 13);
             this.label42.TabIndex = 1040;
@@ -388,11 +392,12 @@ namespace LastChaos_ToolBox_2024.Editors
             this.tbSkill1RequiredLevel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
             this.tbSkill1RequiredLevel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tbSkill1RequiredLevel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-            this.tbSkill1RequiredLevel.Location = new System.Drawing.Point(202, 17);
+            this.tbSkill1RequiredLevel.Location = new System.Drawing.Point(287, 17);
             this.tbSkill1RequiredLevel.Name = "tbSkill1RequiredLevel";
             this.tbSkill1RequiredLevel.Size = new System.Drawing.Size(40, 20);
             this.tbSkill1RequiredLevel.TabIndex = 1041;
             this.tbSkill1RequiredLevel.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.tbSkill1RequiredLevel.TextChanged += new System.EventHandler(this.tbSkill1RequiredLevel_TextChanged);
             // 
             // label9
             // 

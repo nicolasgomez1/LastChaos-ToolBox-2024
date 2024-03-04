@@ -14,44 +14,43 @@ using System.Windows.Forms;
 
 namespace LastChaos_ToolBox_2024
 {
-    /* Args:
-     *	Main<Pointer to Main Form>
-     *	Form<Parent Form to center the Window>
-     *	String array with flag names<Flags Array>
-     *	Long<Flag>
-     * Returns:
-     *		Longs<composed Flag>
-     */
-    /*FlagPicker pFlagSelector = new FlagPicker(pMain, this, Defs.ItemClass, Convert.ToInt32(btnFlag.Text.ToString()));
+	/* Args:
+	 *	Main<Pointer to Main Form>
+	 *	Form<Parent Form to center the Window>
+	 *	String array with flag names<Flags Array>
+	 *	Long<Flag>
+	 * Returns:
+	 *		Longs<composed Flag>
+	// Call and receive implementation
+	FlagPicker pFlagSelector = new FlagPicker(pMain, this, Defs.ItemClass, Convert.ToInt32(btnFlag.Text.ToString()));
 
-    if (pFlagSelector.ShowDialog() != DialogResult.OK)
+	if (pFlagSelector.ShowDialog() != DialogResult.OK)
 		 return;
 
-    string strFlag = pFlagSelector.ReturnValues.ToString();*/
-    /****************************************/
-    public partial class FlagPicker : Form
+	string strFlag = pFlagSelector.ReturnValues.ToString();
+	/****************************************/
+	public partial class FlagPicker : Form
 	{
 		private Form pParentForm;
 		private Main pMain;
 		private string[] strArrayFlag;
-		private long pNFlag;
 		public long ReturnValues = 0;
 
 		public FlagPicker(Main mainForm, Form ParentForm, string[] strArray, long nFlag)
 		{
 			InitializeComponent();
 
-            this.FormBorderStyle = FormBorderStyle.FixedSingle;
+			this.FormBorderStyle = FormBorderStyle.FixedSingle;
 
-            pMain = mainForm;
-            pParentForm = ParentForm;
-            this.strArrayFlag = strArray;
-			ReturnValues = pNFlag = nFlag;
-        }
+			pMain = mainForm;
+			pParentForm = ParentForm;
+			this.strArrayFlag = strArray;
+            ReturnValues = nFlag;
+		}
 
 		private void FlagPicker_Load(object sender, EventArgs e)
 		{
-            this.Location = new Point((int)pParentForm.Location.X + (pParentForm.Width - this.Width) / 2, (int)pParentForm.Location.Y + (pParentForm.Height - this.Height) / 2);
+			this.Location = new Point((int)pParentForm.Location.X + (pParentForm.Width - this.Width) / 2, (int)pParentForm.Location.Y + (pParentForm.Height - this.Height) / 2);
 
 			clbFlagList.Items.Clear();
 
@@ -61,38 +60,38 @@ namespace LastChaos_ToolBox_2024
 			{
 				clbFlagList.Items.Add(i + " - " + strArrayFlag[i]);
 
-				clbFlagList.SetItemChecked(i, (pNFlag & 1L << i) > 0);
+				clbFlagList.SetItemChecked(i, (ReturnValues & 1L << i) > 0);
 			}
 
 			clbFlagList.EndUpdate();
 
-			tbFlag.Text = pNFlag.ToString();
+			tbFlag.Text = ReturnValues.ToString();
 		}
 
-        private void btnCheckAll_Click(object sender, EventArgs e)
-        {
-            long nFlag = 0;
+		private void btnCheckAll_Click(object sender, EventArgs e)
+		{
+			long nFlag = 0;
 
 			for (int i = 0; i < clbFlagList.Items.Count; ++i)
 			{
 				clbFlagList.SetItemChecked(i, true);
-                nFlag += 1L << i;
-            }
+				nFlag += 1L << i;
+			}
 
-            tbFlag.Text = nFlag.ToString();
+			tbFlag.Text = nFlag.ToString();
 
-            ReturnValues = 0;
-        }
+			ReturnValues = 0;
+		}
 
-        private void btnUnCheckAll_Click(object sender, EventArgs e)
+		private void btnUnCheckAll_Click(object sender, EventArgs e)
 		{
 			for (int i = 0; i < clbFlagList.Items.Count; ++i)
-                clbFlagList.SetItemChecked(i, false);
+				clbFlagList.SetItemChecked(i, false);
 
 			tbFlag.Text = "0";
 
-            ReturnValues = 0;
-        }
+			ReturnValues = 0;
+		}
 
 		private void clbFlagList_SelectedIndexChanged(object sender, EventArgs e)
 		{
@@ -117,5 +116,5 @@ namespace LastChaos_ToolBox_2024
 
 			Close();
 		}
-    }
+	}
 }

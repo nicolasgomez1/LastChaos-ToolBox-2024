@@ -12,161 +12,161 @@ using System.Windows.Forms;
 
 namespace LastChaos_ToolBox_2024
 {
-    /* Args:
-     *	Main<Pointer to Main Form>
-     *	Form<Parent Form to center the Window>
-     *	String<name the image type>
-     * Returns:
-     *		String<Array of 3 elements>
-     */
-    /*IconPicker pIconSelector = new IconPicker(pMain, this, "ItemBtn");
+	/* Args:
+	 *	Main<Pointer to Main Form>
+	 *	Form<Parent Form to center the Window>
+	 *	String<name the image type>
+	 * Returns:
+	 *		String<Array of 3 elements>
+	// Call and receive implementation
+	IconPicker pIconSelector = new IconPicker(pMain, this, "ItemBtn");
 
 	if (pIconSelector.ShowDialog() != DialogResult.OK)
-	    return;
+		return;
 
-	string[] strArray = pIconSelector.ReturnValues;*/
-    /****************************************/
-    public partial class IconPicker : Form
-    {
-        private Form pParentForm;
-        private Main pMain;
-        private double dX, dY, dIconSize;
-        private string strBtnType;
-        public string[] ReturnValues = new string[] { "0", "0", "0" };
-        private System.Windows.Forms.ToolTip pToolTip;
+	string[] strArray = pIconSelector.ReturnValues;
+	/****************************************/
+	public partial class IconPicker : Form
+	{
+		private Form pParentForm;
+		private Main pMain;
+		private double dX, dY, dIconSize;
+		private string strBtnType;
+		public string[] ReturnValues = new string[] { "0", "0", "0" };
+		private System.Windows.Forms.ToolTip pToolTip;
 
-        public IconPicker(Main mainForm, Form ParentForm, String strBtnType)
-        {
-            InitializeComponent();
+		public IconPicker(Main mainForm, Form ParentForm, String strBtnType)
+		{
+			InitializeComponent();
 
-            this.FormBorderStyle = FormBorderStyle.FixedSingle;
+			this.FormBorderStyle = FormBorderStyle.FixedSingle;
 
-            //this.MouseMove += IconPicker_MouseMove;
-            foreach (Control control in Controls)
-                control.MouseMove += IconPicker_MouseMove;
+			//this.MouseMove += IconPicker_MouseMove;
+			foreach (Control control in Controls)
+				control.MouseMove += IconPicker_MouseMove;
 
-            pMain = mainForm;
-            pParentForm = ParentForm;
-            this.strBtnType = strBtnType;
-        }
+			pMain = mainForm;
+			pParentForm = ParentForm;
+			this.strBtnType = strBtnType;
+		}
 
-        private void IconPicker_Load(object sender, EventArgs e)
-        {
-            this.Location = new Point((int)pParentForm.Location.X + (pParentForm.Width - this.Width) / 2, (int)pParentForm.Location.Y + (pParentForm.Height - this.Height) / 2);
+		private void IconPicker_Load(object sender, EventArgs e)
+		{
+			this.Location = new Point((int)pParentForm.Location.X + (pParentForm.Width - this.Width) / 2, (int)pParentForm.Location.Y + (pParentForm.Height - this.Height) / 2);
 
-            cbFileSelector.Items.Clear();
+			cbFileSelector.Items.Clear();
 
-            cbFileSelector.BeginUpdate();
+			cbFileSelector.BeginUpdate();
 
-            if (Directory.Exists(strBtnType))
-            {
-                try
-                {
-                    string[] strArrayFilePaths = Directory.GetFiles(strBtnType, "*.png");
+			if (Directory.Exists(strBtnType))
+			{
+				try
+				{
+					string[] strArrayFilePaths = Directory.GetFiles(strBtnType, "*.png");
 
-                    strArrayFilePaths = strArrayFilePaths.OrderBy(f => ExtractNumberFromFileName(f)).ToArray();
+					strArrayFilePaths = strArrayFilePaths.OrderBy(f => ExtractNumberFromFileName(f)).ToArray();
 
-                    foreach (string strFilePath in strArrayFilePaths)
-                        cbFileSelector.Items.Add(Path.GetFileNameWithoutExtension(strFilePath));
-                }
-                catch (Exception ex)
-                {
-                    pMain.PrintLog($"Icon Picker > {ex.Message}");
-                }
-            }
-            else
-            {
-                pMain.PrintLog("Icon Picker > Folder: " + strBtnType + " not exist.", Color.Red);
-            }
+					foreach (string strFilePath in strArrayFilePaths)
+						cbFileSelector.Items.Add(Path.GetFileNameWithoutExtension(strFilePath));
+				}
+				catch (Exception ex)
+				{
+					pMain.PrintLog($"Icon Picker > {ex.Message}");
+				}
+			}
+			else
+			{
+				pMain.PrintLog("Icon Picker > Folder: " + strBtnType + " not exist.", Color.Red);
+			}
 
-            cbFileSelector.EndUpdate();
+			cbFileSelector.EndUpdate();
 
-            cbFileSelector.SelectedIndex = 0;
+			cbFileSelector.SelectedIndex = 0;
 
-            pToolTip = new ToolTip();
-            pToolTip.SetToolTip(pbImageViewer, "Can press Ctrl when do Left Click for instant Pick and Close");
-        }
+			pToolTip = new ToolTip();
+			pToolTip.SetToolTip(pbImageViewer, "Can press Ctrl when do Left Click for instant Pick and Close");
+		}
 
-        private void IconPicker_MouseMove(object sender, MouseEventArgs e)
-        {
-            dX = Math.Floor(((e.X) / dIconSize));
-            dY = Math.Floor(((e.Y) / dIconSize));
+		private void IconPicker_MouseMove(object sender, MouseEventArgs e)
+		{
+			dX = Math.Floor(((e.X) / dIconSize));
+			dY = Math.Floor(((e.Y) / dIconSize));
 
-            lbLocation.Text = "Row: " + dY + " Col: " + dX;
-        }
+			lbLocation.Text = "Row: " + dY + " Col: " + dX;
+		}
 
-        private void btnSelect_Click(object sender, EventArgs e)
-        {
-            DialogResult = DialogResult.OK;
+		private void btnSelect_Click(object sender, EventArgs e)
+		{
+			DialogResult = DialogResult.OK;
 
-            Close();
-        }
+			Close();
+		}
 
-        private int ExtractNumberFromFileName(string fileName)
-        {
-            string strNumber = Path.GetFileNameWithoutExtension(fileName);
+		private int ExtractNumberFromFileName(string fileName)
+		{
+			string strNumber = Path.GetFileNameWithoutExtension(fileName);
 
-            strNumber = new string(strNumber.Where(char.IsDigit).ToArray());
+			strNumber = new string(strNumber.Where(char.IsDigit).ToArray());
 
-            if (int.TryParse(strNumber, out int result))
-                return result;
-            else
-                return int.MaxValue;
-        }
+			if (int.TryParse(strNumber, out int result))
+				return result;
+			else
+				return int.MaxValue;
+		}
 
-        private void cbFileSelector_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (cbFileSelector.SelectedItem != null)
-            {
-                pbIcon.Image = null;
-                btnSelect.Enabled = false;
+		private void cbFileSelector_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			if (cbFileSelector.SelectedItem != null)
+			{
+				pbIcon.Image = null;
+				btnSelect.Enabled = false;
 
-                string strSelectedFile = cbFileSelector.SelectedItem.ToString();
+				string strSelectedFile = cbFileSelector.SelectedItem.ToString();
 
-                ReturnValues[0] = strSelectedFile.Replace(strBtnType, "");
+				ReturnValues[0] = strSelectedFile.Replace(strBtnType, "");
 
-                string strPathCompose = strBtnType + "\\" + strSelectedFile + ".png";
+				string strPathCompose = strBtnType + "\\" + strSelectedFile + ".png";
 
-                Image pImage = Image.FromFile(strPathCompose);
-                if (pImage != null)
-                {
-                    if (pImage.Width == 512 && pImage.Height == 512)
-                    {
-                        dIconSize = 32.0;
-                        pbImageViewer.SizeMode = PictureBoxSizeMode.Normal;
-                    }
-                    else
-                    {
-                        dIconSize = 16.0;
-                        pbImageViewer.SizeMode = PictureBoxSizeMode.StretchImage;
-                    }
+				Image pImage = Image.FromFile(strPathCompose);
+				if (pImage != null)
+				{
+					if (pImage.Width == 512 && pImage.Height == 512)
+					{
+						dIconSize = 32.0;
+						pbImageViewer.SizeMode = PictureBoxSizeMode.Normal;
+					}
+					else
+					{
+						dIconSize = 16.0;
+						pbImageViewer.SizeMode = PictureBoxSizeMode.StretchImage;
+					}
 
-                    pbImageViewer.Image = pImage;
-                }
-                else
-                {
-                    pMain.PrintLog("Icon Picker > Something went wrong while try load: " + strPathCompose, Color.Red);
-                }
-            }
-        }
+					pbImageViewer.Image = pImage;
+				}
+				else
+				{
+					pMain.PrintLog("Icon Picker > Something went wrong while try load: " + strPathCompose, Color.Red);
+				}
+			}
+		}
 
-        private void pbImageViewer_Click(object sender, EventArgs e)
-        {
-            ReturnValues[1] = dY.ToString();
-            ReturnValues[2] = dX.ToString();
+		private void pbImageViewer_Click(object sender, EventArgs e)
+		{
+			ReturnValues[1] = dY.ToString();
+			ReturnValues[2] = dX.ToString();
 
-            btnSelect.Enabled = true;
+			btnSelect.Enabled = true;
 
-            Image pIcon = pMain.GetIcon(strBtnType, ReturnValues[0], Convert.ToInt32(ReturnValues[1]), Convert.ToInt32(ReturnValues[2]));
-            if (pIcon != null)
-                pbIcon.Image = pIcon;
+			Image pIcon = pMain.GetIcon(strBtnType, ReturnValues[0], Convert.ToInt32(ReturnValues[1]), Convert.ToInt32(ReturnValues[2]));
+			if (pIcon != null)
+				pbIcon.Image = pIcon;
 
-            if (Control.ModifierKeys == Keys.Control)   // NOTE: Thats avoid everything
-            {
-                DialogResult = DialogResult.OK;
+			if (Control.ModifierKeys == Keys.Control)   // NOTE: Thats avoid everything
+			{
+				DialogResult = DialogResult.OK;
 
-                Close();
-            }
-        }
-    }
+				Close();
+			}
+		}
+	}
 }

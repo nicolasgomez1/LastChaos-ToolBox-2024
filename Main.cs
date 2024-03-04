@@ -350,7 +350,7 @@ namespace LastChaos_ToolBox_2024
             {
                 PrintLog($"MySQL > {ex.Message}", Color.Red);
 
-                DialogResult pDialogReturn = MessageBox.Show($"{ex.Message}\n\nWould you like to retry the connection?", "MySQL > It was not possible to connect to your Database Server.", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+                DialogResult pDialogReturn = MessageBox.Show($"{ex.Message}\n\nWould you like to retry the connection?", "LastChaos ToolBox 2024", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
 
                 if (pDialogReturn == DialogResult.Yes)
                     ConnectToDatabase();

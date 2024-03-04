@@ -10,9 +10,10 @@ using System.Reflection;
 using System.Security.Cryptography;
 using System.Security.Policy;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Definitions;	// NOTE: This contains all hardcoded definitions.
+using Definitions;  // NOTE: This contains all hardcoded definitions.
 
 namespace LastChaos_ToolBox_2024.Editors
 {
@@ -38,18 +39,18 @@ namespace LastChaos_ToolBox_2024.Editors
 			pMain = mainForm;
 		}
 
-		public class ListBoxItem
-		{
-			public int ID { get; set; }
-			public string Text { get; set; }
+        public class ListBoxItem
+        {
+            public int ID { get; set; }
+            public string Text { get; set; }
 
-			public override string ToString()
-			{
-				return Text;
-			}
-		}
+            public override string ToString()
+            {
+                return Text;
+            }
+        }
 
-		private async void ItemEditor_LoadAsync(object sender, EventArgs e)
+        private async void ItemEditor_LoadAsync(object sender, EventArgs e)
 		{
 			foreach (Control control in this.Controls)
 			{
@@ -113,9 +114,9 @@ namespace LastChaos_ToolBox_2024.Editors
 			Stopwatch stopwatch = new Stopwatch();
 			stopwatch.Start();
 #endif
-            // Populate pItemTable
-            ProgressDialog progressDialog = new ProgressDialog(this, "Loading Items Data, Please Wait...");
-			
+			// Populate pItemTable
+			ProgressDialog progressDialog = new ProgressDialog(this, "Loading Items Data, Please Wait...");
+
 			bool bRequestNeeded = false;
 
 			// Aquí se definen las columnas generales que son requeridas por la Herramienta en cuestión.
@@ -163,8 +164,8 @@ namespace LastChaos_ToolBox_2024.Editors
 				});
 			}
 
-            // Populate pZoneTable
-            progressDialog.UpdateText("Loading Zones Data, Please Wait...");
+			// Populate pZoneTable
+			progressDialog.UpdateText("Loading Zones Data, Please Wait...");
 
 			// Reset vals and load t_zonedata data if needed
 			bRequestNeeded = false;
@@ -198,8 +199,8 @@ namespace LastChaos_ToolBox_2024.Editors
 				});
 			}
 
-            // Populate pSkillTable
-            progressDialog.UpdateText("Loading Skills Data, Please Wait...");
+			// Populate pSkillTable
+			progressDialog.UpdateText("Loading Skills Data, Please Wait...");
 
 			// Reset vals and load t_skill & t_skilllevel data if needed
 			bRequestNeeded = false;
@@ -230,49 +231,50 @@ namespace LastChaos_ToolBox_2024.Editors
 				pMain.pSkillTable = await Task.Run(() =>
 				{
 					return pMain.QuerySelect(pMain.pSettings.DBCharset, $"SELECT a_index, {string.Join(",", listQueryCompose)} FROM {pMain.pSettings.DBData}.t_skill ORDER BY a_index;");
-                });
+				});
 
-                // Populate pSkillLevelTable NOTE: En Lua yo ejecutaba una Query e iba agregando manualmente todas las claves, además de una subtabla para almacenar los skillslevels. Basicamente hacia una petición de niveles cada vez que iteraba por un skill, cosa poco eficiente. Para intentar mejorar eso haré una unica gran petición y cargaré todo en una segunda tabla.
+				// Populate pSkillLevelTable
+				// NOTE: En Lua yo ejecutaba una Query e iba agregando manualmente todas las claves, además de una subtabla para almacenar los skillslevels. Basicamente hacia una petición de niveles cada vez que iteraba por un skill, cosa poco eficiente. Para intentar mejorar eso haré una unica gran petición y cargaré todo en una segunda tabla.
 
-                // Reset vals and load t_skilllevel data if needed
-                bRequestNeeded = false;
-                listQueryCompose.Clear();
+				// Reset vals and load t_skilllevel data if needed
+				bRequestNeeded = false;
+				listQueryCompose.Clear();
 
 				// Aquí se definen las columnas requeridas para ésta Herramienta.
 				listQueryCompose = new List<string> { "a_level", "a_dummypower" };
 
-                // Aquí se verificará si la Tabla global requerida por la Herramienta está vacía. Si es así se ejecutará la petición directamente.
-                if (pMain.pSkillLevelTable == null)
-                {
-                    bRequestNeeded = true;
-                }
-                else
-                {
-                    for (int i = listQueryCompose.Count - 1; i >= 0; i--)
-                    {
-                        if (!pMain.pSkillLevelTable.Columns.Contains(listQueryCompose[i]))
-                            bRequestNeeded = true;
-                        else
-                            listQueryCompose.RemoveAt(i);
-                    }
-                }
+				// Aquí se verificará si la Tabla global requerida por la Herramienta está vacía. Si es así se ejecutará la petición directamente.
+				if (pMain.pSkillLevelTable == null)
+				{
+					bRequestNeeded = true;
+				}
+				else
+				{
+					for (int i = listQueryCompose.Count - 1; i >= 0; i--)
+					{
+						if (!pMain.pSkillLevelTable.Columns.Contains(listQueryCompose[i]))
+							bRequestNeeded = true;
+						else
+							listQueryCompose.RemoveAt(i);
+					}
+				}
 
-                // Request to t_skill if needed
-                if (bRequestNeeded)
-                {
-                    pMain.pSkillLevelTable = await Task.Run(() =>
-                    {
-                        return pMain.QuerySelect(pMain.pSettings.DBCharset, $"SELECT a_index, {string.Join(",", listQueryCompose)} FROM {pMain.pSettings.DBData}.t_skilllevel ORDER BY a_index;");
-                    });
-                }
-            }
+				// Request to t_skill if needed
+				if (bRequestNeeded)
+				{
+					pMain.pSkillLevelTable = await Task.Run(() =>
+					{
+						return pMain.QuerySelect(pMain.pSettings.DBCharset, $"SELECT a_index, {string.Join(",", listQueryCompose)} FROM {pMain.pSettings.DBData}.t_skilllevel ORDER BY a_index;");
+					});
+				}
+			}
 #if DEBUG
-            stopwatch.Stop();
-            pMain.PrintLog($"Data load took: {stopwatch.ElapsedMilliseconds} ms", Color.CornflowerBlue);
+			stopwatch.Stop();
+			pMain.PrintLog($"Data load took: {stopwatch.ElapsedMilliseconds} ms", Color.CornflowerBlue);
 #endif
-            // NOTE: Definitivamente no fué código más legible... robert martin must wake up sweating at night
-            /****************************************/
-            if (pMain.pItemTable != null)
+			// NOTE: Definitivamente no fué código más legible... robert martin must wake up sweating at night
+			/****************************************/
+			if (pMain.pItemTable != null)
 			{
 				MainList.Items.Clear();
 
@@ -378,7 +380,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			pToolTips[tbSMC] = pToolTip;
 			/****************************************/
 			int nWearingPosition = Convert.ToInt32(pTempRow["a_wearing"]);
-			
+
 			if (pMain.pSettings.ShowRenderDialog[this.Name] == "true")
 			{
 				if (pRenderDialog == null || pRenderDialog.IsDisposed)
@@ -408,7 +410,7 @@ namespace LastChaos_ToolBox_2024.Editors
 
 			pToolTip = new ToolTip();
 			pToolTip.SetToolTip(tbGrade, "¿Rare Rate?");
-			pToolTips[tbGrade] = pToolTip;	// For Dispose
+			pToolTips[tbGrade] = pToolTip;  // For Dispose
 			/****************************************/
 			string strNation = cbNationSelector.SelectedItem.ToString().ToLower();
 
@@ -565,9 +567,25 @@ namespace LastChaos_ToolBox_2024.Editors
 				if (cTextBox.Length > 0)
 					((TextBox)cTextBox[0]).Text = pTempRow["a_num_" + i].ToString();
 			}
-			
-			// Crafting
 
+			// Crafting
+			int iSkillNeededID = Convert.ToInt32(pTempRow["a_need_sskill"]);
+			string strSkillName = iSkillNeededID.ToString();
+
+			if (iSkillNeededID != -1)
+				strSkillName = iSkillNeededID + " - " + pMain.pSkillTable.Rows[iSkillNeededID]["a_name_" + pMain.pSettings.WorkLocale];
+
+			btnSkill1RequiredID.Text = strSkillName;
+			tbSkill1RequiredLevel.Text = pTempRow["a_need_sskill_level"].ToString();
+
+			iSkillNeededID = Convert.ToInt32(pTempRow["a_need_sskill2"]);
+			strSkillName = iSkillNeededID.ToString();
+
+			if (iSkillNeededID != -1)
+				strSkillName = iSkillNeededID + " - " + pMain.pSkillTable.Rows[iSkillNeededID]["a_name_" + pMain.pSettings.WorkLocale];
+
+			btnSkill2RequiredID.Text = strSkillName;
+			tbSkill2RequiredLevel.Text = pTempRow["a_need_sskill_level2"].ToString();
 			/****************************************/
 			/****************************************/
 			bUserAction = true;
@@ -670,18 +688,18 @@ namespace LastChaos_ToolBox_2024.Editors
 			pMain.pZoneTable.Dispose();
 			pMain.pItemTable = null;
 
-            pMain.pSkillTable.Dispose();
-            pMain.pSkillTable = null;
+			pMain.pSkillTable.Dispose();
+			pMain.pSkillTable = null;
 
-            pMain.pSkillLevelTable.Dispose();
-            pMain.pSkillLevelTable = null;
+			pMain.pSkillLevelTable.Dispose();
+			pMain.pSkillLevelTable = null;
 
 			btnCopy.Enabled = false;
 			btnDelete.Enabled = false;
 
-            btnUpdate.Enabled = false;
+			btnUpdate.Enabled = false;
 
-            ItemEditor_LoadAsync(sender, e);
+			ItemEditor_LoadAsync(sender, e);
 		}
 
 		private void btnAddNew_Click(object sender, EventArgs e)
@@ -1272,6 +1290,80 @@ namespace LastChaos_ToolBox_2024.Editors
 			if (bUserAction)
 			{
 				pTempRow["a_num_4"] = tbOption4.ToString();
+
+				bUnsavedChanges = true;
+			}
+		}
+
+		private void btnSkill1RequiredID_Click(object sender, EventArgs e)
+		{
+			if (bUserAction)
+			{
+				string strIDColumn = "a_need_sskill";
+				string strLevelColumn = "a_need_sskill_level";
+
+				SkillPicker pSkillSelector = new SkillPicker(pMain, this, new int[] { Convert.ToInt32(pTempRow[strIDColumn]), Convert.ToInt32(pTempRow[strLevelColumn]) });
+
+				if (pSkillSelector.ShowDialog() != DialogResult.OK)
+					return;
+
+				int iSkillNeededID = pSkillSelector.ReturnValues[0];
+				string strSkillName = iSkillNeededID.ToString();
+
+				if (iSkillNeededID != -1)
+					strSkillName = iSkillNeededID + " - " + pMain.pSkillTable.Rows[iSkillNeededID]["a_name_" + pMain.pSettings.WorkLocale];
+
+				btnSkill1RequiredID.Text = strSkillName;
+
+				pTempRow[strIDColumn] = iSkillNeededID.ToString();
+				pTempRow[strLevelColumn] = pSkillSelector.ReturnValues[1].ToString();
+
+				bUnsavedChanges = true;
+			}
+		}
+
+		private void tbSkill1RequiredLevel_TextChanged(object sender, EventArgs e)
+		{
+			if (bUserAction)
+			{
+				pTempRow["a_need_sskill_level"] = tbSkill1RequiredLevel.ToString();
+
+				bUnsavedChanges = true;
+			}
+		}
+
+		private void btnSkill2RequiredID_Click(object sender, EventArgs e)
+		{
+			if (bUserAction)
+			{
+				string strIDColumn = "a_need_sskill2";
+				string strLevelColumn = "a_need_sskill_level2";
+
+				SkillPicker pSkillSelector = new SkillPicker(pMain, this, new int[] { Convert.ToInt32(pTempRow[strIDColumn]), Convert.ToInt32(pTempRow[strLevelColumn]) });
+
+				if (pSkillSelector.ShowDialog() != DialogResult.OK)
+					return;
+
+				int iSkillNeededID = pSkillSelector.ReturnValues[0];
+				string strSkillName = iSkillNeededID.ToString();
+
+				if (iSkillNeededID != -1)
+					strSkillName = iSkillNeededID + " - " + pMain.pSkillTable.Rows[iSkillNeededID]["a_name_" + pMain.pSettings.WorkLocale];
+
+				btnSkill1RequiredID.Text = strSkillName;
+
+				pTempRow[strIDColumn] = iSkillNeededID.ToString();
+				pTempRow[strLevelColumn] = pSkillSelector.ReturnValues[1].ToString();
+
+				bUnsavedChanges = true;
+			}
+		}
+
+		private void tbSkill2RequiredLevel_TextChanged(object sender, EventArgs e)
+		{
+			if (bUserAction)
+			{
+				pTempRow["a_need_sskill_level2"] = tbSkill2RequiredLevel.ToString();
 
 				bUnsavedChanges = true;
 			}
