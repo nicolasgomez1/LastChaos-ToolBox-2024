@@ -14,7 +14,6 @@ using SlimDX;
 using SlimDX.Direct3D9;
 using System.Drawing.Imaging;
 using System.IO;
-using System.Runtime.InteropServices.ComTypes;
 
 namespace LastChaos_ToolBox_2024
 {
@@ -43,7 +42,8 @@ namespace LastChaos_ToolBox_2024
 		{
 			timerRender.Start();
 
-			panel3DView.MouseWheel += panel3DView_Zoom;
+            this.FormBorderStyle = FormBorderStyle.FixedSingle;
+            panel3DView.MouseWheel += panel3DView_Zoom;
 			this.FormClosing += RenderDialog_FormClosing;
 
 			InitializeDevice();
@@ -92,19 +92,24 @@ namespace LastChaos_ToolBox_2024
 			pDevice = null;
 
 			pMeshContainer = null;
-		}
+        }
 
 		private void panel3DView_Zoom(object sender, MouseEventArgs e)
 		{
 			if (Control.ModifierKeys.HasFlag(Keys.Control))
 			{
-				fUpDown += Math.Sign(e.Delta);
+				fUpDown += Math.Sign(e.Delta) * 0.2f;
 				fUpDown = Math.Max(-5, Math.Min(5.0f, fUpDown));
 			}
+			else if (Control.ModifierKeys.HasFlag(Keys.Shift))
+			{
+                fRotation += Math.Sign(e.Delta) * 0.1f;
+                fRotation = fRotation % 360;
+            }
 			else
 			{
 				fZoom += Math.Sign(e.Delta);
-				fZoom = Math.Max(-1.0f, Math.Min(17.0f, fZoom));
+				fZoom = Math.Max(-0.1f, Math.Min(17.0f, fZoom));
 			}
 		}
 
@@ -176,7 +181,7 @@ namespace LastChaos_ToolBox_2024
 			public byte[][] imageData { get; set; }
 		}
 
-		public class Tex : IDisposable
+		public class Tex
 		{
 			public static tTexture lcTex;
 
@@ -343,33 +348,6 @@ namespace LastChaos_ToolBox_2024
 			{
 				Val >>= (int)Shifter;
 				return Val;
-			}
-
-			public void Dispose()
-			{
-				Dispose(true);
-				GC.SuppressFinalize(this);
-			}
-
-			protected virtual void Dispose(bool disposing)
-			{
-				if (disposing)
-				{
-					if (lcTex != null)
-					{
-						for (int i = 0; i < lcTex.imageData.Length; i++)
-							lcTex.imageData[i] = null;
-						
-						lcTex.imageData = null;
-						lcTex.Header = null;
-						lcTex = null;
-					}
-				}
-			}
-
-			~Tex()
-			{
-				Dispose(false);
 			}
 		}
 
@@ -616,7 +594,6 @@ namespace LastChaos_ToolBox_2024
 			public void Dispose()
 			{
 				ShaderData?.Dispose();
-
 			}
 		}
 		public class tMeshContainer
@@ -1023,13 +1000,13 @@ namespace LastChaos_ToolBox_2024
 			{
 				Tex.ReadFile(FileName);
 				SlimDX.Direct3D9.Format imageFormat = ConvFormat(Tex.GetFormat());
-               
+
 				//texture = BuildTexture(Tex.lcTex.imageData[0], imageFormat, (int)Tex.lcTex.Header.Width, (int)Tex.lcTex.Header.Height);
-                if (Tex.lcTex.imageData != null && Tex.lcTex.imageData.Length > 0 && Tex.lcTex.imageData[0] != null)
-                    texture = BuildTexture(Tex.lcTex.imageData[0], imageFormat, (int)Tex.lcTex.Header.Width, (int)Tex.lcTex.Header.Height);
-                else
-                    pMain.PrintLog("Render Dialog > imageData is empty or null (SMC: " + pstrFilePath + ").", Color.Red);
-            }
+				if (Tex.lcTex.imageData != null && Tex.lcTex.imageData.Length > 0 && Tex.lcTex.imageData[0] != null)
+					texture = BuildTexture(Tex.lcTex.imageData[0], imageFormat, (int)Tex.lcTex.Header.Width, (int)Tex.lcTex.Header.Height);
+				else
+					pMain.PrintLog("Render Dialog > imageData is empty or null (SMC: " + pstrFilePath + ").", Color.Red);
+			}
 
 			return texture;
 		}
@@ -1308,7 +1285,7 @@ namespace LastChaos_ToolBox_2024
 		{
 			pDevice.Viewport = new Viewport(0, 0, panel3DView.Width, panel3DView.Height);
 
-			pDevice.Clear(ClearFlags.ZBuffer | ClearFlags.Target, Color.FromArgb(208, 203, 148), 1f, 0);
+			pDevice.Clear(ClearFlags.ZBuffer | ClearFlags.Target, Color.FromArgb(0, 255, 0), 1f, 0);
 			pDevice.BeginScene();
 
 			vecCameraPosition.Z = 0.1f - fZoom;
@@ -1333,7 +1310,8 @@ namespace LastChaos_ToolBox_2024
 			pDevice.EndScene();
 			pDevice.Present();
 
-			fRotation = fRotation - 0.03f;
+			if (cbRotation.Checked)
+				fRotation = fRotation - 0.03f;
 		}
 	}
 }

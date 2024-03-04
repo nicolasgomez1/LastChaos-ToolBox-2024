@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Management;
@@ -26,9 +27,9 @@ namespace LastChaos_ToolBox_2024.Editors
 		private int nSearchPosition = 0;
 		private string[] strArrayZones;
 		private Dictionary<Control, ToolTip> pToolTips = new Dictionary<Control, ToolTip>();
-        private RenderDialog pRenderDialog;
+		private RenderDialog pRenderDialog;
 
-        public ItemEditor(Main mainForm)
+		public ItemEditor(Main mainForm)
 		{
 			this.FormClosing += ItemEditor_FormClosing;
 
@@ -48,7 +49,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			}
 		}
 
-		private async void ItemEditor_Load(object sender, EventArgs e)
+		private async void ItemEditor_LoadAsync(object sender, EventArgs e)
 		{
 			foreach (Control control in this.Controls)
 			{
@@ -66,7 +67,7 @@ namespace LastChaos_ToolBox_2024.Editors
 
 				cbNationSelector.Items.Add(pMain.pSettings.NationSupported[i]);
 
-				if (pMain.pSettings.NationSupported[i].ToLower() == pMain.pSettings.DefaultEditNation)
+				if (pMain.pSettings.NationSupported[i].ToLower() == pMain.pSettings.WorkLocale)
 					cbNationSelector.SelectedIndex = i;
 			}
 
@@ -108,21 +109,23 @@ namespace LastChaos_ToolBox_2024.Editors
 
 			cbRvRValueSelector.EndUpdate();
 			/****************************************/
-			ProgressDialog progressDialog = new ProgressDialog(this, "Loading Items Data, Please Wait...");
-			/****************************************/
-			/* NOTE: Esto se tendría que replicar en cada herramienta que se cree de ahora en más.
-			 * Definir todas las columnas necesarias para el funcionamiento de la herramienta en cuestión.
-			 * Posteriormente verificar si la tabla pMain.pItemTable está vacía. Si es así directamente ejecutar la Query.
-			 * De lo contrario inteligentemente verificar que columnas requeridas no están presentes en pMain.pItemTable para posteriormente obtenerlas y cargarlas.
-			 */
+#if DEBUG
+			Stopwatch stopwatch = new Stopwatch();
+			stopwatch.Start();
+#endif
+            // Populate pItemTable
+            ProgressDialog progressDialog = new ProgressDialog(this, "Loading Items Data, Please Wait...");
+			
 			bool bRequestNeeded = false;
 
 			// Aquí se definen las columnas generales que son requeridas por la Herramienta en cuestión.
 			List<string> listQueryCompose = new List<string>
 			{
-				"a_enable", "a_texture_id", "a_texture_row", "a_texture_col", "a_file_smc", "a_weight", "a_price", "a_level", "a_level2", "a_durability",
-				"a_fame", "a_max_use", "a_type_idx", "a_subtype_idx", "a_wearing", "a_quest_trigger_ids", "a_quest_trigger_count", "a_rvr_value",
-				"a_rvr_grade", "a_effect_name", "a_attack_effect_name", "a_damage_effect_name", "a_castle_war", "a_job_flag", "a_zone_flag", "a_flag"
+				"a_enable", "a_texture_id", "a_texture_row", "a_texture_col", "a_file_smc", "a_weight", "a_price", "a_level", "a_level2", "a_durability", "a_fame",
+				"a_max_use", "a_grade", "a_type_idx", "a_subtype_idx", "a_wearing", "a_rvr_value", "a_rvr_grade", "a_effect_name", "a_attack_effect_name",
+				"a_damage_effect_name", "a_castle_war", "a_job_flag", "a_zone_flag", "a_flag", "a_origin_variation1", "a_origin_variation2", "a_origin_variation3",
+				"a_origin_variation4", "a_origin_variation5", "a_origin_variation6", "a_set_0", "a_set_1", "a_set_2", "a_set_3", "a_set_4", "a_num_0", "a_num_1",
+				"a_num_2", "a_num_3", "a_num_4", "a_need_sskill", "a_need_sskill_level", "a_need_sskill2", "a_need_sskill_level2"
 			};
 
 			// Esto sirve para solicitar únicamente las columnas asociadas a los idiomas definidos en General -> NationSupported.
@@ -150,30 +153,25 @@ namespace LastChaos_ToolBox_2024.Editors
 				}
 			}
 
-			// Aquí se definirán las columnas que son necesarias para identificar las filas. Éstas columnas serán solicitadas en la petición sin importar si están presentes en la Tabla global.
-			listQueryCompose.Add("a_index");
-			
 			// Request to t_item data if needed
 			if (bRequestNeeded)
 			{
 				pMain.pItemTable = await Task.Run(() =>
 				{
 					// NOTE: Posible problema: Se podrían hacer peticiones con algunas variaciones en el orden o rangos, no sé como se comportaría si sistema en dicho caso.
-					return pMain.QuerySelect(pMain.pSettings.DBCharset, $"SELECT {string.Join(",", listQueryCompose)} FROM {pMain.pSettings.DBData}.t_item ORDER BY a_index;");
+					return pMain.QuerySelect(pMain.pSettings.DBCharset, $"SELECT a_index, {string.Join(",", listQueryCompose)} FROM {pMain.pSettings.DBData}.t_item ORDER BY a_index;");
 				});
 			}
-			/****************************************/
-			progressDialog.UpdateText("Loading Zones Data, Please Wait...");
+
+            // Populate pZoneTable
+            progressDialog.UpdateText("Loading Zones Data, Please Wait...");
 
 			// Reset vals and load t_zonedata data if needed
 			bRequestNeeded = false;
 			listQueryCompose.Clear();
 
 			// Aquí se definen las columnas requeridas para ésta Herramienta.
-			listQueryCompose = new List<string>
-			{
-				"a_name"
-			};
+			listQueryCompose = new List<string> { "a_name" };
 
 			// Aquí se verificará si la Tabla global requerida por la Herramienta está vacía. Si es así se ejecutará la petición directamente.
 			if (pMain.pZoneTable == null)
@@ -184,26 +182,97 @@ namespace LastChaos_ToolBox_2024.Editors
 			{
 				for (int i = listQueryCompose.Count - 1; i >= 0; i--)
 				{
-					if (!pMain.pItemTable.Columns.Contains(listQueryCompose[i]))
+					if (!pMain.pZoneTable.Columns.Contains(listQueryCompose[i]))
 						bRequestNeeded = true;
 					else
 						listQueryCompose.RemoveAt(i);
 				}
 			}
 
-			// Aquí se definirán las columnas que son necesarias para identificar las filas. Éstas columnas serán solicitadas en la petición sin importar si están presentes en la Tabla global.
-			listQueryCompose.Add("a_zone_index");
-
 			// Request to t_zonedata if needed
 			if (bRequestNeeded)
 			{
 				pMain.pZoneTable = await Task.Run(() =>
 				{
-					return pMain.QuerySelect(pMain.pSettings.DBCharset, $"SELECT {string.Join(",", listQueryCompose)} FROM {pMain.pSettings.DBData}.t_zonedata ORDER BY a_zone_index;");
+					return pMain.QuerySelect(pMain.pSettings.DBCharset, $"SELECT a_zone_index, {string.Join(",", listQueryCompose)} FROM {pMain.pSettings.DBData}.t_zonedata ORDER BY a_zone_index;");
 				});
 			}
-			/****************************************/
-			if (pMain.pItemTable != null)
+
+            // Populate pSkillTable
+            progressDialog.UpdateText("Loading Skills Data, Please Wait...");
+
+			// Reset vals and load t_skill & t_skilllevel data if needed
+			bRequestNeeded = false;
+			listQueryCompose.Clear();
+
+			// Aquí se definen las columnas requeridas para ésta Herramienta.
+			listQueryCompose = new List<string> { "a_name_" + pMain.pSettings.WorkLocale };
+
+			// Aquí se verificará si la Tabla global requerida por la Herramienta está vacía. Si es así se ejecutará la petición directamente.
+			if (pMain.pSkillTable == null)
+			{
+				bRequestNeeded = true;
+			}
+			else
+			{
+				for (int i = listQueryCompose.Count - 1; i >= 0; i--)
+				{
+					if (!pMain.pSkillTable.Columns.Contains(listQueryCompose[i]))
+						bRequestNeeded = true;
+					else
+						listQueryCompose.RemoveAt(i);
+				}
+			}
+
+			// Request to t_skill if needed
+			if (bRequestNeeded)
+			{
+				pMain.pSkillTable = await Task.Run(() =>
+				{
+					return pMain.QuerySelect(pMain.pSettings.DBCharset, $"SELECT a_index, {string.Join(",", listQueryCompose)} FROM {pMain.pSettings.DBData}.t_skill ORDER BY a_index;");
+                });
+
+                // Populate pSkillLevelTable NOTE: En Lua yo ejecutaba una Query e iba agregando manualmente todas las claves, además de una subtabla para almacenar los skillslevels. Basicamente hacia una petición de niveles cada vez que iteraba por un skill, cosa poco eficiente. Para intentar mejorar eso haré una unica gran petición y cargaré todo en una segunda tabla.
+
+                // Reset vals and load t_skilllevel data if needed
+                bRequestNeeded = false;
+                listQueryCompose.Clear();
+
+				// Aquí se definen las columnas requeridas para ésta Herramienta.
+				listQueryCompose = new List<string> { "a_level", "a_dummypower" };
+
+                // Aquí se verificará si la Tabla global requerida por la Herramienta está vacía. Si es así se ejecutará la petición directamente.
+                if (pMain.pSkillLevelTable == null)
+                {
+                    bRequestNeeded = true;
+                }
+                else
+                {
+                    for (int i = listQueryCompose.Count - 1; i >= 0; i--)
+                    {
+                        if (!pMain.pSkillLevelTable.Columns.Contains(listQueryCompose[i]))
+                            bRequestNeeded = true;
+                        else
+                            listQueryCompose.RemoveAt(i);
+                    }
+                }
+
+                // Request to t_skill if needed
+                if (bRequestNeeded)
+                {
+                    pMain.pSkillLevelTable = await Task.Run(() =>
+                    {
+                        return pMain.QuerySelect(pMain.pSettings.DBCharset, $"SELECT a_index, {string.Join(",", listQueryCompose)} FROM {pMain.pSettings.DBData}.t_skilllevel ORDER BY a_index;");
+                    });
+                }
+            }
+#if DEBUG
+            stopwatch.Stop();
+            pMain.PrintLog($"Data load took: {stopwatch.ElapsedMilliseconds} ms", Color.CornflowerBlue);
+#endif
+            // NOTE: Definitivamente no fué código más legible... robert martin must wake up sweating at night
+            /****************************************/
+            if (pMain.pItemTable != null)
 			{
 				MainList.Items.Clear();
 
@@ -214,7 +283,7 @@ namespace LastChaos_ToolBox_2024.Editors
 					MainList.Items.Add(new ListBoxItem
 					{
 						ID = Convert.ToInt32(pRow["a_index"]),
-						Text = pRow["a_index"] + " - " + pRow["a_name_" + pMain.pSettings.DefaultEditNation].ToString()
+						Text = pRow["a_index"] + " - " + pRow["a_name_" + pMain.pSettings.WorkLocale].ToString()
 					});
 				}
 
@@ -232,13 +301,14 @@ namespace LastChaos_ToolBox_2024.Editors
 					strArrayZones[i] = pMain.pZoneTable.Rows[i]["a_name"].ToString();
 			}
 			/****************************************/
-			progressDialog.Close();
-
 			pToolTip = new ToolTip();
-			pToolTip.SetToolTip(btnReload, "Reload Items & Zones Data from Database");
-
+			pToolTip.SetToolTip(btnReload, "Reload Items, Zones Skill & Skills Levels Data from Database");
+			pToolTips[btnReload] = pToolTip;    // For Dispose
+			/****************************************/
 			btnReload.Enabled = true;
 			btnAddNew.Enabled = true;
+
+			progressDialog.Close();
 		}
 
 		private void ItemEditor_FormClosing(object sender, FormClosingEventArgs e)
@@ -259,7 +329,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			}
 		}
 
-		void LoadItemData(int nItemID)
+		private void LoadItemData(int nItemID)
 		{
 			bUserAction = false;
 
@@ -277,6 +347,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			pTempRow.ItemArray = (object[])pMain.pItemTable.Select("a_index = " + nItemID)[0].ItemArray.Clone();
 
 			// Load data to UI
+			// General
 			tbID.Text = nItemID.ToString();
 			/****************************************/
 			if (pTempRow["a_enable"].ToString() == "1")
@@ -295,29 +366,31 @@ namespace LastChaos_ToolBox_2024.Editors
 
 				pToolTip = new ToolTip();
 				pToolTip.SetToolTip(pbIcon, "FILE: " + strTexID + " ROW: " + strTexRow + " COL: " + strTexCol);
-
 				pToolTips[pbIcon] = pToolTip;
 			}
 			/****************************************/
 			string strSMCPath = pTempRow["a_file_smc"].ToString();
 
-            tbSMC.Text = strSMCPath;
+			tbSMC.Text = strSMCPath.Replace("Data\\", "");
 
 			pToolTip = new ToolTip();
 			pToolTip.SetToolTip(tbSMC, "Double Click to edit");
 			pToolTips[tbSMC] = pToolTip;
 			/****************************************/
-			if (pRenderDialog == null || pRenderDialog.IsDisposed)
-				pRenderDialog = new RenderDialog(pMain);
+			int nWearingPosition = Convert.ToInt32(pTempRow["a_wearing"]);
+			
+			if (pMain.pSettings.ShowRenderDialog[this.Name] == "true")
+			{
+				if (pRenderDialog == null || pRenderDialog.IsDisposed)
+					pRenderDialog = new RenderDialog(pMain);
 
-			if (!pRenderDialog.Visible)
-				pRenderDialog.Show();
+				if (!pRenderDialog.Visible)
+					pRenderDialog.Show();
 
-            int nWearingPosition = Convert.ToInt32(pTempRow["a_wearing"]);
-
-            pRenderDialog.SetModel(pMain.pSettings.ClientPath + "\\" + strSMCPath, "small", nWearingPosition);
-            /****************************************/
-            tbMaxStack.Text = pTempRow["a_weight"].ToString();
+				pRenderDialog.SetModel(pMain.pSettings.ClientPath + "\\" + strSMCPath, "small", nWearingPosition);
+			}
+			/****************************************/
+			tbMaxStack.Text = pTempRow["a_weight"].ToString();
 
 			tbPrice.Text = pTempRow["a_price"].ToString();
 
@@ -330,6 +403,12 @@ namespace LastChaos_ToolBox_2024.Editors
 			tbFame.Text = pTempRow["a_fame"].ToString();
 
 			tbMaxUse.Text = pTempRow["a_max_use"].ToString();
+			/****************************************/
+			tbGrade.Text = pTempRow["a_grade"].ToString();
+
+			pToolTip = new ToolTip();
+			pToolTip.SetToolTip(tbGrade, "¿Rare Rate?");
+			pToolTips[tbGrade] = pToolTip;	// For Dispose
 			/****************************************/
 			string strNation = cbNationSelector.SelectedItem.ToString().ToLower();
 
@@ -441,9 +520,6 @@ namespace LastChaos_ToolBox_2024.Editors
 				}
 			}
 			/****************************************/
-			tbQuestTriggerID.Text = pTempRow["a_quest_trigger_ids"].ToString();
-			tbQuestTriggerCount.Text = pTempRow["a_quest_trigger_count"].ToString();
-
 			int nRvRValue = Convert.ToInt32(pTempRow["a_rvr_value"]);
 			if (nRvRValue > Defs.SyndicateTypesNGrades.Keys.Count)
 			{
@@ -469,18 +545,41 @@ namespace LastChaos_ToolBox_2024.Editors
 			tbEffectAttack.Text = pTempRow["a_attack_effect_name"].ToString();
 			tbEffectDamage.Text = pTempRow["a_damage_effect_name"].ToString();
 			/****************************************/
+			for (int i = 1; i <= 6; i++)
+			{
+				Control[] cTextBox = this.Controls.Find("tbVariation" + i, true);
+				if (cTextBox.Length > 0)
+					((TextBox)cTextBox[0]).Text = pTempRow["a_origin_variation" + i].ToString();
+			}
+			/****************************************/
+			for (int i = 0; i <= 4; i++)
+			{
+				Control[] cTextBox = this.Controls.Find("tbSet" + i, true);
+				if (cTextBox.Length > 0)
+					((TextBox)cTextBox[0]).Text = pTempRow["a_set_" + i].ToString();
+			}
+			/****************************************/
+			for (int i = 0; i <= 4; i++)
+			{
+				Control[] cTextBox = this.Controls.Find("tbOption" + i, true);
+				if (cTextBox.Length > 0)
+					((TextBox)cTextBox[0]).Text = pTempRow["a_num_" + i].ToString();
+			}
+			
+			// Crafting
 
+			/****************************************/
+			/****************************************/
 			bUserAction = true;
 
 			btnUpdate.Enabled = true;
 
-			BtnCopy.Enabled = true;
+			btnCopy.Enabled = true;
 			btnDelete.Enabled = true;
 		}
 
 		private void tbSearch_KeyDown(object sender, KeyEventArgs e)
 		{
-			// TODO: BUG: Cuando se selecciona el ultimo match posible y se vuelve a presionar ENTER
 			if (e.KeyCode == Keys.Enter)
 			{
 				void Search()
@@ -568,9 +667,21 @@ namespace LastChaos_ToolBox_2024.Editors
 			pMain.pItemTable.Dispose();
 			pMain.pItemTable = null;
 
-			btnUpdate.Enabled = false;
+			pMain.pZoneTable.Dispose();
+			pMain.pItemTable = null;
 
-			ItemEditor_Load(sender, e);
+            pMain.pSkillTable.Dispose();
+            pMain.pSkillTable = null;
+
+            pMain.pSkillLevelTable.Dispose();
+            pMain.pSkillLevelTable = null;
+
+			btnCopy.Enabled = false;
+			btnDelete.Enabled = false;
+
+            btnUpdate.Enabled = false;
+
+            ItemEditor_LoadAsync(sender, e);
 		}
 
 		private void btnAddNew_Click(object sender, EventArgs e)
@@ -596,7 +707,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			}*/
 		}
 
-		private void BtnCopy_Click(object sender, EventArgs e)
+		private void btnCopy_Click(object sender, EventArgs e)
 		{
 			// TODO:
 		}
@@ -625,13 +736,13 @@ namespace LastChaos_ToolBox_2024.Editors
 		{
 			if (bUserAction)
 			{
-				IconPicker pIconSelector = new IconPicker(pMain, "ItemBtn");
+				IconPicker pIconSelector = new IconPicker(pMain, this, "ItemBtn");
 
 				if (pIconSelector.ShowDialog() != DialogResult.OK)
 					return;
 
 				string[] strArray = pIconSelector.ReturnValues;
-				
+
 				Image pIcon = pMain.GetIcon("ItemBtn", strArray[0], Convert.ToInt32(strArray[1]), Convert.ToInt32(strArray[2]));
 				if (pIcon != null)
 				{
@@ -642,7 +753,7 @@ namespace LastChaos_ToolBox_2024.Editors
 					pbIcon.Image = pIcon;
 
 					pToolTips[pbIcon].SetToolTip(pbIcon, "FILE: " + strArray[0] + " ROW: " + strArray[1] + " COL: " + strArray[2]);
-					
+
 					bUnsavedChanges = true;
 				}
 			}
@@ -739,6 +850,16 @@ namespace LastChaos_ToolBox_2024.Editors
 			}
 		}
 
+		private void tbGrade_TextChanged(object sender, EventArgs e)
+		{
+			if (bUserAction)
+			{
+				pTempRow["a_grade"] = tbGrade.Text;
+
+				bUnsavedChanges = true;
+			}
+		}
+
 		private void cbNationSelector_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			if (bUserAction)
@@ -794,13 +915,13 @@ namespace LastChaos_ToolBox_2024.Editors
 		{
 			if (bUserAction)
 			{
-				FlagPicker pFlagSelector = new FlagPicker(pMain, Defs.ItemClass, Convert.ToInt32(btnClassFlag.Text.ToString()));
+				FlagPicker pFlagSelector = new FlagPicker(pMain, this, Defs.ItemClass, Convert.ToInt32(btnClassFlag.Text.ToString()));
 
 				if (pFlagSelector.ShowDialog() != DialogResult.OK)
 					return;
 
 				string strFlag = pFlagSelector.ReturnValues.ToString();
-				
+
 				btnClassFlag.Text = strFlag;
 
 				string strTooltip = "";
@@ -824,13 +945,13 @@ namespace LastChaos_ToolBox_2024.Editors
 		{
 			if (bUserAction)
 			{
-				FlagPicker pFlagSelector = new FlagPicker(pMain, strArrayZones, long.Parse(btnAllowedZoneFlag.Text.ToString()));
+				FlagPicker pFlagSelector = new FlagPicker(pMain, this, strArrayZones, long.Parse(btnAllowedZoneFlag.Text.ToString()));
 
 				if (pFlagSelector.ShowDialog() != DialogResult.OK)
 					return;
 
 				string strFlag = pFlagSelector.ReturnValues.ToString();
-				
+
 				btnAllowedZoneFlag.Text = strFlag;
 
 				string strTooltip = "";
@@ -854,13 +975,13 @@ namespace LastChaos_ToolBox_2024.Editors
 		{
 			if (bUserAction)
 			{
-				FlagPicker pFlagSelector = new FlagPicker(pMain, Defs.ItemFlag, long.Parse(btnItemFlag.Text.ToString()));
+				FlagPicker pFlagSelector = new FlagPicker(pMain, this, Defs.ItemFlag, long.Parse(btnItemFlag.Text.ToString()));
 
 				if (pFlagSelector.ShowDialog() != DialogResult.OK)
 					return;
 
 				string strFlag = pFlagSelector.ReturnValues.ToString();
-				
+
 				btnItemFlag.Text = strFlag;
 
 				string strTooltip = "";
@@ -928,25 +1049,6 @@ namespace LastChaos_ToolBox_2024.Editors
 			}
 		}
 
-		private void tbQuestTriggerID_TextChanged(object sender, EventArgs e)
-		{
-			if (bUserAction)
-			{
-				pTempRow["a_quest_trigger_ids"] = tbQuestTriggerID.Text;
-
-				bUnsavedChanges = true;
-			}
-		}
-
-		private void tbQuestTriggerCount_TextChanged(object sender, EventArgs e)
-		{
-			if (bUserAction)
-			{
-				pTempRow["a_quest_trigger_count"] = tbQuestTriggerCount.Text;
-
-				bUnsavedChanges = true;
-			}
-		}
 		private void cbRvRValueSelector_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			int nType = cbRvRValueSelector.SelectedIndex;
@@ -1015,6 +1117,166 @@ namespace LastChaos_ToolBox_2024.Editors
 			}
 		}
 
+		private void tbVariation1_TextChanged(object sender, EventArgs e)
+		{
+			if (bUserAction)
+			{
+				pTempRow["a_origin_variation1"] = tbVariation1.ToString();
+
+				bUnsavedChanges = true;
+			}
+		}
+
+		private void tbVariation2_TextChanged(object sender, EventArgs e)
+		{
+			if (bUserAction)
+			{
+				pTempRow["a_origin_variation2"] = tbVariation2.ToString();
+
+				bUnsavedChanges = true;
+			}
+		}
+
+		private void tbVariation3_TextChanged(object sender, EventArgs e)
+		{
+			if (bUserAction)
+			{
+				pTempRow["a_origin_variation3"] = tbVariation3.ToString();
+
+				bUnsavedChanges = true;
+			}
+		}
+
+		private void tbVariation4_TextChanged(object sender, EventArgs e)
+		{
+			if (bUserAction)
+			{
+				pTempRow["a_origin_variation4"] = tbVariation4.ToString();
+
+				bUnsavedChanges = true;
+			}
+		}
+
+		private void tbVariation5_TextChanged(object sender, EventArgs e)
+		{
+			if (bUserAction)
+			{
+				pTempRow["a_origin_variation5"] = tbVariation5.ToString();
+
+				bUnsavedChanges = true;
+			}
+		}
+
+		private void tbVariation6_TextChanged(object sender, EventArgs e)
+		{
+			if (bUserAction)
+			{
+				pTempRow["a_origin_variation6"] = tbVariation6.ToString();
+
+				bUnsavedChanges = true;
+			}
+		}
+
+		private void tbSet0_TextChanged(object sender, EventArgs e)
+		{
+			if (bUserAction)
+			{
+				pTempRow["a_set_0"] = tbSet0.ToString();
+
+				bUnsavedChanges = true;
+			}
+		}
+
+		private void tbSet1_TextChanged(object sender, EventArgs e)
+		{
+			if (bUserAction)
+			{
+				pTempRow["a_set_1"] = tbSet1.ToString();
+
+				bUnsavedChanges = true;
+			}
+		}
+
+		private void tbSet2_TextChanged(object sender, EventArgs e)
+		{
+			if (bUserAction)
+			{
+				pTempRow["a_set_2"] = tbSet2.ToString();
+
+				bUnsavedChanges = true;
+			}
+		}
+
+		private void tbSet3_TextChanged(object sender, EventArgs e)
+		{
+			if (bUserAction)
+			{
+				pTempRow["a_set_3"] = tbSet3.ToString();
+
+				bUnsavedChanges = true;
+			}
+		}
+
+		private void tbSet4_TextChanged(object sender, EventArgs e)
+		{
+			if (bUserAction)
+			{
+				pTempRow["a_set_4"] = tbSet4.ToString();
+
+				bUnsavedChanges = true;
+			}
+		}
+
+		private void tbOption0_TextChanged(object sender, EventArgs e)
+		{
+			if (bUserAction)
+			{
+				pTempRow["a_num_0"] = tbOption0.ToString();
+
+				bUnsavedChanges = true;
+			}
+		}
+
+		private void tbOption1_TextChanged(object sender, EventArgs e)
+		{
+			if (bUserAction)
+			{
+				pTempRow["a_num_1"] = tbOption1.ToString();
+
+				bUnsavedChanges = true;
+			}
+		}
+
+		private void tbOption2_TextChanged(object sender, EventArgs e)
+		{
+			if (bUserAction)
+			{
+				pTempRow["a_num_2"] = tbOption2.ToString();
+
+				bUnsavedChanges = true;
+			}
+		}
+
+		private void tbOption3_TextChanged(object sender, EventArgs e)
+		{
+			if (bUserAction)
+			{
+				pTempRow["a_num_3"] = tbOption3.ToString();
+
+				bUnsavedChanges = true;
+			}
+		}
+
+		private void tbOption4_TextChanged(object sender, EventArgs e)
+		{
+			if (bUserAction)
+			{
+				pTempRow["a_num_4"] = tbOption4.ToString();
+
+				bUnsavedChanges = true;
+			}
+		}
+
 		private void btnUpdate_Click(object sender, EventArgs e)
 		{
 			DataRow[] pRow = pMain.pItemTable.Select("a_index = " + Convert.ToInt32(tbID.Text));
@@ -1031,7 +1293,7 @@ namespace LastChaos_ToolBox_2024.Editors
 				// NOTE: Esto puede ser útil más adelante. Verifica si la columna existe en la tabla principal.
 				/*if (!pMain.pItemTable.Columns.Contains("column_name"))
 					pMain.pItemTable.Columns.Add("column_name", column.DataType);*/
-
+				// TODO: Add check, if query fails?
 				pMain.pItemTable.Rows[nRowIndex][strColumnName] = objColumnValue;
 			}
 		}

@@ -41,9 +41,7 @@ namespace LastChaos_ToolBox_2024
 
         private void ResizeForm()
         {
-            const int iMargin = 10;
-
-            pDialogForm.Size = new Size((int)pLabel.CreateGraphics().MeasureString(pLabel.Text, pLabel.Font).Width + 2 * iMargin, pDialogForm.Height);
+            pDialogForm.Size = new Size((int)pLabel.CreateGraphics().MeasureString(pLabel.Text, pLabel.Font).Width + 2 * 10, pDialogForm.Height);
         }
 
         public void UpdateText(string strText)

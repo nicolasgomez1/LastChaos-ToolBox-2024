@@ -12,3 +12,6 @@ ClientPath=D:\Documents\LastChaos Files\SourceBinLibs\CCB+
 ; Here the suffixes of the nations that will be requested when making a select and everything consequent are defined.
 ; In my case I eliminated everything related to the rest of the nations, so I only load these 3, but in a more generic case, more could be added.
 NationSupported=USA,SPN,BRZ
+
+[RenderDialog]
+ItemEditor=true

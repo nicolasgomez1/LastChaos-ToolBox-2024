@@ -28,28 +28,29 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.btnUnCheckAll = new System.Windows.Forms.Button();
+            this.btnCheckAll = new System.Windows.Forms.Button();
             this.clbFlagList = new System.Windows.Forms.CheckedListBox();
             this.tbFlag = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnSelect = new System.Windows.Forms.Button();
+            this.btnUnCheckAll = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // btnUnCheckAll
+            // btnCheckAll
             // 
-            this.btnUnCheckAll.Enabled = false;
-            this.btnUnCheckAll.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(85)))), ((int)(((byte)(76)))));
-            this.btnUnCheckAll.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
-            this.btnUnCheckAll.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
-            this.btnUnCheckAll.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnUnCheckAll.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-            this.btnUnCheckAll.Location = new System.Drawing.Point(12, 12);
-            this.btnUnCheckAll.Name = "btnUnCheckAll";
-            this.btnUnCheckAll.Size = new System.Drawing.Size(206, 23);
-            this.btnUnCheckAll.TabIndex = 9;
-            this.btnUnCheckAll.Text = "Uncheck All";
-            this.btnUnCheckAll.UseVisualStyleBackColor = true;
-            this.btnUnCheckAll.Click += new System.EventHandler(this.btnUnCheckAll_Click);
+            this.btnCheckAll.Enabled = false;
+            this.btnCheckAll.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(85)))), ((int)(((byte)(76)))));
+            this.btnCheckAll.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+            this.btnCheckAll.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
+            this.btnCheckAll.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCheckAll.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.btnCheckAll.Location = new System.Drawing.Point(12, 12);
+            this.btnCheckAll.Name = "btnCheckAll";
+            this.btnCheckAll.Size = new System.Drawing.Size(96, 23);
+            this.btnCheckAll.TabIndex = 9;
+            this.btnCheckAll.Text = "Check All";
+            this.btnCheckAll.UseVisualStyleBackColor = true;
+            this.btnCheckAll.Click += new System.EventHandler(this.btnCheckAll_Click);
             // 
             // clbFlagList
             // 
@@ -87,20 +88,35 @@
             this.label10.Text = "Flag";
             this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // button1
+            // btnSelect
             // 
-            this.button1.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(85)))), ((int)(((byte)(76)))));
-            this.button1.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
-            this.button1.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-            this.button1.Location = new System.Drawing.Point(168, 465);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(50, 23);
-            this.button1.TabIndex = 1014;
-            this.button1.Text = "Select";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.btnSelect.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(85)))), ((int)(((byte)(76)))));
+            this.btnSelect.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+            this.btnSelect.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
+            this.btnSelect.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSelect.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.btnSelect.Location = new System.Drawing.Point(168, 465);
+            this.btnSelect.Name = "btnSelect";
+            this.btnSelect.Size = new System.Drawing.Size(50, 23);
+            this.btnSelect.TabIndex = 1014;
+            this.btnSelect.Text = "Select";
+            this.btnSelect.UseVisualStyleBackColor = true;
+            this.btnSelect.Click += new System.EventHandler(this.btnSelect_Click);
+            // 
+            // btnUnCheckAll
+            // 
+            this.btnUnCheckAll.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(85)))), ((int)(((byte)(76)))));
+            this.btnUnCheckAll.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+            this.btnUnCheckAll.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
+            this.btnUnCheckAll.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnUnCheckAll.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.btnUnCheckAll.Location = new System.Drawing.Point(122, 12);
+            this.btnUnCheckAll.Name = "btnUnCheckAll";
+            this.btnUnCheckAll.Size = new System.Drawing.Size(96, 23);
+            this.btnUnCheckAll.TabIndex = 1015;
+            this.btnUnCheckAll.Text = "Uncheck All";
+            this.btnUnCheckAll.UseVisualStyleBackColor = true;
+            this.btnUnCheckAll.Click += new System.EventHandler(this.btnUnCheckAll_Click);
             // 
             // FlagPicker
             // 
@@ -108,11 +124,12 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
             this.ClientSize = new System.Drawing.Size(230, 500);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btnUnCheckAll);
+            this.Controls.Add(this.btnSelect);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.tbFlag);
             this.Controls.Add(this.clbFlagList);
-            this.Controls.Add(this.btnUnCheckAll);
+            this.Controls.Add(this.btnCheckAll);
             this.Icon = global::LastChaos_ToolBox_2024.Properties.Resources.NG;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -125,15 +142,15 @@
         }
         #endregion
 
-        private System.Windows.Forms.Button btnSelect;
         private System.Windows.Forms.ComboBox cbFileSelector;
         private System.Windows.Forms.PictureBox pbImageViewer;
         private System.Windows.Forms.Label lbLocation;
         private System.Windows.Forms.PictureBox pbIcon;
-        private System.Windows.Forms.Button btnUnCheckAll;
+        private System.Windows.Forms.Button btnCheckAll;
         private System.Windows.Forms.CheckedListBox clbFlagList;
         private System.Windows.Forms.TextBox tbFlag;
         private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnSelect;
+        private System.Windows.Forms.Button btnUnCheckAll;
     }
 }

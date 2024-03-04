@@ -14,11 +14,12 @@ namespace LastChaos_ToolBox_2024
 {
     /* Args:
      *	Main<Pointer to Main Form>
+     *	Form<Parent Form to center the Window>
      *	String<name the image type>
-     *	Returns:
-     *		String<array of 3 elements>
+     * Returns:
+     *		String<Array of 3 elements>
      */
-    /*IconPicker pIconSelector = new IconPicker(pMain, "ItemBtn");
+    /*IconPicker pIconSelector = new IconPicker(pMain, this, "ItemBtn");
 
 	if (pIconSelector.ShowDialog() != DialogResult.OK)
 	    return;
@@ -27,12 +28,14 @@ namespace LastChaos_ToolBox_2024
     /****************************************/
     public partial class IconPicker : Form
     {
+        private Form pParentForm;
         private Main pMain;
         private double dX, dY, dIconSize;
-        private string pStrBtnType;
+        private string strBtnType;
         public string[] ReturnValues = new string[] { "0", "0", "0" };
         private System.Windows.Forms.ToolTip pToolTip;
-        public IconPicker(Main mainForm, String strBtnType)
+
+        public IconPicker(Main mainForm, Form ParentForm, String strBtnType)
         {
             InitializeComponent();
 
@@ -43,20 +46,23 @@ namespace LastChaos_ToolBox_2024
                 control.MouseMove += IconPicker_MouseMove;
 
             pMain = mainForm;
-            pStrBtnType = strBtnType;
+            pParentForm = ParentForm;
+            this.strBtnType = strBtnType;
         }
 
         private void IconPicker_Load(object sender, EventArgs e)
         {
+            this.Location = new Point((int)pParentForm.Location.X + (pParentForm.Width - this.Width) / 2, (int)pParentForm.Location.Y + (pParentForm.Height - this.Height) / 2);
+
             cbFileSelector.Items.Clear();
 
             cbFileSelector.BeginUpdate();
 
-            if (Directory.Exists(pStrBtnType))
+            if (Directory.Exists(strBtnType))
             {
                 try
                 {
-                    string[] strArrayFilePaths = Directory.GetFiles(pStrBtnType, "*.png");
+                    string[] strArrayFilePaths = Directory.GetFiles(strBtnType, "*.png");
 
                     strArrayFilePaths = strArrayFilePaths.OrderBy(f => ExtractNumberFromFileName(f)).ToArray();
 
@@ -70,7 +76,7 @@ namespace LastChaos_ToolBox_2024
             }
             else
             {
-                pMain.PrintLog("Icon Picker > Folder: " + pStrBtnType + " not exist.", Color.Red);
+                pMain.PrintLog("Icon Picker > Folder: " + strBtnType + " not exist.", Color.Red);
             }
 
             cbFileSelector.EndUpdate();
@@ -117,9 +123,9 @@ namespace LastChaos_ToolBox_2024
 
                 string strSelectedFile = cbFileSelector.SelectedItem.ToString();
 
-                ReturnValues[0] = strSelectedFile.Replace(pStrBtnType, "");
+                ReturnValues[0] = strSelectedFile.Replace(strBtnType, "");
 
-                string strPathCompose = pStrBtnType + "\\" + strSelectedFile + ".png";
+                string strPathCompose = strBtnType + "\\" + strSelectedFile + ".png";
 
                 Image pImage = Image.FromFile(strPathCompose);
                 if (pImage != null)
@@ -151,7 +157,7 @@ namespace LastChaos_ToolBox_2024
 
             btnSelect.Enabled = true;
 
-            Image pIcon = pMain.GetIcon(pStrBtnType, ReturnValues[0], Convert.ToInt32(ReturnValues[1]), Convert.ToInt32(ReturnValues[2]));
+            Image pIcon = pMain.GetIcon(strBtnType, ReturnValues[0], Convert.ToInt32(ReturnValues[1]), Convert.ToInt32(ReturnValues[2]));
             if (pIcon != null)
                 pbIcon.Image = pIcon;
 

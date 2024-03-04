@@ -15,7 +15,6 @@ using IniParser;
 using IniParser.Model;
 using LastChaos_ToolBox_2024.Editors;
 
-
 namespace LastChaos_ToolBox_2024
 {
     public partial class Main : Form
@@ -25,6 +24,8 @@ namespace LastChaos_ToolBox_2024
         public MySqlConnection mysqlConn;
         public DataTable pItemTable = null;
         public DataTable pZoneTable = null;
+        public DataTable pSkillTable = null;
+        public DataTable pSkillLevelTable = null;
 
         private string strWindowsTitle;
 
@@ -39,10 +40,11 @@ namespace LastChaos_ToolBox_2024
             public string DBData = "";
             public string DBUser = "";
             public string DBCharset = "utf8";
-            public string DefaultEditNation = "USA";
+            public string WorkLocale = "USA";
 
             public string ClientPath = "";
             public string[] NationSupported;
+            public Dictionary<string, string> ShowRenderDialog { get; set; } = new Dictionary<string, string>();
         }
 
         public Main()
@@ -79,29 +81,39 @@ namespace LastChaos_ToolBox_2024
                 mysqlConn.Close();
             }
 
+            // TODO: Add dispose to all global table vals
+            if (pItemTable != null)
+            {
+                pItemTable.Dispose();
+                pItemTable = null;
+            }
+
+            if (pZoneTable != null)
+            {
+                pZoneTable.Dispose();
+                pItemTable = null;
+            }
+
+            if (pSkillTable != null)
+            {
+                pSkillTable.Dispose();
+                pSkillTable = null;
+            }
+
+            if (pSkillLevelTable != null)
+            {
+                pSkillLevelTable.Dispose();
+                pSkillLevelTable = null;
+            }
+
+            // NOTE: Posible Bug: can reload when some editor is opened.
             ConnectToDatabase();
         }
 
         private void ItemEditor_Click(object sender, EventArgs e)
         {
-            // TODO: NOTE: ¿Limitar la cantidad de editores de un mismo tipo que se pueden abrir?
             ItemEditor pItemEditor = new ItemEditor(this);
             pItemEditor.Show();
-        }
-
-        private string GetValueFromLine(string strString)
-        {
-            string[] strArray = strString.Split('=');
-
-            if (strArray.Length >= 2)
-            {
-                return strArray[1].Trim();
-            }
-            else
-            {
-                PrintLog("Settings file is corrupted or wrong formed.", Color.Red);
-                return "";
-            }
         }
 
         public void PrintLog(string strMsg, Color? ColorMsg = null)
@@ -144,17 +156,23 @@ namespace LastChaos_ToolBox_2024
                 pSettings.DBData = pData["Settings"]["MySQLDBData"];
                 pSettings.DBUser = pData["Settings"]["MySQLDBUser"];
                 pSettings.DBCharset = pData["Settings"]["Charset"];
-                pSettings.DefaultEditNation = pData["Settings"]["Nation"].ToLower();
+                pSettings.WorkLocale = pData["Settings"]["Nation"].ToLower();
 
                 // General Settings
                 pSettings.ClientPath = pData["Settings"]["ClientPath"];
-
+                /****************************************/
                 string[] strArrayNations = pData["Settings"]["NationSupported"].Split(',');
 
                 pSettings.NationSupported = new string[strArrayNations.Length];
 
                 for (int i = 0; i < strArrayNations.Length; i++)
                     pSettings.NationSupported[i] = strArrayNations[i];
+                /****************************************/
+                KeyDataCollection arrayKeys = pData["RenderDialog"];
+
+                foreach (KeyData pKey in arrayKeys)
+                    pSettings.ShowRenderDialog[pKey.KeyName] = pKey.Value;
+                /****************************************/
 
                 PrintLog("Settings load finished.", Color.Lime);
             }
@@ -234,7 +252,7 @@ namespace LastChaos_ToolBox_2024
 
                     using (MySqlCommand mysqlCommand = new MySqlCommand(strQuery, mysqlConnection))
                     {
-                        mysqlCommand.ExecuteReader();
+                        mysqlCommand.ExecuteNonQuery();
 
                         mysqlConnection.Close();
 
@@ -251,6 +269,68 @@ namespace LastChaos_ToolBox_2024
                 return false;
             }
         }
+
+        // NOTE: I try with pMain.pItemTable = await pMain.QuerySelectAsync(pMain.pSettings.DBCharset, $"SELECT {string.Join(",", listQueryCompose)} FROM {pMain.pSettings.DBData}.t_item ORDER BY a_index;"); and took 300ms more
+        /*public async Task<DataTable> QuerySelectAsync(string strCharset, string strQuery)
+        {
+            try
+            {
+                string strConnect = $"SERVER={pSettings.DBHost};DATABASE={pSettings.DBData};UID={pSettings.DBUsername};PASSWORD={pSettings.DBPassword};CHARSET=" + strCharset;
+
+                using (MySqlConnection mysqlConnection = new MySqlConnection(strConnect))
+                {
+                    await mysqlConnection.OpenAsync(); //mysqlConnection.Open();
+
+                    using (MySqlCommand mysqlCommand = new MySqlCommand(strQuery, mysqlConnection))
+                    {
+                        DataTable pTable = new DataTable();
+                        pTable.Load(await mysqlCommand.ExecuteReaderAsync());   //pTable.Load(mysqlCommand.ExecuteReader());
+
+                        mysqlConnection.Close();
+
+                        PrintLog("MySql Query (Charset: " + strCharset + ")\n" + strQuery + "\nExecute successfully.", Color.Lime);
+
+                        return pTable;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                PrintLog($"MySql Query (Charset: {strCharset})\n{strQuery}\nFail > {ex.Message}", Color.Red);
+
+                return null;
+            }
+        }
+
+        public async Task<bool> QueryUpdateInsertAsync(string strCharset, string strQuery)
+        {
+            try
+            {
+                string strConnect = $"SERVER={pSettings.DBHost};DATABASE={pSettings.DBData};UID={pSettings.DBUsername};PASSWORD={pSettings.DBPassword};CHARSET=" + strCharset;
+
+                using (MySqlConnection mysqlConnection = new MySqlConnection(strConnect))
+                {
+                    await mysqlConnection.OpenAsync();  //mysqlConnection.Open();
+
+                    using (MySqlCommand mysqlCommand = new MySqlCommand(strQuery, mysqlConnection))
+                    {
+                        await mysqlCommand.ExecuteNonQueryAsync(); //mysqlCommand.ExecuteReader();
+
+                        mysqlConnection.Close();
+
+                        PrintLog("MySql Query (Charset: " + strCharset + ")\n" + strQuery + "\nExecute successfully.", Color.Lime);
+
+                        return true;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                PrintLog($"MySql Query (Charset: {strCharset})\n{strQuery}\nFail > {ex.Message}", Color.Red);
+
+                return false;
+            }
+        }*/
 
         void ConnectToDatabase()
         {
