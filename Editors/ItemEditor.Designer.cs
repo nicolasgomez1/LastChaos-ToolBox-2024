@@ -39,14 +39,14 @@ namespace LastChaos_ToolBox_2024.Editors
             this.GeneralPanel = new System.Windows.Forms.Panel();
             this.label8 = new System.Windows.Forms.Label();
             this.groupBox9 = new System.Windows.Forms.GroupBox();
-            this.btnSkill2RequiredID = new System.Windows.Forms.Button();
             this.btnSkill1RequiredID = new System.Windows.Forms.Button();
-            this.label43 = new System.Windows.Forms.Label();
-            this.tbSkill2RequiredLevel = new System.Windows.Forms.TextBox();
-            this.label44 = new System.Windows.Forms.Label();
             this.label42 = new System.Windows.Forms.Label();
             this.tbSkill1RequiredLevel = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
+            this.btnSkill2RequiredID = new System.Windows.Forms.Button();
+            this.label43 = new System.Windows.Forms.Label();
+            this.tbSkill2RequiredLevel = new System.Windows.Forms.TextBox();
+            this.label44 = new System.Windows.Forms.Label();
             this.tbGrade = new System.Windows.Forms.TextBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.tbEffectDamage = new System.Windows.Forms.TextBox();
@@ -97,7 +97,7 @@ namespace LastChaos_ToolBox_2024.Editors
             this.tbVariation1 = new System.Windows.Forms.TextBox();
             this.label25 = new System.Windows.Forms.Label();
             this.btnItemFlag = new System.Windows.Forms.Button();
-            this.label24 = new System.Windows.Forms.Label();
+            this.lAllowedZone = new System.Windows.Forms.Label();
             this.btnAllowedZoneFlag = new System.Windows.Forms.Button();
             this.cbCastleType = new System.Windows.Forms.ComboBox();
             this.label23 = new System.Windows.Forms.Label();
@@ -138,6 +138,7 @@ namespace LastChaos_ToolBox_2024.Editors
             this.btnCopy = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
             this.tbSearch = new System.Windows.Forms.TextBox();
+            this.tbAllowedZoneFlag = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             this.GeneralPanel.SuspendLayout();
             this.groupBox9.SuspendLayout();
@@ -236,6 +237,7 @@ namespace LastChaos_ToolBox_2024.Editors
             this.GeneralPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.GeneralPanel.AutoScroll = true;
+            this.GeneralPanel.Controls.Add(this.tbAllowedZoneFlag);
             this.GeneralPanel.Controls.Add(this.label8);
             this.GeneralPanel.Controls.Add(this.groupBox9);
             this.GeneralPanel.Controls.Add(this.tbGrade);
@@ -246,7 +248,7 @@ namespace LastChaos_ToolBox_2024.Editors
             this.GeneralPanel.Controls.Add(this.groupBox6);
             this.GeneralPanel.Controls.Add(this.label25);
             this.GeneralPanel.Controls.Add(this.btnItemFlag);
-            this.GeneralPanel.Controls.Add(this.label24);
+            this.GeneralPanel.Controls.Add(this.lAllowedZone);
             this.GeneralPanel.Controls.Add(this.btnAllowedZoneFlag);
             this.GeneralPanel.Controls.Add(this.cbCastleType);
             this.GeneralPanel.Controls.Add(this.label23);
@@ -297,14 +299,14 @@ namespace LastChaos_ToolBox_2024.Editors
             // 
             // groupBox9
             // 
-            this.groupBox9.Controls.Add(this.btnSkill2RequiredID);
             this.groupBox9.Controls.Add(this.btnSkill1RequiredID);
-            this.groupBox9.Controls.Add(this.label43);
-            this.groupBox9.Controls.Add(this.tbSkill2RequiredLevel);
-            this.groupBox9.Controls.Add(this.label44);
             this.groupBox9.Controls.Add(this.label42);
             this.groupBox9.Controls.Add(this.tbSkill1RequiredLevel);
             this.groupBox9.Controls.Add(this.label9);
+            this.groupBox9.Controls.Add(this.btnSkill2RequiredID);
+            this.groupBox9.Controls.Add(this.label43);
+            this.groupBox9.Controls.Add(this.tbSkill2RequiredLevel);
+            this.groupBox9.Controls.Add(this.label44);
             this.groupBox9.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.groupBox9.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
             this.groupBox9.Location = new System.Drawing.Point(0, 192);
@@ -314,20 +316,6 @@ namespace LastChaos_ToolBox_2024.Editors
             this.groupBox9.TabStop = false;
             this.groupBox9.Text = "Crafting Data";
             // 
-            // btnSkill2RequiredID
-            // 
-            this.btnSkill2RequiredID.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(85)))), ((int)(((byte)(76)))));
-            this.btnSkill2RequiredID.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
-            this.btnSkill2RequiredID.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
-            this.btnSkill2RequiredID.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSkill2RequiredID.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-            this.btnSkill2RequiredID.Location = new System.Drawing.Point(107, 42);
-            this.btnSkill2RequiredID.Name = "btnSkill2RequiredID";
-            this.btnSkill2RequiredID.Size = new System.Drawing.Size(135, 23);
-            this.btnSkill2RequiredID.TabIndex = 1046;
-            this.btnSkill2RequiredID.UseVisualStyleBackColor = true;
-            this.btnSkill2RequiredID.Click += new System.EventHandler(this.btnSkill2RequiredID_Click);
-            // 
             // btnSkill1RequiredID
             // 
             this.btnSkill1RequiredID.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(85)))), ((int)(((byte)(76)))));
@@ -335,56 +323,22 @@ namespace LastChaos_ToolBox_2024.Editors
             this.btnSkill1RequiredID.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
             this.btnSkill1RequiredID.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSkill1RequiredID.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-            this.btnSkill1RequiredID.Location = new System.Drawing.Point(107, 16);
+            this.btnSkill1RequiredID.Location = new System.Drawing.Point(84, 19);
             this.btnSkill1RequiredID.Name = "btnSkill1RequiredID";
             this.btnSkill1RequiredID.Size = new System.Drawing.Size(135, 23);
             this.btnSkill1RequiredID.TabIndex = 1038;
             this.btnSkill1RequiredID.UseVisualStyleBackColor = true;
             this.btnSkill1RequiredID.Click += new System.EventHandler(this.btnSkill1RequiredID_Click);
             // 
-            // label43
-            // 
-            this.label43.AutoSize = true;
-            this.label43.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-            this.label43.Location = new System.Drawing.Point(248, 47);
-            this.label43.Name = "label43";
-            this.label43.Size = new System.Drawing.Size(33, 13);
-            this.label43.TabIndex = 1044;
-            this.label43.Text = "Level";
-            this.label43.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // tbSkill2RequiredLevel
-            // 
-            this.tbSkill2RequiredLevel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
-            this.tbSkill2RequiredLevel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.tbSkill2RequiredLevel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-            this.tbSkill2RequiredLevel.Location = new System.Drawing.Point(287, 43);
-            this.tbSkill2RequiredLevel.Name = "tbSkill2RequiredLevel";
-            this.tbSkill2RequiredLevel.Size = new System.Drawing.Size(40, 20);
-            this.tbSkill2RequiredLevel.TabIndex = 1045;
-            this.tbSkill2RequiredLevel.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.tbSkill2RequiredLevel.TextChanged += new System.EventHandler(this.tbSkill2RequiredLevel_TextChanged);
-            // 
-            // label44
-            // 
-            this.label44.AutoSize = true;
-            this.label44.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-            this.label44.Location = new System.Drawing.Point(6, 47);
-            this.label44.Name = "label44";
-            this.label44.Size = new System.Drawing.Size(95, 13);
-            this.label44.TabIndex = 1042;
-            this.label44.Text = "Skill 2 Required ID";
-            this.label44.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
             // label42
             // 
             this.label42.AutoSize = true;
             this.label42.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-            this.label42.Location = new System.Drawing.Point(248, 21);
+            this.label42.Location = new System.Drawing.Point(225, 24);
             this.label42.Name = "label42";
-            this.label42.Size = new System.Drawing.Size(33, 13);
+            this.label42.Size = new System.Drawing.Size(55, 13);
             this.label42.TabIndex = 1040;
-            this.label42.Text = "Level";
+            this.label42.Text = "Skill Level";
             this.label42.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // tbSkill1RequiredLevel
@@ -392,7 +346,7 @@ namespace LastChaos_ToolBox_2024.Editors
             this.tbSkill1RequiredLevel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
             this.tbSkill1RequiredLevel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tbSkill1RequiredLevel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-            this.tbSkill1RequiredLevel.Location = new System.Drawing.Point(287, 17);
+            this.tbSkill1RequiredLevel.Location = new System.Drawing.Point(286, 20);
             this.tbSkill1RequiredLevel.Name = "tbSkill1RequiredLevel";
             this.tbSkill1RequiredLevel.Size = new System.Drawing.Size(40, 20);
             this.tbSkill1RequiredLevel.TabIndex = 1041;
@@ -403,12 +357,64 @@ namespace LastChaos_ToolBox_2024.Editors
             // 
             this.label9.AutoSize = true;
             this.label9.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-            this.label9.Location = new System.Drawing.Point(6, 21);
+            this.label9.Location = new System.Drawing.Point(6, 24);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(95, 13);
+            this.label9.Size = new System.Drawing.Size(72, 13);
             this.label9.TabIndex = 1038;
-            this.label9.Text = "Skill 1 Required ID";
+            this.label9.Text = "Skill Required";
             this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // btnSkill2RequiredID
+            // 
+            this.btnSkill2RequiredID.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(85)))), ((int)(((byte)(76)))));
+            this.btnSkill2RequiredID.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+            this.btnSkill2RequiredID.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
+            this.btnSkill2RequiredID.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSkill2RequiredID.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.btnSkill2RequiredID.Location = new System.Drawing.Point(185, -8);
+            this.btnSkill2RequiredID.Name = "btnSkill2RequiredID";
+            this.btnSkill2RequiredID.Size = new System.Drawing.Size(37, 23);
+            this.btnSkill2RequiredID.TabIndex = 1046;
+            this.btnSkill2RequiredID.UseVisualStyleBackColor = true;
+            this.btnSkill2RequiredID.Visible = false;
+            this.btnSkill2RequiredID.Click += new System.EventHandler(this.btnSkill2RequiredID_Click);
+            // 
+            // label43
+            // 
+            this.label43.AutoSize = true;
+            this.label43.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.label43.Location = new System.Drawing.Point(228, -3);
+            this.label43.Name = "label43";
+            this.label43.Size = new System.Drawing.Size(55, 13);
+            this.label43.TabIndex = 1044;
+            this.label43.Text = "Skill Level";
+            this.label43.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.label43.Visible = false;
+            // 
+            // tbSkill2RequiredLevel
+            // 
+            this.tbSkill2RequiredLevel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+            this.tbSkill2RequiredLevel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tbSkill2RequiredLevel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.tbSkill2RequiredLevel.Location = new System.Drawing.Point(289, -7);
+            this.tbSkill2RequiredLevel.Name = "tbSkill2RequiredLevel";
+            this.tbSkill2RequiredLevel.Size = new System.Drawing.Size(40, 20);
+            this.tbSkill2RequiredLevel.TabIndex = 1045;
+            this.tbSkill2RequiredLevel.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.tbSkill2RequiredLevel.Visible = false;
+            this.tbSkill2RequiredLevel.TextChanged += new System.EventHandler(this.tbSkill2RequiredLevel_TextChanged);
+            // 
+            // label44
+            // 
+            this.label44.AutoSize = true;
+            this.label44.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.label44.Location = new System.Drawing.Point(98, -3);
+            this.label44.Name = "label44";
+            this.label44.Size = new System.Drawing.Size(81, 13);
+            this.label44.TabIndex = 1042;
+            this.label44.Text = "Skill 2 Required";
+            this.label44.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.label44.Visible = false;
             // 
             // tbGrade
             // 
@@ -1021,16 +1027,16 @@ namespace LastChaos_ToolBox_2024.Editors
             this.btnItemFlag.UseVisualStyleBackColor = true;
             this.btnItemFlag.Click += new System.EventHandler(this.btnItemFlag_Click);
             // 
-            // label24
+            // lAllowedZone
             // 
-            this.label24.AutoSize = true;
-            this.label24.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-            this.label24.Location = new System.Drawing.Point(675, 62);
-            this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(72, 13);
-            this.label24.TabIndex = 1029;
-            this.label24.Text = "Allowed Zone";
-            this.label24.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.lAllowedZone.AutoSize = true;
+            this.lAllowedZone.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.lAllowedZone.Location = new System.Drawing.Point(675, 62);
+            this.lAllowedZone.Name = "lAllowedZone";
+            this.lAllowedZone.Size = new System.Drawing.Size(72, 13);
+            this.lAllowedZone.TabIndex = 1029;
+            this.lAllowedZone.Text = "Allowed Zone";
+            this.lAllowedZone.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // btnAllowedZoneFlag
             // 
@@ -1044,6 +1050,7 @@ namespace LastChaos_ToolBox_2024.Editors
             this.btnAllowedZoneFlag.Size = new System.Drawing.Size(100, 23);
             this.btnAllowedZoneFlag.TabIndex = 1028;
             this.btnAllowedZoneFlag.UseVisualStyleBackColor = true;
+            this.btnAllowedZoneFlag.Visible = false;
             this.btnAllowedZoneFlag.Click += new System.EventHandler(this.btnAllowedZoneFlag_Click);
             // 
             // cbCastleType
@@ -1508,6 +1515,20 @@ namespace LastChaos_ToolBox_2024.Editors
             this.tbSearch.TabIndex = 1025;
             this.tbSearch.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tbSearch_KeyDown);
             // 
+            // tbAllowedZoneFlag
+            // 
+            this.tbAllowedZoneFlag.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+            this.tbAllowedZoneFlag.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tbAllowedZoneFlag.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.tbAllowedZoneFlag.Location = new System.Drawing.Point(753, 58);
+            this.tbAllowedZoneFlag.Name = "tbAllowedZoneFlag";
+            this.tbAllowedZoneFlag.ReadOnly = true;
+            this.tbAllowedZoneFlag.Size = new System.Drawing.Size(100, 20);
+            this.tbAllowedZoneFlag.TabIndex = 1038;
+            this.tbAllowedZoneFlag.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.tbAllowedZoneFlag.Visible = false;
+            this.tbAllowedZoneFlag.TextChanged += new System.EventHandler(this.tbAllowedZoneFlag_TextChanged);
+            // 
             // ItemEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1550,7 +1571,7 @@ namespace LastChaos_ToolBox_2024.Editors
 
         }
 
-        #endregion
+#endregion
 
         private System.Windows.Forms.Button btnReload;
         private System.Windows.Forms.Button btnAddNew;
@@ -1609,7 +1630,7 @@ namespace LastChaos_ToolBox_2024.Editors
         private Label label22;
         private Label label23;
         private ComboBox cbCastleType;
-        private Label label24;
+        private Label lAllowedZone;
         private Button btnAllowedZoneFlag;
         private Label label25;
         private Button btnItemFlag;
@@ -1659,5 +1680,6 @@ namespace LastChaos_ToolBox_2024.Editors
         private Label label44;
         private Button btnSkill1RequiredID;
         private Button btnSkill2RequiredID;
+        private TextBox tbAllowedZoneFlag;
     }
 }

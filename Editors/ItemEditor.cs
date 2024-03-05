@@ -1,4 +1,7 @@
-﻿using System;
+﻿//#define NEED_SECOND_SKILL_TO_CRAFT	// NOTE: These values are required by the server, but are not actually used
+#define ALLOWED_ZONE_SYSTEM	// NOTE: Custom system made by NicolasG, disable that to use normal a_zone_flag
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -36,7 +39,21 @@ namespace LastChaos_ToolBox_2024.Editors
 
             InitializeComponent();
 
-			pMain = mainForm;
+#if NEED_SECOND_SKILL_TO_CRAFT
+			label44.Visible = true;
+			btnSkill2RequiredID.Visible = true;
+            label43.Visible = true;
+			tbSkill2RequiredLevel.Visible = true;
+#endif
+
+#if ALLOWED_ZONE_SYSTEM
+            btnAllowedZoneFlag.Visible = true;
+#else
+            lAllowedZone.Text = "Zone Flag";
+            tbAllowedZoneFlag.Visible = true;
+#endif
+
+            pMain = mainForm;
 		}
 
 		public class ListBoxItem
@@ -61,8 +78,11 @@ namespace LastChaos_ToolBox_2024.Editors
                 "a_max_use", "a_grade", "a_type_idx", "a_subtype_idx", "a_wearing", "a_rvr_value", "a_rvr_grade", "a_effect_name", "a_attack_effect_name",
                 "a_damage_effect_name", "a_castle_war", "a_job_flag", "a_zone_flag", "a_flag", "a_origin_variation1", "a_origin_variation2", "a_origin_variation3",
                 "a_origin_variation4", "a_origin_variation5", "a_origin_variation6", "a_set_0", "a_set_1", "a_set_2", "a_set_3", "a_set_4", "a_num_0", "a_num_1",
-                "a_num_2", "a_num_3", "a_num_4", "a_need_sskill", "a_need_sskill_level", "a_need_sskill2", "a_need_sskill_level2"
-            };
+                "a_num_2", "a_num_3", "a_num_4", "a_need_sskill", "a_need_sskill_level",
+#if NEED_SECOND_SKILL_TO_CRAFT
+				"a_need_sskill2", "a_need_sskill_level2"
+#endif
+			};
 
             // Esto sirve para solicitar únicamente las columnas asociadas a los idiomas definidos en General -> NationSupported.
             for (int i = 0; i < pMain.pSettings.NationSupported.Length; i++)
@@ -500,11 +520,11 @@ namespace LastChaos_ToolBox_2024.Editors
 			pToolTip = new ToolTip();
 			pToolTip.SetToolTip(btnClassFlag, strTooltip);
 			pToolTips[btnClassFlag] = pToolTip;
-			/****************************************/
-			// NOTE: This is not compatible with original database/source. I changed this to work with a system it has been developed.
-			string strFlag = pTempRow["a_zone_flag"].ToString();
+            /****************************************/
+            string strFlag = pTempRow["a_zone_flag"].ToString();
 
-			btnAllowedZoneFlag.Text = strFlag;
+#if ALLOWED_ZONE_SYSTEM
+            btnAllowedZoneFlag.Text = strFlag;
 
 			strTooltip = "";
 			nFlag = long.Parse(strFlag);
@@ -518,8 +538,11 @@ namespace LastChaos_ToolBox_2024.Editors
 			pToolTip = new ToolTip();
 			pToolTip.SetToolTip(btnAllowedZoneFlag, strTooltip);
 			pToolTips[btnAllowedZoneFlag] = pToolTip;
-			/****************************************/
-			strFlag = pTempRow["a_flag"].ToString();
+#else
+			tbAllowedZoneFlag.Text = strFlag;
+#endif
+            /****************************************/
+            strFlag = pTempRow["a_flag"].ToString();
 
 			btnItemFlag.Text = strFlag;
 
@@ -623,6 +646,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			btnSkill1RequiredID.Text = strSkillName;
 			tbSkill1RequiredLevel.Text = pTempRow["a_need_sskill_level"].ToString();
 
+#if NEED_SECOND_SKILL_TO_CRAFT
 			iSkillNeededID = Convert.ToInt32(pTempRow["a_need_sskill2"]);
 			strSkillName = iSkillNeededID.ToString();
             pSkillData = pMain.pSkillTable.AsEnumerable().FirstOrDefault(row => row.Field<int>("a_indeX") == iSkillNeededID);
@@ -632,6 +656,7 @@ namespace LastChaos_ToolBox_2024.Editors
 
             btnSkill2RequiredID.Text = strSkillName;
 			tbSkill2RequiredLevel.Text = pTempRow["a_need_sskill_level2"].ToString();
+#endif
 
 			pSkillData = null;
             /****************************************/
@@ -1010,7 +1035,8 @@ namespace LastChaos_ToolBox_2024.Editors
 
 		private void btnAllowedZoneFlag_Click(object sender, EventArgs e)
 		{
-			if (bUserAction)
+#if ALLOWED_ZONE_SYSTEM
+            if (bUserAction)
 			{
 				FlagPicker pFlagSelector = new FlagPicker(pMain, this, strArrayZones, long.Parse(btnAllowedZoneFlag.Text.ToString()));
 
@@ -1036,9 +1062,22 @@ namespace LastChaos_ToolBox_2024.Editors
 
 				bUnsavedChanges = true;
 			}
-		}
+#endif
+        }
 
-		private void btnItemFlag_Click(object sender, EventArgs e)
+        private void tbAllowedZoneFlag_TextChanged(object sender, EventArgs e)
+        {
+#if !ALLOWED_ZONE_SYSTEM
+            if (bUserAction)
+            {
+                pTempRow["a_zone_flag"] = tbAllowedZoneFlag.Text;
+
+                bUnsavedChanges = true;
+            }
+#endif
+        }
+
+        private void btnItemFlag_Click(object sender, EventArgs e)
 		{
 			if (bUserAction)
 			{
@@ -1385,6 +1424,7 @@ namespace LastChaos_ToolBox_2024.Editors
 
 		private void btnSkill2RequiredID_Click(object sender, EventArgs e)
         {
+#if NEED_SECOND_SKILL_TO_CRAFT
             if (bUserAction)
             {
                 string strIDColumn = "a_need_sskill";
@@ -1410,19 +1450,22 @@ namespace LastChaos_ToolBox_2024.Editors
 
                 bUnsavedChanges = true;
             }
+#endif
         }
 
         private void tbSkill2RequiredLevel_TextChanged(object sender, EventArgs e)
 		{
+#if NEED_SECOND_SKILL_TO_CRAFT
 			if (bUserAction)
 			{
 				pTempRow["a_need_sskill_level2"] = tbSkill2RequiredLevel.Text;
 
                 bUnsavedChanges = true;
 			}
-		}
+#endif
+        }
 
-		private void btnUpdate_Click(object sender, EventArgs e)
+        private void btnUpdate_Click(object sender, EventArgs e)
 		{
 			DataRow[] pRow = pMain.pItemTable.Select("a_index = " + Convert.ToInt32(tbID.Text));
 
@@ -1442,5 +1485,5 @@ namespace LastChaos_ToolBox_2024.Editors
 				pMain.pItemTable.Rows[nRowIndex][strColumnName] = objColumnValue;
 			}
 		}
-	}
+    }
 }
