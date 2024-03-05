@@ -16,7 +16,7 @@ In Item Editor there are notes and examples on how to manage the request, storag
 * Finally, when in a Tool the operator decides to apply changes made, an attempt is made to execute a Query either type UPDATE or INSERT, in case of success, said changes are updated in the __Global Tables__.
 
 # Practical examples
-* Example of requesting and storing t_item data in the __GlobalTable__: pItemTable.
+* Example of requesting and storing t_item data in the __Global Table__: pItemTable. To later store information in a temporary variable to work with, to finally pass that temporary data to the __Global Table__.
 
 ```c#
 // This function will be executed asynchronously when opening the Item Editor Tool
@@ -36,11 +36,35 @@ private async void ItemEditor_LoadAsync(object sender, EventArgs e)
 		// Finally we can clone the content of a desired row to our temporary variable. To later be able to work with said variable and its content temporarily, without adulterating the content of the Global Table.
 		pTempRow.ItemArray = (object[])pMain.pItemTable.Select("a_index = 19")[0].ItemArray.Clone();
 
+		/*------------------------------------------------------------------*/
+
 		// Eventually we can get information from our temporary variable by doing the following.
 		string strGetItemEnable = pTempRow["a_enable"].ToString();
 
+		/*------------------------------------------------------------------*/
+
 		// By deduction we can alter the content of temporary variable by doing:
 		pTempRow["a_enable"] = "0";
+
+		/*------------------------------------------------------------------*/
+
+		// To transfer all the data from our temporary variable to the Global Table we can do the following...
+
+		// We obtain the reference to the desired row to alter.
+		DataRow pItemTableRow = pMain.pItemTable.Select("a_index = 19").FirstOrDefault();
+		if (pItemTableRow != null)	// We verify that said row exists.
+		{
+			//In case of original structure of the Global Table is not altered we can do: pItemTableRow.ItemArray = pTempRow.ItemArray;
+
+			//In case of original structure of the Global Table is altered we can do the following...
+			foreach (DataColumn column in pTempRow.Table.Columns)	// We can iterate through all the columns of the temporary variable.
+			{
+				if (!pMain.pItemTable.Columns.Contains(column.ColumnName))	// In case any of the columns do not exist in the Global Table.
+					pMain.pItemTable.Columns.Add(column.ColumnName, column.DataType);	// We add it. Keep in mind, this adds the column only for a single row, the rest will not have that new column.
+
+				pItemTableRow[column.ColumnName] = pTempRow[column.ColumnName];	// Finally we write the values of all the columns of the Global Table with the data of the temporary variable.
+			}
+		}
 	}
 }
 

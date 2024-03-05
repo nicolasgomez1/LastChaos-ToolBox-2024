@@ -71,8 +71,8 @@ namespace LastChaos_ToolBox_2024.Editors
 		{
 			bool bRequestNeeded = false;
 
-			// NOTE: Here you must define the columns that you want to request from the database.
-			HashSet<string> listQueryCompose = new HashSet<string>
+            // NOTE: Here you must define the columns that you want to request from the database.
+            List<string> listQueryCompose = new List<string>
 			{
 				"a_enable", "a_texture_id", "a_texture_row", "a_texture_col", "a_file_smc", "a_weight", "a_price", "a_level", "a_level2", "a_durability", "a_fame",
 				"a_max_use", "a_grade", "a_type_idx", "a_subtype_idx", "a_wearing", "a_rvr_value", "a_rvr_grade", "a_effect_name", "a_attack_effect_name",
@@ -97,8 +97,8 @@ namespace LastChaos_ToolBox_2024.Editors
 			{
 				bRequestNeeded = true;
 			}
-            else    // NOTE: If the global table is not empty, check if any of the columns to request are already present. To remove it from the query and not request redundant information.
-            {
+			else    // NOTE: If the global table is not empty, check if any of the columns to request are already present. To remove it from the query and not request redundant information.
+			{
 				foreach (var column in listQueryCompose.ToList())
 				{
 					if (!pMain.pItemTable.Columns.Contains(column))
@@ -112,9 +112,9 @@ namespace LastChaos_ToolBox_2024.Editors
 			{
 				pMain.pItemTable = await Task.Run(() =>
 				{
-                    // WARNING NOTE: Possible problem: I don't know how this will work when do query with multiple locales that are not compatible with a single charset are requested.
-                    // NOTE: As you can see, regardless of the columns to request, it is always necessary to request the reference column, in this case a_index.
-                    return pMain.QuerySelect(pMain.pSettings.DBCharset, $"SELECT a_index, {string.Join(",", listQueryCompose)} FROM {pMain.pSettings.DBData}.t_item ORDER BY a_index;");
+					// WARNING NOTE: Possible problem: I don't know how this will work when do query with multiple locales that are not compatible with a single charset are requested.
+					// NOTE: As you can see, regardless of the columns to request, it is always necessary to request the reference column, in this case a_index.
+					return pMain.QuerySelect(pMain.pSettings.DBCharset, $"SELECT a_index, {string.Join(",", listQueryCompose)} FROM {pMain.pSettings.DBData}.t_item ORDER BY a_index;");
 				});
 			}
 		}
@@ -123,7 +123,7 @@ namespace LastChaos_ToolBox_2024.Editors
 		{
 			bool bRequestNeeded = false;
 
-			HashSet<string> listQueryCompose = new HashSet<string> { "a_name" };
+			List<string> listQueryCompose = new List<string> { "a_name" };
 
 			if (pMain.pZoneTable == null)
 			{
@@ -153,7 +153,7 @@ namespace LastChaos_ToolBox_2024.Editors
 		{
 			bool bRequestNeeded = false;
 
-			HashSet<string> listQueryCompose = new HashSet<string> {
+            List<string> listQueryCompose = new List<string> {
 				"a_name_" + pMain.pSettings.WorkLocale, "a_client_description_" + pMain.pSettings.WorkLocale, "a_client_icon_texid", "a_client_icon_row", "a_client_icon_col"
 			};
 
@@ -186,7 +186,7 @@ namespace LastChaos_ToolBox_2024.Editors
 				bRequestNeeded = false;
 				listQueryCompose.Clear();
 
-				listQueryCompose = new HashSet<string> { "a_level", "a_dummypower" };
+				listQueryCompose = new List<string> { "a_level", "a_dummypower" };
 
 				if (pMain.pSkillLevelTable == null)
 				{
@@ -280,7 +280,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			stopwatch.Start();
 #endif
 			await Task.WhenAll( // NOTE: Here information is requested from the mysql server asynchronously, thus reducing waiting times to the minimum possible.
-                LoadItemDataAsync(),    // Populate pItemTable
+				LoadItemDataAsync(),    // Populate pItemTable
 				LoadZoneDataAsync(),    // Populate pZoneTable
 				LoadSkillDataAsync()    // Populate pSkillTable & pSkillLevelTable
 			);
@@ -329,7 +329,7 @@ namespace LastChaos_ToolBox_2024.Editors
 		}
 
 		private void ItemEditor_FormClosing(object sender, FormClosingEventArgs e)  // NOTE: Here is an example of the unsaved data warning messages in case you want to close the form.
-        {
+		{
 			void Clear()
 			{
 				foreach (var toolTip in pToolTips.Values)
@@ -469,36 +469,37 @@ namespace LastChaos_ToolBox_2024.Editors
 			/****************************************/
 			btnClassFlag.Text = pTempRow["a_job_flag"].ToString();
 
-			string strTooltip = "";
-			long nFlag = Convert.ToInt32(pTempRow["a_job_flag"]);
+			StringBuilder strTooltip = new StringBuilder();	//string strTooltip = "";
+
+            long nFlag = Convert.ToInt32(pTempRow["a_job_flag"]);
 
 			for (int i = 0; i < Defs.ItemClass.Length; i++)
 			{
 				if ((nFlag & 1L << i) != 0)
-					strTooltip += Defs.ItemClass[i] + "\n";
-			}
+					strTooltip.Append(Defs.ItemClass[i] + "\n");    //strTooltip += Defs.ItemClass[i] + "\n";
+            }
 
 			pToolTip = new ToolTip();
-			pToolTip.SetToolTip(btnClassFlag, strTooltip);
-			pToolTips[btnClassFlag] = pToolTip;
+			pToolTip.SetToolTip(btnClassFlag, strTooltip.ToString());   //pToolTip.SetToolTip(btnClassFlag, strTooltip);
+            pToolTips[btnClassFlag] = pToolTip;
 			/****************************************/
 			string strFlag = pTempRow["a_zone_flag"].ToString();
 
 #if ALLOWED_ZONE_SYSTEM
 			btnAllowedZoneFlag.Text = strFlag;
 
-			strTooltip = "";
-			nFlag = long.Parse(strFlag);
+            strTooltip = new StringBuilder();	//strTooltip = "";
+            nFlag = long.Parse(strFlag);
 
 			for (int i = 0; i < pMain.pZoneTable.Rows.Count; i++)
 			{
 				if ((nFlag & 1L << i) != 0)
-					strTooltip += pMain.pZoneTable.Rows[i]["a_name"] + "\n";
+                    strTooltip.Append(pMain.pZoneTable.Rows[i]["a_name"] + "\n");	//strTooltip += pMain.pZoneTable.Rows[i]["a_name"] + "\n";
 			}
 
 			pToolTip = new ToolTip();
-			pToolTip.SetToolTip(btnAllowedZoneFlag, strTooltip);
-			pToolTips[btnAllowedZoneFlag] = pToolTip;
+            pToolTip.SetToolTip(btnAllowedZoneFlag, strTooltip.ToString());	//pToolTip.SetToolTip(btnAllowedZoneFlag, strTooltip);
+            pToolTips[btnAllowedZoneFlag] = pToolTip;
 #else
 			tbAllowedZoneFlag.Text = strFlag;
 #endif
@@ -507,18 +508,18 @@ namespace LastChaos_ToolBox_2024.Editors
 
 			btnItemFlag.Text = strFlag;
 
-			strTooltip = "";
-			nFlag = long.Parse(strFlag);
+            strTooltip = new StringBuilder();   //strTooltip = "";
+            nFlag = long.Parse(strFlag);
 
 			for (int i = 0; i < Defs.ItemFlag.Length; i++)
 			{
 				if ((nFlag & 1L << i) != 0)
-					strTooltip += Defs.ItemFlag[i] + "\n";
+                    strTooltip.Append(Defs.ItemFlag[i] + "\n");	//strTooltip += Defs.ItemFlag[i] + "\n";
 			}
 
 			pToolTip = new ToolTip();
-			pToolTip.SetToolTip(btnItemFlag, strTooltip);
-			pToolTips[btnItemFlag] = pToolTip;
+            pToolTip.SetToolTip(btnItemFlag, strTooltip.ToString());	//pToolTip.SetToolTip(btnItemFlag, strTooltip);
+            pToolTips[btnItemFlag] = pToolTip;
 			/****************************************/
 			int nType = Convert.ToInt32(pTempRow["a_type_idx"]);
 
@@ -714,7 +715,7 @@ namespace LastChaos_ToolBox_2024.Editors
 		}
 
 		private void btnReload_Click(object sender, EventArgs e)    // NOTE: Here is an example on how to manage the reloading of information from global tables
-        {
+		{
 			nSearchPosition = 0;
 
 			pMain.pItemTable.Dispose();
@@ -977,18 +978,18 @@ namespace LastChaos_ToolBox_2024.Editors
 
 				btnClassFlag.Text = strFlag;
 
-				string strTooltip = "";
+                StringBuilder strTooltip = new StringBuilder(); //string strTooltip = "";
 				long nFlag = Convert.ToInt32(strFlag);
 
 				for (int i = 0; i < Defs.ItemClass.Length; i++)
 				{
 					if ((nFlag & 1L << i) != 0)
-						strTooltip += Defs.ItemClass[i] + "\n";
+                        strTooltip.Append(Defs.ItemClass[i] + "\n");		//strTooltip += Defs.ItemClass[i] + "\n";
 				}
 
-				pToolTips[btnClassFlag].SetToolTip(btnClassFlag, strTooltip);
+                pToolTips[btnClassFlag].SetToolTip(btnClassFlag, strTooltip.ToString());	//pToolTips[btnClassFlag].SetToolTip(btnClassFlag, strTooltip);
 
-				pTempRow["a_job_flag"] = strFlag;
+                pTempRow["a_job_flag"] = strFlag;
 
 				bUnsavedChanges = true;
 			}
@@ -1008,16 +1009,17 @@ namespace LastChaos_ToolBox_2024.Editors
 
 				btnAllowedZoneFlag.Text = strFlag;
 
-				string strTooltip = "";
+                StringBuilder strTooltip = new StringBuilder(); //string strTooltip = "";
 				long nFlag = long.Parse(strFlag);
 
 				for (int i = 0; i < pMain.pZoneTable.Rows.Count; i++)
 				{
 					if ((nFlag & 1L << i) != 0)
-						strTooltip += pMain.pZoneTable.Rows[i]["a_name"] + "\n";
-				}
+						strTooltip.Append(pMain.pZoneTable.Rows[i]["a_name"] + "\n");	//strTooltip += pMain.pZoneTable.Rows[i]["a_name"] + "\n";
 
-				pToolTips[btnAllowedZoneFlag].SetToolTip(btnAllowedZoneFlag, strTooltip);
+                }
+
+                pToolTips[btnAllowedZoneFlag].SetToolTip(btnAllowedZoneFlag, strTooltip.ToString());	//pToolTips[btnAllowedZoneFlag].SetToolTip(btnAllowedZoneFlag, strTooltip);
 
 				pTempRow["a_zone_flag"] = strFlag;
 
@@ -1051,18 +1053,18 @@ namespace LastChaos_ToolBox_2024.Editors
 
 				btnItemFlag.Text = strFlag;
 
-				string strTooltip = "";
-				long nFlag = long.Parse(strFlag);
+                StringBuilder strTooltip = new StringBuilder(); //string strTooltip = "";
+                long nFlag = long.Parse(strFlag);
 
 				for (int i = 0; i < Defs.ItemFlag.Length; i++)
 				{
 					if ((nFlag & 1L << i) != 0)
-						strTooltip += Defs.ItemFlag[i] + "\n";
+						strTooltip.Append(Defs.ItemFlag[i] + "\n");	//strTooltip += Defs.ItemFlag[i] + "\n";
 				}
 
-				pToolTips[btnItemFlag].SetToolTip(btnItemFlag, strTooltip);
+				pToolTips[btnItemFlag].SetToolTip(btnItemFlag, strTooltip.ToString()); //pToolTips[btnItemFlag].SetToolTip(btnItemFlag, strTooltip);
 
-				pTempRow["a_flag"] = strFlag;
+                pTempRow["a_flag"] = strFlag;
 
 				bUnsavedChanges = true;
 			}
@@ -1428,22 +1430,16 @@ namespace LastChaos_ToolBox_2024.Editors
 
 		private void btnUpdate_Click(object sender, EventArgs e)
 		{
-			DataRow[] pRow = pMain.pItemTable.Select("a_index = " + Convert.ToInt32(tbID.Text));
-
-			int nRowIndex = pMain.pItemTable.Rows.IndexOf(pRow[0]);
-
-			foreach (DataColumn column in pTempRow.Table.Columns)
+			DataRow pItemTableRow = pMain.pItemTable.Select("a_index = " + Convert.ToInt32(tbID.Text)).FirstOrDefault();
+			if (pItemTableRow != null)
 			{
-				string strColumnName = column.ColumnName;
-				object objColumnValue = pTempRow[column];
+				foreach (DataColumn column in pTempRow.Table.Columns)
+				{
+					if (!pMain.pItemTable.Columns.Contains(column.ColumnName))
+						pMain.pItemTable.Columns.Add(column.ColumnName, column.DataType);
 
-				// TODO: Compose query to update values in db server
-
-				// NOTE: Esto puede ser útil más adelante. Verifica si la columna existe en la tabla principal.
-				/*if (!pMain.pItemTable.Columns.Contains("column_name"))
-					pMain.pItemTable.Columns.Add("column_name", column.DataType);*/
-				// TODO: Add check, if query fails?
-				pMain.pItemTable.Rows[nRowIndex][strColumnName] = objColumnValue;
+                    pItemTableRow[column.ColumnName] = pTempRow[column.ColumnName];
+				}
 			}
 		}
 	}
