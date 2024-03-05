@@ -113,6 +113,7 @@ namespace LastChaos_ToolBox_2024.Editors
 				pMain.pItemTable = await Task.Run(() =>
 				{
                     // WARNING NOTE: Possible problem: I don't know how this will work when do query with multiple locales that are not compatible with a single charset are requested.
+                    // NOTE: As you can see, regardless of the columns to request, it is always necessary to request the reference column, in this case a_index.
                     return pMain.QuerySelect(pMain.pSettings.DBCharset, $"SELECT a_index, {string.Join(",", listQueryCompose)} FROM {pMain.pSettings.DBData}.t_item ORDER BY a_index;");
 				});
 			}
