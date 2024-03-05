@@ -20,9 +20,9 @@ In Item Editor there are notes and examples on how to manage the request, storag
 
 # Help Dialogs
 * Pickers
-1) [Flag Picker Implementation Example](FlagPicker.cs)
-2) [Icon Picker Implementation Example](IconPicker.cs)
-3) [Skill Picker Implementation Example](SkillPicker.cs)
+1) [Flag Picker Implementation Example](Pickers/FlagPicker.cs)
+2) [Icon Picker Implementation Example](Pickers/IconPicker.cs)
+3) [Skill Picker Implementation Example](Pickers/SkillPicker.cs)
 
 * Others
 1) [Progress Dialog Implementation Example](ProgressDialog.cs)
