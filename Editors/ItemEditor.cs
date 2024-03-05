@@ -17,7 +17,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Definitions;
-using Org.BouncyCastle.Pqc.Crypto.Lms;
 
 namespace LastChaos_ToolBox_2024.Editors
 {
@@ -83,9 +82,11 @@ namespace LastChaos_ToolBox_2024.Editors
 #if NEED_SECOND_SKILL_TO_CRAFT
 				"a_need_sskill2", "a_need_sskill_level2",
 #endif
-				"a_need_item0", "a_need_item_count0", "a_need_item1", "a_need_item_count1", "a_need_item2", "a_need_item_count2", "a_need_item3", "a_need_item_count3"
-				, "a_need_item4", "a_need_item_count4", "a_need_item5", "a_need_item_count5", "a_need_item6", "a_need_item_count6", "a_need_item7", "a_need_item_count7"
-				, "a_need_item8", "a_need_item_count8", "a_need_item9", "a_need_item_count9"
+				"a_need_item0", "a_need_item_count0", "a_need_item1", "a_need_item_count1", "a_need_item2", "a_need_item_count2", "a_need_item3", "a_need_item_count3",
+				"a_need_item4", "a_need_item_count4", "a_need_item5", "a_need_item_count5", "a_need_item6", "a_need_item_count6", "a_need_item7", "a_need_item_count7",
+				"a_need_item8", "a_need_item_count8", "a_need_item9", "a_need_item_count9", "a_rare_index_0", "a_rare_prob_0", "a_rare_index_1", "a_rare_prob_1",
+				"a_rare_index_2", "a_rare_prob_2", "a_rare_index_3", "a_rare_prob_3", "a_rare_index_4", "a_rare_prob_4", "a_rare_index_5", "a_rare_prob_5",
+				"a_rare_index_6", "a_rare_prob_6", "a_rare_index_7", "a_rare_prob_7", "a_rare_index_8", "a_rare_prob_8", "a_rare_index_9", "a_rare_prob_9"
 			};
 
 			// NOTE: If columns related to locale are required, they must be defined here.
@@ -184,9 +185,8 @@ namespace LastChaos_ToolBox_2024.Editors
 					return pMain.QuerySelect(pMain.pSettings.DBCharset, $"SELECT a_index, {string.Join(",", listQueryCompose)} FROM {pMain.pSettings.DBData}.t_skill ORDER BY a_index;");
 				});
 
-				// Populate pSkillLevelTable
-				// Reset vals
-				bRequestNeeded = false;
+                // Reset vals & Populate pSkillLevelTable
+                bRequestNeeded = false;
 				listQueryCompose.Clear();
 
 				listQueryCompose = new List<string> { "a_level", "a_dummypower" };
@@ -216,7 +216,37 @@ namespace LastChaos_ToolBox_2024.Editors
 			}
 		}
 
-		private async void ItemEditor_LoadAsync(object sender, EventArgs e)
+        private async Task LoadRareOptionDataAsync()
+        {
+            bool bRequestNeeded = false;
+
+            List<string> listQueryCompose = new List<string> { "a_prefix_" + pMain.pSettings.WorkLocale };
+
+            if (pMain.pRareOptionTable == null)
+            {
+                bRequestNeeded = true;
+            }
+            else
+            {
+                foreach (var column in listQueryCompose.ToList())
+                {
+                    if (!pMain.pRareOptionTable.Columns.Contains(column))
+                        bRequestNeeded = true;
+                    else
+                        listQueryCompose.Remove(column);
+                }
+            }
+
+            if (bRequestNeeded)
+            {
+                pMain.pRareOptionTable = await Task.Run(() =>
+                {
+                    return pMain.QuerySelect(pMain.pSettings.DBCharset, $"SELECT a_index, {string.Join(",", listQueryCompose)} FROM {pMain.pSettings.DBData}.t_rareoption ORDER BY a_index;");
+                });
+            }
+        }
+
+        private async void ItemEditor_LoadAsync(object sender, EventArgs e)
 		{
 			ProgressDialog pProgressDialog = new ProgressDialog(this, "Loading Data, Please Wait...");
 
@@ -285,8 +315,9 @@ namespace LastChaos_ToolBox_2024.Editors
 			await Task.WhenAll( // NOTE: Here information is requested from the mysql server asynchronously, thus reducing waiting times to the minimum possible.
 				LoadItemDataAsync(),    // Populate pItemTable
 				LoadZoneDataAsync(),    // Populate pZoneTable
-				LoadSkillDataAsync()    // Populate pSkillTable & pSkillLevelTable
-			);
+				LoadSkillDataAsync(),    // Populate pSkillTable & pSkillLevelTable
+                LoadRareOptionDataAsync()	// Populate pRateoptionTable
+            );
 #if DEBUG
 			stopwatch.Stop();
 			pMain.PrintLog($"Data load took: {stopwatch.ElapsedMilliseconds} ms", Color.CornflowerBlue);
@@ -322,7 +353,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			}
 			/****************************************/
 			pToolTip = new ToolTip();
-			pToolTip.SetToolTip(btnReload, "Reload Items, Zones Skill & Skills Levels Data from Database");
+			pToolTip.SetToolTip(btnReload, "Reload Items, Zones, Skills & Rare Options Data from Database");
 			pToolTips[btnReload] = pToolTip;    // For Dispose
 			/****************************************/
 			btnReload.Enabled = true;
@@ -331,25 +362,26 @@ namespace LastChaos_ToolBox_2024.Editors
 			pProgressDialog.Close();
 		}
 
-		private void ItemEditor_FormClosing(object sender, FormClosingEventArgs e)  // NOTE: Here is an example of the unsaved data warning messages in case you want to close the form.
+		private void ItemEditor_FormClosing(object sender, FormClosingEventArgs e)  // NOTE: Here is an example of the unsaved data warning messages in case want to close the form.
 		{
 			void Clear()
 			{
 				foreach (var toolTip in pToolTips.Values)
 					toolTip.Dispose();
 
-				if (pRenderDialog != null)
+				pToolTips = null;
+
+                if (pRenderDialog != null)
 					pRenderDialog.Close();
 
 				pTempRow = null;
 
 				strArrayZones = null;
-
 			}
 
 			if (bUnsavedChanges)
 			{
-				DialogResult pDialogReturn = MessageBox.Show("You have unsaved changes. Do you want to discard them and exit?", "Item Editor", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+				DialogResult pDialogReturn = MessageBox.Show("You have unsaved changes. Do you want to discard them and exit?", "Item Editor", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
 				if (pDialogReturn == DialogResult.No)
 					e.Cancel = true;
@@ -485,6 +517,9 @@ namespace LastChaos_ToolBox_2024.Editors
 					strTooltip.Append(Defs.ItemClass[i] + "\n");
 			}
 
+			if (nFlag != 0 && strTooltip.Length <= 0)
+				pMain.PrintLog("Item Editor > Item: " + nItemID + " Error: a_job_flag out of range", Color.Red);
+
 			pToolTip = new ToolTip();
 			pToolTip.SetToolTip(btnClassFlag, strTooltip.ToString());
 			pToolTips[btnClassFlag] = pToolTip;
@@ -502,6 +537,9 @@ namespace LastChaos_ToolBox_2024.Editors
 				if ((nFlag & 1L << i) != 0)
 					strTooltip.Append(pMain.pZoneTable.Rows[i]["a_name"] + "\n");
 			}
+
+			if (nFlag != 0 && strTooltip.Length <= 0)
+				pMain.PrintLog("Item Editor > Item: " + nItemID + " Error: a_zone_flag out of range", Color.Red);
 
 			pToolTip = new ToolTip();
 			pToolTip.SetToolTip(btnAllowedZoneFlag, strTooltip.ToString());
@@ -522,6 +560,9 @@ namespace LastChaos_ToolBox_2024.Editors
 				if ((nFlag & 1L << i) != 0)
 					strTooltip.Append(Defs.ItemFlag[i] + "\n");
 			}
+
+			if (nFlag != 0 && strTooltip.Length <= 0)
+				pMain.PrintLog("Item Editor > Item: " + nItemID + " Error: a_flag out of range", Color.Red);
 
 			pToolTip = new ToolTip();
 			pToolTip.SetToolTip(btnItemFlag, strTooltip.ToString());
@@ -618,7 +659,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			tbSkill2RequiredLevel.Text = pTempRow["a_need_sskill_level2"].ToString();
 #endif
 
-            pSkillData = null;
+			pSkillData = null;
 			/****************************************/
 			DataRow pItemTableRow;
 
@@ -640,6 +681,15 @@ namespace LastChaos_ToolBox_2024.Editors
 			}
 
 			pItemTableRow = null;
+			/****************************************/
+			//	"a_need_item0", "a_need_item_count0"
+			for (int i = 0; i <= 9; i++)
+			{
+
+				btnRareIndex0.Text = "";
+				tbRareProb0.Text = "";
+				lRareProb0.Text = "-";
+            }
 			/****************************************/
 			bUserAction = true;
 
@@ -707,7 +757,7 @@ namespace LastChaos_ToolBox_2024.Editors
 
 				if (bUnsavedChanges)
 				{
-					DialogResult pDialogReturn = MessageBox.Show("There are unsaved changes. If you proceed, your changes will be discarded.\nDo you want to continue?", "Item Editor", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+					DialogResult pDialogReturn = MessageBox.Show("There are unsaved changes. If you proceed, your changes will be discarded.\nDo you want to continue?", "Item Editor", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
 					if (pDialogReturn == DialogResult.Yes)
 					{
@@ -735,11 +785,12 @@ namespace LastChaos_ToolBox_2024.Editors
 		{
 			nSearchPosition = 0;
 
-			pMain.pItemTable.Dispose();
+            // TODO: Add dispose to all global tables
+            pMain.pItemTable.Dispose();
 			pMain.pItemTable = null;
 
 			pMain.pZoneTable.Dispose();
-			pMain.pItemTable = null;
+			pMain.pZoneTable = null;
 
 			pMain.pSkillTable.Dispose();
 			pMain.pSkillTable = null;
@@ -747,7 +798,10 @@ namespace LastChaos_ToolBox_2024.Editors
 			pMain.pSkillLevelTable.Dispose();
 			pMain.pSkillLevelTable = null;
 
-			btnCopy.Enabled = false;
+			pMain.pRareOptionTable.Dispose();
+			pMain.pRareOptionTable = null;
+
+            btnCopy.Enabled = false;
 			btnDelete.Enabled = false;
 
 			btnUpdate.Enabled = false;
@@ -1275,7 +1329,7 @@ namespace LastChaos_ToolBox_2024.Editors
 					strSkillName = iSkillNeededID + " - " + pSkillTableRow["a_name_" + pMain.pSettings.WorkLocale];
 
 					pSkillTableRow = null;
-                }
+				}
 
 				btnSkill1RequiredID.Text = strSkillName;
 
@@ -1333,9 +1387,9 @@ namespace LastChaos_ToolBox_2024.Editors
 				bUnsavedChanges = true;
 			}
 #endif
-        }
+		}
 
-        private void tbSkill2RequiredLevel_TextChanged(object sender, EventArgs e)
+		private void tbSkill2RequiredLevel_TextChanged(object sender, EventArgs e)
 		{
 #if NEED_SECOND_SKILL_TO_CRAFT
 			if (bUserAction)
@@ -1368,7 +1422,7 @@ namespace LastChaos_ToolBox_2024.Editors
 					strItemName = iItemNeededID + " - " + pItemTableRow["a_name_" + pMain.pSettings.WorkLocale];
 
 					pItemTableRow = null;
-                }
+				}
 
 				((Button)this.Controls.Find("btnItem" + nNumber + "Required", true)[0]).Text = strItemName;
 				
@@ -1402,17 +1456,17 @@ namespace LastChaos_ToolBox_2024.Editors
 		}
 
 		private void tbItem0RequiredAmount_TextChanged(object sender, EventArgs e) { ItemAmountRequiredAction((TextBox)sender, 0); }
-        private void tbItem1RequiredAmount_TextChanged(object sender, EventArgs e) { ItemAmountRequiredAction((TextBox)sender, 1); }
-        private void tbItem2RequiredAmount_TextChanged(object sender, EventArgs e) { ItemAmountRequiredAction((TextBox)sender, 2); }
-        private void tbItem3RequiredAmount_TextChanged(object sender, EventArgs e) { ItemAmountRequiredAction((TextBox)sender, 3); }
-        private void tbItem4RequiredAmount_TextChanged(object sender, EventArgs e) { ItemAmountRequiredAction((TextBox)sender, 4); }
-        private void tbItem5RequiredAmount_TextChanged(object sender, EventArgs e) { ItemAmountRequiredAction((TextBox)sender, 5); }
-        private void tbItem6RequiredAmount_TextChanged(object sender, EventArgs e) { ItemAmountRequiredAction((TextBox)sender, 6); }
-        private void tbItem7RequiredAmount_TextChanged(object sender, EventArgs e) { ItemAmountRequiredAction((TextBox)sender, 7); }
-        private void tbItem8RequiredAmount_TextChanged(object sender, EventArgs e) { ItemAmountRequiredAction((TextBox)sender, 8); }
-        private void tbItem9RequiredAmount_TextChanged(object sender, EventArgs e) { ItemAmountRequiredAction((TextBox)sender, 9); }
-        /****************************************/
-        private void btnUpdate_Click(object sender, EventArgs e)
+		private void tbItem1RequiredAmount_TextChanged(object sender, EventArgs e) { ItemAmountRequiredAction((TextBox)sender, 1); }
+		private void tbItem2RequiredAmount_TextChanged(object sender, EventArgs e) { ItemAmountRequiredAction((TextBox)sender, 2); }
+		private void tbItem3RequiredAmount_TextChanged(object sender, EventArgs e) { ItemAmountRequiredAction((TextBox)sender, 3); }
+		private void tbItem4RequiredAmount_TextChanged(object sender, EventArgs e) { ItemAmountRequiredAction((TextBox)sender, 4); }
+		private void tbItem5RequiredAmount_TextChanged(object sender, EventArgs e) { ItemAmountRequiredAction((TextBox)sender, 5); }
+		private void tbItem6RequiredAmount_TextChanged(object sender, EventArgs e) { ItemAmountRequiredAction((TextBox)sender, 6); }
+		private void tbItem7RequiredAmount_TextChanged(object sender, EventArgs e) { ItemAmountRequiredAction((TextBox)sender, 7); }
+		private void tbItem8RequiredAmount_TextChanged(object sender, EventArgs e) { ItemAmountRequiredAction((TextBox)sender, 8); }
+		private void tbItem9RequiredAmount_TextChanged(object sender, EventArgs e) { ItemAmountRequiredAction((TextBox)sender, 9); }
+		/****************************************/
+		private void btnUpdate_Click(object sender, EventArgs e)
 		{
 			DataRow pItemTableRow = pMain.pItemTable.Select("a_index = " + Convert.ToInt32(tbID.Text)).FirstOrDefault();
 			if (pItemTableRow != null)

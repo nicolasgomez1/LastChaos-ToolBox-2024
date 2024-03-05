@@ -37,6 +37,57 @@ namespace LastChaos_ToolBox_2024.Editors
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btnUpdate = new System.Windows.Forms.Button();
             this.GeneralPanel = new System.Windows.Forms.Panel();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.lRareProb9 = new System.Windows.Forms.Label();
+            this.btnRareIndex9 = new System.Windows.Forms.Button();
+            this.label80 = new System.Windows.Forms.Label();
+            this.label81 = new System.Windows.Forms.Label();
+            this.tbRareProb9 = new System.Windows.Forms.TextBox();
+            this.lRareProb5 = new System.Windows.Forms.Label();
+            this.btnRareIndex5 = new System.Windows.Forms.Button();
+            this.label83 = new System.Windows.Forms.Label();
+            this.label84 = new System.Windows.Forms.Label();
+            this.tbRareProb5 = new System.Windows.Forms.TextBox();
+            this.lRareProb6 = new System.Windows.Forms.Label();
+            this.btnRareIndex6 = new System.Windows.Forms.Button();
+            this.label86 = new System.Windows.Forms.Label();
+            this.label87 = new System.Windows.Forms.Label();
+            this.tbRareProb6 = new System.Windows.Forms.TextBox();
+            this.lRareProb7 = new System.Windows.Forms.Label();
+            this.btnRareIndex7 = new System.Windows.Forms.Button();
+            this.label89 = new System.Windows.Forms.Label();
+            this.label90 = new System.Windows.Forms.Label();
+            this.tbRareProb7 = new System.Windows.Forms.TextBox();
+            this.lRareProb8 = new System.Windows.Forms.Label();
+            this.btnRareIndex8 = new System.Windows.Forms.Button();
+            this.label92 = new System.Windows.Forms.Label();
+            this.label93 = new System.Windows.Forms.Label();
+            this.tbRareProb8 = new System.Windows.Forms.TextBox();
+            this.lRareProb4 = new System.Windows.Forms.Label();
+            this.btnRareIndex4 = new System.Windows.Forms.Button();
+            this.label77 = new System.Windows.Forms.Label();
+            this.label78 = new System.Windows.Forms.Label();
+            this.tbRareProb4 = new System.Windows.Forms.TextBox();
+            this.lRareProb0 = new System.Windows.Forms.Label();
+            this.btnRareIndex0 = new System.Windows.Forms.Button();
+            this.label71 = new System.Windows.Forms.Label();
+            this.label72 = new System.Windows.Forms.Label();
+            this.tbRareProb0 = new System.Windows.Forms.TextBox();
+            this.lRareProb1 = new System.Windows.Forms.Label();
+            this.btnRareIndex1 = new System.Windows.Forms.Button();
+            this.label74 = new System.Windows.Forms.Label();
+            this.label75 = new System.Windows.Forms.Label();
+            this.tbRareProb1 = new System.Windows.Forms.TextBox();
+            this.lRareProb2 = new System.Windows.Forms.Label();
+            this.btnRareIndex2 = new System.Windows.Forms.Button();
+            this.label68 = new System.Windows.Forms.Label();
+            this.label69 = new System.Windows.Forms.Label();
+            this.tbRareProb2 = new System.Windows.Forms.TextBox();
+            this.lRareProb3 = new System.Windows.Forms.Label();
+            this.btnRareIndex3 = new System.Windows.Forms.Button();
+            this.label64 = new System.Windows.Forms.Label();
+            this.label65 = new System.Windows.Forms.Label();
+            this.tbRareProb3 = new System.Windows.Forms.TextBox();
             this.tbAllowedZoneFlag = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.groupBox9 = new System.Windows.Forms.GroupBox();
@@ -181,6 +232,7 @@ namespace LastChaos_ToolBox_2024.Editors
             this.tbSearch = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             this.GeneralPanel.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             this.groupBox9.SuspendLayout();
             this.groupBox5.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -277,6 +329,7 @@ namespace LastChaos_ToolBox_2024.Editors
             this.GeneralPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.GeneralPanel.AutoScroll = true;
+            this.GeneralPanel.Controls.Add(this.groupBox3);
             this.GeneralPanel.Controls.Add(this.tbAllowedZoneFlag);
             this.GeneralPanel.Controls.Add(this.label8);
             this.GeneralPanel.Controls.Add(this.groupBox9);
@@ -325,6 +378,635 @@ namespace LastChaos_ToolBox_2024.Editors
             this.GeneralPanel.Name = "GeneralPanel";
             this.GeneralPanel.Size = new System.Drawing.Size(1021, 528);
             this.GeneralPanel.TabIndex = 0;
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.lRareProb9);
+            this.groupBox3.Controls.Add(this.btnRareIndex9);
+            this.groupBox3.Controls.Add(this.label80);
+            this.groupBox3.Controls.Add(this.label81);
+            this.groupBox3.Controls.Add(this.tbRareProb9);
+            this.groupBox3.Controls.Add(this.lRareProb5);
+            this.groupBox3.Controls.Add(this.btnRareIndex5);
+            this.groupBox3.Controls.Add(this.label83);
+            this.groupBox3.Controls.Add(this.label84);
+            this.groupBox3.Controls.Add(this.tbRareProb5);
+            this.groupBox3.Controls.Add(this.lRareProb6);
+            this.groupBox3.Controls.Add(this.btnRareIndex6);
+            this.groupBox3.Controls.Add(this.label86);
+            this.groupBox3.Controls.Add(this.label87);
+            this.groupBox3.Controls.Add(this.tbRareProb6);
+            this.groupBox3.Controls.Add(this.lRareProb7);
+            this.groupBox3.Controls.Add(this.btnRareIndex7);
+            this.groupBox3.Controls.Add(this.label89);
+            this.groupBox3.Controls.Add(this.label90);
+            this.groupBox3.Controls.Add(this.tbRareProb7);
+            this.groupBox3.Controls.Add(this.lRareProb8);
+            this.groupBox3.Controls.Add(this.btnRareIndex8);
+            this.groupBox3.Controls.Add(this.label92);
+            this.groupBox3.Controls.Add(this.label93);
+            this.groupBox3.Controls.Add(this.tbRareProb8);
+            this.groupBox3.Controls.Add(this.lRareProb4);
+            this.groupBox3.Controls.Add(this.btnRareIndex4);
+            this.groupBox3.Controls.Add(this.label77);
+            this.groupBox3.Controls.Add(this.label78);
+            this.groupBox3.Controls.Add(this.tbRareProb4);
+            this.groupBox3.Controls.Add(this.lRareProb0);
+            this.groupBox3.Controls.Add(this.btnRareIndex0);
+            this.groupBox3.Controls.Add(this.label71);
+            this.groupBox3.Controls.Add(this.label72);
+            this.groupBox3.Controls.Add(this.tbRareProb0);
+            this.groupBox3.Controls.Add(this.lRareProb1);
+            this.groupBox3.Controls.Add(this.btnRareIndex1);
+            this.groupBox3.Controls.Add(this.label74);
+            this.groupBox3.Controls.Add(this.label75);
+            this.groupBox3.Controls.Add(this.tbRareProb1);
+            this.groupBox3.Controls.Add(this.lRareProb2);
+            this.groupBox3.Controls.Add(this.btnRareIndex2);
+            this.groupBox3.Controls.Add(this.label68);
+            this.groupBox3.Controls.Add(this.label69);
+            this.groupBox3.Controls.Add(this.tbRareProb2);
+            this.groupBox3.Controls.Add(this.lRareProb3);
+            this.groupBox3.Controls.Add(this.btnRareIndex3);
+            this.groupBox3.Controls.Add(this.label64);
+            this.groupBox3.Controls.Add(this.label65);
+            this.groupBox3.Controls.Add(this.tbRareProb3);
+            this.groupBox3.Location = new System.Drawing.Point(0, 397);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(632, 172);
+            this.groupBox3.TabIndex = 1039;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Rare Options Data";
+            // 
+            // lRareProb9
+            // 
+            this.lRareProb9.AutoSize = true;
+            this.lRareProb9.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.lRareProb9.Location = new System.Drawing.Point(590, 142);
+            this.lRareProb9.Name = "lRareProb9";
+            this.lRareProb9.Size = new System.Drawing.Size(10, 13);
+            this.lRareProb9.TabIndex = 1131;
+            this.lRareProb9.Text = "-";
+            this.lRareProb9.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // btnRareIndex9
+            // 
+            this.btnRareIndex9.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(85)))), ((int)(((byte)(76)))));
+            this.btnRareIndex9.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+            this.btnRareIndex9.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
+            this.btnRareIndex9.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnRareIndex9.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.btnRareIndex9.Location = new System.Drawing.Point(383, 137);
+            this.btnRareIndex9.Name = "btnRareIndex9";
+            this.btnRareIndex9.Size = new System.Drawing.Size(120, 23);
+            this.btnRareIndex9.TabIndex = 1132;
+            this.btnRareIndex9.UseVisualStyleBackColor = true;
+            // 
+            // label80
+            // 
+            this.label80.AutoSize = true;
+            this.label80.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.label80.Location = new System.Drawing.Point(509, 142);
+            this.label80.Name = "label80";
+            this.label80.Size = new System.Drawing.Size(29, 13);
+            this.label80.TabIndex = 1134;
+            this.label80.Text = "Prob";
+            this.label80.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label81
+            // 
+            this.label81.AutoSize = true;
+            this.label81.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.label81.Location = new System.Drawing.Point(330, 142);
+            this.label81.Name = "label81";
+            this.label81.Size = new System.Drawing.Size(47, 13);
+            this.label81.TabIndex = 1133;
+            this.label81.Text = "Option 9";
+            this.label81.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // tbRareProb9
+            // 
+            this.tbRareProb9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+            this.tbRareProb9.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tbRareProb9.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.tbRareProb9.Location = new System.Drawing.Point(544, 138);
+            this.tbRareProb9.Name = "tbRareProb9";
+            this.tbRareProb9.Size = new System.Drawing.Size(40, 20);
+            this.tbRareProb9.TabIndex = 1135;
+            this.tbRareProb9.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // lRareProb5
+            // 
+            this.lRareProb5.AutoSize = true;
+            this.lRareProb5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.lRareProb5.Location = new System.Drawing.Point(590, 26);
+            this.lRareProb5.Name = "lRareProb5";
+            this.lRareProb5.Size = new System.Drawing.Size(10, 13);
+            this.lRareProb5.TabIndex = 1126;
+            this.lRareProb5.Text = "-";
+            this.lRareProb5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // btnRareIndex5
+            // 
+            this.btnRareIndex5.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(85)))), ((int)(((byte)(76)))));
+            this.btnRareIndex5.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+            this.btnRareIndex5.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
+            this.btnRareIndex5.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnRareIndex5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.btnRareIndex5.Location = new System.Drawing.Point(383, 21);
+            this.btnRareIndex5.Name = "btnRareIndex5";
+            this.btnRareIndex5.Size = new System.Drawing.Size(120, 23);
+            this.btnRareIndex5.TabIndex = 1127;
+            this.btnRareIndex5.UseVisualStyleBackColor = true;
+            // 
+            // label83
+            // 
+            this.label83.AutoSize = true;
+            this.label83.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.label83.Location = new System.Drawing.Point(509, 26);
+            this.label83.Name = "label83";
+            this.label83.Size = new System.Drawing.Size(29, 13);
+            this.label83.TabIndex = 1129;
+            this.label83.Text = "Prob";
+            this.label83.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label84
+            // 
+            this.label84.AutoSize = true;
+            this.label84.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.label84.Location = new System.Drawing.Point(330, 26);
+            this.label84.Name = "label84";
+            this.label84.Size = new System.Drawing.Size(47, 13);
+            this.label84.TabIndex = 1128;
+            this.label84.Text = "Option 5";
+            this.label84.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // tbRareProb5
+            // 
+            this.tbRareProb5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+            this.tbRareProb5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tbRareProb5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.tbRareProb5.Location = new System.Drawing.Point(544, 22);
+            this.tbRareProb5.Name = "tbRareProb5";
+            this.tbRareProb5.Size = new System.Drawing.Size(40, 20);
+            this.tbRareProb5.TabIndex = 1130;
+            this.tbRareProb5.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // lRareProb6
+            // 
+            this.lRareProb6.AutoSize = true;
+            this.lRareProb6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.lRareProb6.Location = new System.Drawing.Point(590, 55);
+            this.lRareProb6.Name = "lRareProb6";
+            this.lRareProb6.Size = new System.Drawing.Size(10, 13);
+            this.lRareProb6.TabIndex = 1121;
+            this.lRareProb6.Text = "-";
+            this.lRareProb6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // btnRareIndex6
+            // 
+            this.btnRareIndex6.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(85)))), ((int)(((byte)(76)))));
+            this.btnRareIndex6.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+            this.btnRareIndex6.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
+            this.btnRareIndex6.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnRareIndex6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.btnRareIndex6.Location = new System.Drawing.Point(383, 50);
+            this.btnRareIndex6.Name = "btnRareIndex6";
+            this.btnRareIndex6.Size = new System.Drawing.Size(120, 23);
+            this.btnRareIndex6.TabIndex = 1122;
+            this.btnRareIndex6.UseVisualStyleBackColor = true;
+            // 
+            // label86
+            // 
+            this.label86.AutoSize = true;
+            this.label86.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.label86.Location = new System.Drawing.Point(509, 55);
+            this.label86.Name = "label86";
+            this.label86.Size = new System.Drawing.Size(29, 13);
+            this.label86.TabIndex = 1124;
+            this.label86.Text = "Prob";
+            this.label86.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label87
+            // 
+            this.label87.AutoSize = true;
+            this.label87.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.label87.Location = new System.Drawing.Point(330, 55);
+            this.label87.Name = "label87";
+            this.label87.Size = new System.Drawing.Size(47, 13);
+            this.label87.TabIndex = 1123;
+            this.label87.Text = "Option 6";
+            this.label87.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // tbRareProb6
+            // 
+            this.tbRareProb6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+            this.tbRareProb6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tbRareProb6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.tbRareProb6.Location = new System.Drawing.Point(544, 51);
+            this.tbRareProb6.Name = "tbRareProb6";
+            this.tbRareProb6.Size = new System.Drawing.Size(40, 20);
+            this.tbRareProb6.TabIndex = 1125;
+            this.tbRareProb6.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // lRareProb7
+            // 
+            this.lRareProb7.AutoSize = true;
+            this.lRareProb7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.lRareProb7.Location = new System.Drawing.Point(590, 84);
+            this.lRareProb7.Name = "lRareProb7";
+            this.lRareProb7.Size = new System.Drawing.Size(10, 13);
+            this.lRareProb7.TabIndex = 1116;
+            this.lRareProb7.Text = "-";
+            this.lRareProb7.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // btnRareIndex7
+            // 
+            this.btnRareIndex7.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(85)))), ((int)(((byte)(76)))));
+            this.btnRareIndex7.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+            this.btnRareIndex7.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
+            this.btnRareIndex7.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnRareIndex7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.btnRareIndex7.Location = new System.Drawing.Point(383, 79);
+            this.btnRareIndex7.Name = "btnRareIndex7";
+            this.btnRareIndex7.Size = new System.Drawing.Size(120, 23);
+            this.btnRareIndex7.TabIndex = 1117;
+            this.btnRareIndex7.UseVisualStyleBackColor = true;
+            // 
+            // label89
+            // 
+            this.label89.AutoSize = true;
+            this.label89.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.label89.Location = new System.Drawing.Point(509, 84);
+            this.label89.Name = "label89";
+            this.label89.Size = new System.Drawing.Size(29, 13);
+            this.label89.TabIndex = 1119;
+            this.label89.Text = "Prob";
+            this.label89.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label90
+            // 
+            this.label90.AutoSize = true;
+            this.label90.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.label90.Location = new System.Drawing.Point(330, 84);
+            this.label90.Name = "label90";
+            this.label90.Size = new System.Drawing.Size(47, 13);
+            this.label90.TabIndex = 1118;
+            this.label90.Text = "Option 7";
+            this.label90.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // tbRareProb7
+            // 
+            this.tbRareProb7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+            this.tbRareProb7.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tbRareProb7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.tbRareProb7.Location = new System.Drawing.Point(544, 80);
+            this.tbRareProb7.Name = "tbRareProb7";
+            this.tbRareProb7.Size = new System.Drawing.Size(40, 20);
+            this.tbRareProb7.TabIndex = 1120;
+            this.tbRareProb7.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // lRareProb8
+            // 
+            this.lRareProb8.AutoSize = true;
+            this.lRareProb8.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.lRareProb8.Location = new System.Drawing.Point(590, 113);
+            this.lRareProb8.Name = "lRareProb8";
+            this.lRareProb8.Size = new System.Drawing.Size(10, 13);
+            this.lRareProb8.TabIndex = 1112;
+            this.lRareProb8.Text = "-";
+            this.lRareProb8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // btnRareIndex8
+            // 
+            this.btnRareIndex8.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(85)))), ((int)(((byte)(76)))));
+            this.btnRareIndex8.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+            this.btnRareIndex8.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
+            this.btnRareIndex8.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnRareIndex8.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.btnRareIndex8.Location = new System.Drawing.Point(383, 108);
+            this.btnRareIndex8.Name = "btnRareIndex8";
+            this.btnRareIndex8.Size = new System.Drawing.Size(120, 23);
+            this.btnRareIndex8.TabIndex = 1111;
+            this.btnRareIndex8.UseVisualStyleBackColor = true;
+            // 
+            // label92
+            // 
+            this.label92.AutoSize = true;
+            this.label92.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.label92.Location = new System.Drawing.Point(509, 113);
+            this.label92.Name = "label92";
+            this.label92.Size = new System.Drawing.Size(29, 13);
+            this.label92.TabIndex = 1114;
+            this.label92.Text = "Prob";
+            this.label92.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label93
+            // 
+            this.label93.AutoSize = true;
+            this.label93.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.label93.Location = new System.Drawing.Point(330, 113);
+            this.label93.Name = "label93";
+            this.label93.Size = new System.Drawing.Size(47, 13);
+            this.label93.TabIndex = 1113;
+            this.label93.Text = "Option 8";
+            this.label93.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // tbRareProb8
+            // 
+            this.tbRareProb8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+            this.tbRareProb8.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tbRareProb8.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.tbRareProb8.Location = new System.Drawing.Point(544, 109);
+            this.tbRareProb8.Name = "tbRareProb8";
+            this.tbRareProb8.Size = new System.Drawing.Size(40, 20);
+            this.tbRareProb8.TabIndex = 1115;
+            this.tbRareProb8.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // lRareProb4
+            // 
+            this.lRareProb4.AutoSize = true;
+            this.lRareProb4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.lRareProb4.Location = new System.Drawing.Point(266, 142);
+            this.lRareProb4.Name = "lRareProb4";
+            this.lRareProb4.Size = new System.Drawing.Size(10, 13);
+            this.lRareProb4.TabIndex = 1106;
+            this.lRareProb4.Text = "-";
+            this.lRareProb4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // btnRareIndex4
+            // 
+            this.btnRareIndex4.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(85)))), ((int)(((byte)(76)))));
+            this.btnRareIndex4.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+            this.btnRareIndex4.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
+            this.btnRareIndex4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnRareIndex4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.btnRareIndex4.Location = new System.Drawing.Point(59, 137);
+            this.btnRareIndex4.Name = "btnRareIndex4";
+            this.btnRareIndex4.Size = new System.Drawing.Size(120, 23);
+            this.btnRareIndex4.TabIndex = 1107;
+            this.btnRareIndex4.UseVisualStyleBackColor = true;
+            // 
+            // label77
+            // 
+            this.label77.AutoSize = true;
+            this.label77.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.label77.Location = new System.Drawing.Point(185, 142);
+            this.label77.Name = "label77";
+            this.label77.Size = new System.Drawing.Size(29, 13);
+            this.label77.TabIndex = 1109;
+            this.label77.Text = "Prob";
+            this.label77.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label78
+            // 
+            this.label78.AutoSize = true;
+            this.label78.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.label78.Location = new System.Drawing.Point(6, 142);
+            this.label78.Name = "label78";
+            this.label78.Size = new System.Drawing.Size(47, 13);
+            this.label78.TabIndex = 1108;
+            this.label78.Text = "Option 4";
+            this.label78.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // tbRareProb4
+            // 
+            this.tbRareProb4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+            this.tbRareProb4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tbRareProb4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.tbRareProb4.Location = new System.Drawing.Point(220, 138);
+            this.tbRareProb4.Name = "tbRareProb4";
+            this.tbRareProb4.Size = new System.Drawing.Size(40, 20);
+            this.tbRareProb4.TabIndex = 1110;
+            this.tbRareProb4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // lRareProb0
+            // 
+            this.lRareProb0.AutoSize = true;
+            this.lRareProb0.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.lRareProb0.Location = new System.Drawing.Point(266, 26);
+            this.lRareProb0.Name = "lRareProb0";
+            this.lRareProb0.Size = new System.Drawing.Size(10, 13);
+            this.lRareProb0.TabIndex = 1101;
+            this.lRareProb0.Text = "-";
+            this.lRareProb0.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // btnRareIndex0
+            // 
+            this.btnRareIndex0.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(85)))), ((int)(((byte)(76)))));
+            this.btnRareIndex0.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+            this.btnRareIndex0.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
+            this.btnRareIndex0.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnRareIndex0.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.btnRareIndex0.Location = new System.Drawing.Point(59, 21);
+            this.btnRareIndex0.Name = "btnRareIndex0";
+            this.btnRareIndex0.Size = new System.Drawing.Size(120, 23);
+            this.btnRareIndex0.TabIndex = 1102;
+            this.btnRareIndex0.UseVisualStyleBackColor = true;
+            // 
+            // label71
+            // 
+            this.label71.AutoSize = true;
+            this.label71.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.label71.Location = new System.Drawing.Point(185, 26);
+            this.label71.Name = "label71";
+            this.label71.Size = new System.Drawing.Size(29, 13);
+            this.label71.TabIndex = 1104;
+            this.label71.Text = "Prob";
+            this.label71.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label72
+            // 
+            this.label72.AutoSize = true;
+            this.label72.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.label72.Location = new System.Drawing.Point(6, 26);
+            this.label72.Name = "label72";
+            this.label72.Size = new System.Drawing.Size(47, 13);
+            this.label72.TabIndex = 1103;
+            this.label72.Text = "Option 0";
+            this.label72.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // tbRareProb0
+            // 
+            this.tbRareProb0.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+            this.tbRareProb0.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tbRareProb0.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.tbRareProb0.Location = new System.Drawing.Point(220, 22);
+            this.tbRareProb0.Name = "tbRareProb0";
+            this.tbRareProb0.Size = new System.Drawing.Size(40, 20);
+            this.tbRareProb0.TabIndex = 1105;
+            this.tbRareProb0.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // lRareProb1
+            // 
+            this.lRareProb1.AutoSize = true;
+            this.lRareProb1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.lRareProb1.Location = new System.Drawing.Point(266, 55);
+            this.lRareProb1.Name = "lRareProb1";
+            this.lRareProb1.Size = new System.Drawing.Size(10, 13);
+            this.lRareProb1.TabIndex = 1096;
+            this.lRareProb1.Text = "-";
+            this.lRareProb1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // btnRareIndex1
+            // 
+            this.btnRareIndex1.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(85)))), ((int)(((byte)(76)))));
+            this.btnRareIndex1.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+            this.btnRareIndex1.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
+            this.btnRareIndex1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnRareIndex1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.btnRareIndex1.Location = new System.Drawing.Point(59, 50);
+            this.btnRareIndex1.Name = "btnRareIndex1";
+            this.btnRareIndex1.Size = new System.Drawing.Size(120, 23);
+            this.btnRareIndex1.TabIndex = 1097;
+            this.btnRareIndex1.UseVisualStyleBackColor = true;
+            // 
+            // label74
+            // 
+            this.label74.AutoSize = true;
+            this.label74.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.label74.Location = new System.Drawing.Point(185, 55);
+            this.label74.Name = "label74";
+            this.label74.Size = new System.Drawing.Size(29, 13);
+            this.label74.TabIndex = 1099;
+            this.label74.Text = "Prob";
+            this.label74.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label75
+            // 
+            this.label75.AutoSize = true;
+            this.label75.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.label75.Location = new System.Drawing.Point(6, 55);
+            this.label75.Name = "label75";
+            this.label75.Size = new System.Drawing.Size(47, 13);
+            this.label75.TabIndex = 1098;
+            this.label75.Text = "Option 1";
+            this.label75.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // tbRareProb1
+            // 
+            this.tbRareProb1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+            this.tbRareProb1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tbRareProb1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.tbRareProb1.Location = new System.Drawing.Point(220, 51);
+            this.tbRareProb1.Name = "tbRareProb1";
+            this.tbRareProb1.Size = new System.Drawing.Size(40, 20);
+            this.tbRareProb1.TabIndex = 1100;
+            this.tbRareProb1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // lRareProb2
+            // 
+            this.lRareProb2.AutoSize = true;
+            this.lRareProb2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.lRareProb2.Location = new System.Drawing.Point(266, 84);
+            this.lRareProb2.Name = "lRareProb2";
+            this.lRareProb2.Size = new System.Drawing.Size(10, 13);
+            this.lRareProb2.TabIndex = 1091;
+            this.lRareProb2.Text = "-";
+            this.lRareProb2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // btnRareIndex2
+            // 
+            this.btnRareIndex2.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(85)))), ((int)(((byte)(76)))));
+            this.btnRareIndex2.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+            this.btnRareIndex2.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
+            this.btnRareIndex2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnRareIndex2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.btnRareIndex2.Location = new System.Drawing.Point(59, 79);
+            this.btnRareIndex2.Name = "btnRareIndex2";
+            this.btnRareIndex2.Size = new System.Drawing.Size(120, 23);
+            this.btnRareIndex2.TabIndex = 1092;
+            this.btnRareIndex2.UseVisualStyleBackColor = true;
+            // 
+            // label68
+            // 
+            this.label68.AutoSize = true;
+            this.label68.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.label68.Location = new System.Drawing.Point(185, 84);
+            this.label68.Name = "label68";
+            this.label68.Size = new System.Drawing.Size(29, 13);
+            this.label68.TabIndex = 1094;
+            this.label68.Text = "Prob";
+            this.label68.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label69
+            // 
+            this.label69.AutoSize = true;
+            this.label69.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.label69.Location = new System.Drawing.Point(6, 84);
+            this.label69.Name = "label69";
+            this.label69.Size = new System.Drawing.Size(47, 13);
+            this.label69.TabIndex = 1093;
+            this.label69.Text = "Option 2";
+            this.label69.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // tbRareProb2
+            // 
+            this.tbRareProb2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+            this.tbRareProb2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tbRareProb2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.tbRareProb2.Location = new System.Drawing.Point(220, 80);
+            this.tbRareProb2.Name = "tbRareProb2";
+            this.tbRareProb2.Size = new System.Drawing.Size(40, 20);
+            this.tbRareProb2.TabIndex = 1095;
+            this.tbRareProb2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // lRareProb3
+            // 
+            this.lRareProb3.AutoSize = true;
+            this.lRareProb3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.lRareProb3.Location = new System.Drawing.Point(266, 113);
+            this.lRareProb3.Name = "lRareProb3";
+            this.lRareProb3.Size = new System.Drawing.Size(10, 13);
+            this.lRareProb3.TabIndex = 1087;
+            this.lRareProb3.Text = "-";
+            this.lRareProb3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // btnRareIndex3
+            // 
+            this.btnRareIndex3.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(85)))), ((int)(((byte)(76)))));
+            this.btnRareIndex3.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+            this.btnRareIndex3.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
+            this.btnRareIndex3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnRareIndex3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.btnRareIndex3.Location = new System.Drawing.Point(59, 108);
+            this.btnRareIndex3.Name = "btnRareIndex3";
+            this.btnRareIndex3.Size = new System.Drawing.Size(120, 23);
+            this.btnRareIndex3.TabIndex = 1087;
+            this.btnRareIndex3.UseVisualStyleBackColor = true;
+            // 
+            // label64
+            // 
+            this.label64.AutoSize = true;
+            this.label64.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.label64.Location = new System.Drawing.Point(185, 113);
+            this.label64.Name = "label64";
+            this.label64.Size = new System.Drawing.Size(29, 13);
+            this.label64.TabIndex = 1089;
+            this.label64.Text = "Prob";
+            this.label64.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label65
+            // 
+            this.label65.AutoSize = true;
+            this.label65.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.label65.Location = new System.Drawing.Point(6, 113);
+            this.label65.Name = "label65";
+            this.label65.Size = new System.Drawing.Size(47, 13);
+            this.label65.TabIndex = 1088;
+            this.label65.Text = "Option 3";
+            this.label65.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // tbRareProb3
+            // 
+            this.tbRareProb3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+            this.tbRareProb3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tbRareProb3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.tbRareProb3.Location = new System.Drawing.Point(220, 109);
+            this.tbRareProb3.Name = "tbRareProb3";
+            this.tbRareProb3.Size = new System.Drawing.Size(40, 20);
+            this.tbRareProb3.TabIndex = 1090;
+            this.tbRareProb3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // tbAllowedZoneFlag
             // 
@@ -1162,7 +1844,7 @@ namespace LastChaos_ToolBox_2024.Editors
             this.groupBox8.Size = new System.Drawing.Size(81, 156);
             this.groupBox8.TabIndex = 1034;
             this.groupBox8.TabStop = false;
-            this.groupBox8.Text = "Set Data";
+            this.groupBox8.Text = "Sets Data";
             // 
             // label36
             // 
@@ -2110,6 +2792,8 @@ namespace LastChaos_ToolBox_2024.Editors
             this.groupBox1.ResumeLayout(false);
             this.GeneralPanel.ResumeLayout(false);
             this.GeneralPanel.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.groupBox9.ResumeLayout(false);
             this.groupBox9.PerformLayout();
             this.groupBox5.ResumeLayout(false);
@@ -2280,5 +2964,56 @@ namespace LastChaos_ToolBox_2024.Editors
         private TextBox tbItem1RequiredAmount;
         private Button btnItem1Required;
         private Label label47;
+        private GroupBox groupBox3;
+        private Label lRareProb3;
+        private Label label64;
+        private TextBox tbRareProb3;
+        private Button btnRareIndex3;
+        private Label label65;
+        private Label lRareProb9;
+        private Button btnRareIndex9;
+        private Label label80;
+        private Label label81;
+        private TextBox tbRareProb9;
+        private Label lRareProb5;
+        private Button btnRareIndex5;
+        private Label label83;
+        private Label label84;
+        private TextBox tbRareProb5;
+        private Label lRareProb6;
+        private Button btnRareIndex6;
+        private Label label86;
+        private Label label87;
+        private TextBox tbRareProb6;
+        private Label lRareProb7;
+        private Button btnRareIndex7;
+        private Label label89;
+        private Label label90;
+        private TextBox tbRareProb7;
+        private Label lRareProb8;
+        private Button btnRareIndex8;
+        private Label label92;
+        private Label label93;
+        private TextBox tbRareProb8;
+        private Label lRareProb4;
+        private Button btnRareIndex4;
+        private Label label77;
+        private Label label78;
+        private TextBox tbRareProb4;
+        private Label lRareProb0;
+        private Button btnRareIndex0;
+        private Label label71;
+        private Label label72;
+        private TextBox tbRareProb0;
+        private Label lRareProb1;
+        private Button btnRareIndex1;
+        private Label label74;
+        private Label label75;
+        private TextBox tbRareProb1;
+        private Label lRareProb2;
+        private Button btnRareIndex2;
+        private Label label68;
+        private Label label69;
+        private TextBox tbRareProb2;
     }
 }

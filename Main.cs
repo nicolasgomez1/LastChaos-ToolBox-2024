@@ -28,8 +28,9 @@ namespace LastChaos_ToolBox_2024
 		public DataTable pZoneTable = null;
 		public DataTable pSkillTable = null;
 		public DataTable pSkillLevelTable = null;
+        public DataTable pRareOptionTable = null;
 
-		public class Settings
+        public class Settings
 		{
 			public string SettingsFile = "Settings.ini";
 
@@ -106,8 +107,14 @@ namespace LastChaos_ToolBox_2024
 				pSkillLevelTable = null;
 			}
 
-			// NOTE: Posible Bug: User can reload when some editor is opened.
-			ConnectToDatabase();
+            if (pRareOptionTable != null)
+            {
+                pRareOptionTable.Dispose();
+                pRareOptionTable = null;
+            }
+
+            // NOTE: Posible Bug: User can reload when some editor is opened.
+            ConnectToDatabase();
 		}
 
 		private void ItemEditor_Click(object sender, EventArgs e)
@@ -426,10 +433,5 @@ namespace LastChaos_ToolBox_2024
 			HashSet Add and Join Test took: 12 ms
 			*/
         }
-
-		private void button5_Click(object sender, EventArgs e)
-		{
-			
-		}
     }
 }
