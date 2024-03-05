@@ -15,6 +15,9 @@ In Item Editor there are notes and examples on how to manage the request, storag
 
 * Finally, when in a Tool the operator decides to apply changes made, an attempt is made to execute a Query either type UPDATE or INSERT, in case of success, said changes are updated in the __Global Tables__.
 
+# Hardcoded definitions and information
+* This information is stored in [Definitions.cs](Definitions.cs)
+
 # Practical examples
 * Example of requesting and storing t_item data in the __Global Table__: pItemTable. To later store information in a temporary variable to work with, to finally pass that temporary data to the __Global Table__.
 
@@ -57,6 +60,7 @@ private async void ItemEditor_LoadAsync(object sender, EventArgs e)
 			//In case of original structure of the Global Table is not altered we can do: pItemTableRow.ItemArray = pTempRow.ItemArray;
 
 			//In case of original structure of the Global Table is altered we can do the following...
+			
 			foreach (DataColumn column in pTempRow.Table.Columns)	// We can iterate through all the columns of the temporary variable.
 			{
 				if (!pMain.pItemTable.Columns.Contains(column.ColumnName))	// In case any of the columns do not exist in the Global Table.

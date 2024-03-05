@@ -80,7 +80,7 @@ namespace LastChaos_ToolBox_2024
 
 			tbFlag.Text = nFlag.ToString();
 
-			ReturnValues = 0;
+			ReturnValues = nFlag;
 		}
 
 		private void btnUnCheckAll_Click(object sender, EventArgs e)

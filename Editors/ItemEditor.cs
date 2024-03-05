@@ -339,7 +339,10 @@ namespace LastChaos_ToolBox_2024.Editors
 					pRenderDialog.Close();
 
 				pTempRow = null;
-			}
+
+                strArrayZones = null;
+
+            }
 
 			if (bUnsavedChanges)
 			{

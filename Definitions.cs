@@ -258,7 +258,7 @@ namespace Definitions
             "Raid Special",
             "Quest",
             "Box (LuckyDraw Box)",
-            "Not TradeAgent",
+            "Not Trade Agent",
             "Durability",
             "Costume 2",
             "Socket",

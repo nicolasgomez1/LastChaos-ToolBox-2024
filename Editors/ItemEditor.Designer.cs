@@ -37,6 +37,7 @@ namespace LastChaos_ToolBox_2024.Editors
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btnUpdate = new System.Windows.Forms.Button();
             this.GeneralPanel = new System.Windows.Forms.Panel();
+            this.tbAllowedZoneFlag = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.groupBox9 = new System.Windows.Forms.GroupBox();
             this.btnSkill1RequiredID = new System.Windows.Forms.Button();
@@ -138,7 +139,6 @@ namespace LastChaos_ToolBox_2024.Editors
             this.btnCopy = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
             this.tbSearch = new System.Windows.Forms.TextBox();
-            this.tbAllowedZoneFlag = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             this.GeneralPanel.SuspendLayout();
             this.groupBox9.SuspendLayout();
@@ -209,7 +209,7 @@ namespace LastChaos_ToolBox_2024.Editors
             this.groupBox1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
             this.groupBox1.Location = new System.Drawing.Point(276, 6);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(1055, 582);
+            this.groupBox1.Size = new System.Drawing.Size(1032, 582);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Item Data";
@@ -226,7 +226,7 @@ namespace LastChaos_ToolBox_2024.Editors
             this.btnUpdate.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
             this.btnUpdate.Location = new System.Drawing.Point(6, 19);
             this.btnUpdate.Name = "btnUpdate";
-            this.btnUpdate.Size = new System.Drawing.Size(1043, 23);
+            this.btnUpdate.Size = new System.Drawing.Size(1020, 23);
             this.btnUpdate.TabIndex = 999;
             this.btnUpdate.Text = "Update";
             this.btnUpdate.UseVisualStyleBackColor = true;
@@ -283,8 +283,22 @@ namespace LastChaos_ToolBox_2024.Editors
             this.GeneralPanel.Controls.Add(this.groupBox2);
             this.GeneralPanel.Location = new System.Drawing.Point(282, 54);
             this.GeneralPanel.Name = "GeneralPanel";
-            this.GeneralPanel.Size = new System.Drawing.Size(1043, 528);
+            this.GeneralPanel.Size = new System.Drawing.Size(1021, 528);
             this.GeneralPanel.TabIndex = 0;
+            // 
+            // tbAllowedZoneFlag
+            // 
+            this.tbAllowedZoneFlag.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+            this.tbAllowedZoneFlag.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tbAllowedZoneFlag.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.tbAllowedZoneFlag.Location = new System.Drawing.Point(736, 58);
+            this.tbAllowedZoneFlag.Name = "tbAllowedZoneFlag";
+            this.tbAllowedZoneFlag.ReadOnly = true;
+            this.tbAllowedZoneFlag.Size = new System.Drawing.Size(100, 20);
+            this.tbAllowedZoneFlag.TabIndex = 1038;
+            this.tbAllowedZoneFlag.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.tbAllowedZoneFlag.Visible = false;
+            this.tbAllowedZoneFlag.TextChanged += new System.EventHandler(this.tbAllowedZoneFlag_TextChanged);
             // 
             // label8
             // 
@@ -311,7 +325,7 @@ namespace LastChaos_ToolBox_2024.Editors
             this.groupBox9.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
             this.groupBox9.Location = new System.Drawing.Point(0, 192);
             this.groupBox9.Name = "groupBox9";
-            this.groupBox9.Size = new System.Drawing.Size(734, 225);
+            this.groupBox9.Size = new System.Drawing.Size(734, 229);
             this.groupBox9.TabIndex = 1035;
             this.groupBox9.TabStop = false;
             this.groupBox9.Text = "Crafting Data";
@@ -1006,7 +1020,7 @@ namespace LastChaos_ToolBox_2024.Editors
             // 
             this.label25.AutoSize = true;
             this.label25.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-            this.label25.Location = new System.Drawing.Point(859, 62);
+            this.label25.Location = new System.Drawing.Point(842, 62);
             this.label25.Name = "label25";
             this.label25.Size = new System.Drawing.Size(50, 13);
             this.label25.TabIndex = 1031;
@@ -1020,7 +1034,7 @@ namespace LastChaos_ToolBox_2024.Editors
             this.btnItemFlag.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
             this.btnItemFlag.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnItemFlag.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-            this.btnItemFlag.Location = new System.Drawing.Point(915, 57);
+            this.btnItemFlag.Location = new System.Drawing.Point(898, 57);
             this.btnItemFlag.Name = "btnItemFlag";
             this.btnItemFlag.Size = new System.Drawing.Size(100, 23);
             this.btnItemFlag.TabIndex = 1030;
@@ -1031,7 +1045,7 @@ namespace LastChaos_ToolBox_2024.Editors
             // 
             this.lAllowedZone.AutoSize = true;
             this.lAllowedZone.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-            this.lAllowedZone.Location = new System.Drawing.Point(675, 62);
+            this.lAllowedZone.Location = new System.Drawing.Point(658, 62);
             this.lAllowedZone.Name = "lAllowedZone";
             this.lAllowedZone.Size = new System.Drawing.Size(72, 13);
             this.lAllowedZone.TabIndex = 1029;
@@ -1045,7 +1059,7 @@ namespace LastChaos_ToolBox_2024.Editors
             this.btnAllowedZoneFlag.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
             this.btnAllowedZoneFlag.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnAllowedZoneFlag.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-            this.btnAllowedZoneFlag.Location = new System.Drawing.Point(753, 57);
+            this.btnAllowedZoneFlag.Location = new System.Drawing.Point(736, 57);
             this.btnAllowedZoneFlag.Name = "btnAllowedZoneFlag";
             this.btnAllowedZoneFlag.Size = new System.Drawing.Size(100, 23);
             this.btnAllowedZoneFlag.TabIndex = 1028;
@@ -1079,7 +1093,7 @@ namespace LastChaos_ToolBox_2024.Editors
             // 
             this.label22.AutoSize = true;
             this.label22.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-            this.label22.Location = new System.Drawing.Point(541, 62);
+            this.label22.Location = new System.Drawing.Point(524, 62);
             this.label22.Name = "label22";
             this.label22.Size = new System.Drawing.Size(72, 13);
             this.label22.TabIndex = 1025;
@@ -1093,7 +1107,7 @@ namespace LastChaos_ToolBox_2024.Editors
             this.btnClassFlag.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
             this.btnClassFlag.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnClassFlag.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-            this.btnClassFlag.Location = new System.Drawing.Point(619, 57);
+            this.btnClassFlag.Location = new System.Drawing.Point(602, 57);
             this.btnClassFlag.Name = "btnClassFlag";
             this.btnClassFlag.Size = new System.Drawing.Size(50, 23);
             this.btnClassFlag.TabIndex = 1000;
@@ -1150,7 +1164,7 @@ namespace LastChaos_ToolBox_2024.Editors
             // 
             this.label14.AutoSize = true;
             this.label14.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-            this.label14.Location = new System.Drawing.Point(908, 10);
+            this.label14.Location = new System.Drawing.Point(892, 10);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(50, 13);
             this.label14.TabIndex = 1018;
@@ -1162,7 +1176,7 @@ namespace LastChaos_ToolBox_2024.Editors
             this.tbDurability.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
             this.tbDurability.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tbDurability.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-            this.tbDurability.Location = new System.Drawing.Point(964, 6);
+            this.tbDurability.Location = new System.Drawing.Point(948, 6);
             this.tbDurability.Name = "tbDurability";
             this.tbDurability.Size = new System.Drawing.Size(50, 20);
             this.tbDurability.TabIndex = 1019;
@@ -1173,7 +1187,7 @@ namespace LastChaos_ToolBox_2024.Editors
             // 
             this.label13.AutoSize = true;
             this.label13.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-            this.label13.Location = new System.Drawing.Point(790, 10);
+            this.label13.Location = new System.Drawing.Point(776, 10);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(56, 13);
             this.label13.TabIndex = 1016;
@@ -1185,9 +1199,9 @@ namespace LastChaos_ToolBox_2024.Editors
             this.tbMaxLevel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
             this.tbMaxLevel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tbMaxLevel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-            this.tbMaxLevel.Location = new System.Drawing.Point(852, 6);
+            this.tbMaxLevel.Location = new System.Drawing.Point(838, 6);
             this.tbMaxLevel.Name = "tbMaxLevel";
-            this.tbMaxLevel.Size = new System.Drawing.Size(50, 20);
+            this.tbMaxLevel.Size = new System.Drawing.Size(45, 20);
             this.tbMaxLevel.TabIndex = 1017;
             this.tbMaxLevel.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.tbMaxLevel.TextChanged += new System.EventHandler(this.tbMaxLevel_TextChanged);
@@ -1196,7 +1210,7 @@ namespace LastChaos_ToolBox_2024.Editors
             // 
             this.label12.AutoSize = true;
             this.label12.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-            this.label12.Location = new System.Drawing.Point(675, 10);
+            this.label12.Location = new System.Drawing.Point(666, 10);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(53, 13);
             this.label12.TabIndex = 1014;
@@ -1208,9 +1222,9 @@ namespace LastChaos_ToolBox_2024.Editors
             this.tbMinLevel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
             this.tbMinLevel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tbMinLevel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-            this.tbMinLevel.Location = new System.Drawing.Point(734, 6);
+            this.tbMinLevel.Location = new System.Drawing.Point(725, 6);
             this.tbMinLevel.Name = "tbMinLevel";
-            this.tbMinLevel.Size = new System.Drawing.Size(50, 20);
+            this.tbMinLevel.Size = new System.Drawing.Size(45, 20);
             this.tbMinLevel.TabIndex = 1015;
             this.tbMinLevel.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.tbMinLevel.TextChanged += new System.EventHandler(this.tbMinLevel_TextChanged);
@@ -1233,7 +1247,7 @@ namespace LastChaos_ToolBox_2024.Editors
             this.tbPrice.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
             this.tbPrice.Location = new System.Drawing.Point(580, 6);
             this.tbPrice.Name = "tbPrice";
-            this.tbPrice.Size = new System.Drawing.Size(89, 20);
+            this.tbPrice.Size = new System.Drawing.Size(80, 20);
             this.tbPrice.TabIndex = 1013;
             this.tbPrice.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.tbPrice.TextChanged += new System.EventHandler(this.tbPrice_TextChanged);
@@ -1313,7 +1327,7 @@ namespace LastChaos_ToolBox_2024.Editors
             this.cbTypeSelector.FormattingEnabled = true;
             this.cbTypeSelector.Location = new System.Drawing.Point(305, 56);
             this.cbTypeSelector.Name = "cbTypeSelector";
-            this.cbTypeSelector.Size = new System.Drawing.Size(229, 21);
+            this.cbTypeSelector.Size = new System.Drawing.Size(213, 21);
             this.cbTypeSelector.TabIndex = 14;
             this.cbTypeSelector.SelectedIndexChanged += new System.EventHandler(this.cbTypeSelector_SelectedIndexChanged);
             // 
@@ -1396,7 +1410,6 @@ namespace LastChaos_ToolBox_2024.Editors
             this.tbID.ReadOnly = true;
             this.tbID.Size = new System.Drawing.Size(50, 20);
             this.tbID.TabIndex = 1;
-            this.tbID.Text = "123456";
             this.tbID.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // groupBox2
@@ -1515,26 +1528,12 @@ namespace LastChaos_ToolBox_2024.Editors
             this.tbSearch.TabIndex = 1025;
             this.tbSearch.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tbSearch_KeyDown);
             // 
-            // tbAllowedZoneFlag
-            // 
-            this.tbAllowedZoneFlag.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
-            this.tbAllowedZoneFlag.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.tbAllowedZoneFlag.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-            this.tbAllowedZoneFlag.Location = new System.Drawing.Point(753, 58);
-            this.tbAllowedZoneFlag.Name = "tbAllowedZoneFlag";
-            this.tbAllowedZoneFlag.ReadOnly = true;
-            this.tbAllowedZoneFlag.Size = new System.Drawing.Size(100, 20);
-            this.tbAllowedZoneFlag.TabIndex = 1038;
-            this.tbAllowedZoneFlag.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.tbAllowedZoneFlag.Visible = false;
-            this.tbAllowedZoneFlag.TextChanged += new System.EventHandler(this.tbAllowedZoneFlag_TextChanged);
-            // 
             // ItemEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
-            this.ClientSize = new System.Drawing.Size(1343, 600);
+            this.ClientSize = new System.Drawing.Size(1320, 600);
             this.Controls.Add(this.tbSearch);
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.btnCopy);
@@ -1544,7 +1543,7 @@ namespace LastChaos_ToolBox_2024.Editors
             this.Controls.Add(this.GeneralPanel);
             this.Controls.Add(this.groupBox1);
             this.Icon = global::LastChaos_ToolBox_2024.Properties.Resources.NG;
-            this.MinimumSize = new System.Drawing.Size(1359, 639);
+            this.MinimumSize = new System.Drawing.Size(1336, 639);
             this.Name = "ItemEditor";
             this.Text = "Item Editor";
             this.Load += new System.EventHandler(this.ItemEditor_LoadAsync);
