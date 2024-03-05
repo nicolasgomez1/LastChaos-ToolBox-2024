@@ -51,7 +51,6 @@ namespace LastChaos_ToolBox_2024
         {
             public int ID { get; set; }
             public string Text { get; set; }
-
             public override string ToString() { return Text; }
         }
 
