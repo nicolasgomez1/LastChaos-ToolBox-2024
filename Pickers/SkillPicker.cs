@@ -11,7 +11,6 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static LastChaos_ToolBox_2024.Editors.ItemEditor;
 
 namespace LastChaos_ToolBox_2024
 {
@@ -22,12 +21,13 @@ namespace LastChaos_ToolBox_2024
 	 * Returns:
 	 *		Array<Int<Skill ID>, String<Skill Level>>
 	// Call and receive implementation
-	SkillPicker pSkillSelector = new SkillPicker(pMain, this, new int[] { Convert.ToInt32(pTempRow[strIDColumn]), Convert.ToInt32(pTempRow[strLevelColumn]) });
+	SkillPicker pSkillSelector = new SkillPicker(pMain, this, new object[] { Convert.ToInt32(pTempRow[strIDColumn]), pTempRow[strLevelColumn].ToString() });
 
     if (pSkillSelector.ShowDialog() != DialogResult.OK)
 		return;
 
-	int[] iArray = pSkillSelector.ReturnValues;
+	int iSkillNeededID = Convert.ToInt32(pSkillSelector.ReturnValues[0]);
+    string strSkillLevelNeeded = pSkillSelector.ReturnValues[1].ToString();
     /****************************************/
     public partial class SkillPicker : Form
 	{
@@ -52,10 +52,7 @@ namespace LastChaos_ToolBox_2024
             public int ID { get; set; }
             public string Text { get; set; }
 
-            public override string ToString()
-            {
-                return Text;
-            }
+            public override string ToString() { return Text; }
         }
 
         private async void SkillPicker_LoadAsync(object sender, EventArgs e)
@@ -84,7 +81,8 @@ namespace LastChaos_ToolBox_2024
                         MainList.SelectedIndex = MainList.Items.Count - 1;
                 }
 
-                //MainList.SelectedIndex = 0;
+                if (MainList.SelectedIndex == -1)
+                    MainList.SelectedIndex = 0;
 
                 MainList.EndUpdate();
             }
@@ -94,7 +92,6 @@ namespace LastChaos_ToolBox_2024
         {
             if (e.KeyCode == Keys.Enter)
             {
-                //MessageBox.Show("There are unsaved changes. If you proceed, your changes will be discarded.\nDo you want to continue?", "Item Editor", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
                 void Search()
                 {
                     string strStringToSearch = tbSearch.Text;
