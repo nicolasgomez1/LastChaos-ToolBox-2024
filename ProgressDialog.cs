@@ -4,7 +4,17 @@ using System.Drawing;
 
 namespace LastChaos_ToolBox_2024
 {
-	public class ProgressDialog
+    /*
+    // For call new Instance
+    ProgressDialog pProgressDialog = new ProgressDialog(this, "Loading Data, Please Wait...");
+
+    // For Update text from existing Instance
+    pProgressDialog.UpdateText("Spoon");
+
+    // For close Instance
+    pProgressDialog.Close();
+	/****************************************/
+    public class ProgressDialog
 	{
 		private Form pDialogForm;
         private Label pLabel;
@@ -39,10 +49,7 @@ namespace LastChaos_ToolBox_2024
             ResizeForm();
         }
 
-        private void ResizeForm()
-        {
-            pDialogForm.Size = new Size((int)pLabel.CreateGraphics().MeasureString(pLabel.Text, pLabel.Font).Width + 2 * 10, pDialogForm.Height);
-        }
+        private void ResizeForm() { pDialogForm.Size = new Size((int)pLabel.CreateGraphics().MeasureString(pLabel.Text, pLabel.Font).Width + 2 * 10, pDialogForm.Height); }
 
         public void UpdateText(string strText)
         {

@@ -18,6 +18,16 @@ In Item Editor there are notes and examples on how to manage the request, storag
 # Hardcoded definitions and information
 * This information is stored in [Definitions.cs](Definitions.cs)
 
+# Help Dialogs
+* Pickers
+1) [Flag Picker Implementation Example](FlagPicker.cs)
+2) [Icon Picker Implementation Example](IconPicker.cs)
+3) [Skill Picker Implementation Example](SkillPicker.cs)
+
+* Others
+1) [Progress Dialog Implementation Example](ProgressDialog.cs)
+
+
 # Practical examples
 * Example of requesting and storing t_item data in the __Global Table__: pItemTable. To later store information in a temporary variable to work with, to finally pass that temporary data to the __Global Table__.
 
