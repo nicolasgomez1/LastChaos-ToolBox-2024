@@ -131,6 +131,12 @@
     <Compile Include="Editors\ItemEditor.Designer.cs">
       <DependentUpon>ItemEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="Pickers\ItemPicker.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Pickers\ItemPicker.Designer.cs">
+      <DependentUpon>ItemPicker.cs</DependentUpon>
+    </Compile>
     <Compile Include="Pickers\SkillPicker.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -166,6 +172,9 @@
     </Compile>
     <EmbeddedResource Include="Editors\ItemEditor.resx">
       <DependentUpon>ItemEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pickers\ItemPicker.resx">
+      <DependentUpon>ItemPicker.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Pickers\SkillPicker.resx">
       <DependentUpon>SkillPicker.cs</DependentUpon>

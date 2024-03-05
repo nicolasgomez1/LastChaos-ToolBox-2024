@@ -81,7 +81,7 @@ namespace LastChaos_ToolBox_2024
 				mysqlConn.Close();
 			}
 
-			// TODO: Add dispose to all global table vals
+			// TODO: Add dispose to all global tables
 			if (pItemTable != null)
 			{
 				pItemTable.Dispose();
@@ -106,7 +106,7 @@ namespace LastChaos_ToolBox_2024
 				pSkillLevelTable = null;
 			}
 
-			// NOTE: Posible Bug: can reload when some editor is opened.
+			// NOTE: Posible Bug: User can reload when some editor is opened.
 			ConnectToDatabase();
 		}
 
@@ -426,5 +426,10 @@ namespace LastChaos_ToolBox_2024
 			HashSet Add and Join Test took: 12 ms
 			*/
         }
+
+		private void button5_Click(object sender, EventArgs e)
+		{
+			
+		}
     }
 }

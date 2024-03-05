@@ -1,5 +1,4 @@
-﻿using Definitions;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -57,6 +56,64 @@ namespace LastChaos_ToolBox_2024
         private async void SkillPicker_LoadAsync(object sender, EventArgs e)
 		{
 			this.Location = new Point((int)pParentForm.Location.X + (pParentForm.Width - this.Width) / 2, (int)pParentForm.Location.Y + (pParentForm.Height - this.Height) / 2);
+
+            bool bRequestNeeded = false;
+
+            List<string> listQueryCompose = new List<string> {
+                "a_name_" + pMain.pSettings.WorkLocale, "a_client_description_" + pMain.pSettings.WorkLocale, "a_client_icon_texid", "a_client_icon_row", "a_client_icon_col"
+            };
+
+
+            if (pMain.pSkillTable == null)
+            {
+                bRequestNeeded = true;
+            }
+            else
+            {
+                foreach (var column in listQueryCompose.ToList())
+                {
+                    if (!pMain.pZoneTable.Columns.Contains(column))
+                        bRequestNeeded = true;
+                    else
+                        listQueryCompose.Remove(column);
+                }
+            }
+
+            if (bRequestNeeded)
+            {
+                pMain.pSkillTable = await Task.Run(() =>
+                {
+                    return pMain.QuerySelect(pMain.pSettings.DBCharset, $"SELECT a_index, {string.Join(",", listQueryCompose)} FROM {pMain.pSettings.DBData}.t_skill ORDER BY a_index;");
+                });
+
+                bRequestNeeded = false;
+                listQueryCompose.Clear();
+
+                listQueryCompose = new List<string> { "a_level", "a_dummypower" };
+
+                if (pMain.pSkillLevelTable == null)
+                {
+                    bRequestNeeded = true;
+                }
+                else
+                {
+                    foreach (var column in listQueryCompose.ToList())
+                    {
+                        if (!pMain.pSkillLevelTable.Columns.Contains(column))
+                            bRequestNeeded = true;
+                        else
+                            listQueryCompose.Remove(column);
+                    }
+                }
+
+                if (bRequestNeeded)
+                {
+                    pMain.pSkillLevelTable = await Task.Run(() =>
+                    {
+                        return pMain.QuerySelect(pMain.pSettings.DBCharset, $"SELECT a_index, {string.Join(",", listQueryCompose)} FROM {pMain.pSettings.DBData}.t_skilllevel ORDER BY a_level");
+                    });
+                }
+            }
 
             if (pMain.pSkillTable != null && pMain.pSkillLevelTable != null)
 			{

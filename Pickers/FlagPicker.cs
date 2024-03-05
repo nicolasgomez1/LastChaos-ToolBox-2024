@@ -20,7 +20,7 @@ namespace LastChaos_ToolBox_2024
 	 *	String array with flag names<Flags Array>
 	 *	Long<Flag>
 	 * Returns:
-	 *		Longs<composed Flag>
+	 *		Long<composed Flag>
 	// Call and receive implementation
 	FlagPicker pFlagSelector = new FlagPicker(pMain, this, Defs.ItemClass, Convert.ToInt32(btnFlag.Text.ToString()));
 

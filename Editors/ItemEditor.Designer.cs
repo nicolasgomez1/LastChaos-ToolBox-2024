@@ -40,6 +40,46 @@ namespace LastChaos_ToolBox_2024.Editors
             this.tbAllowedZoneFlag = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.groupBox9 = new System.Windows.Forms.GroupBox();
+            this.label62 = new System.Windows.Forms.Label();
+            this.tbItem9RequiredAmount = new System.Windows.Forms.TextBox();
+            this.btnItem9Required = new System.Windows.Forms.Button();
+            this.label63 = new System.Windows.Forms.Label();
+            this.label60 = new System.Windows.Forms.Label();
+            this.tbItem8RequiredAmount = new System.Windows.Forms.TextBox();
+            this.btnItem8Required = new System.Windows.Forms.Button();
+            this.label61 = new System.Windows.Forms.Label();
+            this.label58 = new System.Windows.Forms.Label();
+            this.tbItem7RequiredAmount = new System.Windows.Forms.TextBox();
+            this.btnItem7Required = new System.Windows.Forms.Button();
+            this.label59 = new System.Windows.Forms.Label();
+            this.label56 = new System.Windows.Forms.Label();
+            this.tbItem6RequiredAmount = new System.Windows.Forms.TextBox();
+            this.btnItem6Required = new System.Windows.Forms.Button();
+            this.label57 = new System.Windows.Forms.Label();
+            this.label50 = new System.Windows.Forms.Label();
+            this.tbItem5RequiredAmount = new System.Windows.Forms.TextBox();
+            this.btnItem5Required = new System.Windows.Forms.Button();
+            this.label51 = new System.Windows.Forms.Label();
+            this.label52 = new System.Windows.Forms.Label();
+            this.tbItem4RequiredAmount = new System.Windows.Forms.TextBox();
+            this.btnItem4Required = new System.Windows.Forms.Button();
+            this.label53 = new System.Windows.Forms.Label();
+            this.label54 = new System.Windows.Forms.Label();
+            this.tbItem3RequiredAmount = new System.Windows.Forms.TextBox();
+            this.btnItem3Required = new System.Windows.Forms.Button();
+            this.label55 = new System.Windows.Forms.Label();
+            this.label48 = new System.Windows.Forms.Label();
+            this.tbItem2RequiredAmount = new System.Windows.Forms.TextBox();
+            this.btnItem2Required = new System.Windows.Forms.Button();
+            this.label49 = new System.Windows.Forms.Label();
+            this.label46 = new System.Windows.Forms.Label();
+            this.tbItem1RequiredAmount = new System.Windows.Forms.TextBox();
+            this.btnItem1Required = new System.Windows.Forms.Button();
+            this.label47 = new System.Windows.Forms.Label();
+            this.label45 = new System.Windows.Forms.Label();
+            this.tbItem0RequiredAmount = new System.Windows.Forms.TextBox();
+            this.btnItem0Required = new System.Windows.Forms.Button();
+            this.label24 = new System.Windows.Forms.Label();
             this.btnSkill1RequiredID = new System.Windows.Forms.Button();
             this.label42 = new System.Windows.Forms.Label();
             this.tbSkill1RequiredLevel = new System.Windows.Forms.TextBox();
@@ -313,6 +353,46 @@ namespace LastChaos_ToolBox_2024.Editors
             // 
             // groupBox9
             // 
+            this.groupBox9.Controls.Add(this.label62);
+            this.groupBox9.Controls.Add(this.tbItem9RequiredAmount);
+            this.groupBox9.Controls.Add(this.btnItem9Required);
+            this.groupBox9.Controls.Add(this.label63);
+            this.groupBox9.Controls.Add(this.label60);
+            this.groupBox9.Controls.Add(this.tbItem8RequiredAmount);
+            this.groupBox9.Controls.Add(this.btnItem8Required);
+            this.groupBox9.Controls.Add(this.label61);
+            this.groupBox9.Controls.Add(this.label58);
+            this.groupBox9.Controls.Add(this.tbItem7RequiredAmount);
+            this.groupBox9.Controls.Add(this.btnItem7Required);
+            this.groupBox9.Controls.Add(this.label59);
+            this.groupBox9.Controls.Add(this.label56);
+            this.groupBox9.Controls.Add(this.tbItem6RequiredAmount);
+            this.groupBox9.Controls.Add(this.btnItem6Required);
+            this.groupBox9.Controls.Add(this.label57);
+            this.groupBox9.Controls.Add(this.label50);
+            this.groupBox9.Controls.Add(this.tbItem5RequiredAmount);
+            this.groupBox9.Controls.Add(this.btnItem5Required);
+            this.groupBox9.Controls.Add(this.label51);
+            this.groupBox9.Controls.Add(this.label52);
+            this.groupBox9.Controls.Add(this.tbItem4RequiredAmount);
+            this.groupBox9.Controls.Add(this.btnItem4Required);
+            this.groupBox9.Controls.Add(this.label53);
+            this.groupBox9.Controls.Add(this.label54);
+            this.groupBox9.Controls.Add(this.tbItem3RequiredAmount);
+            this.groupBox9.Controls.Add(this.btnItem3Required);
+            this.groupBox9.Controls.Add(this.label55);
+            this.groupBox9.Controls.Add(this.label48);
+            this.groupBox9.Controls.Add(this.tbItem2RequiredAmount);
+            this.groupBox9.Controls.Add(this.btnItem2Required);
+            this.groupBox9.Controls.Add(this.label49);
+            this.groupBox9.Controls.Add(this.label46);
+            this.groupBox9.Controls.Add(this.tbItem1RequiredAmount);
+            this.groupBox9.Controls.Add(this.btnItem1Required);
+            this.groupBox9.Controls.Add(this.label47);
+            this.groupBox9.Controls.Add(this.label45);
+            this.groupBox9.Controls.Add(this.tbItem0RequiredAmount);
+            this.groupBox9.Controls.Add(this.btnItem0Required);
+            this.groupBox9.Controls.Add(this.label24);
             this.groupBox9.Controls.Add(this.btnSkill1RequiredID);
             this.groupBox9.Controls.Add(this.label42);
             this.groupBox9.Controls.Add(this.tbSkill1RequiredLevel);
@@ -325,10 +405,490 @@ namespace LastChaos_ToolBox_2024.Editors
             this.groupBox9.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
             this.groupBox9.Location = new System.Drawing.Point(0, 192);
             this.groupBox9.Name = "groupBox9";
-            this.groupBox9.Size = new System.Drawing.Size(734, 229);
+            this.groupBox9.Size = new System.Drawing.Size(734, 199);
             this.groupBox9.TabIndex = 1035;
             this.groupBox9.TabStop = false;
             this.groupBox9.Text = "Crafting Data";
+            // 
+            // label62
+            // 
+            this.label62.AutoSize = true;
+            this.label62.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.label62.Location = new System.Drawing.Point(611, 171);
+            this.label62.Name = "label62";
+            this.label62.Size = new System.Drawing.Size(66, 13);
+            this.label62.TabIndex = 1085;
+            this.label62.Text = "Item Amount";
+            this.label62.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // tbItem9RequiredAmount
+            // 
+            this.tbItem9RequiredAmount.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+            this.tbItem9RequiredAmount.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tbItem9RequiredAmount.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.tbItem9RequiredAmount.Location = new System.Drawing.Point(683, 167);
+            this.tbItem9RequiredAmount.Name = "tbItem9RequiredAmount";
+            this.tbItem9RequiredAmount.Size = new System.Drawing.Size(40, 20);
+            this.tbItem9RequiredAmount.TabIndex = 1086;
+            this.tbItem9RequiredAmount.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.tbItem9RequiredAmount.TextChanged += new System.EventHandler(this.tbItem9RequiredAmount_TextChanged);
+            // 
+            // btnItem9Required
+            // 
+            this.btnItem9Required.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(85)))), ((int)(((byte)(76)))));
+            this.btnItem9Required.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+            this.btnItem9Required.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
+            this.btnItem9Required.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnItem9Required.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.btnItem9Required.Location = new System.Drawing.Point(455, 166);
+            this.btnItem9Required.Name = "btnItem9Required";
+            this.btnItem9Required.Size = new System.Drawing.Size(150, 23);
+            this.btnItem9Required.TabIndex = 1083;
+            this.btnItem9Required.UseVisualStyleBackColor = true;
+            this.btnItem9Required.Click += new System.EventHandler(this.btnItem9Required_Click);
+            // 
+            // label63
+            // 
+            this.label63.AutoSize = true;
+            this.label63.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.label63.Location = new System.Drawing.Point(377, 171);
+            this.label63.Name = "label63";
+            this.label63.Size = new System.Drawing.Size(73, 13);
+            this.label63.TabIndex = 1084;
+            this.label63.Text = "Item Required";
+            this.label63.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // label60
+            // 
+            this.label60.AutoSize = true;
+            this.label60.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.label60.Location = new System.Drawing.Point(611, 142);
+            this.label60.Name = "label60";
+            this.label60.Size = new System.Drawing.Size(66, 13);
+            this.label60.TabIndex = 1081;
+            this.label60.Text = "Item Amount";
+            this.label60.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // tbItem8RequiredAmount
+            // 
+            this.tbItem8RequiredAmount.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+            this.tbItem8RequiredAmount.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tbItem8RequiredAmount.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.tbItem8RequiredAmount.Location = new System.Drawing.Point(683, 138);
+            this.tbItem8RequiredAmount.Name = "tbItem8RequiredAmount";
+            this.tbItem8RequiredAmount.Size = new System.Drawing.Size(40, 20);
+            this.tbItem8RequiredAmount.TabIndex = 1082;
+            this.tbItem8RequiredAmount.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.tbItem8RequiredAmount.TextChanged += new System.EventHandler(this.tbItem8RequiredAmount_TextChanged);
+            // 
+            // btnItem8Required
+            // 
+            this.btnItem8Required.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(85)))), ((int)(((byte)(76)))));
+            this.btnItem8Required.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+            this.btnItem8Required.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
+            this.btnItem8Required.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnItem8Required.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.btnItem8Required.Location = new System.Drawing.Point(455, 137);
+            this.btnItem8Required.Name = "btnItem8Required";
+            this.btnItem8Required.Size = new System.Drawing.Size(150, 23);
+            this.btnItem8Required.TabIndex = 1079;
+            this.btnItem8Required.UseVisualStyleBackColor = true;
+            this.btnItem8Required.Click += new System.EventHandler(this.btnItem8Required_Click);
+            // 
+            // label61
+            // 
+            this.label61.AutoSize = true;
+            this.label61.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.label61.Location = new System.Drawing.Point(377, 142);
+            this.label61.Name = "label61";
+            this.label61.Size = new System.Drawing.Size(73, 13);
+            this.label61.TabIndex = 1080;
+            this.label61.Text = "Item Required";
+            this.label61.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // label58
+            // 
+            this.label58.AutoSize = true;
+            this.label58.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.label58.Location = new System.Drawing.Point(611, 113);
+            this.label58.Name = "label58";
+            this.label58.Size = new System.Drawing.Size(66, 13);
+            this.label58.TabIndex = 1077;
+            this.label58.Text = "Item Amount";
+            this.label58.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // tbItem7RequiredAmount
+            // 
+            this.tbItem7RequiredAmount.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+            this.tbItem7RequiredAmount.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tbItem7RequiredAmount.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.tbItem7RequiredAmount.Location = new System.Drawing.Point(683, 109);
+            this.tbItem7RequiredAmount.Name = "tbItem7RequiredAmount";
+            this.tbItem7RequiredAmount.Size = new System.Drawing.Size(40, 20);
+            this.tbItem7RequiredAmount.TabIndex = 1078;
+            this.tbItem7RequiredAmount.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.tbItem7RequiredAmount.TextChanged += new System.EventHandler(this.tbItem7RequiredAmount_TextChanged);
+            // 
+            // btnItem7Required
+            // 
+            this.btnItem7Required.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(85)))), ((int)(((byte)(76)))));
+            this.btnItem7Required.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+            this.btnItem7Required.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
+            this.btnItem7Required.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnItem7Required.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.btnItem7Required.Location = new System.Drawing.Point(455, 108);
+            this.btnItem7Required.Name = "btnItem7Required";
+            this.btnItem7Required.Size = new System.Drawing.Size(150, 23);
+            this.btnItem7Required.TabIndex = 1075;
+            this.btnItem7Required.UseVisualStyleBackColor = true;
+            this.btnItem7Required.Click += new System.EventHandler(this.btnItem7Required_Click);
+            // 
+            // label59
+            // 
+            this.label59.AutoSize = true;
+            this.label59.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.label59.Location = new System.Drawing.Point(377, 113);
+            this.label59.Name = "label59";
+            this.label59.Size = new System.Drawing.Size(73, 13);
+            this.label59.TabIndex = 1076;
+            this.label59.Text = "Item Required";
+            this.label59.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // label56
+            // 
+            this.label56.AutoSize = true;
+            this.label56.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.label56.Location = new System.Drawing.Point(611, 84);
+            this.label56.Name = "label56";
+            this.label56.Size = new System.Drawing.Size(66, 13);
+            this.label56.TabIndex = 1073;
+            this.label56.Text = "Item Amount";
+            this.label56.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // tbItem6RequiredAmount
+            // 
+            this.tbItem6RequiredAmount.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+            this.tbItem6RequiredAmount.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tbItem6RequiredAmount.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.tbItem6RequiredAmount.Location = new System.Drawing.Point(683, 80);
+            this.tbItem6RequiredAmount.Name = "tbItem6RequiredAmount";
+            this.tbItem6RequiredAmount.Size = new System.Drawing.Size(40, 20);
+            this.tbItem6RequiredAmount.TabIndex = 1074;
+            this.tbItem6RequiredAmount.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.tbItem6RequiredAmount.TextChanged += new System.EventHandler(this.tbItem6RequiredAmount_TextChanged);
+            // 
+            // btnItem6Required
+            // 
+            this.btnItem6Required.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(85)))), ((int)(((byte)(76)))));
+            this.btnItem6Required.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+            this.btnItem6Required.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
+            this.btnItem6Required.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnItem6Required.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.btnItem6Required.Location = new System.Drawing.Point(455, 79);
+            this.btnItem6Required.Name = "btnItem6Required";
+            this.btnItem6Required.Size = new System.Drawing.Size(150, 23);
+            this.btnItem6Required.TabIndex = 1071;
+            this.btnItem6Required.UseVisualStyleBackColor = true;
+            this.btnItem6Required.Click += new System.EventHandler(this.btnItem6Required_Click);
+            // 
+            // label57
+            // 
+            this.label57.AutoSize = true;
+            this.label57.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.label57.Location = new System.Drawing.Point(377, 84);
+            this.label57.Name = "label57";
+            this.label57.Size = new System.Drawing.Size(73, 13);
+            this.label57.TabIndex = 1072;
+            this.label57.Text = "Item Required";
+            this.label57.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // label50
+            // 
+            this.label50.AutoSize = true;
+            this.label50.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.label50.Location = new System.Drawing.Point(611, 55);
+            this.label50.Name = "label50";
+            this.label50.Size = new System.Drawing.Size(66, 13);
+            this.label50.TabIndex = 1069;
+            this.label50.Text = "Item Amount";
+            this.label50.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // tbItem5RequiredAmount
+            // 
+            this.tbItem5RequiredAmount.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+            this.tbItem5RequiredAmount.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tbItem5RequiredAmount.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.tbItem5RequiredAmount.Location = new System.Drawing.Point(683, 51);
+            this.tbItem5RequiredAmount.Name = "tbItem5RequiredAmount";
+            this.tbItem5RequiredAmount.Size = new System.Drawing.Size(40, 20);
+            this.tbItem5RequiredAmount.TabIndex = 1070;
+            this.tbItem5RequiredAmount.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.tbItem5RequiredAmount.TextChanged += new System.EventHandler(this.tbItem5RequiredAmount_TextChanged);
+            // 
+            // btnItem5Required
+            // 
+            this.btnItem5Required.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(85)))), ((int)(((byte)(76)))));
+            this.btnItem5Required.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+            this.btnItem5Required.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
+            this.btnItem5Required.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnItem5Required.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.btnItem5Required.Location = new System.Drawing.Point(455, 50);
+            this.btnItem5Required.Name = "btnItem5Required";
+            this.btnItem5Required.Size = new System.Drawing.Size(150, 23);
+            this.btnItem5Required.TabIndex = 1067;
+            this.btnItem5Required.UseVisualStyleBackColor = true;
+            this.btnItem5Required.Click += new System.EventHandler(this.btnItem5Required_Click);
+            // 
+            // label51
+            // 
+            this.label51.AutoSize = true;
+            this.label51.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.label51.Location = new System.Drawing.Point(377, 55);
+            this.label51.Name = "label51";
+            this.label51.Size = new System.Drawing.Size(73, 13);
+            this.label51.TabIndex = 1068;
+            this.label51.Text = "Item Required";
+            this.label51.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // label52
+            // 
+            this.label52.AutoSize = true;
+            this.label52.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.label52.Location = new System.Drawing.Point(240, 171);
+            this.label52.Name = "label52";
+            this.label52.Size = new System.Drawing.Size(66, 13);
+            this.label52.TabIndex = 1065;
+            this.label52.Text = "Item Amount";
+            this.label52.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // tbItem4RequiredAmount
+            // 
+            this.tbItem4RequiredAmount.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+            this.tbItem4RequiredAmount.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tbItem4RequiredAmount.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.tbItem4RequiredAmount.Location = new System.Drawing.Point(312, 167);
+            this.tbItem4RequiredAmount.Name = "tbItem4RequiredAmount";
+            this.tbItem4RequiredAmount.Size = new System.Drawing.Size(40, 20);
+            this.tbItem4RequiredAmount.TabIndex = 1066;
+            this.tbItem4RequiredAmount.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.tbItem4RequiredAmount.TextChanged += new System.EventHandler(this.tbItem4RequiredAmount_TextChanged);
+            // 
+            // btnItem4Required
+            // 
+            this.btnItem4Required.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(85)))), ((int)(((byte)(76)))));
+            this.btnItem4Required.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+            this.btnItem4Required.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
+            this.btnItem4Required.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnItem4Required.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.btnItem4Required.Location = new System.Drawing.Point(84, 166);
+            this.btnItem4Required.Name = "btnItem4Required";
+            this.btnItem4Required.Size = new System.Drawing.Size(150, 23);
+            this.btnItem4Required.TabIndex = 1063;
+            this.btnItem4Required.UseVisualStyleBackColor = true;
+            this.btnItem4Required.Click += new System.EventHandler(this.btnItem4Required_Click);
+            // 
+            // label53
+            // 
+            this.label53.AutoSize = true;
+            this.label53.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.label53.Location = new System.Drawing.Point(6, 171);
+            this.label53.Name = "label53";
+            this.label53.Size = new System.Drawing.Size(73, 13);
+            this.label53.TabIndex = 1064;
+            this.label53.Text = "Item Required";
+            this.label53.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // label54
+            // 
+            this.label54.AutoSize = true;
+            this.label54.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.label54.Location = new System.Drawing.Point(240, 142);
+            this.label54.Name = "label54";
+            this.label54.Size = new System.Drawing.Size(66, 13);
+            this.label54.TabIndex = 1061;
+            this.label54.Text = "Item Amount";
+            this.label54.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // tbItem3RequiredAmount
+            // 
+            this.tbItem3RequiredAmount.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+            this.tbItem3RequiredAmount.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tbItem3RequiredAmount.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.tbItem3RequiredAmount.Location = new System.Drawing.Point(312, 138);
+            this.tbItem3RequiredAmount.Name = "tbItem3RequiredAmount";
+            this.tbItem3RequiredAmount.Size = new System.Drawing.Size(40, 20);
+            this.tbItem3RequiredAmount.TabIndex = 1062;
+            this.tbItem3RequiredAmount.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.tbItem3RequiredAmount.TextChanged += new System.EventHandler(this.tbItem3RequiredAmount_TextChanged);
+            // 
+            // btnItem3Required
+            // 
+            this.btnItem3Required.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(85)))), ((int)(((byte)(76)))));
+            this.btnItem3Required.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+            this.btnItem3Required.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
+            this.btnItem3Required.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnItem3Required.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.btnItem3Required.Location = new System.Drawing.Point(84, 137);
+            this.btnItem3Required.Name = "btnItem3Required";
+            this.btnItem3Required.Size = new System.Drawing.Size(150, 23);
+            this.btnItem3Required.TabIndex = 1059;
+            this.btnItem3Required.UseVisualStyleBackColor = true;
+            this.btnItem3Required.Click += new System.EventHandler(this.btnItem3Required_Click);
+            // 
+            // label55
+            // 
+            this.label55.AutoSize = true;
+            this.label55.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.label55.Location = new System.Drawing.Point(6, 142);
+            this.label55.Name = "label55";
+            this.label55.Size = new System.Drawing.Size(73, 13);
+            this.label55.TabIndex = 1060;
+            this.label55.Text = "Item Required";
+            this.label55.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // label48
+            // 
+            this.label48.AutoSize = true;
+            this.label48.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.label48.Location = new System.Drawing.Point(240, 113);
+            this.label48.Name = "label48";
+            this.label48.Size = new System.Drawing.Size(66, 13);
+            this.label48.TabIndex = 1057;
+            this.label48.Text = "Item Amount";
+            this.label48.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // tbItem2RequiredAmount
+            // 
+            this.tbItem2RequiredAmount.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+            this.tbItem2RequiredAmount.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tbItem2RequiredAmount.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.tbItem2RequiredAmount.Location = new System.Drawing.Point(312, 109);
+            this.tbItem2RequiredAmount.Name = "tbItem2RequiredAmount";
+            this.tbItem2RequiredAmount.Size = new System.Drawing.Size(40, 20);
+            this.tbItem2RequiredAmount.TabIndex = 1058;
+            this.tbItem2RequiredAmount.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.tbItem2RequiredAmount.TextChanged += new System.EventHandler(this.tbItem2RequiredAmount_TextChanged);
+            // 
+            // btnItem2Required
+            // 
+            this.btnItem2Required.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(85)))), ((int)(((byte)(76)))));
+            this.btnItem2Required.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+            this.btnItem2Required.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
+            this.btnItem2Required.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnItem2Required.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.btnItem2Required.Location = new System.Drawing.Point(84, 108);
+            this.btnItem2Required.Name = "btnItem2Required";
+            this.btnItem2Required.Size = new System.Drawing.Size(150, 23);
+            this.btnItem2Required.TabIndex = 1055;
+            this.btnItem2Required.UseVisualStyleBackColor = true;
+            this.btnItem2Required.Click += new System.EventHandler(this.btnItem2Required_Click);
+            // 
+            // label49
+            // 
+            this.label49.AutoSize = true;
+            this.label49.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.label49.Location = new System.Drawing.Point(6, 113);
+            this.label49.Name = "label49";
+            this.label49.Size = new System.Drawing.Size(73, 13);
+            this.label49.TabIndex = 1056;
+            this.label49.Text = "Item Required";
+            this.label49.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // label46
+            // 
+            this.label46.AutoSize = true;
+            this.label46.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.label46.Location = new System.Drawing.Point(240, 84);
+            this.label46.Name = "label46";
+            this.label46.Size = new System.Drawing.Size(66, 13);
+            this.label46.TabIndex = 1053;
+            this.label46.Text = "Item Amount";
+            this.label46.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // tbItem1RequiredAmount
+            // 
+            this.tbItem1RequiredAmount.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+            this.tbItem1RequiredAmount.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tbItem1RequiredAmount.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.tbItem1RequiredAmount.Location = new System.Drawing.Point(312, 80);
+            this.tbItem1RequiredAmount.Name = "tbItem1RequiredAmount";
+            this.tbItem1RequiredAmount.Size = new System.Drawing.Size(40, 20);
+            this.tbItem1RequiredAmount.TabIndex = 1054;
+            this.tbItem1RequiredAmount.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.tbItem1RequiredAmount.TextChanged += new System.EventHandler(this.tbItem1RequiredAmount_TextChanged);
+            // 
+            // btnItem1Required
+            // 
+            this.btnItem1Required.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(85)))), ((int)(((byte)(76)))));
+            this.btnItem1Required.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+            this.btnItem1Required.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
+            this.btnItem1Required.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnItem1Required.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.btnItem1Required.Location = new System.Drawing.Point(84, 79);
+            this.btnItem1Required.Name = "btnItem1Required";
+            this.btnItem1Required.Size = new System.Drawing.Size(150, 23);
+            this.btnItem1Required.TabIndex = 1051;
+            this.btnItem1Required.UseVisualStyleBackColor = true;
+            this.btnItem1Required.Click += new System.EventHandler(this.btnItem1Required_Click);
+            // 
+            // label47
+            // 
+            this.label47.AutoSize = true;
+            this.label47.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.label47.Location = new System.Drawing.Point(6, 84);
+            this.label47.Name = "label47";
+            this.label47.Size = new System.Drawing.Size(73, 13);
+            this.label47.TabIndex = 1052;
+            this.label47.Text = "Item Required";
+            this.label47.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // label45
+            // 
+            this.label45.AutoSize = true;
+            this.label45.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.label45.Location = new System.Drawing.Point(240, 55);
+            this.label45.Name = "label45";
+            this.label45.Size = new System.Drawing.Size(66, 13);
+            this.label45.TabIndex = 1049;
+            this.label45.Text = "Item Amount";
+            this.label45.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // tbItem0RequiredAmount
+            // 
+            this.tbItem0RequiredAmount.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+            this.tbItem0RequiredAmount.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tbItem0RequiredAmount.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.tbItem0RequiredAmount.Location = new System.Drawing.Point(312, 51);
+            this.tbItem0RequiredAmount.Name = "tbItem0RequiredAmount";
+            this.tbItem0RequiredAmount.Size = new System.Drawing.Size(40, 20);
+            this.tbItem0RequiredAmount.TabIndex = 1050;
+            this.tbItem0RequiredAmount.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.tbItem0RequiredAmount.TextChanged += new System.EventHandler(this.tbItem0RequiredAmount_TextChanged);
+            // 
+            // btnItem0Required
+            // 
+            this.btnItem0Required.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(85)))), ((int)(((byte)(76)))));
+            this.btnItem0Required.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+            this.btnItem0Required.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
+            this.btnItem0Required.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnItem0Required.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.btnItem0Required.Location = new System.Drawing.Point(84, 50);
+            this.btnItem0Required.Name = "btnItem0Required";
+            this.btnItem0Required.Size = new System.Drawing.Size(150, 23);
+            this.btnItem0Required.TabIndex = 1047;
+            this.btnItem0Required.UseVisualStyleBackColor = true;
+            this.btnItem0Required.Click += new System.EventHandler(this.btnItem0Required_Click);
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.label24.Location = new System.Drawing.Point(6, 55);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(73, 13);
+            this.label24.TabIndex = 1048;
+            this.label24.Text = "Item Required";
+            this.label24.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // btnSkill1RequiredID
             // 
@@ -339,7 +899,7 @@ namespace LastChaos_ToolBox_2024.Editors
             this.btnSkill1RequiredID.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
             this.btnSkill1RequiredID.Location = new System.Drawing.Point(84, 19);
             this.btnSkill1RequiredID.Name = "btnSkill1RequiredID";
-            this.btnSkill1RequiredID.Size = new System.Drawing.Size(135, 23);
+            this.btnSkill1RequiredID.Size = new System.Drawing.Size(150, 23);
             this.btnSkill1RequiredID.TabIndex = 1038;
             this.btnSkill1RequiredID.UseVisualStyleBackColor = true;
             this.btnSkill1RequiredID.Click += new System.EventHandler(this.btnSkill1RequiredID_Click);
@@ -348,7 +908,7 @@ namespace LastChaos_ToolBox_2024.Editors
             // 
             this.label42.AutoSize = true;
             this.label42.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-            this.label42.Location = new System.Drawing.Point(225, 24);
+            this.label42.Location = new System.Drawing.Point(240, 24);
             this.label42.Name = "label42";
             this.label42.Size = new System.Drawing.Size(55, 13);
             this.label42.TabIndex = 1040;
@@ -360,7 +920,7 @@ namespace LastChaos_ToolBox_2024.Editors
             this.tbSkill1RequiredLevel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
             this.tbSkill1RequiredLevel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tbSkill1RequiredLevel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-            this.tbSkill1RequiredLevel.Location = new System.Drawing.Point(286, 20);
+            this.tbSkill1RequiredLevel.Location = new System.Drawing.Point(301, 20);
             this.tbSkill1RequiredLevel.Name = "tbSkill1RequiredLevel";
             this.tbSkill1RequiredLevel.Size = new System.Drawing.Size(40, 20);
             this.tbSkill1RequiredLevel.TabIndex = 1041;
@@ -385,9 +945,9 @@ namespace LastChaos_ToolBox_2024.Editors
             this.btnSkill2RequiredID.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
             this.btnSkill2RequiredID.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSkill2RequiredID.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-            this.btnSkill2RequiredID.Location = new System.Drawing.Point(164, -6);
+            this.btnSkill2RequiredID.Location = new System.Drawing.Point(455, 19);
             this.btnSkill2RequiredID.Name = "btnSkill2RequiredID";
-            this.btnSkill2RequiredID.Size = new System.Drawing.Size(135, 23);
+            this.btnSkill2RequiredID.Size = new System.Drawing.Size(150, 23);
             this.btnSkill2RequiredID.TabIndex = 1046;
             this.btnSkill2RequiredID.UseVisualStyleBackColor = true;
             this.btnSkill2RequiredID.Visible = false;
@@ -397,7 +957,7 @@ namespace LastChaos_ToolBox_2024.Editors
             // 
             this.label43.AutoSize = true;
             this.label43.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-            this.label43.Location = new System.Drawing.Point(305, -1);
+            this.label43.Location = new System.Drawing.Point(611, 24);
             this.label43.Name = "label43";
             this.label43.Size = new System.Drawing.Size(55, 13);
             this.label43.TabIndex = 1044;
@@ -410,7 +970,7 @@ namespace LastChaos_ToolBox_2024.Editors
             this.tbSkill2RequiredLevel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
             this.tbSkill2RequiredLevel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tbSkill2RequiredLevel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-            this.tbSkill2RequiredLevel.Location = new System.Drawing.Point(366, -5);
+            this.tbSkill2RequiredLevel.Location = new System.Drawing.Point(672, 20);
             this.tbSkill2RequiredLevel.Name = "tbSkill2RequiredLevel";
             this.tbSkill2RequiredLevel.Size = new System.Drawing.Size(40, 20);
             this.tbSkill2RequiredLevel.TabIndex = 1045;
@@ -422,7 +982,7 @@ namespace LastChaos_ToolBox_2024.Editors
             // 
             this.label44.AutoSize = true;
             this.label44.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-            this.label44.Location = new System.Drawing.Point(77, -1);
+            this.label44.Location = new System.Drawing.Point(368, 24);
             this.label44.Name = "label44";
             this.label44.Size = new System.Drawing.Size(81, 13);
             this.label44.TabIndex = 1042;
@@ -1680,5 +2240,45 @@ namespace LastChaos_ToolBox_2024.Editors
         private Button btnSkill1RequiredID;
         private Button btnSkill2RequiredID;
         private TextBox tbAllowedZoneFlag;
+        private Label label45;
+        private TextBox tbItem0RequiredAmount;
+        private Button btnItem0Required;
+        private Label label24;
+        private Label label62;
+        private TextBox tbItem9RequiredAmount;
+        private Button btnItem9Required;
+        private Label label63;
+        private Label label60;
+        private TextBox tbItem8RequiredAmount;
+        private Button btnItem8Required;
+        private Label label61;
+        private Label label58;
+        private TextBox tbItem7RequiredAmount;
+        private Button btnItem7Required;
+        private Label label59;
+        private Label label56;
+        private TextBox tbItem6RequiredAmount;
+        private Button btnItem6Required;
+        private Label label57;
+        private Label label50;
+        private TextBox tbItem5RequiredAmount;
+        private Button btnItem5Required;
+        private Label label51;
+        private Label label52;
+        private TextBox tbItem4RequiredAmount;
+        private Button btnItem4Required;
+        private Label label53;
+        private Label label54;
+        private TextBox tbItem3RequiredAmount;
+        private Button btnItem3Required;
+        private Label label55;
+        private Label label48;
+        private TextBox tbItem2RequiredAmount;
+        private Button btnItem2Required;
+        private Label label49;
+        private Label label46;
+        private TextBox tbItem1RequiredAmount;
+        private Button btnItem1Required;
+        private Label label47;
     }
 }
