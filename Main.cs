@@ -76,6 +76,7 @@ namespace LastChaos_ToolBox_2024
 
 		private void ClearGlobalTables()
 		{
+			// TODO: ¿Cerrar todos los dialogos abiertos?
             // TODO: Add dispose to all global tables
             if (pItemTable != null)
             {
@@ -126,8 +127,8 @@ namespace LastChaos_ToolBox_2024
 			ItemEditor pItemEditor = new ItemEditor(this);
 			pItemEditor.Show();
 		}
-
-		public void PrintLog(string strMsg, Color? ColorMsg = null)
+        
+        public void PrintLog(string strMsg, Color? ColorMsg = null)
 		{
 			StackFrame stackFrame = new StackFrame(1, true);
 

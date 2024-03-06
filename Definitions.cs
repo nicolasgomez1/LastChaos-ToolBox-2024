@@ -187,8 +187,8 @@ namespace Definitions
 					"Visconte",
 					"Conte",
 					"Marquise",
-					"Duka",                     // NOTE: No points defined in source
-					"Principe (6144 Principal)" // NOTE: No points defined in source
+					"Duka",                     // NOTE: probably not used
+					"Principe (6144 Principal)" // NOTE: probably not used
 				}
 			},
 			{
@@ -200,8 +200,8 @@ namespace Definitions
 					"Theoricus",
 					"Philosophus",
 					"Adeptus",
-					"Magus",        // NOTE: No points defined in source
-					"Ipsissimus"    // NOTE: No points defined in source
+					"Magus",        // NOTE: probably not used
+					"Ipsissimus"    // NOTE: probably not used
 				}
 			}
 		};
@@ -228,8 +228,9 @@ namespace Definitions
 			"Ex-Rogue",
 			"Arch-Mage",
 			"Pet",
-			"APet"
-		};
+			"APet",
+            "Unknown"	// NOTE: Some apet items have 2048, are too much items to be a error, but flag only goest up to APET, i'm not sure of that.
+        };
 
 		public static string[] ItemFlag =
 		{
@@ -274,6 +275,30 @@ namespace Definitions
 			// NicolasG Custom
 			"Money Ticket",
 			"Party Teleport"
+		};
+
+		public static string[] APetTypes =
+		{
+			// Standards
+			"None",
+			"Human",
+			"Beast",
+			"Demon"
+		};
+
+		public static string[] JewelCompositePosition =
+		{
+			// Standards
+			"Jewel Composite Weapon",
+			"Jewel Composite Helmet",
+			"Jewel Composite Armor",
+			"Jewel Composite Pants",
+			"Jewel Composite Gloves",
+			"Jewel Composite Boots",
+			"Jewel Composite Shield",
+			"Jewel Composite Backpack | Wings",
+			"Jewel Composite Accesory",
+			"Jewel Composite All"
 		};
 	}
 }

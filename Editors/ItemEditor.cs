@@ -255,7 +255,7 @@ namespace LastChaos_ToolBox_2024.Editors
 				if (control is Label)
 					((Label)control).TabStop = false;
 			}
-
+			/****************************************/
 			cbNationSelector.Items.Clear();
 
 			cbNationSelector.BeginUpdate();
@@ -272,6 +272,15 @@ namespace LastChaos_ToolBox_2024.Editors
 
 			cbNationSelector.EndUpdate();
 			/****************************************/
+			cbGrade.Items.Clear();
+
+			cbGrade.BeginUpdate();
+
+			foreach (string strAPetType in Defs.APetTypes)
+				cbGrade.Items.Add(strAPetType);
+
+			cbGrade.EndUpdate();
+			/****************************************/
 			cbCastleType.Items.Clear();
 
 			cbCastleType.BeginUpdate();
@@ -280,15 +289,6 @@ namespace LastChaos_ToolBox_2024.Editors
 				cbCastleType.Items.Add(strCastleType);
 
 			cbCastleType.EndUpdate();
-			/****************************************/
-			cbTypeSelector.Items.Clear();
-
-			cbTypeSelector.BeginUpdate();
-
-			foreach (string strType in Defs.ItemTypesNSubTypes.Keys)
-				cbTypeSelector.Items.Add(strType);
-
-			cbTypeSelector.EndUpdate();
 			/****************************************/
 			cbWearingPositionSelector.Items.Clear();
 
@@ -299,6 +299,15 @@ namespace LastChaos_ToolBox_2024.Editors
 
 			cbWearingPositionSelector.EndUpdate();
 			/****************************************/
+			cbTypeSelector.Items.Clear();
+
+			cbTypeSelector.BeginUpdate();
+
+			foreach (string strType in Defs.ItemTypesNSubTypes.Keys)
+				cbTypeSelector.Items.Add(strType);
+
+			cbTypeSelector.EndUpdate();
+			/****************************************/
 			cbRvRValueSelector.Items.Clear();
 
 			cbRvRValueSelector.BeginUpdate();
@@ -307,7 +316,6 @@ namespace LastChaos_ToolBox_2024.Editors
 				cbRvRValueSelector.Items.Add(strSyndicateType);
 
 			cbRvRValueSelector.EndUpdate();
-			/****************************************/
 #if DEBUG
 			Stopwatch stopwatch = new Stopwatch();
 			stopwatch.Start();
@@ -350,6 +358,17 @@ namespace LastChaos_ToolBox_2024.Editors
 
 				for (int i = 0; i < nTotalZones; i++)
 					strArrayZones[i] = pMain.pZoneTable.Rows[i]["a_name"].ToString();
+
+				/****************************************/
+
+				cbSet0.Items.Clear();
+
+				cbSet0.BeginUpdate();
+
+				for (int i = 0; i < nTotalZones; i++)
+					cbSet0.Items.Add(pMain.pZoneTable.Rows[i]["a_name"].ToString());
+
+				cbSet0.EndUpdate();
 			}
 			/****************************************/
 			pToolTip = new ToolTip();
@@ -469,11 +488,12 @@ namespace LastChaos_ToolBox_2024.Editors
 
 			tbMaxUse.Text = pTempRow["a_max_use"].ToString();
 			/****************************************/
-			tbGrade.Text = pTempRow["a_grade"].ToString();
+			int nAPetType = Convert.ToInt32(pTempRow["a_grade"]);
 
-			pToolTip = new ToolTip();
-			pToolTip.SetToolTip(tbGrade, "¿Rare Rate?");
-			pToolTips[tbGrade] = pToolTip;  // For Dispose
+			if (nAPetType < 0 || nAPetType > Defs.ItemCastleTypes.Length)
+				pMain.PrintLog("Item Editor > Item: " + nItemID + " Error: a_grade out of range", Color.Red);
+			else
+				cbGrade.SelectedIndex = nAPetType;
 			/****************************************/
 			string strNation = cbNationSelector.SelectedItem.ToString().ToLower();
 
@@ -509,36 +529,36 @@ namespace LastChaos_ToolBox_2024.Editors
 
 			StringBuilder strTooltip = new StringBuilder();
 
-			long nFlag = Convert.ToInt32(pTempRow["a_job_flag"]);
+			long nJobFlag = Convert.ToInt32(pTempRow["a_job_flag"]);
 
 			for (int i = 0; i < Defs.ItemClass.Length; i++)
 			{
-				if ((nFlag & 1L << i) != 0)
+				if ((nJobFlag & 1L << i) != 0)
 					strTooltip.Append(Defs.ItemClass[i] + "\n");
 			}
 
-			if (nFlag != 0 && strTooltip.Length <= 0)
+			if (nJobFlag != 0 && strTooltip.Length <= 0)
 				pMain.PrintLog("Item Editor > Item: " + nItemID + " Error: a_job_flag out of range", Color.Red);
 
 			pToolTip = new ToolTip();
 			pToolTip.SetToolTip(btnClassFlag, strTooltip.ToString());
 			pToolTips[btnClassFlag] = pToolTip;
 			/****************************************/
-			string strFlag = pTempRow["a_zone_flag"].ToString();
+			string strZoneFlag = pTempRow["a_zone_flag"].ToString();
 
 #if ALLOWED_ZONE_SYSTEM
-			btnAllowedZoneFlag.Text = strFlag;
+			btnAllowedZoneFlag.Text = strZoneFlag;
 
 			strTooltip = new StringBuilder();
-			nFlag = long.Parse(strFlag);
+			long nZoneFlag = long.Parse(strZoneFlag);
 
 			for (int i = 0; i < pMain.pZoneTable.Rows.Count; i++)
 			{
-				if ((nFlag & 1L << i) != 0)
+				if ((nZoneFlag & 1L << i) != 0)
 					strTooltip.Append(pMain.pZoneTable.Rows[i]["a_name"] + "\n");
 			}
 
-			if (nFlag != 0 && strTooltip.Length <= 0)
+			if (nZoneFlag != 0 && strTooltip.Length <= 0)
 				pMain.PrintLog("Item Editor > Item: " + nItemID + " Error: a_zone_flag out of range", Color.Red);
 
 			pToolTip = new ToolTip();
@@ -548,23 +568,25 @@ namespace LastChaos_ToolBox_2024.Editors
 			tbAllowedZoneFlag.Text = strFlag;
 #endif
 			/****************************************/
-			strFlag = pTempRow["a_flag"].ToString();
+			string strItemFlag = pTempRow["a_flag"].ToString();
 
-			btnItemFlag.Text = strFlag;
+			btnItemFlag.Text = strItemFlag;
 
 			strTooltip = new StringBuilder();
-			nFlag = long.Parse(strFlag);
+			long nItemFlag = long.Parse(strItemFlag);
 
 			for (int i = 0; i < Defs.ItemFlag.Length; i++)
 			{
-				if ((nFlag & 1L << i) != 0)
+				if ((nItemFlag & 1L << i) != 0)
 					strTooltip.Append(Defs.ItemFlag[i] + "\n");
 			}
 
-			if (nFlag != 0 && strTooltip.Length <= 0)
+			if (nItemFlag != 0 && strTooltip.Length <= 0)
 				pMain.PrintLog("Item Editor > Item: " + nItemID + " Error: a_flag out of range", Color.Red);
 
-			pToolTip = new ToolTip();
+            // TODO: Add check, for conflicts in flag config
+
+            pToolTip = new ToolTip();
 			pToolTip.SetToolTip(btnItemFlag, strTooltip.ToString());
 			pToolTips[btnItemFlag] = pToolTip;
 			/****************************************/
@@ -629,11 +651,54 @@ namespace LastChaos_ToolBox_2024.Editors
 			/****************************************/
 			for (int i = 1; i <= 6; i++)
 				((TextBox)this.Controls.Find("tbVariation" + i, true)[0]).Text = pTempRow["a_origin_variation" + i].ToString();
-			/****************************************/
-			for (int i = 0; i <= 4; i++)
-				((TextBox)this.Controls.Find("tbSet" + i, true)[0]).Text = pTempRow["a_set_" + i].ToString();
-			/****************************************/
-			for (int i = 0; i <= 4; i++)
+            /****************************************/
+            DataRow pItemTableRow;
+
+            if ((nItemFlag & 1L << 22 /*ITEM_FLAG_QUEST*/) != 0)
+			{
+				gbSetData.Visible = false;
+				gbQuestData.Visible = true;
+
+				if (strArrayZones != null)
+				{
+					int nZoneID = Convert.ToInt32(pTempRow["a_set_0"]);
+
+					if (nZoneID <= strArrayZones.Length)
+						cbSet0.SelectedIndex = nZoneID;
+					else
+						pMain.PrintLog("Item Editor > Item: " + nItemID + " Error: a_set_0 out of range", Color.Red);
+				}
+
+				for (int i = 1; i <= 4; i++)
+					((TextBox)this.Controls.Find("tbSet" + i, true)[0]).Text = pTempRow["a_set_" + i].ToString();
+			}
+			else
+			{
+				gbQuestData.Visible = false;
+				gbSetData.Visible = true;
+
+                for (int i = 0; i <= 4; i++)
+				{
+					int nSetItemID = Convert.ToInt32(pTempRow["a_set_" + i]);
+					string strItemID = nSetItemID.ToString();
+
+					if (nSetItemID != 0)
+					{
+						pItemTableRow = pMain.pItemTable.Select("a_index = " + nSetItemID).FirstOrDefault();
+
+						if (pItemTableRow != null)
+                            strItemID += " - " + pItemTableRow["a_name_" + pMain.pSettings.WorkLocale];
+						else
+							pMain.PrintLog("Item Editor > Item: " + nSetItemID + " Error: a_set_" + i + " not exist.", Color.Red);
+
+                        pItemTableRow = null;
+                    }
+
+					((Button)this.Controls.Find("btnSet" + i, true)[0]).Text = strItemID;
+                }
+            }
+            /****************************************/
+            for (int i = 0; i <= 4; i++)
 				((TextBox)this.Controls.Find("tbOption" + i, true)[0]).Text = pTempRow["a_num_" + i].ToString();
 
 			// Crafting
@@ -676,8 +741,6 @@ namespace LastChaos_ToolBox_2024.Editors
 			tbSkill2RequiredLevel.Text = pTempRow["a_need_sskill_level2"].ToString();
 #endif
 			/****************************************/
-			DataRow pItemTableRow;
-
 			for (int i = 0; i <= 9; i++)
 			{
 				int nRequiredItemID = Convert.ToInt32(pTempRow["a_need_item" + i]);
@@ -691,14 +754,14 @@ namespace LastChaos_ToolBox_2024.Editors
 						strRequiredItemID += " - " + pItemTableRow["a_name_" + pMain.pSettings.WorkLocale];
 					else
 						pMain.PrintLog("Item Editor > Item: " + nItemID + " Error: a_need_item" + i + " not exist.", Color.Red);
-				}
+
+                    pItemTableRow = null;
+                }
 
 				((Button)this.Controls.Find("btnItem" + i + "Required", true)[0]).Text = strRequiredItemID;
 
 				((TextBox)this.Controls.Find("tbItem" + i + "RequiredAmount", true)[0]).Text = pTempRow["a_need_item_count" + i].ToString();
 			}
-
-			pItemTableRow = null;
 			/****************************************/
 			DataRow pRareOptionTableRow;
 
@@ -1011,13 +1074,18 @@ namespace LastChaos_ToolBox_2024.Editors
 			}
 		}
 
-		private void tbGrade_TextChanged(object sender, EventArgs e)
+		private void cbGrade_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			if (bUserAction)
 			{
-				pTempRow["a_grade"] = tbGrade.Text;
+				int nType = cbGrade.SelectedIndex;
 
-				bUnsavedChanges = true;
+				if (nType != -1)
+				{
+					pTempRow["a_grade"] = nType.ToString();
+
+					bUnsavedChanges = true;
+				}
 			}
 		}
 
@@ -1059,11 +1127,11 @@ namespace LastChaos_ToolBox_2024.Editors
 
 		private void cbCastleType_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			int nType = cbTypeSelector.SelectedIndex;
-
-			if (nType != -1)
+			if (bUserAction)
 			{
-				if (bUserAction)
+				int nType = cbTypeSelector.SelectedIndex;
+
+				if (nType != -1)
 				{
 					pTempRow["a_castle_war"] = nType;
 
@@ -1156,7 +1224,8 @@ namespace LastChaos_ToolBox_2024.Editors
 				if (pFlagSelector.ShowDialog() != DialogResult.OK)
 					return;
 
-				string strFlag = pFlagSelector.ReturnValues.ToString();
+				long lFlag = pFlagSelector.ReturnValues;
+                string strFlag = lFlag.ToString();
 
 				btnItemFlag.Text = strFlag;
 
@@ -1169,7 +1238,54 @@ namespace LastChaos_ToolBox_2024.Editors
 						strTooltip.Append(Defs.ItemFlag[i] + "\n");
 				}
 
-				pToolTips[btnItemFlag].SetToolTip(btnItemFlag, strTooltip.ToString());
+                // TODO: Add check, for conflicts in flag config
+
+                if ((lFlag & 1L << 22 /*ITEM_FLAG_QUEST*/) != 0)
+                {
+                    gbSetData.Visible = false;
+                    gbQuestData.Visible = true;
+
+                    if (strArrayZones != null)
+                    {
+                        int nZoneID = Convert.ToInt32(pTempRow["a_set_0"]);
+
+                        if (nZoneID <= strArrayZones.Length)
+                            cbSet0.SelectedIndex = nZoneID;
+                        else
+                            pMain.PrintLog("Item Editor > Item: " + pTempRow["a_index"].ToString() + " Error: a_set_0 out of range", Color.Red);
+                    }
+
+                    for (int i = 1; i <= 4; i++)
+                        ((TextBox)this.Controls.Find("tbSet" + i, true)[0]).Text = pTempRow["a_set_" + i].ToString();
+                }
+                else
+                {
+                    gbQuestData.Visible = false;
+                    gbSetData.Visible = true;
+                    DataRow pItemTableRow;
+
+                    for (int i = 0; i <= 4; i++)
+                    {
+                        int nSetItemID = Convert.ToInt32(pTempRow["a_set_" + i]);
+                        string strItemID = nSetItemID.ToString();
+
+                        if (nSetItemID != 0)
+                        {
+                            pItemTableRow = pMain.pItemTable.Select("a_index = " + nSetItemID).FirstOrDefault();
+
+                            if (pItemTableRow != null)
+                                strItemID += " - " + pItemTableRow["a_name_" + pMain.pSettings.WorkLocale];
+                            else
+                                pMain.PrintLog("Item Editor > Item: " + nSetItemID + " Error: a_set_" + i + " not exist.", Color.Red);
+
+                            pItemTableRow = null;
+                        }
+
+                        ((Button)this.Controls.Find("btnSet" + i, true)[0]).Text = strItemID;
+                    }
+                }
+
+                pToolTips[btnItemFlag].SetToolTip(btnItemFlag, strTooltip.ToString());
 
 				pTempRow["a_flag"] = strFlag;
 
@@ -1207,21 +1323,31 @@ namespace LastChaos_ToolBox_2024.Editors
 
 		private void cbSubTypeSelector_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			if (bUserAction && cbTypeSelector.SelectedIndex != -1)
+			if (bUserAction)
 			{
-				pTempRow["a_subtype_idx"] = cbSubTypeSelector.SelectedIndex.ToString();
+				int nType = cbSubTypeSelector.SelectedIndex;
 
-				bUnsavedChanges = true;
+				if (nType != -1)
+				{
+					pTempRow["a_subtype_idx"] = nType.ToString();
+
+					bUnsavedChanges = true;
+				}
 			}
 		}
 
 		private void cbWearingPositionSelector_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			if (bUserAction && cbWearingPositionSelector.SelectedIndex != -1)
+			if (bUserAction)
 			{
-				pTempRow["a_wearing"] = cbWearingPositionSelector.SelectedIndex.ToString();
+				int nType = cbWearingPositionSelector.SelectedIndex;
 
-				bUnsavedChanges = true;
+				if (nType != -1)
+				{
+					pTempRow["a_wearing"] = nType.ToString();
+
+					bUnsavedChanges = true;
+				}
 			}
 		}
 
@@ -1255,11 +1381,16 @@ namespace LastChaos_ToolBox_2024.Editors
 
 		private void cbRvRGradeSelector_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			if (bUserAction && cbRvRGradeSelector.SelectedIndex != -1)
+			if (bUserAction)
 			{
-				pTempRow["a_rvr_grade"] = cbRvRGradeSelector.SelectedIndex.ToString();
+				int nType = cbRvRGradeSelector.SelectedIndex;
 
-				bUnsavedChanges = true;
+				if (nType != -1)
+				{
+					pTempRow["a_rvr_grade"] = nType.ToString();
+
+					bUnsavedChanges = true;
+				}
 			}
 		}
 
@@ -1310,18 +1441,41 @@ namespace LastChaos_ToolBox_2024.Editors
 		private void tbVariation5_TextChanged(object sender, EventArgs e) { ChangeVariationAction((TextBox)sender, 5); }
 		private void tbVariation6_TextChanged(object sender, EventArgs e) { ChangeVariationAction((TextBox)sender, 6); }
 		/****************************************/
-		private void ChangeSetAction(TextBox cTextBox, int nNumber)
+		private void cbQuestZoneID_SelectedIndexChanged(object sender, EventArgs e)
 		{
+
 			if (bUserAction)
 			{
-				pTempRow["a_set_" + nNumber] = cTextBox.Text;
+				int nType = cbSet0.SelectedIndex;
 
-				bUnsavedChanges = true;
+				if (nType != -1)
+				{
+					pTempRow["a_set_0"] = nType.ToString();
+
+					bUnsavedChanges = true;
+				}
 			}
 		}
 
-		private void tbSet0_TextChanged(object sender, EventArgs e) { ChangeSetAction((TextBox)sender, 0); }
-		private void tbSet1_TextChanged(object sender, EventArgs e) { ChangeSetAction((TextBox)sender, 1); }
+		// TODO: Completas estas funciones
+		private void btnSet0_Click(object sender, EventArgs e){}
+        private void btnSet1_Click(object sender, EventArgs e){}
+        private void btnSet2_Click(object sender, EventArgs e){}
+        private void btnSet3_Click(object sender, EventArgs e){}
+        private void btnSet4_Click(object sender, EventArgs e){}
+		/// ///////////////////////////////////////////////////////
+
+        private void ChangeSetAction(TextBox cTextBox, int nNumber)
+        {
+            if (bUserAction)
+            {
+                pTempRow["a_set_" + nNumber] = cTextBox.Text;
+
+                bUnsavedChanges = true;
+            }
+        }
+
+        private void tbSet1_TextChanged(object sender, EventArgs e) { ChangeSetAction((TextBox)sender, 1); }
 		private void tbSet2_TextChanged(object sender, EventArgs e) { ChangeSetAction((TextBox)sender, 2); }
 		private void tbSet3_TextChanged(object sender, EventArgs e) { ChangeSetAction((TextBox)sender, 3); }
 		private void tbSet4_TextChanged(object sender, EventArgs e) { ChangeSetAction((TextBox)sender, 4); }
@@ -1506,40 +1660,40 @@ namespace LastChaos_ToolBox_2024.Editors
 		{
 			if (bUserAction)
 			{
-                string strRareOptionIDColumn = "a_rare_index_" + nNumber;
+				string strRareOptionIDColumn = "a_rare_index_" + nNumber;
 
-                ItemPicker pItemSelector = new ItemPicker(pMain, this, Convert.ToInt32(pTempRow[strRareOptionIDColumn]));
+				ItemPicker pItemSelector = new ItemPicker(pMain, this, Convert.ToInt32(pTempRow[strRareOptionIDColumn]));
 
-                RareOptionPicker pRareOptionSelector = new RareOptionPicker(pMain, this, 512);
+				RareOptionPicker pRareOptionSelector = new RareOptionPicker(pMain, this, 512);
 
-                if (pRareOptionSelector.ShowDialog() != DialogResult.OK)
-                    return;
+				if (pRareOptionSelector.ShowDialog() != DialogResult.OK)
+					return;
 
-                int iRareOptionID = pRareOptionSelector.ReturnValues;
+				int iRareOptionID = pRareOptionSelector.ReturnValues;
 				string strRareOptionName = iRareOptionID.ToString();
 
 				if (iRareOptionID != -1)
 				{
-                    DataRow pRareOptionTableRow = pMain.pRareOptionTable.Select("a_index = " + iRareOptionID).FirstOrDefault();
+					DataRow pRareOptionTableRow = pMain.pRareOptionTable.Select("a_index = " + iRareOptionID).FirstOrDefault();
 
-                    strRareOptionName += " - " + pRareOptionTableRow["a_prefix_" + pMain.pSettings.WorkLocale];
+					strRareOptionName += " - " + pRareOptionTableRow["a_prefix_" + pMain.pSettings.WorkLocale];
 
-                    pRareOptionTableRow = null;
-                }
+					pRareOptionTableRow = null;
+				}
 
-                ((Button)this.Controls.Find("btnRareIndex" + nNumber, true)[0]).Text = strRareOptionName;
+				((Button)this.Controls.Find("btnRareIndex" + nNumber, true)[0]).Text = strRareOptionName;
 
-                ((TextBox)this.Controls.Find("tbRareProb" + nNumber, true)[0]).Focus();
+				((TextBox)this.Controls.Find("tbRareProb" + nNumber, true)[0]).Focus();
 
-                pTempRow[strRareOptionIDColumn] = iRareOptionID.ToString();
+				pTempRow[strRareOptionIDColumn] = iRareOptionID.ToString();
 
-                bUnsavedChanges = true;
-            }
-        }
+				bUnsavedChanges = true;
+			}
+		}
 
 		private void btnRareIndex0_Click(object sender, EventArgs e) { ChangeRareOptionAction(0); }
 		private void btnRareIndex1_Click(object sender, EventArgs e) { ChangeRareOptionAction(1); }
-        private void btnRareIndex2_Click(object sender, EventArgs e) { ChangeRareOptionAction(2); }
+		private void btnRareIndex2_Click(object sender, EventArgs e) { ChangeRareOptionAction(2); }
 		private void btnRareIndex3_Click(object sender, EventArgs e) { ChangeRareOptionAction(3); }
 		private void btnRareIndex4_Click(object sender, EventArgs e) { ChangeRareOptionAction(4); }
 		private void btnRareIndex5_Click(object sender, EventArgs e) { ChangeRareOptionAction(5); }
@@ -1549,7 +1703,7 @@ namespace LastChaos_ToolBox_2024.Editors
 		private void btnRareIndex9_Click(object sender, EventArgs e) { ChangeRareOptionAction(9); }
 
 
-        private void ChangeRareProbAction(TextBox cTextBox, int nNumber)
+		private void ChangeRareProbAction(TextBox cTextBox, int nNumber)
 		{
 			if (bUserAction)
 			{
@@ -1589,8 +1743,8 @@ namespace LastChaos_ToolBox_2024.Editors
 					pItemTableRow[column.ColumnName] = pTempRow[column.ColumnName];
 				}
 
-                // TODO: cambiar bUnsavedChanges a false si la operacion es exitosa
-            }
-        }
-	}
+				// TODO: cambiar bUnsavedChanges a false si la operacion es exitosa
+			}
+		}
+    }
 }
