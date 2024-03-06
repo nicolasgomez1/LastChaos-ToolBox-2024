@@ -63,6 +63,7 @@ namespace LastChaos_ToolBox_2024
 			Monitor.Start();
 #endif
 			LoadSettings();
+
 			ConnectToDatabase();
 		}
 
@@ -73,6 +74,40 @@ namespace LastChaos_ToolBox_2024
 
 		private void ReloadSettings_Click(object sender, EventArgs e) { LoadSettings(); }
 
+		private void ClearGlobalTables()
+		{
+            // TODO: Add dispose to all global tables
+            if (pItemTable != null)
+            {
+                pItemTable.Dispose();
+                pItemTable = null;
+            }
+
+            if (pZoneTable != null)
+            {
+                pZoneTable.Dispose();
+                pItemTable = null;
+            }
+
+            if (pSkillTable != null)
+            {
+                pSkillTable.Dispose();
+                pSkillTable = null;
+            }
+
+            if (pSkillLevelTable != null)
+            {
+                pSkillLevelTable.Dispose();
+                pSkillLevelTable = null;
+            }
+
+            if (pRareOptionTable != null)
+            {
+                pRareOptionTable.Dispose();
+                pRareOptionTable = null;
+            }
+        }
+
 		private void Reconnect_Click(object sender, EventArgs e)
 		{
 			if (mysqlConn.State == ConnectionState.Open)
@@ -81,37 +116,6 @@ namespace LastChaos_ToolBox_2024
 
 				mysqlConn.Close();
 			}
-
-			// TODO: Add dispose to all global tables
-			if (pItemTable != null)
-			{
-				pItemTable.Dispose();
-				pItemTable = null;
-			}
-
-			if (pZoneTable != null)
-			{
-				pZoneTable.Dispose();
-				pItemTable = null;
-			}
-
-			if (pSkillTable != null)
-			{
-				pSkillTable.Dispose();
-				pSkillTable = null;
-			}
-
-			if (pSkillLevelTable != null)
-			{
-				pSkillLevelTable.Dispose();
-				pSkillLevelTable = null;
-			}
-
-            if (pRareOptionTable != null)
-            {
-                pRareOptionTable.Dispose();
-                pRareOptionTable = null;
-            }
 
             // NOTE: Posible Bug: User can reload when some editor is opened.
             ConnectToDatabase();
@@ -343,7 +347,9 @@ namespace LastChaos_ToolBox_2024
 		{
 			try
 			{
-				string strConnect = $"SERVER={pSettings.DBHost};DATABASE={pSettings.DBData};UID={pSettings.DBUsername};PASSWORD={pSettings.DBPassword};CHARSET={pSettings.DBCharset}";
+                ClearGlobalTables();
+
+                string strConnect = $"SERVER={pSettings.DBHost};DATABASE={pSettings.DBData};UID={pSettings.DBUsername};PASSWORD={pSettings.DBPassword};CHARSET={pSettings.DBCharset}";
 
 				mysqlConn = new MySqlConnection(strConnect);
 

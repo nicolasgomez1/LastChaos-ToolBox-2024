@@ -436,7 +436,7 @@ namespace LastChaos_ToolBox_2024.Editors
             this.groupBox3.Size = new System.Drawing.Size(632, 172);
             this.groupBox3.TabIndex = 1039;
             this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Rare Options Data";
+            this.groupBox3.Text = "Origin / Rare Options Data";
             // 
             // lRareProb9
             // 
@@ -461,6 +461,7 @@ namespace LastChaos_ToolBox_2024.Editors
             this.btnRareIndex9.Size = new System.Drawing.Size(120, 23);
             this.btnRareIndex9.TabIndex = 1132;
             this.btnRareIndex9.UseVisualStyleBackColor = true;
+            this.btnRareIndex9.Click += new System.EventHandler(this.btnRareIndex9_Click);
             // 
             // label80
             // 
@@ -494,6 +495,7 @@ namespace LastChaos_ToolBox_2024.Editors
             this.tbRareProb9.Size = new System.Drawing.Size(40, 20);
             this.tbRareProb9.TabIndex = 1135;
             this.tbRareProb9.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.tbRareProb9.TextChanged += new System.EventHandler(this.tbRareProb9_TextChanged);
             // 
             // lRareProb5
             // 
@@ -518,6 +520,7 @@ namespace LastChaos_ToolBox_2024.Editors
             this.btnRareIndex5.Size = new System.Drawing.Size(120, 23);
             this.btnRareIndex5.TabIndex = 1127;
             this.btnRareIndex5.UseVisualStyleBackColor = true;
+            this.btnRareIndex5.Click += new System.EventHandler(this.btnRareIndex5_Click);
             // 
             // label83
             // 
@@ -551,6 +554,7 @@ namespace LastChaos_ToolBox_2024.Editors
             this.tbRareProb5.Size = new System.Drawing.Size(40, 20);
             this.tbRareProb5.TabIndex = 1130;
             this.tbRareProb5.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.tbRareProb5.TextChanged += new System.EventHandler(this.tbRareProb5_TextChanged);
             // 
             // lRareProb6
             // 
@@ -575,6 +579,7 @@ namespace LastChaos_ToolBox_2024.Editors
             this.btnRareIndex6.Size = new System.Drawing.Size(120, 23);
             this.btnRareIndex6.TabIndex = 1122;
             this.btnRareIndex6.UseVisualStyleBackColor = true;
+            this.btnRareIndex6.Click += new System.EventHandler(this.btnRareIndex6_Click);
             // 
             // label86
             // 
@@ -608,6 +613,7 @@ namespace LastChaos_ToolBox_2024.Editors
             this.tbRareProb6.Size = new System.Drawing.Size(40, 20);
             this.tbRareProb6.TabIndex = 1125;
             this.tbRareProb6.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.tbRareProb6.TextChanged += new System.EventHandler(this.tbRareProb6_TextChanged);
             // 
             // lRareProb7
             // 
@@ -632,6 +638,7 @@ namespace LastChaos_ToolBox_2024.Editors
             this.btnRareIndex7.Size = new System.Drawing.Size(120, 23);
             this.btnRareIndex7.TabIndex = 1117;
             this.btnRareIndex7.UseVisualStyleBackColor = true;
+            this.btnRareIndex7.Click += new System.EventHandler(this.btnRareIndex7_Click);
             // 
             // label89
             // 
@@ -665,6 +672,7 @@ namespace LastChaos_ToolBox_2024.Editors
             this.tbRareProb7.Size = new System.Drawing.Size(40, 20);
             this.tbRareProb7.TabIndex = 1120;
             this.tbRareProb7.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.tbRareProb7.TextChanged += new System.EventHandler(this.tbRareProb7_TextChanged);
             // 
             // lRareProb8
             // 
@@ -689,6 +697,7 @@ namespace LastChaos_ToolBox_2024.Editors
             this.btnRareIndex8.Size = new System.Drawing.Size(120, 23);
             this.btnRareIndex8.TabIndex = 1111;
             this.btnRareIndex8.UseVisualStyleBackColor = true;
+            this.btnRareIndex8.Click += new System.EventHandler(this.btnRareIndex8_Click);
             // 
             // label92
             // 
@@ -722,6 +731,7 @@ namespace LastChaos_ToolBox_2024.Editors
             this.tbRareProb8.Size = new System.Drawing.Size(40, 20);
             this.tbRareProb8.TabIndex = 1115;
             this.tbRareProb8.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.tbRareProb8.TextChanged += new System.EventHandler(this.tbRareProb8_TextChanged);
             // 
             // lRareProb4
             // 
@@ -746,6 +756,7 @@ namespace LastChaos_ToolBox_2024.Editors
             this.btnRareIndex4.Size = new System.Drawing.Size(120, 23);
             this.btnRareIndex4.TabIndex = 1107;
             this.btnRareIndex4.UseVisualStyleBackColor = true;
+            this.btnRareIndex4.Click += new System.EventHandler(this.btnRareIndex4_Click);
             // 
             // label77
             // 
@@ -779,6 +790,7 @@ namespace LastChaos_ToolBox_2024.Editors
             this.tbRareProb4.Size = new System.Drawing.Size(40, 20);
             this.tbRareProb4.TabIndex = 1110;
             this.tbRareProb4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.tbRareProb4.TextChanged += new System.EventHandler(this.tbRareProb4_TextChanged);
             // 
             // lRareProb0
             // 
@@ -803,6 +815,7 @@ namespace LastChaos_ToolBox_2024.Editors
             this.btnRareIndex0.Size = new System.Drawing.Size(120, 23);
             this.btnRareIndex0.TabIndex = 1102;
             this.btnRareIndex0.UseVisualStyleBackColor = true;
+            this.btnRareIndex0.Click += new System.EventHandler(this.btnRareIndex0_Click);
             // 
             // label71
             // 
@@ -836,6 +849,7 @@ namespace LastChaos_ToolBox_2024.Editors
             this.tbRareProb0.Size = new System.Drawing.Size(40, 20);
             this.tbRareProb0.TabIndex = 1105;
             this.tbRareProb0.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.tbRareProb0.TextChanged += new System.EventHandler(this.tbRareProb0_TextChanged);
             // 
             // lRareProb1
             // 
@@ -860,6 +874,7 @@ namespace LastChaos_ToolBox_2024.Editors
             this.btnRareIndex1.Size = new System.Drawing.Size(120, 23);
             this.btnRareIndex1.TabIndex = 1097;
             this.btnRareIndex1.UseVisualStyleBackColor = true;
+            this.btnRareIndex1.Click += new System.EventHandler(this.btnRareIndex1_Click);
             // 
             // label74
             // 
@@ -893,6 +908,7 @@ namespace LastChaos_ToolBox_2024.Editors
             this.tbRareProb1.Size = new System.Drawing.Size(40, 20);
             this.tbRareProb1.TabIndex = 1100;
             this.tbRareProb1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.tbRareProb1.TextChanged += new System.EventHandler(this.tbRareProb1_TextChanged);
             // 
             // lRareProb2
             // 
@@ -917,6 +933,7 @@ namespace LastChaos_ToolBox_2024.Editors
             this.btnRareIndex2.Size = new System.Drawing.Size(120, 23);
             this.btnRareIndex2.TabIndex = 1092;
             this.btnRareIndex2.UseVisualStyleBackColor = true;
+            this.btnRareIndex2.Click += new System.EventHandler(this.btnRareIndex2_Click);
             // 
             // label68
             // 
@@ -950,6 +967,7 @@ namespace LastChaos_ToolBox_2024.Editors
             this.tbRareProb2.Size = new System.Drawing.Size(40, 20);
             this.tbRareProb2.TabIndex = 1095;
             this.tbRareProb2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.tbRareProb2.TextChanged += new System.EventHandler(this.tbRareProb2_TextChanged);
             // 
             // lRareProb3
             // 
@@ -974,6 +992,7 @@ namespace LastChaos_ToolBox_2024.Editors
             this.btnRareIndex3.Size = new System.Drawing.Size(120, 23);
             this.btnRareIndex3.TabIndex = 1087;
             this.btnRareIndex3.UseVisualStyleBackColor = true;
+            this.btnRareIndex3.Click += new System.EventHandler(this.btnRareIndex3_Click);
             // 
             // label64
             // 
@@ -1007,6 +1026,7 @@ namespace LastChaos_ToolBox_2024.Editors
             this.tbRareProb3.Size = new System.Drawing.Size(40, 20);
             this.tbRareProb3.TabIndex = 1090;
             this.tbRareProb3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.tbRareProb3.TextChanged += new System.EventHandler(this.tbRareProb3_TextChanged);
             // 
             // tbAllowedZoneFlag
             // 
@@ -1783,6 +1803,7 @@ namespace LastChaos_ToolBox_2024.Editors
             // cbRvRGradeSelector
             // 
             this.cbRvRGradeSelector.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+            this.cbRvRGradeSelector.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbRvRGradeSelector.Enabled = false;
             this.cbRvRGradeSelector.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
             this.cbRvRGradeSelector.FormattingEnabled = true;
@@ -1806,6 +1827,7 @@ namespace LastChaos_ToolBox_2024.Editors
             // cbRvRValueSelector
             // 
             this.cbRvRValueSelector.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+            this.cbRvRValueSelector.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbRvRValueSelector.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
             this.cbRvRValueSelector.FormattingEnabled = true;
             this.cbRvRValueSelector.Location = new System.Drawing.Point(48, 19);
@@ -2312,6 +2334,7 @@ namespace LastChaos_ToolBox_2024.Editors
             // cbCastleType
             // 
             this.cbCastleType.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+            this.cbCastleType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbCastleType.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
             this.cbCastleType.FormattingEnabled = true;
             this.cbCastleType.Location = new System.Drawing.Point(623, 30);
@@ -2520,6 +2543,7 @@ namespace LastChaos_ToolBox_2024.Editors
             // cbWearingPositionSelector
             // 
             this.cbWearingPositionSelector.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+            this.cbWearingPositionSelector.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbWearingPositionSelector.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
             this.cbWearingPositionSelector.FormattingEnabled = true;
             this.cbWearingPositionSelector.Location = new System.Drawing.Point(824, 30);
@@ -2542,6 +2566,7 @@ namespace LastChaos_ToolBox_2024.Editors
             // cbSubTypeSelector
             // 
             this.cbSubTypeSelector.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+            this.cbSubTypeSelector.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbSubTypeSelector.Enabled = false;
             this.cbSubTypeSelector.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
             this.cbSubTypeSelector.FormattingEnabled = true;
@@ -2565,6 +2590,7 @@ namespace LastChaos_ToolBox_2024.Editors
             // cbTypeSelector
             // 
             this.cbTypeSelector.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+            this.cbTypeSelector.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbTypeSelector.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
             this.cbTypeSelector.FormattingEnabled = true;
             this.cbTypeSelector.Location = new System.Drawing.Point(305, 56);
@@ -2671,6 +2697,7 @@ namespace LastChaos_ToolBox_2024.Editors
             // cbNationSelector
             // 
             this.cbNationSelector.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+            this.cbNationSelector.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbNationSelector.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
             this.cbNationSelector.FormattingEnabled = true;
             this.cbNationSelector.Location = new System.Drawing.Point(6, 13);

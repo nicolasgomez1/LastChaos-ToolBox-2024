@@ -99,6 +99,7 @@
             // cbLevelSelector
             // 
             this.cbLevelSelector.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+            this.cbLevelSelector.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbLevelSelector.Enabled = false;
             this.cbLevelSelector.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
             this.cbLevelSelector.FormattingEnabled = true;

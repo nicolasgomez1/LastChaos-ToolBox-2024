@@ -185,8 +185,8 @@ namespace LastChaos_ToolBox_2024.Editors
 					return pMain.QuerySelect(pMain.pSettings.DBCharset, $"SELECT a_index, {string.Join(",", listQueryCompose)} FROM {pMain.pSettings.DBData}.t_skill ORDER BY a_index;");
 				});
 
-                // Reset vals & Populate pSkillLevelTable
-                bRequestNeeded = false;
+				// Reset vals & Populate pSkillLevelTable
+				bRequestNeeded = false;
 				listQueryCompose.Clear();
 
 				listQueryCompose = new List<string> { "a_level", "a_dummypower" };
@@ -216,37 +216,37 @@ namespace LastChaos_ToolBox_2024.Editors
 			}
 		}
 
-        private async Task LoadRareOptionDataAsync()
-        {
-            bool bRequestNeeded = false;
+		private async Task LoadRareOptionDataAsync()
+		{
+			bool bRequestNeeded = false;
 
-            List<string> listQueryCompose = new List<string> { "a_prefix_" + pMain.pSettings.WorkLocale };
+			List<string> listQueryCompose = new List<string> { "a_prefix_" + pMain.pSettings.WorkLocale };
 
-            if (pMain.pRareOptionTable == null)
-            {
-                bRequestNeeded = true;
-            }
-            else
-            {
-                foreach (var column in listQueryCompose.ToList())
-                {
-                    if (!pMain.pRareOptionTable.Columns.Contains(column))
-                        bRequestNeeded = true;
-                    else
-                        listQueryCompose.Remove(column);
-                }
-            }
+			if (pMain.pRareOptionTable == null)
+			{
+				bRequestNeeded = true;
+			}
+			else
+			{
+				foreach (var column in listQueryCompose.ToList())
+				{
+					if (!pMain.pRareOptionTable.Columns.Contains(column))
+						bRequestNeeded = true;
+					else
+						listQueryCompose.Remove(column);
+				}
+			}
 
-            if (bRequestNeeded)
-            {
-                pMain.pRareOptionTable = await Task.Run(() =>
-                {
-                    return pMain.QuerySelect(pMain.pSettings.DBCharset, $"SELECT a_index, {string.Join(",", listQueryCompose)} FROM {pMain.pSettings.DBData}.t_rareoption ORDER BY a_index;");
-                });
-            }
-        }
+			if (bRequestNeeded)
+			{
+				pMain.pRareOptionTable = await Task.Run(() =>
+				{
+					return pMain.QuerySelect(pMain.pSettings.DBCharset, $"SELECT a_index, {string.Join(",", listQueryCompose)} FROM {pMain.pSettings.DBData}.t_rareoption ORDER BY a_index;");
+				});
+			}
+		}
 
-        private async void ItemEditor_LoadAsync(object sender, EventArgs e)
+		private async void ItemEditor_LoadAsync(object sender, EventArgs e)
 		{
 			ProgressDialog pProgressDialog = new ProgressDialog(this, "Loading Data, Please Wait...");
 
@@ -316,8 +316,8 @@ namespace LastChaos_ToolBox_2024.Editors
 				LoadItemDataAsync(),    // Populate pItemTable
 				LoadZoneDataAsync(),    // Populate pZoneTable
 				LoadSkillDataAsync(),    // Populate pSkillTable & pSkillLevelTable
-                LoadRareOptionDataAsync()	// Populate pRateoptionTable
-            );
+				LoadRareOptionDataAsync()	// Populate pRateoptionTable
+			);
 #if DEBUG
 			stopwatch.Stop();
 			pMain.PrintLog($"Data load took: {stopwatch.ElapsedMilliseconds} ms", Color.CornflowerBlue);
@@ -371,7 +371,7 @@ namespace LastChaos_ToolBox_2024.Editors
 
 				pToolTips = null;
 
-                if (pRenderDialog != null)
+				if (pRenderDialog != null)
 					pRenderDialog.Close();
 
 				pTempRow = null;
@@ -406,7 +406,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			foreach (var toolTip in pToolTips.Values)
 				toolTip.Dispose();
 			/****************************************/
-			// Replicate struct in temp row
+			// Replicate struct in temp row val
 			pTempRow = pMain.pItemTable.NewRow();
 			// Copy data from main table to temp one
 			pTempRow.ItemArray = (object[])pMain.pItemTable.Select("a_index = " + nItemID)[0].ItemArray.Clone();
@@ -639,10 +639,18 @@ namespace LastChaos_ToolBox_2024.Editors
 			// Crafting
 			int iSkillNeededID = Convert.ToInt32(pTempRow["a_need_sskill"]);
 			string strSkillName = iSkillNeededID.ToString();
-			DataRow pSkillData = pMain.pSkillTable.Select("a_index = " + iSkillNeededID).FirstOrDefault();
 
 			if (iSkillNeededID != -1)
-				strSkillName = iSkillNeededID + " - " + pSkillData["a_name_" + pMain.pSettings.WorkLocale];
+			{
+				DataRow pSkillData = pMain.pSkillTable.Select("a_index = " + iSkillNeededID).FirstOrDefault();
+
+				if (pSkillData != null)
+					strSkillName += " - " + pSkillData["a_name_" + pMain.pSettings.WorkLocale];
+				else
+					pMain.PrintLog("Item Editor > Item: " + nItemID + " Error: a_need_sskill " + iSkillNeededID + " not exist.", Color.Red);
+
+				pSkillData = null;
+			}
 
 			btnSkill1RequiredID.Text = strSkillName;
 			tbSkill1RequiredLevel.Text = pTempRow["a_need_sskill_level"].ToString();
@@ -653,13 +661,20 @@ namespace LastChaos_ToolBox_2024.Editors
 			pSkillData = pMain.pSkillTable.Select("a_index = " + iSkillNeededID).FirstOrDefault();
 
 			if (iSkillNeededID != -1)
-				strSkillName = iSkillNeededID + " - " + pSkillData["a_name_" + pMain.pSettings.WorkLocale];
+			{
+				DataRow pSkillData = pMain.pSkillTable.Select("a_index = " + iSkillNeededID).FirstOrDefault();
+
+				if (pSkillData != null)
+					strSkillName += " - " + pSkillData["a_name_" + pMain.pSettings.WorkLocale];
+				else
+					pMain.PrintLog("Item Editor > Item: " + nItemID + " Error: a_need_sskill2 " + iSkillNeededID + " not exist.", Color.Red);
+
+				pSkillData = null;
+			}
 
 			btnSkill2RequiredID.Text = strSkillName;
 			tbSkill2RequiredLevel.Text = pTempRow["a_need_sskill_level2"].ToString();
 #endif
-
-			pSkillData = null;
 			/****************************************/
 			DataRow pItemTableRow;
 
@@ -672,7 +687,10 @@ namespace LastChaos_ToolBox_2024.Editors
 				{
 					pItemTableRow = pMain.pItemTable.Select("a_index = " + nRequiredItemID).FirstOrDefault();
 
-					strRequiredItemID = nRequiredItemID + " - " + pItemTableRow["a_name_" + pMain.pSettings.WorkLocale];
+					if (pItemTableRow != null)
+						strRequiredItemID += " - " + pItemTableRow["a_name_" + pMain.pSettings.WorkLocale];
+					else
+						pMain.PrintLog("Item Editor > Item: " + nItemID + " Error: a_need_item" + i + " not exist.", Color.Red);
 				}
 
 				((Button)this.Controls.Find("btnItem" + i + "Required", true)[0]).Text = strRequiredItemID;
@@ -682,14 +700,32 @@ namespace LastChaos_ToolBox_2024.Editors
 
 			pItemTableRow = null;
 			/****************************************/
-			//	"a_need_item0", "a_need_item_count0"
+			DataRow pRareOptionTableRow;
+
 			for (int i = 0; i <= 9; i++)
 			{
+				int nRareOptionID = Convert.ToInt32(pTempRow["a_rare_index_" + i]);
+				string strRateOptionID = nRareOptionID.ToString();
+				int nRateOptionProb = Convert.ToInt32(pTempRow["a_rare_prob_" + i]);
 
-				btnRareIndex0.Text = "";
-				tbRareProb0.Text = "";
-				lRareProb0.Text = "-";
-            }
+				if (nRareOptionID != -1)
+				{
+					pRareOptionTableRow = pMain.pRareOptionTable.Select("a_index = " + nRareOptionID).FirstOrDefault();
+
+					if (pRareOptionTableRow != null)
+						strRateOptionID += " - " + pRareOptionTableRow["a_prefix_" + pMain.pSettings.WorkLocale];
+					else
+						pMain.PrintLog("Item Editor > Item: " + nItemID + " Error: a_rare_index_" + i + " not exist.", Color.Red);
+				}
+
+				((Button)this.Controls.Find("btnRareIndex" + i, true)[0]).Text = strRateOptionID;
+
+				((TextBox)this.Controls.Find("tbRareProb" + i, true)[0]).Text = nRateOptionProb.ToString();
+				
+				((Label)this.Controls.Find("lRareProb" + i, true)[0]).Text = ((nRateOptionProb * 100.0f) / 10000.0f) + "%";	// NOTE: I'm not sure about this calc. Ref: IdentifyRareOption
+			}
+
+			pRareOptionTableRow = null;
 			/****************************************/
 			bUserAction = true;
 
@@ -785,8 +821,8 @@ namespace LastChaos_ToolBox_2024.Editors
 		{
 			nSearchPosition = 0;
 
-            // TODO: Add dispose to all global tables
-            pMain.pItemTable.Dispose();
+			// TODO: Add dispose to all global tables
+			pMain.pItemTable.Dispose();
 			pMain.pItemTable = null;
 
 			pMain.pZoneTable.Dispose();
@@ -801,7 +837,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			pMain.pRareOptionTable.Dispose();
 			pMain.pRareOptionTable = null;
 
-            btnCopy.Enabled = false;
+			btnCopy.Enabled = false;
 			btnDelete.Enabled = false;
 
 			btnUpdate.Enabled = false;
@@ -1257,7 +1293,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			}
 		}
 		/****************************************/
-		private void VariationAction(TextBox cTextBox, int nNumber)
+		private void ChangeVariationAction(TextBox cTextBox, int nNumber)
 		{
 			if (bUserAction)
 			{
@@ -1267,14 +1303,14 @@ namespace LastChaos_ToolBox_2024.Editors
 			}
 		}
 
-		private void tbVariation1_TextChanged(object sender, EventArgs e) { VariationAction((TextBox)sender, 1); }
-		private void tbVariation2_TextChanged(object sender, EventArgs e) { VariationAction((TextBox)sender, 2); }
-		private void tbVariation3_TextChanged(object sender, EventArgs e) { VariationAction((TextBox)sender, 3); }
-		private void tbVariation4_TextChanged(object sender, EventArgs e) { VariationAction((TextBox)sender, 4); }
-		private void tbVariation5_TextChanged(object sender, EventArgs e) { VariationAction((TextBox)sender, 5); }
-		private void tbVariation6_TextChanged(object sender, EventArgs e) { VariationAction((TextBox)sender, 6); }
+		private void tbVariation1_TextChanged(object sender, EventArgs e) { ChangeVariationAction((TextBox)sender, 1); }
+		private void tbVariation2_TextChanged(object sender, EventArgs e) { ChangeVariationAction((TextBox)sender, 2); }
+		private void tbVariation3_TextChanged(object sender, EventArgs e) { ChangeVariationAction((TextBox)sender, 3); }
+		private void tbVariation4_TextChanged(object sender, EventArgs e) { ChangeVariationAction((TextBox)sender, 4); }
+		private void tbVariation5_TextChanged(object sender, EventArgs e) { ChangeVariationAction((TextBox)sender, 5); }
+		private void tbVariation6_TextChanged(object sender, EventArgs e) { ChangeVariationAction((TextBox)sender, 6); }
 		/****************************************/
-		private void SetAction(TextBox cTextBox, int nNumber)
+		private void ChangeSetAction(TextBox cTextBox, int nNumber)
 		{
 			if (bUserAction)
 			{
@@ -1284,13 +1320,13 @@ namespace LastChaos_ToolBox_2024.Editors
 			}
 		}
 
-		private void tbSet0_TextChanged(object sender, EventArgs e) { SetAction((TextBox)sender, 0); }
-		private void tbSet1_TextChanged(object sender, EventArgs e) { SetAction((TextBox)sender, 1); }
-		private void tbSet2_TextChanged(object sender, EventArgs e) { SetAction((TextBox)sender, 2); }
-		private void tbSet3_TextChanged(object sender, EventArgs e) { SetAction((TextBox)sender, 3); }
-		private void tbSet4_TextChanged(object sender, EventArgs e) { SetAction((TextBox)sender, 4); }
+		private void tbSet0_TextChanged(object sender, EventArgs e) { ChangeSetAction((TextBox)sender, 0); }
+		private void tbSet1_TextChanged(object sender, EventArgs e) { ChangeSetAction((TextBox)sender, 1); }
+		private void tbSet2_TextChanged(object sender, EventArgs e) { ChangeSetAction((TextBox)sender, 2); }
+		private void tbSet3_TextChanged(object sender, EventArgs e) { ChangeSetAction((TextBox)sender, 3); }
+		private void tbSet4_TextChanged(object sender, EventArgs e) { ChangeSetAction((TextBox)sender, 4); }
 		/****************************************/
-		private void OptionAction(TextBox cTextBox, int nNumber)
+		private void ChangeOptionAction(TextBox cTextBox, int nNumber)
 		{
 			if (bUserAction)
 			{
@@ -1300,11 +1336,11 @@ namespace LastChaos_ToolBox_2024.Editors
 			}
 		}
 
-		private void tbOption0_TextChanged(object sender, EventArgs e) { OptionAction((TextBox)sender, 0); }
-		private void tbOption1_TextChanged(object sender, EventArgs e) { OptionAction((TextBox)sender, 1); }
-		private void tbOption2_TextChanged(object sender, EventArgs e) { OptionAction((TextBox)sender, 2); }
-		private void tbOption3_TextChanged(object sender, EventArgs e) { OptionAction((TextBox)sender, 3); }
-		private void tbOption4_TextChanged(object sender, EventArgs e) { OptionAction((TextBox)sender, 4); }
+		private void tbOption0_TextChanged(object sender, EventArgs e) { ChangeOptionAction((TextBox)sender, 0); }
+		private void tbOption1_TextChanged(object sender, EventArgs e) { ChangeOptionAction((TextBox)sender, 1); }
+		private void tbOption2_TextChanged(object sender, EventArgs e) { ChangeOptionAction((TextBox)sender, 2); }
+		private void tbOption3_TextChanged(object sender, EventArgs e) { ChangeOptionAction((TextBox)sender, 3); }
+		private void tbOption4_TextChanged(object sender, EventArgs e) { ChangeOptionAction((TextBox)sender, 4); }
 		/****************************************/
 		private void btnSkill1RequiredID_Click(object sender, EventArgs e)
 		{
@@ -1326,7 +1362,7 @@ namespace LastChaos_ToolBox_2024.Editors
 				{
 					DataRow pSkillTableRow = pMain.pSkillTable.Select("a_index = " + iSkillNeededID).FirstOrDefault();
 
-					strSkillName = iSkillNeededID + " - " + pSkillTableRow["a_name_" + pMain.pSettings.WorkLocale];
+					strSkillName += " - " + pSkillTableRow["a_name_" + pMain.pSettings.WorkLocale];
 
 					pSkillTableRow = null;
 				}
@@ -1373,7 +1409,7 @@ namespace LastChaos_ToolBox_2024.Editors
 				{
 					DataRow pSkillTableRow = pMain.pSkillTable.Select("a_index = " + iSkillNeededID).FirstOrDefault();
 
-					strSkillName = iSkillNeededID + " - " + pSkillTableRow["a_name_" + pMain.pSettings.WorkLocale];
+					strSkillName += " - " + pSkillTableRow["a_name_" + pMain.pSettings.WorkLocale];
 
 					pSkillTableRow = null;
 				}
@@ -1401,7 +1437,7 @@ namespace LastChaos_ToolBox_2024.Editors
 #endif
 		}
 		/****************************************/
-		private void ItemRequiredAction(int nNumber)
+		private void ChangeItemRequiredAction(int nNumber)
 		{
 			if (bUserAction)
 			{
@@ -1419,7 +1455,7 @@ namespace LastChaos_ToolBox_2024.Editors
 				{
 					DataRow pItemTableRow = pMain.pItemTable.Select("a_index = " + iItemNeededID).FirstOrDefault();
 
-					strItemName = iItemNeededID + " - " + pItemTableRow["a_name_" + pMain.pSettings.WorkLocale];
+					strItemName += " - " + pItemTableRow["a_name_" + pMain.pSettings.WorkLocale];
 
 					pItemTableRow = null;
 				}
@@ -1434,18 +1470,18 @@ namespace LastChaos_ToolBox_2024.Editors
 			}
 		}
 
-		private void btnItem0Required_Click(object sender, EventArgs e) { ItemRequiredAction(0); }
-		private void btnItem1Required_Click(object sender, EventArgs e) { ItemRequiredAction(1); }
-		private void btnItem2Required_Click(object sender, EventArgs e) { ItemRequiredAction(2); }
-		private void btnItem3Required_Click(object sender, EventArgs e) { ItemRequiredAction(3); }
-		private void btnItem4Required_Click(object sender, EventArgs e) { ItemRequiredAction(4); }
-		private void btnItem5Required_Click(object sender, EventArgs e) { ItemRequiredAction(5); }
-		private void btnItem6Required_Click(object sender, EventArgs e) { ItemRequiredAction(6); }
-		private void btnItem7Required_Click(object sender, EventArgs e) { ItemRequiredAction(7); }
-		private void btnItem8Required_Click(object sender, EventArgs e) { ItemRequiredAction(8); }
-		private void btnItem9Required_Click(object sender, EventArgs e) { ItemRequiredAction(9); }
+		private void btnItem0Required_Click(object sender, EventArgs e) { ChangeItemRequiredAction(0); }
+		private void btnItem1Required_Click(object sender, EventArgs e) { ChangeItemRequiredAction(1); }
+		private void btnItem2Required_Click(object sender, EventArgs e) { ChangeItemRequiredAction(2); }
+		private void btnItem3Required_Click(object sender, EventArgs e) { ChangeItemRequiredAction(3); }
+		private void btnItem4Required_Click(object sender, EventArgs e) { ChangeItemRequiredAction(4); }
+		private void btnItem5Required_Click(object sender, EventArgs e) { ChangeItemRequiredAction(5); }
+		private void btnItem6Required_Click(object sender, EventArgs e) { ChangeItemRequiredAction(6); }
+		private void btnItem7Required_Click(object sender, EventArgs e) { ChangeItemRequiredAction(7); }
+		private void btnItem8Required_Click(object sender, EventArgs e) { ChangeItemRequiredAction(8); }
+		private void btnItem9Required_Click(object sender, EventArgs e) { ChangeItemRequiredAction(9); }
 
-		private void ItemAmountRequiredAction(TextBox cTextBox, int nNumber)
+		private void ChangeItemRequiredAmountAction(TextBox cTextBox, int nNumber)
 		{
 			if (bUserAction)
 			{
@@ -1455,16 +1491,88 @@ namespace LastChaos_ToolBox_2024.Editors
 			}
 		}
 
-		private void tbItem0RequiredAmount_TextChanged(object sender, EventArgs e) { ItemAmountRequiredAction((TextBox)sender, 0); }
-		private void tbItem1RequiredAmount_TextChanged(object sender, EventArgs e) { ItemAmountRequiredAction((TextBox)sender, 1); }
-		private void tbItem2RequiredAmount_TextChanged(object sender, EventArgs e) { ItemAmountRequiredAction((TextBox)sender, 2); }
-		private void tbItem3RequiredAmount_TextChanged(object sender, EventArgs e) { ItemAmountRequiredAction((TextBox)sender, 3); }
-		private void tbItem4RequiredAmount_TextChanged(object sender, EventArgs e) { ItemAmountRequiredAction((TextBox)sender, 4); }
-		private void tbItem5RequiredAmount_TextChanged(object sender, EventArgs e) { ItemAmountRequiredAction((TextBox)sender, 5); }
-		private void tbItem6RequiredAmount_TextChanged(object sender, EventArgs e) { ItemAmountRequiredAction((TextBox)sender, 6); }
-		private void tbItem7RequiredAmount_TextChanged(object sender, EventArgs e) { ItemAmountRequiredAction((TextBox)sender, 7); }
-		private void tbItem8RequiredAmount_TextChanged(object sender, EventArgs e) { ItemAmountRequiredAction((TextBox)sender, 8); }
-		private void tbItem9RequiredAmount_TextChanged(object sender, EventArgs e) { ItemAmountRequiredAction((TextBox)sender, 9); }
+		private void tbItem0RequiredAmount_TextChanged(object sender, EventArgs e) { ChangeItemRequiredAmountAction((TextBox)sender, 0); }
+		private void tbItem1RequiredAmount_TextChanged(object sender, EventArgs e) { ChangeItemRequiredAmountAction((TextBox)sender, 1); }
+		private void tbItem2RequiredAmount_TextChanged(object sender, EventArgs e) { ChangeItemRequiredAmountAction((TextBox)sender, 2); }
+		private void tbItem3RequiredAmount_TextChanged(object sender, EventArgs e) { ChangeItemRequiredAmountAction((TextBox)sender, 3); }
+		private void tbItem4RequiredAmount_TextChanged(object sender, EventArgs e) { ChangeItemRequiredAmountAction((TextBox)sender, 4); }
+		private void tbItem5RequiredAmount_TextChanged(object sender, EventArgs e) { ChangeItemRequiredAmountAction((TextBox)sender, 5); }
+		private void tbItem6RequiredAmount_TextChanged(object sender, EventArgs e) { ChangeItemRequiredAmountAction((TextBox)sender, 6); }
+		private void tbItem7RequiredAmount_TextChanged(object sender, EventArgs e) { ChangeItemRequiredAmountAction((TextBox)sender, 7); }
+		private void tbItem8RequiredAmount_TextChanged(object sender, EventArgs e) { ChangeItemRequiredAmountAction((TextBox)sender, 8); }
+		private void tbItem9RequiredAmount_TextChanged(object sender, EventArgs e) { ChangeItemRequiredAmountAction((TextBox)sender, 9); }
+		/****************************************/
+		private void ChangeRareOptionAction(int nNumber)
+		{
+			if (bUserAction)
+			{
+                string strRareOptionIDColumn = "a_rare_index_" + nNumber;
+
+                ItemPicker pItemSelector = new ItemPicker(pMain, this, Convert.ToInt32(pTempRow[strRareOptionIDColumn]));
+
+                RareOptionPicker pRareOptionSelector = new RareOptionPicker(pMain, this, 512);
+
+                if (pRareOptionSelector.ShowDialog() != DialogResult.OK)
+                    return;
+
+                int iRareOptionID = pRareOptionSelector.ReturnValues;
+				string strRareOptionName = iRareOptionID.ToString();
+
+				if (iRareOptionID != -1)
+				{
+                    DataRow pRareOptionTableRow = pMain.pRareOptionTable.Select("a_index = " + iRareOptionID).FirstOrDefault();
+
+                    strRareOptionName += " - " + pRareOptionTableRow["a_prefix_" + pMain.pSettings.WorkLocale];
+
+                    pRareOptionTableRow = null;
+                }
+
+                ((Button)this.Controls.Find("btnRareIndex" + nNumber, true)[0]).Text = strRareOptionName;
+
+                ((TextBox)this.Controls.Find("tbRareProb" + nNumber, true)[0]).Focus();
+
+                pTempRow[strRareOptionIDColumn] = iRareOptionID.ToString();
+
+                bUnsavedChanges = true;
+            }
+        }
+
+		private void btnRareIndex0_Click(object sender, EventArgs e) { ChangeRareOptionAction(0); }
+		private void btnRareIndex1_Click(object sender, EventArgs e) { ChangeRareOptionAction(1); }
+        private void btnRareIndex2_Click(object sender, EventArgs e) { ChangeRareOptionAction(2); }
+		private void btnRareIndex3_Click(object sender, EventArgs e) { ChangeRareOptionAction(3); }
+		private void btnRareIndex4_Click(object sender, EventArgs e) { ChangeRareOptionAction(4); }
+		private void btnRareIndex5_Click(object sender, EventArgs e) { ChangeRareOptionAction(5); }
+		private void btnRareIndex6_Click(object sender, EventArgs e) { ChangeRareOptionAction(6); }
+		private void btnRareIndex7_Click(object sender, EventArgs e) { ChangeRareOptionAction(7); }
+		private void btnRareIndex8_Click(object sender, EventArgs e) { ChangeRareOptionAction(8); }
+		private void btnRareIndex9_Click(object sender, EventArgs e) { ChangeRareOptionAction(9); }
+
+
+        private void ChangeRareProbAction(TextBox cTextBox, int nNumber)
+		{
+			if (bUserAction)
+			{
+				string strProb = cTextBox.Text;
+
+				((Label)this.Controls.Find("lRareProb" + nNumber, true)[0]).Text = ((Convert.ToInt32(strProb) * 100.0f) / 10000.0f) + "%";  // NOTE: I'm not sure about this calc. Ref: IdentifyRareOption
+
+				pTempRow["a_rare_prob_" + nNumber] = strProb;
+
+				bUnsavedChanges = true;
+			}
+		}
+
+		private void tbRareProb0_TextChanged(object sender, EventArgs e) { ChangeRareProbAction((TextBox)sender, 0); }
+		private void tbRareProb1_TextChanged(object sender, EventArgs e) { ChangeRareProbAction((TextBox)sender, 1); }
+		private void tbRareProb2_TextChanged(object sender, EventArgs e) { ChangeRareProbAction((TextBox)sender, 2); }
+		private void tbRareProb3_TextChanged(object sender, EventArgs e) { ChangeRareProbAction((TextBox)sender, 3); }
+		private void tbRareProb4_TextChanged(object sender, EventArgs e) { ChangeRareProbAction((TextBox)sender, 4); }
+		private void tbRareProb5_TextChanged(object sender, EventArgs e) { ChangeRareProbAction((TextBox)sender, 5); }
+		private void tbRareProb6_TextChanged(object sender, EventArgs e) { ChangeRareProbAction((TextBox)sender, 6); }
+		private void tbRareProb7_TextChanged(object sender, EventArgs e) { ChangeRareProbAction((TextBox)sender, 7); }
+		private void tbRareProb8_TextChanged(object sender, EventArgs e) { ChangeRareProbAction((TextBox)sender, 8); }
+		private void tbRareProb9_TextChanged(object sender, EventArgs e) { ChangeRareProbAction((TextBox)sender, 9); }
 		/****************************************/
 		private void btnUpdate_Click(object sender, EventArgs e)
 		{
@@ -1476,9 +1584,13 @@ namespace LastChaos_ToolBox_2024.Editors
 					if (!pMain.pItemTable.Columns.Contains(column.ColumnName))
 						pMain.pItemTable.Columns.Add(column.ColumnName, column.DataType);
 
+					// TODO: Componer la query, ejecutarl ay si es exitosa la operacion, actualizar los datos locales
+
 					pItemTableRow[column.ColumnName] = pTempRow[column.ColumnName];
 				}
-			}
-		}
+
+                // TODO: cambiar bUnsavedChanges a false si la operacion es exitosa
+            }
+        }
 	}
 }

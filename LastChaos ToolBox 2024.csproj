@@ -131,6 +131,12 @@
     <Compile Include="Editors\ItemEditor.Designer.cs">
       <DependentUpon>ItemEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="Pickers\RareOptionPicker.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Pickers\RareOptionPicker.Designer.cs">
+      <DependentUpon>RareOptionPicker.cs</DependentUpon>
+    </Compile>
     <Compile Include="Pickers\ItemPicker.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -172,6 +178,9 @@
     </Compile>
     <EmbeddedResource Include="Editors\ItemEditor.resx">
       <DependentUpon>ItemEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pickers\RareOptionPicker.resx">
+      <DependentUpon>RareOptionPicker.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Pickers\ItemPicker.resx">
       <DependentUpon>ItemPicker.cs</DependentUpon>
