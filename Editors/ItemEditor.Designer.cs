@@ -40,52 +40,52 @@ namespace LastChaos_ToolBox_2024.Editors
             this.cbGrade = new System.Windows.Forms.ComboBox();
             this.groupBox11 = new System.Windows.Forms.GroupBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.lRareProb9 = new System.Windows.Forms.Label();
+            this.lRareProb9Percentage = new System.Windows.Forms.Label();
             this.btnRareIndex9 = new System.Windows.Forms.Button();
             this.lRareProbType9 = new System.Windows.Forms.Label();
             this.label81 = new System.Windows.Forms.Label();
             this.tbRareProb9 = new System.Windows.Forms.TextBox();
-            this.lRareProb5 = new System.Windows.Forms.Label();
+            this.lRareProb5Percentage = new System.Windows.Forms.Label();
             this.btnRareIndex5 = new System.Windows.Forms.Button();
             this.lRareProbType5 = new System.Windows.Forms.Label();
             this.label84 = new System.Windows.Forms.Label();
             this.tbRareProb5 = new System.Windows.Forms.TextBox();
-            this.lRareProb6 = new System.Windows.Forms.Label();
+            this.lRareProb6Percentage = new System.Windows.Forms.Label();
             this.btnRareIndex6 = new System.Windows.Forms.Button();
             this.lRareProbType6 = new System.Windows.Forms.Label();
             this.label87 = new System.Windows.Forms.Label();
             this.tbRareProb6 = new System.Windows.Forms.TextBox();
-            this.lRareProb7 = new System.Windows.Forms.Label();
+            this.lRareProb7Percentage = new System.Windows.Forms.Label();
             this.btnRareIndex7 = new System.Windows.Forms.Button();
             this.lRareProbType7 = new System.Windows.Forms.Label();
             this.label90 = new System.Windows.Forms.Label();
             this.tbRareProb7 = new System.Windows.Forms.TextBox();
-            this.lRareProb8 = new System.Windows.Forms.Label();
+            this.lRareProb8Percentage = new System.Windows.Forms.Label();
             this.btnRareIndex8 = new System.Windows.Forms.Button();
             this.lRareProbType8 = new System.Windows.Forms.Label();
             this.label93 = new System.Windows.Forms.Label();
             this.tbRareProb8 = new System.Windows.Forms.TextBox();
-            this.lRareProb4 = new System.Windows.Forms.Label();
+            this.lRareProb4Percentage = new System.Windows.Forms.Label();
             this.btnRareIndex4 = new System.Windows.Forms.Button();
             this.lRareProbType4 = new System.Windows.Forms.Label();
             this.label78 = new System.Windows.Forms.Label();
             this.tbRareProb4 = new System.Windows.Forms.TextBox();
-            this.lRareProb0 = new System.Windows.Forms.Label();
+            this.lRareProb0Percentage = new System.Windows.Forms.Label();
             this.btnRareIndex0 = new System.Windows.Forms.Button();
             this.lRareProbType0 = new System.Windows.Forms.Label();
             this.label72 = new System.Windows.Forms.Label();
             this.tbRareProb0 = new System.Windows.Forms.TextBox();
-            this.lRareProb1 = new System.Windows.Forms.Label();
+            this.lRareProb1Percentage = new System.Windows.Forms.Label();
             this.btnRareIndex1 = new System.Windows.Forms.Button();
             this.lRareProbType1 = new System.Windows.Forms.Label();
             this.label75 = new System.Windows.Forms.Label();
             this.tbRareProb1 = new System.Windows.Forms.TextBox();
-            this.lRareProb2 = new System.Windows.Forms.Label();
+            this.lRareProb2Percentage = new System.Windows.Forms.Label();
             this.btnRareIndex2 = new System.Windows.Forms.Button();
             this.lRareProbType2 = new System.Windows.Forms.Label();
             this.label69 = new System.Windows.Forms.Label();
             this.tbRareProb2 = new System.Windows.Forms.TextBox();
-            this.lRareProb3 = new System.Windows.Forms.Label();
+            this.lRareProb3Percentage = new System.Windows.Forms.Label();
             this.btnRareIndex3 = new System.Windows.Forms.Button();
             this.lRareProbType3 = new System.Windows.Forms.Label();
             this.label65 = new System.Windows.Forms.Label();
@@ -417,52 +417,52 @@ namespace LastChaos_ToolBox_2024.Editors
             // 
             // groupBox3
             // 
-            this.groupBox3.Controls.Add(this.lRareProb9);
+            this.groupBox3.Controls.Add(this.lRareProb9Percentage);
             this.groupBox3.Controls.Add(this.btnRareIndex9);
             this.groupBox3.Controls.Add(this.lRareProbType9);
             this.groupBox3.Controls.Add(this.label81);
             this.groupBox3.Controls.Add(this.tbRareProb9);
-            this.groupBox3.Controls.Add(this.lRareProb5);
+            this.groupBox3.Controls.Add(this.lRareProb5Percentage);
             this.groupBox3.Controls.Add(this.btnRareIndex5);
             this.groupBox3.Controls.Add(this.lRareProbType5);
             this.groupBox3.Controls.Add(this.label84);
             this.groupBox3.Controls.Add(this.tbRareProb5);
-            this.groupBox3.Controls.Add(this.lRareProb6);
+            this.groupBox3.Controls.Add(this.lRareProb6Percentage);
             this.groupBox3.Controls.Add(this.btnRareIndex6);
             this.groupBox3.Controls.Add(this.lRareProbType6);
             this.groupBox3.Controls.Add(this.label87);
             this.groupBox3.Controls.Add(this.tbRareProb6);
-            this.groupBox3.Controls.Add(this.lRareProb7);
+            this.groupBox3.Controls.Add(this.lRareProb7Percentage);
             this.groupBox3.Controls.Add(this.btnRareIndex7);
             this.groupBox3.Controls.Add(this.lRareProbType7);
             this.groupBox3.Controls.Add(this.label90);
             this.groupBox3.Controls.Add(this.tbRareProb7);
-            this.groupBox3.Controls.Add(this.lRareProb8);
+            this.groupBox3.Controls.Add(this.lRareProb8Percentage);
             this.groupBox3.Controls.Add(this.btnRareIndex8);
             this.groupBox3.Controls.Add(this.lRareProbType8);
             this.groupBox3.Controls.Add(this.label93);
             this.groupBox3.Controls.Add(this.tbRareProb8);
-            this.groupBox3.Controls.Add(this.lRareProb4);
+            this.groupBox3.Controls.Add(this.lRareProb4Percentage);
             this.groupBox3.Controls.Add(this.btnRareIndex4);
             this.groupBox3.Controls.Add(this.lRareProbType4);
             this.groupBox3.Controls.Add(this.label78);
             this.groupBox3.Controls.Add(this.tbRareProb4);
-            this.groupBox3.Controls.Add(this.lRareProb0);
+            this.groupBox3.Controls.Add(this.lRareProb0Percentage);
             this.groupBox3.Controls.Add(this.btnRareIndex0);
             this.groupBox3.Controls.Add(this.lRareProbType0);
             this.groupBox3.Controls.Add(this.label72);
             this.groupBox3.Controls.Add(this.tbRareProb0);
-            this.groupBox3.Controls.Add(this.lRareProb1);
+            this.groupBox3.Controls.Add(this.lRareProb1Percentage);
             this.groupBox3.Controls.Add(this.btnRareIndex1);
             this.groupBox3.Controls.Add(this.lRareProbType1);
             this.groupBox3.Controls.Add(this.label75);
             this.groupBox3.Controls.Add(this.tbRareProb1);
-            this.groupBox3.Controls.Add(this.lRareProb2);
+            this.groupBox3.Controls.Add(this.lRareProb2Percentage);
             this.groupBox3.Controls.Add(this.btnRareIndex2);
             this.groupBox3.Controls.Add(this.lRareProbType2);
             this.groupBox3.Controls.Add(this.label69);
             this.groupBox3.Controls.Add(this.tbRareProb2);
-            this.groupBox3.Controls.Add(this.lRareProb3);
+            this.groupBox3.Controls.Add(this.lRareProb3Percentage);
             this.groupBox3.Controls.Add(this.btnRareIndex3);
             this.groupBox3.Controls.Add(this.lRareProbType3);
             this.groupBox3.Controls.Add(this.label65);
@@ -474,16 +474,16 @@ namespace LastChaos_ToolBox_2024.Editors
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Origin / Rare / Costume Suit Options Data";
             // 
-            // lRareProb9
+            // lRareProb9Percentage
             // 
-            this.lRareProb9.AutoSize = true;
-            this.lRareProb9.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-            this.lRareProb9.Location = new System.Drawing.Point(266, 287);
-            this.lRareProb9.Name = "lRareProb9";
-            this.lRareProb9.Size = new System.Drawing.Size(10, 13);
-            this.lRareProb9.TabIndex = 1131;
-            this.lRareProb9.Text = "-";
-            this.lRareProb9.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lRareProb9Percentage.AutoSize = true;
+            this.lRareProb9Percentage.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.lRareProb9Percentage.Location = new System.Drawing.Point(266, 287);
+            this.lRareProb9Percentage.Name = "lRareProb9Percentage";
+            this.lRareProb9Percentage.Size = new System.Drawing.Size(10, 13);
+            this.lRareProb9Percentage.TabIndex = 1131;
+            this.lRareProb9Percentage.Text = "-";
+            this.lRareProb9Percentage.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // btnRareIndex9
             // 
@@ -533,16 +533,16 @@ namespace LastChaos_ToolBox_2024.Editors
             this.tbRareProb9.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.tbRareProb9.TextChanged += new System.EventHandler(this.tbRareProb9_TextChanged);
             // 
-            // lRareProb5
+            // lRareProb5Percentage
             // 
-            this.lRareProb5.AutoSize = true;
-            this.lRareProb5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-            this.lRareProb5.Location = new System.Drawing.Point(266, 171);
-            this.lRareProb5.Name = "lRareProb5";
-            this.lRareProb5.Size = new System.Drawing.Size(10, 13);
-            this.lRareProb5.TabIndex = 1126;
-            this.lRareProb5.Text = "-";
-            this.lRareProb5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lRareProb5Percentage.AutoSize = true;
+            this.lRareProb5Percentage.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.lRareProb5Percentage.Location = new System.Drawing.Point(266, 171);
+            this.lRareProb5Percentage.Name = "lRareProb5Percentage";
+            this.lRareProb5Percentage.Size = new System.Drawing.Size(10, 13);
+            this.lRareProb5Percentage.TabIndex = 1126;
+            this.lRareProb5Percentage.Text = "-";
+            this.lRareProb5Percentage.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // btnRareIndex5
             // 
@@ -592,16 +592,16 @@ namespace LastChaos_ToolBox_2024.Editors
             this.tbRareProb5.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.tbRareProb5.TextChanged += new System.EventHandler(this.tbRareProb5_TextChanged);
             // 
-            // lRareProb6
+            // lRareProb6Percentage
             // 
-            this.lRareProb6.AutoSize = true;
-            this.lRareProb6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-            this.lRareProb6.Location = new System.Drawing.Point(266, 200);
-            this.lRareProb6.Name = "lRareProb6";
-            this.lRareProb6.Size = new System.Drawing.Size(10, 13);
-            this.lRareProb6.TabIndex = 1121;
-            this.lRareProb6.Text = "-";
-            this.lRareProb6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lRareProb6Percentage.AutoSize = true;
+            this.lRareProb6Percentage.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.lRareProb6Percentage.Location = new System.Drawing.Point(266, 200);
+            this.lRareProb6Percentage.Name = "lRareProb6Percentage";
+            this.lRareProb6Percentage.Size = new System.Drawing.Size(10, 13);
+            this.lRareProb6Percentage.TabIndex = 1121;
+            this.lRareProb6Percentage.Text = "-";
+            this.lRareProb6Percentage.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // btnRareIndex6
             // 
@@ -651,16 +651,16 @@ namespace LastChaos_ToolBox_2024.Editors
             this.tbRareProb6.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.tbRareProb6.TextChanged += new System.EventHandler(this.tbRareProb6_TextChanged);
             // 
-            // lRareProb7
+            // lRareProb7Percentage
             // 
-            this.lRareProb7.AutoSize = true;
-            this.lRareProb7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-            this.lRareProb7.Location = new System.Drawing.Point(266, 229);
-            this.lRareProb7.Name = "lRareProb7";
-            this.lRareProb7.Size = new System.Drawing.Size(10, 13);
-            this.lRareProb7.TabIndex = 1116;
-            this.lRareProb7.Text = "-";
-            this.lRareProb7.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lRareProb7Percentage.AutoSize = true;
+            this.lRareProb7Percentage.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.lRareProb7Percentage.Location = new System.Drawing.Point(266, 229);
+            this.lRareProb7Percentage.Name = "lRareProb7Percentage";
+            this.lRareProb7Percentage.Size = new System.Drawing.Size(10, 13);
+            this.lRareProb7Percentage.TabIndex = 1116;
+            this.lRareProb7Percentage.Text = "-";
+            this.lRareProb7Percentage.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // btnRareIndex7
             // 
@@ -710,16 +710,16 @@ namespace LastChaos_ToolBox_2024.Editors
             this.tbRareProb7.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.tbRareProb7.TextChanged += new System.EventHandler(this.tbRareProb7_TextChanged);
             // 
-            // lRareProb8
+            // lRareProb8Percentage
             // 
-            this.lRareProb8.AutoSize = true;
-            this.lRareProb8.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-            this.lRareProb8.Location = new System.Drawing.Point(266, 258);
-            this.lRareProb8.Name = "lRareProb8";
-            this.lRareProb8.Size = new System.Drawing.Size(10, 13);
-            this.lRareProb8.TabIndex = 1112;
-            this.lRareProb8.Text = "-";
-            this.lRareProb8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lRareProb8Percentage.AutoSize = true;
+            this.lRareProb8Percentage.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.lRareProb8Percentage.Location = new System.Drawing.Point(266, 258);
+            this.lRareProb8Percentage.Name = "lRareProb8Percentage";
+            this.lRareProb8Percentage.Size = new System.Drawing.Size(10, 13);
+            this.lRareProb8Percentage.TabIndex = 1112;
+            this.lRareProb8Percentage.Text = "-";
+            this.lRareProb8Percentage.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // btnRareIndex8
             // 
@@ -769,16 +769,16 @@ namespace LastChaos_ToolBox_2024.Editors
             this.tbRareProb8.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.tbRareProb8.TextChanged += new System.EventHandler(this.tbRareProb8_TextChanged);
             // 
-            // lRareProb4
+            // lRareProb4Percentage
             // 
-            this.lRareProb4.AutoSize = true;
-            this.lRareProb4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-            this.lRareProb4.Location = new System.Drawing.Point(266, 142);
-            this.lRareProb4.Name = "lRareProb4";
-            this.lRareProb4.Size = new System.Drawing.Size(10, 13);
-            this.lRareProb4.TabIndex = 1106;
-            this.lRareProb4.Text = "-";
-            this.lRareProb4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lRareProb4Percentage.AutoSize = true;
+            this.lRareProb4Percentage.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.lRareProb4Percentage.Location = new System.Drawing.Point(266, 142);
+            this.lRareProb4Percentage.Name = "lRareProb4Percentage";
+            this.lRareProb4Percentage.Size = new System.Drawing.Size(10, 13);
+            this.lRareProb4Percentage.TabIndex = 1106;
+            this.lRareProb4Percentage.Text = "-";
+            this.lRareProb4Percentage.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // btnRareIndex4
             // 
@@ -828,16 +828,16 @@ namespace LastChaos_ToolBox_2024.Editors
             this.tbRareProb4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.tbRareProb4.TextChanged += new System.EventHandler(this.tbRareProb4_TextChanged);
             // 
-            // lRareProb0
+            // lRareProb0Percentage
             // 
-            this.lRareProb0.AutoSize = true;
-            this.lRareProb0.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-            this.lRareProb0.Location = new System.Drawing.Point(266, 26);
-            this.lRareProb0.Name = "lRareProb0";
-            this.lRareProb0.Size = new System.Drawing.Size(10, 13);
-            this.lRareProb0.TabIndex = 1101;
-            this.lRareProb0.Text = "-";
-            this.lRareProb0.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lRareProb0Percentage.AutoSize = true;
+            this.lRareProb0Percentage.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.lRareProb0Percentage.Location = new System.Drawing.Point(266, 26);
+            this.lRareProb0Percentage.Name = "lRareProb0Percentage";
+            this.lRareProb0Percentage.Size = new System.Drawing.Size(10, 13);
+            this.lRareProb0Percentage.TabIndex = 1101;
+            this.lRareProb0Percentage.Text = "-";
+            this.lRareProb0Percentage.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // btnRareIndex0
             // 
@@ -887,16 +887,16 @@ namespace LastChaos_ToolBox_2024.Editors
             this.tbRareProb0.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.tbRareProb0.TextChanged += new System.EventHandler(this.tbRareProb0_TextChanged);
             // 
-            // lRareProb1
+            // lRareProb1Percentage
             // 
-            this.lRareProb1.AutoSize = true;
-            this.lRareProb1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-            this.lRareProb1.Location = new System.Drawing.Point(266, 55);
-            this.lRareProb1.Name = "lRareProb1";
-            this.lRareProb1.Size = new System.Drawing.Size(10, 13);
-            this.lRareProb1.TabIndex = 1096;
-            this.lRareProb1.Text = "-";
-            this.lRareProb1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lRareProb1Percentage.AutoSize = true;
+            this.lRareProb1Percentage.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.lRareProb1Percentage.Location = new System.Drawing.Point(266, 55);
+            this.lRareProb1Percentage.Name = "lRareProb1Percentage";
+            this.lRareProb1Percentage.Size = new System.Drawing.Size(10, 13);
+            this.lRareProb1Percentage.TabIndex = 1096;
+            this.lRareProb1Percentage.Text = "-";
+            this.lRareProb1Percentage.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // btnRareIndex1
             // 
@@ -946,16 +946,16 @@ namespace LastChaos_ToolBox_2024.Editors
             this.tbRareProb1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.tbRareProb1.TextChanged += new System.EventHandler(this.tbRareProb1_TextChanged);
             // 
-            // lRareProb2
+            // lRareProb2Percentage
             // 
-            this.lRareProb2.AutoSize = true;
-            this.lRareProb2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-            this.lRareProb2.Location = new System.Drawing.Point(266, 84);
-            this.lRareProb2.Name = "lRareProb2";
-            this.lRareProb2.Size = new System.Drawing.Size(10, 13);
-            this.lRareProb2.TabIndex = 1091;
-            this.lRareProb2.Text = "-";
-            this.lRareProb2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lRareProb2Percentage.AutoSize = true;
+            this.lRareProb2Percentage.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.lRareProb2Percentage.Location = new System.Drawing.Point(266, 84);
+            this.lRareProb2Percentage.Name = "lRareProb2Percentage";
+            this.lRareProb2Percentage.Size = new System.Drawing.Size(10, 13);
+            this.lRareProb2Percentage.TabIndex = 1091;
+            this.lRareProb2Percentage.Text = "-";
+            this.lRareProb2Percentage.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // btnRareIndex2
             // 
@@ -1005,16 +1005,16 @@ namespace LastChaos_ToolBox_2024.Editors
             this.tbRareProb2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.tbRareProb2.TextChanged += new System.EventHandler(this.tbRareProb2_TextChanged);
             // 
-            // lRareProb3
+            // lRareProb3Percentage
             // 
-            this.lRareProb3.AutoSize = true;
-            this.lRareProb3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-            this.lRareProb3.Location = new System.Drawing.Point(266, 113);
-            this.lRareProb3.Name = "lRareProb3";
-            this.lRareProb3.Size = new System.Drawing.Size(10, 13);
-            this.lRareProb3.TabIndex = 1087;
-            this.lRareProb3.Text = "-";
-            this.lRareProb3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lRareProb3Percentage.AutoSize = true;
+            this.lRareProb3Percentage.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+            this.lRareProb3Percentage.Location = new System.Drawing.Point(266, 113);
+            this.lRareProb3Percentage.Name = "lRareProb3Percentage";
+            this.lRareProb3Percentage.Size = new System.Drawing.Size(10, 13);
+            this.lRareProb3Percentage.TabIndex = 1087;
+            this.lRareProb3Percentage.Text = "-";
+            this.lRareProb3Percentage.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // btnRareIndex3
             // 
@@ -3163,52 +3163,52 @@ namespace LastChaos_ToolBox_2024.Editors
         private Button btnItem1Required;
         private Label label47;
         private GroupBox groupBox3;
-        private Label lRareProb3;
+        private Label lRareProb3Percentage;
         private Label lRareProbType3;
         private TextBox tbRareProb3;
         private Button btnRareIndex3;
         private Label label65;
-        private Label lRareProb9;
+        private Label lRareProb9Percentage;
         private Button btnRareIndex9;
         private Label lRareProbType9;
         private Label label81;
         private TextBox tbRareProb9;
-        private Label lRareProb5;
+        private Label lRareProb5Percentage;
         private Button btnRareIndex5;
         private Label lRareProbType5;
         private Label label84;
         private TextBox tbRareProb5;
-        private Label lRareProb6;
+        private Label lRareProb6Percentage;
         private Button btnRareIndex6;
         private Label lRareProbType6;
         private Label label87;
         private TextBox tbRareProb6;
-        private Label lRareProb7;
+        private Label lRareProb7Percentage;
         private Button btnRareIndex7;
         private Label lRareProbType7;
         private Label label90;
         private TextBox tbRareProb7;
-        private Label lRareProb8;
+        private Label lRareProb8Percentage;
         private Button btnRareIndex8;
         private Label lRareProbType8;
         private Label label93;
         private TextBox tbRareProb8;
-        private Label lRareProb4;
+        private Label lRareProb4Percentage;
         private Button btnRareIndex4;
         private Label lRareProbType4;
         private Label label78;
         private TextBox tbRareProb4;
-        private Label lRareProb0;
+        private Label lRareProb0Percentage;
         private Button btnRareIndex0;
         private Label lRareProbType0;
         private Label label72;
         private TextBox tbRareProb0;
-        private Label lRareProb1;
+        private Label lRareProb1Percentage;
         private Button btnRareIndex1;
         private Label lRareProbType1;
         private Label label75;
         private TextBox tbRareProb1;
-        private Label lRareProb2;
+        private Label lRareProb2Percentage;
         private Button btnRareIndex2;
         private Label lRareProbType2;
         private Label label69;

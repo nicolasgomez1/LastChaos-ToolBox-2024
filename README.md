@@ -14,8 +14,10 @@ If Flag is: ITEM_FLAG_COSTUME2, a_rare_index_0/4 should be Item Picker.
 If Flag is: ITEM_FLAG_ORIGIN, a_rare_index_1/5 should be Item Picker, a_rare_index_6/9 Shold be Skill Picker, a_set_4 shoul be Item Picker.	¿And a_rare_index_0? Generic number Input...
 If Flag is: ITEM_FLAG_RARE, a_rare_index_0/9, should be Rare Option Picker.
 If Flag is: ITEM_FLAG_QUEST, a_set_0 should be Zone Selector, a_set_1/4 should be Generic number Input.
+If Flag is: ITEM_FLAG_RARE, a_rare_index_0/9 Should be Rare option Picker, a_rare_prob_0/9 should be Generic number Input, and required to show % labels.
 If Flag is: unknown, a_set_0 should be Flag Picker (JewelCompositePosition)
 	If a_set_0 is 0, a_rare_index_0 should be a Option Picker.
+
 
 If a_type_idx is 0 or 1, a_set_0 should be Generic number Input.
 This↑ is super common situation so...

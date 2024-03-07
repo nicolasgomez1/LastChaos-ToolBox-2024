@@ -785,7 +785,7 @@ namespace LastChaos_ToolBox_2024.Editors
 
 				((TextBox)this.Controls.Find("tbRareProb" + i, true)[0]).Text = nRateOptionProb.ToString();
 				
-				((Label)this.Controls.Find("lRareProb" + i, true)[0]).Text = ((nRateOptionProb * 100.0f) / 10000.0f) + "%";	// NOTE: I'm not sure about this calc. Ref: IdentifyRareOption
+				((Label)this.Controls.Find("lRareProb" + i + "Percentage", true)[0]).Text = ((nRateOptionProb * 100.0f) / 10000.0f) + "%";	// NOTE: I'm not sure about this calc. Ref: IdentifyRareOption
 			}
 
 			pRareOptionTableRow = null;
@@ -1713,7 +1713,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			{
 				string strProb = cTextBox.Text;
 
-				((Label)this.Controls.Find("lRareProb" + nNumber, true)[0]).Text = ((Convert.ToInt32(strProb) * 100.0f) / 10000.0f) + "%";  // NOTE: I'm not sure about this calc. Ref: IdentifyRareOption
+				((Label)this.Controls.Find("lRareProb" + nNumber + "Percentage", true)[0]).Text = ((Convert.ToInt32(strProb) * 100.0f) / 10000.0f) + "%";  // NOTE: I'm not sure about this calc. Ref: IdentifyRareOption
 
 				pTempRow["a_rare_prob_" + nNumber] = strProb;
 
