@@ -31,18 +31,14 @@ namespace LastChaos_ToolBox_2024
         private void InitializeComponent()
         {
 			this.components = new System.ComponentModel.Container();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.button1 = new System.Windows.Forms.Button();
 			this.button2 = new System.Windows.Forms.Button();
 			this.button3 = new System.Windows.Forms.Button();
 			this.Monitor = new System.Windows.Forms.Timer(this.components);
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
-			this.gridFortune = new System.Windows.Forms.DataGridView();
 			this.rtbConsole = new System.Windows.Forms.RichTextBox();
 			this.button4 = new System.Windows.Forms.Button();
 			this.groupBox1.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.gridFortune)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// button1
@@ -99,7 +95,6 @@ namespace LastChaos_ToolBox_2024
 			// 
 			this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.groupBox1.Controls.Add(this.gridFortune);
 			this.groupBox1.Controls.Add(this.button1);
 			this.groupBox1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.groupBox1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
@@ -109,36 +104,6 @@ namespace LastChaos_ToolBox_2024
 			this.groupBox1.TabIndex = 3;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Tools";
-			// 
-			// gridFortune
-			// 
-			this.gridFortune.AllowUserToAddRows = false;
-			this.gridFortune.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
-			this.gridFortune.BorderStyle = System.Windows.Forms.BorderStyle.None;
-			dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
-			dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-			dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
-			dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Red;
-			dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-			this.gridFortune.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
-			this.gridFortune.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
-			dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			dataGridViewCellStyle2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-			dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
-			dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-			dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-			this.gridFortune.DefaultCellStyle = dataGridViewCellStyle2;
-			this.gridFortune.EnableHeadersVisualStyles = false;
-			this.gridFortune.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
-			this.gridFortune.Location = new System.Drawing.Point(6, 48);
-			this.gridFortune.Name = "gridFortune";
-			this.gridFortune.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
-			this.gridFortune.Size = new System.Drawing.Size(662, 213);
-			this.gridFortune.TabIndex = 1;
 			// 
 			// rtbConsole
 			// 
@@ -186,7 +151,6 @@ namespace LastChaos_ToolBox_2024
 			this.Text = "LastChaos ToolBox 2024";
 			this.Load += new System.EventHandler(this.Main_Load);
 			this.groupBox1.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.gridFortune)).EndInit();
 			this.ResumeLayout(false);
 
         }
@@ -199,7 +163,6 @@ namespace LastChaos_ToolBox_2024
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.RichTextBox rtbConsole;
         private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.DataGridView gridFortune;
     }
 }
 

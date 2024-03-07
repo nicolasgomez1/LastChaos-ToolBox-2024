@@ -66,40 +66,6 @@ namespace LastChaos_ToolBox_2024
 			LoadSettings();
 
 			ConnectToDatabase();
-
-			GridClear();
-		}
-
-		private void GridClear()
-		{
-			gridFortune.TopLeftHeaderCell.Value = "N°";
-			gridFortune.Columns.Add("skill", "Skill ID");
-			gridFortune.Columns.Add("level", "Skill Level");
-			gridFortune.Columns.Add("prob", "Probability");
-			gridFortune.Columns.Add("string", "String ID");
-
-			gridFortune.AdvancedRowHeadersBorderStyle.All = DataGridViewAdvancedCellBorderStyle.Single;
-			gridFortune.RowHeadersDefaultCellStyle.BackColor = Color.FromArgb(28, 30, 31);
-			gridFortune.RowHeadersDefaultCellStyle.SelectionForeColor = gridFortune.RowHeadersDefaultCellStyle.ForeColor = Color.FromArgb(208, 203, 148);
-			gridFortune.RowHeadersDefaultCellStyle.SelectionBackColor = Color.FromArgb(60, 56, 54);
-			
-			gridFortune.AdvancedColumnHeadersBorderStyle.All = DataGridViewAdvancedCellBorderStyle.Single;
-			gridFortune.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(28, 30, 31);
-			gridFortune.ColumnHeadersDefaultCellStyle.ForeColor = Color.FromArgb(208, 203, 148);
-			gridFortune.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-
-			gridFortune.AdvancedCellBorderStyle.Bottom = DataGridViewAdvancedCellBorderStyle.Inset;
-			gridFortune.DefaultCellStyle.BackColor = Color.FromArgb(40, 40, 40);
-			gridFortune.DefaultCellStyle.ForeColor = Color.FromArgb(208, 203, 148);
-			gridFortune.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-
-			for (int i = 0; i < 2; i++)
-			{
-				gridFortune.Rows.Insert(i, "skill id - name", "0", "0", "999");
-				gridFortune.Rows[i].HeaderCell.Value = (i + 1).ToString();
-			}
-
-			gridFortune.Rows.Clear();
 		}
 
 		private void monitor_Tick(object sender, EventArgs e)

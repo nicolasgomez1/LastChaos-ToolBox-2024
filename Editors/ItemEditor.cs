@@ -830,13 +830,15 @@ namespace LastChaos_ToolBox_2024.Editors
 #endif
             if (pMain.pItemFortuneTable != null)
 			{
-				DataRow pItemFortuneTemp = pMain.pItemFortuneTable.Select("a_item_idx = " + nItemID).FirstOrDefault();
-				if (pItemFortuneTemp != null)
+				List<DataRow> listItemFortune = pMain.pItemFortuneTable.AsEnumerable().Where(row => row.Field<int>("a_item_idx") == nItemID).ToList();
+				if (listItemFortune.Any())
 				{
-					for (int i = 0; i < 2; i++)
+					int i = 0;
+					foreach (DataRow pRow in listItemFortune)
 					{
 						gridFortune.Rows.Insert(i, "skill id - name", "0", "0", "999");
 						gridFortune.Rows[i].HeaderCell.Value = (i + 1).ToString();
+						i++;
 					}
 				}
 			}

@@ -416,7 +416,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			this.groupBox11.Controls.Add(this.gridFortune);
 			this.groupBox11.Location = new System.Drawing.Point(0, 543);
 			this.groupBox11.Name = "groupBox11";
-			this.groupBox11.Size = new System.Drawing.Size(998, 162);
+			this.groupBox11.Size = new System.Drawing.Size(998, 200);
 			this.groupBox11.TabIndex = 1041;
 			this.groupBox11.TabStop = false;
 			this.groupBox11.Text = "Fortune Data";
@@ -2979,7 +2979,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			this.gridFortune.AllowUserToAddRows = false;
 			this.gridFortune.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
-			this.gridFortune.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.gridFortune.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
 			dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
 			dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
 			dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -3002,7 +3002,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			this.gridFortune.Location = new System.Drawing.Point(6, 19);
 			this.gridFortune.Name = "gridFortune";
 			this.gridFortune.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
-			this.gridFortune.Size = new System.Drawing.Size(986, 213);
+			this.gridFortune.Size = new System.Drawing.Size(986, 171);
 			this.gridFortune.TabIndex = 2;
 			// 
 			// ItemEditor
