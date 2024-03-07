@@ -28,9 +28,10 @@ namespace LastChaos_ToolBox_2024
 		public DataTable pZoneTable = null;
 		public DataTable pSkillTable = null;
 		public DataTable pSkillLevelTable = null;
-        public DataTable pRareOptionTable = null;
+		public DataTable pRareOptionTable = null;
+		public DataTable pItemFortuneTable = null;
 
-        public class Settings
+		public class Settings
 		{
 			public string SettingsFile = "Settings.ini";
 
@@ -65,6 +66,40 @@ namespace LastChaos_ToolBox_2024
 			LoadSettings();
 
 			ConnectToDatabase();
+
+			GridClear();
+		}
+
+		private void GridClear()
+		{
+			gridFortune.TopLeftHeaderCell.Value = "N°";
+			gridFortune.Columns.Add("skill", "Skill ID");
+			gridFortune.Columns.Add("level", "Skill Level");
+			gridFortune.Columns.Add("prob", "Probability");
+			gridFortune.Columns.Add("string", "String ID");
+
+			gridFortune.AdvancedRowHeadersBorderStyle.All = DataGridViewAdvancedCellBorderStyle.Single;
+			gridFortune.RowHeadersDefaultCellStyle.BackColor = Color.FromArgb(28, 30, 31);
+			gridFortune.RowHeadersDefaultCellStyle.SelectionForeColor = gridFortune.RowHeadersDefaultCellStyle.ForeColor = Color.FromArgb(208, 203, 148);
+			gridFortune.RowHeadersDefaultCellStyle.SelectionBackColor = Color.FromArgb(60, 56, 54);
+			
+			gridFortune.AdvancedColumnHeadersBorderStyle.All = DataGridViewAdvancedCellBorderStyle.Single;
+			gridFortune.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(28, 30, 31);
+			gridFortune.ColumnHeadersDefaultCellStyle.ForeColor = Color.FromArgb(208, 203, 148);
+			gridFortune.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+
+			gridFortune.AdvancedCellBorderStyle.Bottom = DataGridViewAdvancedCellBorderStyle.Inset;
+			gridFortune.DefaultCellStyle.BackColor = Color.FromArgb(40, 40, 40);
+			gridFortune.DefaultCellStyle.ForeColor = Color.FromArgb(208, 203, 148);
+			gridFortune.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+
+			for (int i = 0; i < 2; i++)
+			{
+				gridFortune.Rows.Insert(i, "skill id - name", "0", "0", "999");
+				gridFortune.Rows[i].HeaderCell.Value = (i + 1).ToString();
+			}
+
+			gridFortune.Rows.Clear();
 		}
 
 		private void monitor_Tick(object sender, EventArgs e)
@@ -76,38 +111,44 @@ namespace LastChaos_ToolBox_2024
 
 		private void ClearGlobalTables()
 		{
-			// TODO: ¿Cerrar todos los dialogos abiertos?
-            // TODO: Add dispose to all global tables
-            if (pItemTable != null)
-            {
-                pItemTable.Dispose();
-                pItemTable = null;
-            }
+			// TODO: ¿Close all opened dialogs?
+			// TODO: Add dispose to all global tables
+			if (pItemTable != null)
+			{
+				pItemTable.Dispose();
+				pItemTable = null;
+			}
 
-            if (pZoneTable != null)
-            {
-                pZoneTable.Dispose();
-                pItemTable = null;
-            }
+			if (pZoneTable != null)
+			{
+				pZoneTable.Dispose();
+				pItemTable = null;
+			}
 
-            if (pSkillTable != null)
-            {
-                pSkillTable.Dispose();
-                pSkillTable = null;
-            }
+			if (pSkillTable != null)
+			{
+				pSkillTable.Dispose();
+				pSkillTable = null;
+			}
 
-            if (pSkillLevelTable != null)
-            {
-                pSkillLevelTable.Dispose();
-                pSkillLevelTable = null;
-            }
+			if (pSkillLevelTable != null)
+			{
+				pSkillLevelTable.Dispose();
+				pSkillLevelTable = null;
+			}
 
-            if (pRareOptionTable != null)
-            {
-                pRareOptionTable.Dispose();
-                pRareOptionTable = null;
-            }
-        }
+			if (pRareOptionTable != null)
+			{
+				pRareOptionTable.Dispose();
+				pRareOptionTable = null;
+			}
+
+			if (pItemFortuneTable != null)
+			{
+				pItemFortuneTable.Dispose();
+				pItemFortuneTable = null;
+			}
+		}
 
 		private void Reconnect_Click(object sender, EventArgs e)
 		{
@@ -118,8 +159,8 @@ namespace LastChaos_ToolBox_2024
 				mysqlConn.Close();
 			}
 
-            // NOTE: Posible Bug: User can reload when some editor is opened.
-            ConnectToDatabase();
+			// NOTE: Posible Bug: User can reload when some editor is opened.
+			ConnectToDatabase();
 		}
 
 		private void ItemEditor_Click(object sender, EventArgs e)
@@ -127,8 +168,8 @@ namespace LastChaos_ToolBox_2024
 			ItemEditor pItemEditor = new ItemEditor(this);
 			pItemEditor.Show();
 		}
-        
-        public void PrintLog(string strMsg, Color? ColorMsg = null)
+		
+		public void PrintLog(string strMsg, Color? ColorMsg = null)
 		{
 			StackFrame stackFrame = new StackFrame(1, true);
 
@@ -348,9 +389,9 @@ namespace LastChaos_ToolBox_2024
 		{
 			try
 			{
-                ClearGlobalTables();
+				ClearGlobalTables();
 
-                string strConnect = $"SERVER={pSettings.DBHost};DATABASE={pSettings.DBData};UID={pSettings.DBUsername};PASSWORD={pSettings.DBPassword};CHARSET={pSettings.DBCharset}";
+				string strConnect = $"SERVER={pSettings.DBHost};DATABASE={pSettings.DBData};UID={pSettings.DBUsername};PASSWORD={pSettings.DBPassword};CHARSET={pSettings.DBCharset}";
 
 				mysqlConn = new MySqlConnection(strConnect);
 
@@ -382,7 +423,7 @@ namespace LastChaos_ToolBox_2024
 			
 			string strConcatenate = "";
 			for (int i = 0; i < nIters; i++)
-                strConcatenate += i + "\n";
+				strConcatenate += i + "\n";
 
 			stopwatch.Stop();
 			PrintLog($"String Concatenate Test took: {stopwatch.ElapsedMilliseconds} ms", Color.CornflowerBlue);
@@ -392,38 +433,38 @@ namespace LastChaos_ToolBox_2024
 			
 			StringBuilder strBuilder = new StringBuilder();
 			for (int i = 0; i < nIters; i++)
-                strBuilder.Append(i + "\n");
+				strBuilder.Append(i + "\n");
 
 			strBuilder.ToString();
 
-            stopwatch.Stop();
+			stopwatch.Stop();
 			PrintLog($"String Builder Test took: {stopwatch.ElapsedMilliseconds} ms", Color.CornflowerBlue);
 
 			stopwatch.Reset();
 			stopwatch.Start();
 			
 			List<int> listString = new List<int>();	// allowed duplicity
-            for (int i = 0; i < nIters; i++)
-                listString.Add(i);
+			for (int i = 0; i < nIters; i++)
+				listString.Add(i);
 
 			string.Join("\n", listString);
 
-            stopwatch.Stop();
+			stopwatch.Stop();
 			PrintLog($"List Add and Join Test took: {stopwatch.ElapsedMilliseconds} ms", Color.CornflowerBlue);
 
-            stopwatch.Reset();
-            stopwatch.Start();
+			stopwatch.Reset();
+			stopwatch.Start();
 
-            HashSet<int> hashsetString = new HashSet<int>();	// uniqueness
-            for (int i = 0; i < nIters; i++)
-                hashsetString.Add(i);
+			HashSet<int> hashsetString = new HashSet<int>();	// uniqueness
+			for (int i = 0; i < nIters; i++)
+				hashsetString.Add(i);
 
-            string.Join("\n", hashsetString);
+			string.Join("\n", hashsetString);
 
-            stopwatch.Stop();
-            PrintLog($"HashSet Add and Join Test took: {stopwatch.ElapsedMilliseconds} ms", Color.CornflowerBlue);
-
-            /*
+			stopwatch.Stop();
+			PrintLog($"HashSet Add and Join Test took: {stopwatch.ElapsedMilliseconds} ms", Color.CornflowerBlue);
+			
+			/*
 			String Concatenate Test took: 14260 ms
 			String Builder Test took: 10 ms
 			List Add and Join Test took: 9 ms
@@ -439,6 +480,6 @@ namespace LastChaos_ToolBox_2024
 			List Add and Join Test took: 9 ms
 			HashSet Add and Join Test took: 12 ms
 			*/
-        }
-    }
+		}
+	}
 }

@@ -316,6 +316,28 @@ namespace LastChaos_ToolBox_2024.Editors
 				cbRvRValueSelector.Items.Add(strSyndicateType);
 
 			cbRvRValueSelector.EndUpdate();
+			/****************************************/
+			gridFortune.TopLeftHeaderCell.Value = "N°";
+			gridFortune.Columns.Add("skill", "Skill ID");
+			gridFortune.Columns.Add("level", "Skill Level");
+			gridFortune.Columns.Add("prob", "Probability");
+			gridFortune.Columns.Add("string", "String ID");
+
+			gridFortune.AdvancedRowHeadersBorderStyle.All = DataGridViewAdvancedCellBorderStyle.Single;
+			gridFortune.RowHeadersDefaultCellStyle.BackColor = Color.FromArgb(28, 30, 31);
+			gridFortune.RowHeadersDefaultCellStyle.SelectionForeColor = gridFortune.RowHeadersDefaultCellStyle.ForeColor = Color.FromArgb(208, 203, 148);
+			gridFortune.RowHeadersDefaultCellStyle.SelectionBackColor = Color.FromArgb(60, 56, 54);
+
+			gridFortune.AdvancedColumnHeadersBorderStyle.All = DataGridViewAdvancedCellBorderStyle.Single;
+			gridFortune.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(28, 30, 31);
+			gridFortune.ColumnHeadersDefaultCellStyle.ForeColor = Color.FromArgb(208, 203, 148);
+			gridFortune.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+
+			gridFortune.AdvancedCellBorderStyle.Bottom = DataGridViewAdvancedCellBorderStyle.Inset;
+			gridFortune.DefaultCellStyle.BackColor = Color.FromArgb(40, 40, 40);
+			gridFortune.DefaultCellStyle.ForeColor = Color.FromArgb(208, 203, 148);
+			gridFortune.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+			/****************************************/
 #if DEBUG
 			Stopwatch stopwatch = new Stopwatch();
 			stopwatch.Start();
@@ -328,7 +350,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			);
 #if DEBUG
 			stopwatch.Stop();
-			pMain.PrintLog($"Data load took: {stopwatch.ElapsedMilliseconds} ms", Color.CornflowerBlue);
+			pMain.PrintLog($"Items, Zones, Skill & Skills Level Data load took: {stopwatch.ElapsedMilliseconds} ms", Color.CornflowerBlue);
 #endif
 			/****************************************/
 			if (pMain.pItemTable != null)
@@ -372,7 +394,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			}
 			/****************************************/
 			pToolTip = new ToolTip();
-			pToolTip.SetToolTip(btnReload, "Reload Items, Zones, Skills & Rare Options Data from Database");
+			pToolTip.SetToolTip(btnReload, "Reload Items, Zones, Skills, Rare Options & Fortune Data from Database");
 			pToolTips[btnReload] = pToolTip;    // For Dispose
 			/****************************************/
 			btnReload.Enabled = true;
@@ -421,6 +443,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			cbTypeSelector.SelectedIndex = -1;
 			cbSubTypeSelector.SelectedIndex = -1;
 			cbWearingPositionSelector.SelectedIndex = -1;
+			gridFortune.Rows.Clear();
 
 			foreach (var toolTip in pToolTips.Values)
 				toolTip.Dispose();
@@ -430,7 +453,6 @@ namespace LastChaos_ToolBox_2024.Editors
 			// Copy data from main table to temp one
 			pTempRow.ItemArray = (object[])pMain.pItemTable.Select("a_index = " + nItemID)[0].ItemArray.Clone();
 
-			// Load data to UI
 			// General
 			tbID.Text = nItemID.ToString();
 			/****************************************/
@@ -762,7 +784,8 @@ namespace LastChaos_ToolBox_2024.Editors
 
 				((TextBox)this.Controls.Find("tbItem" + i + "RequiredAmount", true)[0]).Text = pTempRow["a_need_item_count" + i].ToString();
 			}
-			/****************************************/
+
+			// Rare
 			DataRow pRareOptionTableRow;
 
 			for (int i = 0; i <= 9; i++)
@@ -785,11 +808,39 @@ namespace LastChaos_ToolBox_2024.Editors
 
 				((TextBox)this.Controls.Find("tbRareProb" + i, true)[0]).Text = nRateOptionProb.ToString();
 				
-				((Label)this.Controls.Find("lRareProb" + i + "Percentage", true)[0]).Text = ((nRateOptionProb * 100.0f) / 10000.0f) + "%";	// NOTE: I'm not sure about this calc. Ref: IdentifyRareOption
+				((Label)this.Controls.Find("lRareProb" + i + "Percentage", true)[0]).Text = ((nRateOptionProb * 100.0f) / 10000.0f) + "%";
 			}
 
 			pRareOptionTableRow = null;
-			/****************************************/
+
+			// Fortune
+#if DEBUG
+			Stopwatch stopwatch = new Stopwatch();
+			stopwatch.Start();
+#endif
+            bool bRequestNeeded = (pMain.pItemFortuneTable == null) || (pMain.pItemFortuneTable.Select("a_item_idx = " + nItemID).Length <= 0);
+			if (bRequestNeeded)
+			{
+				// NOTE: I tried with "select count(*)" first but, was more slower.
+				pMain.pItemFortuneTable = pMain.QuerySelect(pMain.pSettings.DBCharset, $"SELECT a_item_idx, a_skill_index , a_skill_level, a_string_index, a_prob FROM {pMain.pSettings.DBData}.t_fortune_data WHERE a_item_idx = " + nItemID + " ORDER BY a_string_index;"); // NOTE: I don't know what column use to sort
+            }
+#if DEBUG
+            stopwatch.Stop();
+            pMain.PrintLog($"Fortune Data load took: {stopwatch.ElapsedMilliseconds} ms", Color.CornflowerBlue);
+#endif
+            if (pMain.pItemFortuneTable != null)
+			{
+				DataRow pItemFortuneTemp = pMain.pItemFortuneTable.Select("a_item_idx = " + nItemID).FirstOrDefault();
+				if (pItemFortuneTemp != null)
+				{
+					for (int i = 0; i < 2; i++)
+					{
+						gridFortune.Rows.Insert(i, "skill id - name", "0", "0", "999");
+						gridFortune.Rows[i].HeaderCell.Value = (i + 1).ToString();
+					}
+				}
+			}
+
 			bUserAction = true;
 
 			btnUpdate.Enabled = true;
@@ -899,6 +950,9 @@ namespace LastChaos_ToolBox_2024.Editors
 
 			pMain.pRareOptionTable.Dispose();
 			pMain.pRareOptionTable = null;
+
+			pMain.pItemFortuneTable.Dispose();
+			pMain.pItemFortuneTable = null;
 
 			btnCopy.Enabled = false;
 			btnDelete.Enabled = false;
@@ -1457,7 +1511,7 @@ namespace LastChaos_ToolBox_2024.Editors
 				}
 			}
 		}
-        private void btnSetAction(int nNumber) {
+		private void btnSetAction(int nNumber) {
 			// TODO: Completas estas funciones
 			/*
 			Aca hay que actuar en base a la flag seleccionada
@@ -1469,8 +1523,8 @@ namespace LastChaos_ToolBox_2024.Editors
 		private void btnSet2_Click(object sender, EventArgs e){ btnSetAction(2); }
 		private void btnSet3_Click(object sender, EventArgs e){ btnSetAction(3); }
 		private void btnSet4_Click(object sender, EventArgs e) { btnSetAction(4); }
-        /****************************************/
-        private void ChangeSetAction(TextBox cTextBox, int nNumber)
+		/****************************************/
+		private void ChangeSetAction(TextBox cTextBox, int nNumber)
 		{
 			if (bUserAction)
 			{
@@ -1639,8 +1693,8 @@ namespace LastChaos_ToolBox_2024.Editors
 		private void btnItem7Required_Click(object sender, EventArgs e) { ChangeItemRequiredAction(7); }
 		private void btnItem8Required_Click(object sender, EventArgs e) { ChangeItemRequiredAction(8); }
 		private void btnItem9Required_Click(object sender, EventArgs e) { ChangeItemRequiredAction(9); }
-        /****************************************/
-        private void ChangeItemRequiredAmountAction(TextBox cTextBox, int nNumber)
+		/****************************************/
+		private void ChangeItemRequiredAmountAction(TextBox cTextBox, int nNumber)
 		{
 			if (bUserAction)
 			{
@@ -1706,14 +1760,14 @@ namespace LastChaos_ToolBox_2024.Editors
 		private void btnRareIndex7_Click(object sender, EventArgs e) { ChangeRareOptionAction(7); }
 		private void btnRareIndex8_Click(object sender, EventArgs e) { ChangeRareOptionAction(8); }
 		private void btnRareIndex9_Click(object sender, EventArgs e) { ChangeRareOptionAction(9); }
-        /****************************************/
-        private void ChangeRareProbAction(TextBox cTextBox, int nNumber)
+		/****************************************/
+		private void ChangeRareProbAction(TextBox cTextBox, int nNumber)
 		{
 			if (bUserAction)
 			{
 				string strProb = cTextBox.Text;
 
-				((Label)this.Controls.Find("lRareProb" + nNumber + "Percentage", true)[0]).Text = ((Convert.ToInt32(strProb) * 100.0f) / 10000.0f) + "%";  // NOTE: I'm not sure about this calc. Ref: IdentifyRareOption
+				((Label)this.Controls.Find("lRareProb" + nNumber + "Percentage", true)[0]).Text = ((Convert.ToInt32(strProb) * 100.0f) / 10000.0f) + "%";
 
 				pTempRow["a_rare_prob_" + nNumber] = strProb;
 
@@ -1747,8 +1801,8 @@ namespace LastChaos_ToolBox_2024.Editors
 					pItemTableRow[column.ColumnName] = pTempRow[column.ColumnName];
 				}
 
-                bUnsavedChanges = false;
-            }
+				bUnsavedChanges = false;
+			}
 		}
     }
 }

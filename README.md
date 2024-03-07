@@ -18,7 +18,6 @@ If Flag is: ITEM_FLAG_RARE, a_rare_index_0/9 Should be Rare option Picker, a_rar
 If Flag is: unknown, a_set_0 should be Flag Picker (JewelCompositePosition)
 	If a_set_0 is 0, a_rare_index_0 should be a Option Picker.
 
-
 If a_type_idx is 0 or 1, a_set_0 should be Generic number Input.
 This↑ is super common situation so...
 
