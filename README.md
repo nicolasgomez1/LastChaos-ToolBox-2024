@@ -8,6 +8,22 @@ It provides the basics for creating tools to manage Databases and perhaps files 
 In Item Editor there are notes and examples on how to manage the request, storage and management of data.
 
 
+# TODO
+~~~
+If Flag is: ITEM_FLAG_COSTUME2, a_rare_index_0/4 should be Item Picker.
+If Flag is: ITEM_FLAG_ORIGIN, a_rare_index_1/5 should be Item Picker, a_rare_index_6/9 Shold be Skill Picker, a_set_4 shoul be Item Picker.	¿And a_rare_index_0? Generic number Input...
+If Flag is: ITEM_FLAG_RARE, a_rare_index_0/9, should be Rare Option Picker.
+If Flag is: ITEM_FLAG_QUEST, a_set_0 should be Zone Selector, a_set_1/4 should be Generic number Input.
+If Flag is: unknown, a_set_0 should be Flag Picker (JewelCompositePosition)
+	If a_set_0 is 0, a_rare_index_0 should be a Option Picker.
+
+If a_type_idx is 0 or 1, a_set_0 should be Generic number Input.
+This↑ is super common situation so...
+
+
+Analyzing the situation a little, the simplest thing would be to put TextBoxs and that's it, but I would like to make the tool foolproof.
+~~~
+
 # Concept of Global Tables
 * The idea behind the project is to have a fast and efficient tool in terms of requests to the database. With that in mind I designed a scheme in which there are __Global Tables__, these are populated for the first time by the Tool that requires the information, and later said information can be used by another tool, Avoiding constants requests each time some Tool open.
 

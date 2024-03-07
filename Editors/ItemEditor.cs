@@ -584,9 +584,9 @@ namespace LastChaos_ToolBox_2024.Editors
 			if (nItemFlag != 0 && strTooltip.Length <= 0)
 				pMain.PrintLog("Item Editor > Item: " + nItemID + " Error: a_flag out of range", Color.Red);
 
-            // TODO: Add check, for conflicts in flag config
+			// TODO: Add check for conflicts in flag config
 
-            pToolTip = new ToolTip();
+			pToolTip = new ToolTip();
 			pToolTip.SetToolTip(btnItemFlag, strTooltip.ToString());
 			pToolTips[btnItemFlag] = pToolTip;
 			/****************************************/
@@ -651,10 +651,10 @@ namespace LastChaos_ToolBox_2024.Editors
 			/****************************************/
 			for (int i = 1; i <= 6; i++)
 				((TextBox)this.Controls.Find("tbVariation" + i, true)[0]).Text = pTempRow["a_origin_variation" + i].ToString();
-            /****************************************/
-            DataRow pItemTableRow;
+			/****************************************/
+			DataRow pItemTableRow;
 
-            if ((nItemFlag & 1L << 22 /*ITEM_FLAG_QUEST*/) != 0)
+			if ((nItemFlag & 1L << 22 /*ITEM_FLAG_QUEST*/) != 0)
 			{
 				gbSetData.Visible = false;
 				gbQuestData.Visible = true;
@@ -677,7 +677,7 @@ namespace LastChaos_ToolBox_2024.Editors
 				gbQuestData.Visible = false;
 				gbSetData.Visible = true;
 
-                for (int i = 0; i <= 4; i++)
+				for (int i = 0; i <= 4; i++)
 				{
 					int nSetItemID = Convert.ToInt32(pTempRow["a_set_" + i]);
 					string strItemID = nSetItemID.ToString();
@@ -687,18 +687,18 @@ namespace LastChaos_ToolBox_2024.Editors
 						pItemTableRow = pMain.pItemTable.Select("a_index = " + nSetItemID).FirstOrDefault();
 
 						if (pItemTableRow != null)
-                            strItemID += " - " + pItemTableRow["a_name_" + pMain.pSettings.WorkLocale];
+							strItemID += " - " + pItemTableRow["a_name_" + pMain.pSettings.WorkLocale];
 						else
 							pMain.PrintLog("Item Editor > Item: " + nSetItemID + " Error: a_set_" + i + " not exist.", Color.Red);
 
-                        pItemTableRow = null;
-                    }
+						pItemTableRow = null;
+					}
 
 					((Button)this.Controls.Find("btnSet" + i, true)[0]).Text = strItemID;
-                }
-            }
-            /****************************************/
-            for (int i = 0; i <= 4; i++)
+				}
+			}
+			/****************************************/
+			for (int i = 0; i <= 4; i++)
 				((TextBox)this.Controls.Find("tbOption" + i, true)[0]).Text = pTempRow["a_num_" + i].ToString();
 
 			// Crafting
@@ -755,8 +755,8 @@ namespace LastChaos_ToolBox_2024.Editors
 					else
 						pMain.PrintLog("Item Editor > Item: " + nItemID + " Error: a_need_item" + i + " not exist.", Color.Red);
 
-                    pItemTableRow = null;
-                }
+					pItemTableRow = null;
+				}
 
 				((Button)this.Controls.Find("btnItem" + i + "Required", true)[0]).Text = strRequiredItemID;
 
@@ -1225,7 +1225,7 @@ namespace LastChaos_ToolBox_2024.Editors
 					return;
 
 				long lFlag = pFlagSelector.ReturnValues;
-                string strFlag = lFlag.ToString();
+				string strFlag = lFlag.ToString();
 
 				btnItemFlag.Text = strFlag;
 
@@ -1238,54 +1238,55 @@ namespace LastChaos_ToolBox_2024.Editors
 						strTooltip.Append(Defs.ItemFlag[i] + "\n");
 				}
 
-                // TODO: Add check, for conflicts in flag config
+				// TODO: Add check for conflicts in flag config
 
-                if ((lFlag & 1L << 22 /*ITEM_FLAG_QUEST*/) != 0)
-                {
-                    gbSetData.Visible = false;
-                    gbQuestData.Visible = true;
+				if ((lFlag & 1L << 22 /*ITEM_FLAG_QUEST*/) != 0)
+				{
+					gbSetData.Visible = false;
+					gbQuestData.Visible = true;
 
-                    if (strArrayZones != null)
-                    {
-                        int nZoneID = Convert.ToInt32(pTempRow["a_set_0"]);
+					if (strArrayZones != null)
+					{
+						int nZoneID = Convert.ToInt32(pTempRow["a_set_0"]);
 
-                        if (nZoneID <= strArrayZones.Length)
-                            cbSet0.SelectedIndex = nZoneID;
-                        else
-                            pMain.PrintLog("Item Editor > Item: " + pTempRow["a_index"].ToString() + " Error: a_set_0 out of range", Color.Red);
-                    }
+						if (nZoneID <= strArrayZones.Length)
+							cbSet0.SelectedIndex = nZoneID;
+						else
+							pMain.PrintLog("Item Editor > Item: " + pTempRow["a_index"].ToString() + " Error: a_set_0 out of range", Color.Red);
+					}
 
-                    for (int i = 1; i <= 4; i++)
-                        ((TextBox)this.Controls.Find("tbSet" + i, true)[0]).Text = pTempRow["a_set_" + i].ToString();
-                }
-                else
-                {
-                    gbQuestData.Visible = false;
-                    gbSetData.Visible = true;
-                    DataRow pItemTableRow;
+					for (int i = 1; i <= 4; i++)
+						((TextBox)this.Controls.Find("tbSet" + i, true)[0]).Text = pTempRow["a_set_" + i].ToString();
+				}
+				else
+				{
+					gbQuestData.Visible = false;
+					gbSetData.Visible = true;
 
-                    for (int i = 0; i <= 4; i++)
-                    {
-                        int nSetItemID = Convert.ToInt32(pTempRow["a_set_" + i]);
-                        string strItemID = nSetItemID.ToString();
+					DataRow pItemTableRow;
 
-                        if (nSetItemID != 0)
-                        {
-                            pItemTableRow = pMain.pItemTable.Select("a_index = " + nSetItemID).FirstOrDefault();
+					for (int i = 0; i <= 4; i++)
+					{
+						int nSetItemID = Convert.ToInt32(pTempRow["a_set_" + i]);
+						string strItemID = nSetItemID.ToString();
 
-                            if (pItemTableRow != null)
-                                strItemID += " - " + pItemTableRow["a_name_" + pMain.pSettings.WorkLocale];
-                            else
-                                pMain.PrintLog("Item Editor > Item: " + nSetItemID + " Error: a_set_" + i + " not exist.", Color.Red);
+						if (nSetItemID != 0)
+						{
+							pItemTableRow = pMain.pItemTable.Select("a_index = " + nSetItemID).FirstOrDefault();
 
-                            pItemTableRow = null;
-                        }
+							if (pItemTableRow != null)
+								strItemID += " - " + pItemTableRow["a_name_" + pMain.pSettings.WorkLocale];
+							else
+								pMain.PrintLog("Item Editor > Item: " + nSetItemID + " Error: a_set_" + i + " not exist.", Color.Red);
 
-                        ((Button)this.Controls.Find("btnSet" + i, true)[0]).Text = strItemID;
-                    }
-                }
+							pItemTableRow = null;
+						}
 
-                pToolTips[btnItemFlag].SetToolTip(btnItemFlag, strTooltip.ToString());
+						((Button)this.Controls.Find("btnSet" + i, true)[0]).Text = strItemID;
+					}
+				}
+
+				pToolTips[btnItemFlag].SetToolTip(btnItemFlag, strTooltip.ToString());
 
 				pTempRow["a_flag"] = strFlag;
 
@@ -1456,26 +1457,30 @@ namespace LastChaos_ToolBox_2024.Editors
 				}
 			}
 		}
+        private void btnSetAction(int nNumber) {
+			// TODO: Completas estas funciones
+			/*
+			Aca hay que actuar en base a la flag seleccionada
+			*/
+		}
 
-		// TODO: Completas estas funciones
-		private void btnSet0_Click(object sender, EventArgs e){}
-        private void btnSet1_Click(object sender, EventArgs e){}
-        private void btnSet2_Click(object sender, EventArgs e){}
-        private void btnSet3_Click(object sender, EventArgs e){}
-        private void btnSet4_Click(object sender, EventArgs e){}
-		/// ///////////////////////////////////////////////////////
-
+		private void btnSet0_Click(object sender, EventArgs e) { btnSetAction(0); }
+		private void btnSet1_Click(object sender, EventArgs e){ btnSetAction(1); }
+		private void btnSet2_Click(object sender, EventArgs e){ btnSetAction(2); }
+		private void btnSet3_Click(object sender, EventArgs e){ btnSetAction(3); }
+		private void btnSet4_Click(object sender, EventArgs e) { btnSetAction(4); }
+        /****************************************/
         private void ChangeSetAction(TextBox cTextBox, int nNumber)
-        {
-            if (bUserAction)
-            {
-                pTempRow["a_set_" + nNumber] = cTextBox.Text;
+		{
+			if (bUserAction)
+			{
+				pTempRow["a_set_" + nNumber] = cTextBox.Text;
 
-                bUnsavedChanges = true;
-            }
-        }
+				bUnsavedChanges = true;
+			}
+		}
 
-        private void tbSet1_TextChanged(object sender, EventArgs e) { ChangeSetAction((TextBox)sender, 1); }
+		private void tbSet1_TextChanged(object sender, EventArgs e) { ChangeSetAction((TextBox)sender, 1); }
 		private void tbSet2_TextChanged(object sender, EventArgs e) { ChangeSetAction((TextBox)sender, 2); }
 		private void tbSet3_TextChanged(object sender, EventArgs e) { ChangeSetAction((TextBox)sender, 3); }
 		private void tbSet4_TextChanged(object sender, EventArgs e) { ChangeSetAction((TextBox)sender, 4); }
@@ -1634,8 +1639,8 @@ namespace LastChaos_ToolBox_2024.Editors
 		private void btnItem7Required_Click(object sender, EventArgs e) { ChangeItemRequiredAction(7); }
 		private void btnItem8Required_Click(object sender, EventArgs e) { ChangeItemRequiredAction(8); }
 		private void btnItem9Required_Click(object sender, EventArgs e) { ChangeItemRequiredAction(9); }
-
-		private void ChangeItemRequiredAmountAction(TextBox cTextBox, int nNumber)
+        /****************************************/
+        private void ChangeItemRequiredAmountAction(TextBox cTextBox, int nNumber)
 		{
 			if (bUserAction)
 			{
@@ -1701,9 +1706,8 @@ namespace LastChaos_ToolBox_2024.Editors
 		private void btnRareIndex7_Click(object sender, EventArgs e) { ChangeRareOptionAction(7); }
 		private void btnRareIndex8_Click(object sender, EventArgs e) { ChangeRareOptionAction(8); }
 		private void btnRareIndex9_Click(object sender, EventArgs e) { ChangeRareOptionAction(9); }
-
-
-		private void ChangeRareProbAction(TextBox cTextBox, int nNumber)
+        /****************************************/
+        private void ChangeRareProbAction(TextBox cTextBox, int nNumber)
 		{
 			if (bUserAction)
 			{
@@ -1738,13 +1742,13 @@ namespace LastChaos_ToolBox_2024.Editors
 					if (!pMain.pItemTable.Columns.Contains(column.ColumnName))
 						pMain.pItemTable.Columns.Add(column.ColumnName, column.DataType);
 
-					// TODO: Componer la query, ejecutarl ay si es exitosa la operacion, actualizar los datos locales
+					// TODO: Compose query to insert/update, if work update local global table.
 
 					pItemTableRow[column.ColumnName] = pTempRow[column.ColumnName];
 				}
 
-				// TODO: cambiar bUnsavedChanges a false si la operacion es exitosa
-			}
+                bUnsavedChanges = false;
+            }
 		}
     }
 }
