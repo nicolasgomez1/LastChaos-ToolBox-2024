@@ -145,4 +145,5 @@ private async Task LoadItemDataAsync()
 }
 ```
 
+Item Editor WiP
 ![1](https://github.com/nicolasgomez1/LastChaos-ToolBox-2024/assets/5092697/c10e3961-4a2b-4602-b87a-81c6bbb26b3b)
