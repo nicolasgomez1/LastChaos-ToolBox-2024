@@ -21,7 +21,7 @@ If a_type_idx is 0 or 1, a_set_0 should be Generic number Input.
 This↑ is super common situation so...
 
 
-Analyzing the situation a little, the simplest thing would be to put TextBoxs and that's it, but I would like to make the tool foolproof.
+Analyzing the situation... the simplest thing would be to put TextBoxs and that's it, but I would like to make the tool foolproof.
 ~~~
 
 # Concept of Global Tables
