@@ -31,6 +31,7 @@ namespace LastChaos_ToolBox_2024.Editors
 		private System.Windows.Forms.ToolTip pToolTip;
 		private DataRow pTempItemRow;
 		private DataRow pTempFortuneHead;
+		private DataRow[] pTempFortuneData;
 		private int nSearchPosition = 0;
 		private string[] strArrayZones;
 		private Dictionary<Control, ToolTip> pToolTips = new Dictionary<Control, ToolTip>();
@@ -450,6 +451,7 @@ namespace LastChaos_ToolBox_2024.Editors
 				// TODO: Add here all used tables
 				pTempItemRow = null;
 				pTempFortuneHead = null;
+				pTempFortuneData = null;
 
 				strArrayZones = null;
 			}
@@ -473,11 +475,10 @@ namespace LastChaos_ToolBox_2024.Editors
 		{
 			bUserAction = false;
 
-			// Clear Selections & Others
+			// Reset some Controls
 			cbTypeSelector.SelectedIndex = -1;
 			cbSubTypeSelector.SelectedIndex = -1;
 			cbWearingPositionSelector.SelectedIndex = -1;
-
 			cbFortuneEnable.Visible = false;
 			cbIFortuneProbType.Visible = false;
 			btnAddFortune.Visible = false;
@@ -487,10 +488,8 @@ namespace LastChaos_ToolBox_2024.Editors
 			foreach (var toolTip in pToolTips.Values)
 				toolTip.Dispose();
 			/****************************************/
-			// Replicate struct in temp row val
-			pTempItemRow = pMain.pItemTable.NewRow();
-			// Copy data from main table to temp one
-			pTempItemRow.ItemArray = (object[])pMain.pItemTable.Select("a_index = " + nItemID)[0].ItemArray.Clone();
+			pTempItemRow = pMain.pItemTable.NewRow();   // Replicate struct in temp row val
+			pTempItemRow.ItemArray = (object[])pMain.pItemTable.Select("a_index = " + nItemID)[0].ItemArray.Clone();    // Copy data from main table to temp one
 
 			// General
 			tbID.Text = nItemID.ToString();
@@ -899,15 +898,16 @@ namespace LastChaos_ToolBox_2024.Editors
 					/****************************************/
 					if (pMain.pItemFortuneDataTable != null)
 					{
-						List<DataRow> listItemFortune = pMain.pItemFortuneDataTable.AsEnumerable().Where(row => row.Field<int>("a_item_idx") == nItemID).ToList();
-						if (listItemFortune.Any())
+						pTempFortuneData = pMain.pItemFortuneDataTable.AsEnumerable().Where(row => row.Field<int>("a_item_idx") == nItemID).ToArray();
+
+						if (pTempFortuneData.Length > 0)
 						{
 							bHaveFortune = true;
 
 							gridFortune.SuspendLayout();    // NOTE: Esto no parece estar funcionando...
 							
 							int i = 0;
-							foreach (DataRow pFortuneRow in listItemFortune)
+							foreach (DataRow pFortuneRow in pTempFortuneData)
 							{
 								int iSkillID = Convert.ToInt32(pFortuneRow["a_skill_index"]);
 								int iSkillLevel = Convert.ToInt32(pFortuneRow["a_skill_level"]);
@@ -936,6 +936,10 @@ namespace LastChaos_ToolBox_2024.Editors
 												cSkillLevel.Value = cSkillLevel.Items[cSkillLevel.Items.Count - 1];
 										}
 									}
+
+									gridFortune.Rows[i].Cells["prob"].Value = pFortuneRow["a_prob"].ToString();
+
+									gridFortune.Rows[i].Cells["string"].Value = pFortuneRow["a_string_index"].ToString();
 								}
 
 								pSkillRow = null;
@@ -1638,10 +1642,7 @@ namespace LastChaos_ToolBox_2024.Editors
 		}
 		private void btnSetAction(int nNumber)
 		{
-			// TODO: Completas estas funciones
-			/*
-			Aca hay que actuar en base a la flag seleccionada
-			*/
+			// TODO: Here have to do something depending on flag selected.
 		}
 
 		private void btnSet0_Click(object sender, EventArgs e) { btnSetAction(0); }
@@ -1939,6 +1940,55 @@ namespace LastChaos_ToolBox_2024.Editors
 					pTempFortuneHead["a_prob_type"] = nType.ToString();
 
 					bUnsavedChanges = true;
+				}
+			}
+		}
+
+		private void gridFortune_CellContentClick(object sender, DataGridViewCellEventArgs e)
+		{
+			if (bUserAction)
+			{
+				if (gridFortune.Columns[e.ColumnIndex] is DataGridViewButtonColumn && e.RowIndex >= 0)
+				{
+					// TODO: Check if row exist, if not add it.
+					// pTempFortuneData
+				}
+			}
+		}
+
+		private void gridFortune_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
+		{
+			if (bUserAction)
+			{
+				if (gridFortune.CurrentCell is DataGridViewComboBoxCell)
+				{
+					ComboBox comboBox = e.Control as ComboBox;
+					if (comboBox != null)
+					{
+						comboBox.SelectedIndexChanged += (s, args) =>
+						{
+							// TODO: Check if row exist, if not add it.
+							// pTempFortuneData
+						};
+					}
+				}
+			}
+		}
+
+		private void gridFortune_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+		{
+			if (bUserAction)
+			{
+				if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
+				{
+					DataGridViewCell pCell = gridFortune.Rows[e.RowIndex].Cells["prob"];
+
+					if (pCell is DataGridViewTextBoxCell)
+					{
+						string strProbValue = pCell.Value?.ToString();
+						// TODO: Check if row exist, if not add it.
+						// pTempFortuneData
+					}
 				}
 			}
 		}
