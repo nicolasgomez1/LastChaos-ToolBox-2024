@@ -10,6 +10,7 @@ using System.Drawing;
 using System.Linq;
 using System.Management;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Security.Policy;
 using System.Text;
@@ -27,6 +28,7 @@ namespace LastChaos_ToolBox_2024.Editors
 		private Main pMain;
 		private bool bUserAction = false;
 		private bool bUnsavedChanges = false;
+		private bool bFortuneLoaded = false;
 		private ListBoxItem pLastSelected;
 		private System.Windows.Forms.ToolTip pToolTip;
 		private DataRow pTempItemRow;
@@ -62,6 +64,45 @@ namespace LastChaos_ToolBox_2024.Editors
 #endif
 
 			pMain = mainForm;
+
+			gbFortune.MouseEnter += gbFortune_MouseEnter;
+			/****************************************/
+			gridFortune.TopLeftHeaderCell.Value = "N°";
+
+			DataGridViewButtonColumn cSkill = new DataGridViewButtonColumn();
+			cSkill.Name = "skill";
+			cSkill.HeaderText = "Skill";
+			gridFortune.Columns.Add(cSkill);
+
+			DataGridViewComboBoxColumn cSkillLevel = new DataGridViewComboBoxColumn();
+			cSkillLevel.Name = "level";
+			cSkillLevel.HeaderText = "Skill Level";
+			gridFortune.Columns.Add(cSkillLevel);
+
+			gridFortune.Columns.Add("prob", "Probability");
+
+			DataGridViewButtonColumn cString = new DataGridViewButtonColumn();
+			cString.Name = "string";
+			cString.HeaderText = "String ID";
+			gridFortune.Columns.Add(cString);
+
+			gridFortune.AdvancedRowHeadersBorderStyle.All = DataGridViewAdvancedCellBorderStyle.Single;
+			gridFortune.RowHeadersDefaultCellStyle.BackColor = Color.FromArgb(28, 30, 31);
+			gridFortune.RowHeadersDefaultCellStyle.SelectionForeColor = gridFortune.RowHeadersDefaultCellStyle.ForeColor = Color.FromArgb(208, 203, 148);
+			gridFortune.RowHeadersDefaultCellStyle.SelectionBackColor = Color.FromArgb(60, 56, 54);
+
+			gridFortune.AdvancedColumnHeadersBorderStyle.All = DataGridViewAdvancedCellBorderStyle.Single;
+			gridFortune.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(28, 30, 31);
+			gridFortune.ColumnHeadersDefaultCellStyle.ForeColor = Color.FromArgb(208, 203, 148);
+			gridFortune.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+
+			gridFortune.AdvancedCellBorderStyle.Bottom = DataGridViewAdvancedCellBorderStyle.Inset;
+			gridFortune.DefaultCellStyle.BackColor = Color.FromArgb(40, 40, 40);
+			gridFortune.DefaultCellStyle.ForeColor = Color.FromArgb(208, 203, 148);
+			gridFortune.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+
+			gridFortune.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+			/****************************************/
 		}
 
 		public class ListBoxItem
@@ -250,6 +291,134 @@ namespace LastChaos_ToolBox_2024.Editors
 			}
 		}
 
+		private void LoadFortuneData()
+		{
+#if DEBUG
+			Stopwatch stopwatch = new Stopwatch();
+			stopwatch.Start();
+#endif
+			int nItemID = Convert.ToInt32(pTempItemRow["a_index"]);
+			bool bHaveFortune = false;
+
+			bool bRequestNeeded = (pMain.pItemFortuneHeadTable == null) || (pMain.pItemFortuneHeadTable.Select("a_item_idx = " + nItemID).Length <= 0);
+			if (bRequestNeeded)
+			{
+				pMain.pItemFortuneHeadTable = pMain.QuerySelect(pMain.pSettings.DBCharset, $"SELECT a_item_idx, a_prob_type, a_enable FROM {pMain.pSettings.DBData}.t_fortune_head WHERE a_item_idx = " + nItemID);
+
+				DataRow[] pFortuneHead = pMain.pItemFortuneHeadTable.Select("a_item_idx = " + nItemID);
+
+				if (pFortuneHead.Length > 0)
+				{
+					bRequestNeeded = (pMain.pItemFortuneDataTable == null) || (pMain.pItemFortuneDataTable.Select("a_item_idx = " + nItemID).Length <= 0);
+
+					if (bRequestNeeded)
+					{
+						pMain.pItemFortuneDataTable = pMain.QuerySelect(pMain.pSettings.DBCharset, $"SELECT a_item_idx, a_skill_index, a_skill_level, a_string_index, a_prob FROM {pMain.pSettings.DBData}.t_fortune_data WHERE a_item_idx = " + nItemID + " ORDER BY a_string_index;"); // NOTE: I don't know what column use to sort
+
+						if (pMain.pItemFortuneHeadTable != null)
+						{
+							pTempFortuneHead = pMain.pItemFortuneHeadTable.NewRow();
+							pTempFortuneHead.ItemArray = (object[])pFortuneHead[0].ItemArray.Clone();
+						}
+					}
+				}
+
+				pFortuneHead = null;
+			}
+#if DEBUG
+			stopwatch.Stop();
+			pMain.PrintLog($"Check and Fortune Head & Data load took: {stopwatch.ElapsedMilliseconds} ms", Color.CornflowerBlue);
+#endif
+		}
+
+		private void SetFortuneData()
+		{
+			if (bFortuneLoaded)
+				return;
+
+			bFortuneLoaded = true;
+
+			gridFortune.Rows.Clear();
+
+			int nItemID = Convert.ToInt32(pTempItemRow["a_index"]);
+
+			DataRow[] pFortuneHead = pMain.pItemFortuneHeadTable.Select("a_item_idx = " + nItemID);
+
+			if (pFortuneHead.Length > 0)
+			{
+				cbFortuneEnable.Visible = true;
+				lProbType.Visible = true;
+				cbIFortuneProbType.Visible = true;
+				gridFortune.Enabled = true;
+
+				if (pTempFortuneHead["a_enable"].ToString() == "1")
+					cbFortuneEnable.Checked = true;
+				else
+					cbFortuneEnable.Checked = false;
+
+				cbIFortuneProbType.SelectedIndex = Convert.ToInt32(pTempFortuneHead["a_prob_type"]);
+
+				/****************************************/
+
+				if (pMain.pItemFortuneDataTable != null)
+				{
+					pTempFortuneData = pMain.pItemFortuneDataTable.AsEnumerable().Where(row => row.Field<int>("a_item_idx") == nItemID).ToArray();
+
+					if (pTempFortuneData.Length > 0)
+					{
+						int i = 0;
+						foreach (DataRow pFortuneRow in pTempFortuneData)
+						{
+							int iSkillID = Convert.ToInt32(pFortuneRow["a_skill_index"]);
+							int iSkillLevel = Convert.ToInt32(pFortuneRow["a_skill_level"]);
+							string strSkillID = iSkillID.ToString();
+
+							DataRow pSkillRow = pMain.pSkillTable.Select("a_index = " + strSkillID).FirstOrDefault();
+							if (pSkillRow != null)
+							{
+								gridFortune.Rows.Insert(i);
+
+								gridFortune.Rows[i].HeaderCell.Value = (i + 1).ToString();
+
+								gridFortune.Rows[i].Cells["skill"].Value = strSkillID + " - " + pSkillRow["a_name_" + pMain.pSettings.WorkLocale];
+
+								using (DataGridViewComboBoxCell cSkillLevel = (DataGridViewComboBoxCell)gridFortune.Rows[i].Cells["level"])
+								{
+									List<DataRow> listSkillLevels = pMain.pSkillLevelTable.AsEnumerable().Where(row => row.Field<int>("a_index") == iSkillID).ToList();
+
+									foreach (var pRowSkillLevel in listSkillLevels)
+									{
+										int iFortuneSkillLevel = Convert.ToInt32(pRowSkillLevel["a_level"]);
+
+										cSkillLevel.Items.Add("Level: " + iFortuneSkillLevel + " - Power: " + pRowSkillLevel["a_dummypower"].ToString());
+
+										if (iSkillLevel == iFortuneSkillLevel)
+											cSkillLevel.Value = cSkillLevel.Items[cSkillLevel.Items.Count - 1];
+									}
+								}
+
+								gridFortune.Rows[i].Cells["prob"].Value = pFortuneRow["a_prob"].ToString();
+
+								gridFortune.Rows[i].Cells["string"].Value = pFortuneRow["a_string_index"].ToString();
+							}
+
+							pSkillRow = null;
+
+							i++;
+						}
+					}
+					else
+					{
+						pMain.PrintLog("Item Editor > Item: " + nItemID + " Warning: This item have a entry in a_fortune_head, but not in a_fortune_data", Color.Yellow);
+					}
+				}
+			}
+			else
+			{
+				btnAddFortune.Visible = true;
+			}
+		}
+
 		private async void ItemEditor_LoadAsync(object sender, EventArgs e)
 		{
 			ProgressDialog pProgressDialog = new ProgressDialog(this, "Loading Data, Please Wait...");
@@ -322,6 +491,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			cbRvRValueSelector.EndUpdate();
 			/****************************************/
 			cbFortuneEnable.Visible = false;
+			lProbType.Visible = false;
 			cbIFortuneProbType.Visible = false;
 			btnAddFortune.Visible = false;
 			gridFortune.Enabled = false;
@@ -334,43 +504,6 @@ namespace LastChaos_ToolBox_2024.Editors
 				cbIFortuneProbType.Items.Add(strProbType);
 
 			cbIFortuneProbType.EndUpdate();
-			/****************************************/
-			gridFortune.TopLeftHeaderCell.Value = "N°";
-
-			DataGridViewButtonColumn cSkill = new DataGridViewButtonColumn();
-			cSkill.Name = "skill";
-			cSkill.HeaderText = "Skill";
-			gridFortune.Columns.Add(cSkill);
-
-			DataGridViewComboBoxColumn cSkillLevel = new DataGridViewComboBoxColumn();
-			cSkillLevel.Name = "level";
-			cSkillLevel.HeaderText = "Skill Level";
-			gridFortune.Columns.Add(cSkillLevel);
-
-			gridFortune.Columns.Add("prob", "Probability");
-
-			DataGridViewButtonColumn cString = new DataGridViewButtonColumn();
-			cString.Name = "string";
-			cString.HeaderText = "String ID";
-			gridFortune.Columns.Add(cString);
-
-			gridFortune.AdvancedRowHeadersBorderStyle.All = DataGridViewAdvancedCellBorderStyle.Single;
-			gridFortune.RowHeadersDefaultCellStyle.BackColor = Color.FromArgb(28, 30, 31);
-			gridFortune.RowHeadersDefaultCellStyle.SelectionForeColor = gridFortune.RowHeadersDefaultCellStyle.ForeColor = Color.FromArgb(208, 203, 148);
-			gridFortune.RowHeadersDefaultCellStyle.SelectionBackColor = Color.FromArgb(60, 56, 54);
-
-			gridFortune.AdvancedColumnHeadersBorderStyle.All = DataGridViewAdvancedCellBorderStyle.Single;
-			gridFortune.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(28, 30, 31);
-			gridFortune.ColumnHeadersDefaultCellStyle.ForeColor = Color.FromArgb(208, 203, 148);
-			gridFortune.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-
-			gridFortune.AdvancedCellBorderStyle.Bottom = DataGridViewAdvancedCellBorderStyle.Inset;
-			gridFortune.DefaultCellStyle.BackColor = Color.FromArgb(40, 40, 40);
-			gridFortune.DefaultCellStyle.ForeColor = Color.FromArgb(208, 203, 148);
-			gridFortune.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-
-			gridFortune.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-			/****************************************/
 #if DEBUG
 			Stopwatch stopwatch = new Stopwatch();
 			stopwatch.Start();
@@ -386,7 +519,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			pMain.PrintLog($"Items, Zones, Skill & Skills Level Data load took: {stopwatch.ElapsedMilliseconds} ms", Color.CornflowerBlue);
 #endif
 			/****************************************/
-			if (pMain.pItemTable != null)
+			if (pMain.pItemTable != null && pMain.pZoneTable != null && pMain.pSkillTable != null && pMain.pSkillLevelTable != null && pMain.pRareOptionTable != null)
 			{
 				MainList.Items.Clear();
 
@@ -474,15 +607,17 @@ namespace LastChaos_ToolBox_2024.Editors
 		private void LoadItemData(int nItemID)
 		{
 			bUserAction = false;
-
+			
 			// Reset some Controls
 			cbTypeSelector.SelectedIndex = -1;
 			cbSubTypeSelector.SelectedIndex = -1;
 			cbWearingPositionSelector.SelectedIndex = -1;
+
+			bFortuneLoaded = false;
 			cbFortuneEnable.Visible = false;
+			lProbType.Visible = false;
 			cbIFortuneProbType.Visible = false;
 			btnAddFortune.Visible = false;
-			gridFortune.Rows.Clear();
 			gridFortune.Enabled = false;
 
 			foreach (var toolTip in pToolTips.Values)
@@ -852,119 +987,21 @@ namespace LastChaos_ToolBox_2024.Editors
 			pRareOptionTableRow = null;
 
 			// Fortune
-#if DEBUG
-			Stopwatch stopwatch = new Stopwatch();
-			stopwatch.Start();
-#endif
-			bool bHaveFortune = false;
-
-			bool bRequestNeeded = (pMain.pItemFortuneHeadTable == null) || (pMain.pItemFortuneHeadTable.Select("a_item_idx = " + nItemID).Length <= 0);
-			if (bRequestNeeded)
+			if (pMain.pSettings.ItemEditorAutoShowFortune == "true")
 			{
-				pMain.pItemFortuneHeadTable = pMain.QuerySelect(pMain.pSettings.DBCharset, $"SELECT a_item_idx, a_prob_type, a_enable FROM {pMain.pSettings.DBData}.t_fortune_head WHERE a_item_idx = " + nItemID);
-
-				bRequestNeeded = (pMain.pItemFortuneDataTable == null) || (pMain.pItemFortuneDataTable.Select("a_item_idx = " + nItemID).Length <= 0);
-
-				if (bRequestNeeded)
+				if (pMain.pItemFortuneHeadTable == null || pMain.pItemFortuneDataTable == null)
 				{
-					// NOTE: I tried with "select count(*)" first but, was more slower.
-					pMain.pItemFortuneDataTable = pMain.QuerySelect(pMain.pSettings.DBCharset, $"SELECT a_item_idx, a_skill_index, a_skill_level, a_string_index, a_prob FROM {pMain.pSettings.DBData}.t_fortune_data WHERE a_item_idx = " + nItemID + " ORDER BY a_string_index;"); // NOTE: I don't know what column use to sort
+					LoadFortuneData();
+					SetFortuneData();
+				}
+				else
+				{
+					SetFortuneData();
 				}
 			}
-#if DEBUG
-			stopwatch.Stop();
-			pMain.PrintLog($"Fortune Head & Data load took: {stopwatch.ElapsedMilliseconds} ms", Color.CornflowerBlue);
-#endif
-			if (pMain.pItemFortuneHeadTable != null)
+			else
 			{
-				DataRow[] pFortuneHead = pMain.pItemFortuneHeadTable.Select("a_item_idx = " + nItemID);
-
-				if (pFortuneHead.Length > 0)
-				{
-					cbFortuneEnable.Visible = true;
-					cbIFortuneProbType.Visible = true;
-					gridFortune.Enabled = true;
-
-					pTempFortuneHead = pMain.pItemFortuneHeadTable.NewRow();
-					pTempFortuneHead.ItemArray = (object[])pFortuneHead[0].ItemArray.Clone();
-
-					if (pTempFortuneHead["a_enable"].ToString() == "1")
-						cbFortuneEnable.Checked = true;
-					else
-						cbFortuneEnable.Checked = false;
-
-					cbIFortuneProbType.SelectedIndex = Convert.ToInt32(pTempFortuneHead["a_prob_type"]);
-
-					/****************************************/
-					if (pMain.pItemFortuneDataTable != null)
-					{
-						pTempFortuneData = pMain.pItemFortuneDataTable.AsEnumerable().Where(row => row.Field<int>("a_item_idx") == nItemID).ToArray();
-
-						if (pTempFortuneData.Length > 0)
-						{
-							bHaveFortune = true;
-
-							gridFortune.SuspendLayout();    // NOTE: Esto no parece estar funcionando...
-							
-							int i = 0;
-							foreach (DataRow pFortuneRow in pTempFortuneData)
-							{
-								int iSkillID = Convert.ToInt32(pFortuneRow["a_skill_index"]);
-								int iSkillLevel = Convert.ToInt32(pFortuneRow["a_skill_level"]);
-								string strSkillID = iSkillID.ToString();
-
-								DataRow pSkillRow = pMain.pSkillTable.Select("a_index = " + strSkillID).FirstOrDefault();
-								if (pSkillRow != null)
-								{
-									gridFortune.Rows.Insert(i);
-
-									gridFortune.Rows[i].HeaderCell.Value = (i + 1).ToString();
-
-									gridFortune.Rows[i].Cells["skill"].Value = strSkillID + " - " + pSkillRow["a_name_" + pMain.pSettings.WorkLocale];
-
-									using (DataGridViewComboBoxCell cSkillLevel = (DataGridViewComboBoxCell)gridFortune.Rows[i].Cells["level"])
-									{
-										List<DataRow> listSkillLevels = pMain.pSkillLevelTable.AsEnumerable().Where(row => row.Field<int>("a_index") == iSkillID).ToList();
-
-										foreach (var pRowSkillLevel in listSkillLevels)
-										{
-											int iFortuneSkillLevel = Convert.ToInt32(pRowSkillLevel["a_level"]);
-
-											cSkillLevel.Items.Add("Level: " + iFortuneSkillLevel + " - Power: " + pRowSkillLevel["a_dummypower"].ToString());
-
-											if (iSkillLevel == iFortuneSkillLevel)
-												cSkillLevel.Value = cSkillLevel.Items[cSkillLevel.Items.Count - 1];
-										}
-									}
-
-									gridFortune.Rows[i].Cells["prob"].Value = pFortuneRow["a_prob"].ToString();
-
-									gridFortune.Rows[i].Cells["string"].Value = pFortuneRow["a_string_index"].ToString();
-								}
-
-								pSkillRow = null;
-
-								i++;
-							}
-
-							gridFortune.ResumeLayout();
-						}
-						else
-						{
-							pMain.PrintLog("Item Editor > Item: " + nItemID + " Warning: This item have a entry in a_fortune_head, but not in a_fortune_data", Color.Yellow);
-						}
-					}
-				}
-
-				pFortuneHead = null;
-			}
-
-			if (!bHaveFortune)
-			{
-				cbFortuneEnable.Visible = false;
-				cbIFortuneProbType.Visible = false;
-				btnAddFortune.Visible = true;
-				gridFortune.Enabled = false;
+				gridFortune.Rows.Clear();
 			}
 
 			bUserAction = true;
@@ -1077,11 +1114,17 @@ namespace LastChaos_ToolBox_2024.Editors
 			pMain.pRareOptionTable.Dispose();
 			pMain.pRareOptionTable = null;
 
-			pMain.pItemFortuneHeadTable.Dispose();
-			pMain.pItemFortuneHeadTable = null;
+			if (pMain.pItemFortuneHeadTable != null)
+			{
+				pMain.pItemFortuneHeadTable.Dispose();
+				pMain.pItemFortuneHeadTable = null;
+			}
 
-			pMain.pItemFortuneDataTable.Dispose();
-			pMain.pItemFortuneDataTable = null;
+			if (pMain.pItemFortuneDataTable != null)
+			{
+				pMain.pItemFortuneDataTable.Dispose();
+				pMain.pItemFortuneDataTable = null;
+			}
 
 			btnCopy.Enabled = false;
 			btnDelete.Enabled = false;
@@ -1913,6 +1956,29 @@ namespace LastChaos_ToolBox_2024.Editors
 		private void tbRareProb8_TextChanged(object sender, EventArgs e) { ChangeRareProbAction((TextBox)sender, 8); }
 		private void tbRareProb9_TextChanged(object sender, EventArgs e) { ChangeRareProbAction((TextBox)sender, 9); }
 		/****************************************/
+		private void gbFortune_MouseEnter(object sender, EventArgs e) {
+			if (pMain.pItemTable != null)
+			{
+				bUserAction = false;
+
+				if (pMain.pItemFortuneHeadTable == null || pMain.pItemFortuneDataTable == null)
+				{
+					LoadFortuneData();
+					SetFortuneData();
+				}
+				else
+				{
+					SetFortuneData();
+				}
+
+				bUserAction = true;
+			}
+		}
+
+		private void btnAddFortune_Click(object sender, EventArgs e)
+		{
+			// TODO: agregar una nueva linea en pTempFortuneHead
+		}
 
 		private void cbFortuneEnable_CheckedChanged(object sender, EventArgs e)
 		{

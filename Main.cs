@@ -43,10 +43,12 @@ namespace LastChaos_ToolBox_2024
 			public string DBData = "";
 			public string DBUser = "";
 			public string DBCharset = "utf8";
-			public string WorkLocale = "USA";
 
+			public string WorkLocale = "USA";
 			public string ClientPath = "";
 			public string[] NationSupported;
+			public string ItemEditorAutoShowFortune = "false";
+
 			public Dictionary<string, string> ShowRenderDialog { get; set; } = new Dictionary<string, string>();
 		}
 
@@ -141,20 +143,23 @@ namespace LastChaos_ToolBox_2024
 			ItemEditor pItemEditor = new ItemEditor(this);
 			pItemEditor.Show();
 		}
-		
+
+		/****************************************/
+		private static StreamWriter pStreamWriter = new StreamWriter("Logs.log", true);
+
 		public void PrintLog(string strMsg, Color? ColorMsg = null)
 		{
 			StackFrame stackFrame = new StackFrame(1, true);
 
-			string strLog = $"{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff")} [{Path.GetFileName(stackFrame.GetFileName())} : {stackFrame.GetFileLineNumber()} : {stackFrame.GetMethod().Name}] > {strMsg}";
+			StringBuilder strLog = new StringBuilder();
+			strLog.Append($"{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff")} [{Path.GetFileName(stackFrame.GetFileName())} : {stackFrame.GetFileLineNumber()} : {stackFrame.GetMethod().Name}] > {strMsg}");
 
-			using (StreamWriter pStreamWriter = File.AppendText("Logs.log"))
-				pStreamWriter.WriteLine(strLog);
+			lock (pStreamWriter) { pStreamWriter.WriteLine(strLog.ToString()); }
 
-			rtbConsole.Invoke((MethodInvoker)delegate
+			rtbConsole.BeginInvoke((MethodInvoker)delegate
 			{
 				int nStartPos = rtbConsole.TextLength;
-				rtbConsole.AppendText(strLog + Environment.NewLine);
+				rtbConsole.AppendText(strLog.ToString() + Environment.NewLine);
 				int nEndPos = rtbConsole.TextLength;
 
 				rtbConsole.Select(nStartPos, nEndPos - nStartPos);
@@ -164,7 +169,7 @@ namespace LastChaos_ToolBox_2024
 				rtbConsole.ScrollToCaret();
 			});
 		}
-
+		/****************************************/
 		void LoadSettings()
 		{
 			PrintLog("Loading Settings...");
@@ -194,10 +199,12 @@ namespace LastChaos_ToolBox_2024
 				for (int i = 0; i < strArrayNations.Length; i++)
 					pSettings.NationSupported[i] = strArrayNations[i];
 				/****************************************/
+				pSettings.ItemEditorAutoShowFortune = pData["Settings"]["ItemEditorAutoShowFortune"].ToLower();
+				/****************************************/
 				KeyDataCollection arrayKeys = pData["RenderDialog"];
 
 				foreach (KeyData pKey in arrayKeys)
-					pSettings.ShowRenderDialog[pKey.KeyName] = pKey.Value;
+					pSettings.ShowRenderDialog[pKey.KeyName] = pKey.Value.ToLower();
 				/****************************************/
 
 				PrintLog("Settings load finished.", Color.Lime);

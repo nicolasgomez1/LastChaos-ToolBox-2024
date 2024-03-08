@@ -40,7 +40,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			this.btnUpdate = new System.Windows.Forms.Button();
 			this.GeneralPanel = new System.Windows.Forms.Panel();
 			this.cbGrade = new System.Windows.Forms.ComboBox();
-			this.groupBox11 = new System.Windows.Forms.GroupBox();
+			this.gbFortune = new System.Windows.Forms.GroupBox();
 			this.cbIFortuneProbType = new System.Windows.Forms.ComboBox();
 			this.cbFortuneEnable = new System.Windows.Forms.CheckBox();
 			this.gridFortune = new System.Windows.Forms.DataGridView();
@@ -248,9 +248,10 @@ namespace LastChaos_ToolBox_2024.Editors
 			this.btnCopy = new System.Windows.Forms.Button();
 			this.btnDelete = new System.Windows.Forms.Button();
 			this.tbSearch = new System.Windows.Forms.TextBox();
+			this.lProbType = new System.Windows.Forms.Label();
 			this.groupBox1.SuspendLayout();
 			this.GeneralPanel.SuspendLayout();
-			this.groupBox11.SuspendLayout();
+			this.gbFortune.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.gridFortune)).BeginInit();
 			this.groupBox3.SuspendLayout();
 			this.groupBox9.SuspendLayout();
@@ -352,7 +353,7 @@ namespace LastChaos_ToolBox_2024.Editors
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.GeneralPanel.AutoScroll = true;
 			this.GeneralPanel.Controls.Add(this.cbGrade);
-			this.GeneralPanel.Controls.Add(this.groupBox11);
+			this.GeneralPanel.Controls.Add(this.gbFortune);
 			this.GeneralPanel.Controls.Add(this.groupBox3);
 			this.GeneralPanel.Controls.Add(this.tbAllowedZoneFlag);
 			this.GeneralPanel.Controls.Add(this.label8);
@@ -415,20 +416,21 @@ namespace LastChaos_ToolBox_2024.Editors
 			this.cbGrade.TabIndex = 1009;
 			this.cbGrade.SelectedIndexChanged += new System.EventHandler(this.cbGrade_SelectedIndexChanged);
 			// 
-			// groupBox11
+			// gbFortune
 			// 
-			this.groupBox11.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+			this.gbFortune.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.groupBox11.Controls.Add(this.cbIFortuneProbType);
-			this.groupBox11.Controls.Add(this.cbFortuneEnable);
-			this.groupBox11.Controls.Add(this.gridFortune);
-			this.groupBox11.Controls.Add(this.btnAddFortune);
-			this.groupBox11.Location = new System.Drawing.Point(0, 543);
-			this.groupBox11.Name = "groupBox11";
-			this.groupBox11.Size = new System.Drawing.Size(998, 274);
-			this.groupBox11.TabIndex = 1041;
-			this.groupBox11.TabStop = false;
-			this.groupBox11.Text = "Fortune Data";
+			this.gbFortune.Controls.Add(this.cbIFortuneProbType);
+			this.gbFortune.Controls.Add(this.cbFortuneEnable);
+			this.gbFortune.Controls.Add(this.lProbType);
+			this.gbFortune.Controls.Add(this.gridFortune);
+			this.gbFortune.Controls.Add(this.btnAddFortune);
+			this.gbFortune.Location = new System.Drawing.Point(0, 543);
+			this.gbFortune.Name = "gbFortune";
+			this.gbFortune.Size = new System.Drawing.Size(998, 274);
+			this.gbFortune.TabIndex = 1041;
+			this.gbFortune.TabStop = false;
+			this.gbFortune.Text = "Fortune Data";
 			// 
 			// cbIFortuneProbType
 			// 
@@ -436,7 +438,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			this.cbIFortuneProbType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.cbIFortuneProbType.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
 			this.cbIFortuneProbType.FormattingEnabled = true;
-			this.cbIFortuneProbType.Location = new System.Drawing.Point(71, 17);
+			this.cbIFortuneProbType.Location = new System.Drawing.Point(159, 17);
 			this.cbIFortuneProbType.Name = "cbIFortuneProbType";
 			this.cbIFortuneProbType.Size = new System.Drawing.Size(86, 21);
 			this.cbIFortuneProbType.TabIndex = 1044;
@@ -489,8 +491,8 @@ namespace LastChaos_ToolBox_2024.Editors
 			this.gridFortune.Size = new System.Drawing.Size(986, 224);
 			this.gridFortune.TabIndex = 2;
 			this.gridFortune.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridFortune_CellContentClick);
-			this.gridFortune.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.gridFortune_EditingControlShowing);
 			this.gridFortune.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridFortune_CellValueChanged);
+			this.gridFortune.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.gridFortune_EditingControlShowing);
 			// 
 			// btnAddFortune
 			// 
@@ -508,6 +510,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			this.btnAddFortune.Text = "Add Fortune";
 			this.btnAddFortune.UseVisualStyleBackColor = true;
 			this.btnAddFortune.Visible = false;
+			this.btnAddFortune.Click += new System.EventHandler(this.btnAddFortune_Click);
 			// 
 			// groupBox3
 			// 
@@ -3063,6 +3066,17 @@ namespace LastChaos_ToolBox_2024.Editors
 			this.tbSearch.Text = "11016";
 			this.tbSearch.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tbSearch_KeyDown);
 			// 
+			// lProbType
+			// 
+			this.lProbType.AutoSize = true;
+			this.lProbType.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.lProbType.Location = new System.Drawing.Point(71, 21);
+			this.lProbType.Name = "lProbType";
+			this.lProbType.Size = new System.Drawing.Size(82, 13);
+			this.lProbType.TabIndex = 1087;
+			this.lProbType.Text = "Probability Type";
+			this.lProbType.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			// 
 			// ItemEditor
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -3085,8 +3099,8 @@ namespace LastChaos_ToolBox_2024.Editors
 			this.groupBox1.ResumeLayout(false);
 			this.GeneralPanel.ResumeLayout(false);
 			this.GeneralPanel.PerformLayout();
-			this.groupBox11.ResumeLayout(false);
-			this.groupBox11.PerformLayout();
+			this.gbFortune.ResumeLayout(false);
+			this.gbFortune.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.gridFortune)).EndInit();
 			this.groupBox3.ResumeLayout(false);
 			this.groupBox3.PerformLayout();
@@ -3311,7 +3325,7 @@ namespace LastChaos_ToolBox_2024.Editors
         private Label lRareProbType2;
         private Label label69;
         private TextBox tbRareProb2;
-        private GroupBox groupBox11;
+        private GroupBox gbFortune;
         private ComboBox cbGrade;
         private ComboBox cbSet0;
         private GroupBox gbSetData;
@@ -3329,5 +3343,6 @@ namespace LastChaos_ToolBox_2024.Editors
 		private CheckBox cbFortuneEnable;
 		private ComboBox cbIFortuneProbType;
 		private Button btnAddFortune;
+		private Label lProbType;
 	}
 }
