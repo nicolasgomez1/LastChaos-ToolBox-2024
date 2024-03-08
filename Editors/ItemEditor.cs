@@ -18,26 +18,24 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Definitions;
-using Org.BouncyCastle.Asn1.X509;
-using static Mysqlx.Notice.Warning.Types;
 
 namespace LastChaos_ToolBox_2024.Editors
 {
 	public partial class ItemEditor : Form
 	{
 		private Main pMain;
+		private RenderDialog pRenderDialog;
 		private bool bUserAction = false;
 		private bool bUnsavedChanges = false;
 		private bool bFortuneLoaded = false;
+		private int nSearchPosition = 0;
 		private ListBoxItem pLastSelected;
-		private System.Windows.Forms.ToolTip pToolTip;
 		private DataRow pTempItemRow;
 		private DataRow pTempFortuneHead;
 		private DataRow[] pTempFortuneData;
-		private int nSearchPosition = 0;
 		private string[] strArrayZones;
+		private System.Windows.Forms.ToolTip pToolTip;
 		private Dictionary<Control, ToolTip> pToolTips = new Dictionary<Control, ToolTip>();
-		private RenderDialog pRenderDialog;
 
 		public ItemEditor(Main mainForm)
 		{

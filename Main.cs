@@ -80,7 +80,6 @@ namespace LastChaos_ToolBox_2024
 
 		private void ClearGlobalTables()
 		{
-			// TODO: ¿Close all opened dialogs?
 			// TODO: Add dispose to all global tables
 			if (pItemTable != null)
 			{
@@ -123,6 +122,17 @@ namespace LastChaos_ToolBox_2024
 				pItemFortuneDataTable.Dispose();
 				pItemFortuneDataTable = null;
 			}
+			/****************************************/
+			List<Form> formsToClose = new List<Form>();
+
+			foreach (Form form in Application.OpenForms)
+			{
+				if (form != this)
+					formsToClose.Add(form);
+			}
+
+			foreach (Form form in formsToClose)
+				form.Close();
 		}
 
 		private void Reconnect_Click(object sender, EventArgs e)
@@ -134,7 +144,6 @@ namespace LastChaos_ToolBox_2024
 				mysqlConn.Close();
 			}
 
-			// NOTE: Posible Bug: User can reload when some editor is opened.
 			ConnectToDatabase();
 		}
 
