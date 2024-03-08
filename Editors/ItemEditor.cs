@@ -561,6 +561,8 @@ namespace LastChaos_ToolBox_2024.Editors
 			pToolTip.SetToolTip(btnReload, "Reload Items, Zones, Skills, Rare Options & Fortune Data from Database");
 			pToolTips[btnReload] = pToolTip;    // For Dispose
 			/****************************************/
+			MainList.Enabled = true;
+
 			btnReload.Enabled = true;
 			btnAddNew.Enabled = true;
 
@@ -1094,6 +1096,9 @@ namespace LastChaos_ToolBox_2024.Editors
 
 		private void btnReload_Click(object sender, EventArgs e)    // NOTE: Here is an example on how to manage the reloading of information from global tables
 		{
+			MainList.Enabled = false;
+			btnReload.Enabled = false;
+
 			nSearchPosition = 0;
 
 			// TODO: Add dispose to all global tables
@@ -1124,10 +1129,11 @@ namespace LastChaos_ToolBox_2024.Editors
 				pMain.pItemFortuneDataTable = null;
 			}
 
+			btnUpdate.Enabled = false;
+
+			btnAddNew.Enabled = false;
 			btnCopy.Enabled = false;
 			btnDelete.Enabled = false;
-
-			btnUpdate.Enabled = false;
 
 			ItemEditor_LoadAsync(sender, e);
 		}
