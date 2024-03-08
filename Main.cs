@@ -29,7 +29,8 @@ namespace LastChaos_ToolBox_2024
 		public DataTable pSkillTable = null;
 		public DataTable pSkillLevelTable = null;
 		public DataTable pRareOptionTable = null;
-		public DataTable pItemFortuneTable = null;
+		public DataTable pItemFortuneHeadTable = null;
+		public DataTable pItemFortuneDataTable = null;
 
 		public class Settings
 		{
@@ -109,10 +110,16 @@ namespace LastChaos_ToolBox_2024
 				pRareOptionTable = null;
 			}
 
-			if (pItemFortuneTable != null)
+			if (pItemFortuneHeadTable != null)
 			{
-				pItemFortuneTable.Dispose();
-				pItemFortuneTable = null;
+				pItemFortuneHeadTable.Dispose();
+				pItemFortuneHeadTable = null;
+			}
+
+			if (pItemFortuneDataTable != null)
+			{
+				pItemFortuneDataTable.Dispose();
+				pItemFortuneDataTable = null;
 			}
 		}
 

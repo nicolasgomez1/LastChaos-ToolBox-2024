@@ -300,5 +300,12 @@ namespace Definitions
 			"Jewel Composite Accesory",
 			"Jewel Composite All"
 		};
+
+		public static string[] FortuneItemProbTypes =
+		{
+			// Standards
+			"Prob",
+			"Random"
+		};
 	}
 }

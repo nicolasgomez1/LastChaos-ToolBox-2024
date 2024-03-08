@@ -63,7 +63,6 @@ namespace LastChaos_ToolBox_2024
                 "a_name_" + pMain.pSettings.WorkLocale, "a_client_description_" + pMain.pSettings.WorkLocale, "a_client_icon_texid", "a_client_icon_row", "a_client_icon_col"
             };
 
-
             if (pMain.pSkillTable == null)
             {
                 bRequestNeeded = true;
@@ -216,9 +215,9 @@ namespace LastChaos_ToolBox_2024
                 tbDescription.Text = pRowSkill["a_client_description_" + pMain.pSettings.WorkLocale].ToString();
 
                 string strOriginalSkillLevel = ReturnValues[1].ToString();
-                List<DataRow> pRowsSkillLevel = pMain.pSkillLevelTable.AsEnumerable().Where(row => row.Field<int>("a_index") == nItemID).ToList();
+                List<DataRow> listSkillLevels = pMain.pSkillLevelTable.AsEnumerable().Where(row => row.Field<int>("a_index") == nItemID).ToList();
 
-                foreach (var pRowSkillLevel in pRowsSkillLevel)
+                foreach (var pRowSkillLevel in listSkillLevels)
                 {
                     string strSkillLevel = pRowSkillLevel["a_level"].ToString();
                     
@@ -228,7 +227,10 @@ namespace LastChaos_ToolBox_2024
                         cbLevelSelector.SelectedIndex = cbLevelSelector.Items.Count - 1;
                 }
 
-                if (cbLevelSelector.SelectedIndex == -1)
+                pRowSkill = null;
+				listSkillLevels = null;
+
+				if (cbLevelSelector.SelectedIndex == -1)
                     cbLevelSelector.SelectedIndex = 0;
 
                 cbLevelSelector.EndUpdate();

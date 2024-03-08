@@ -17,6 +17,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Definitions;
+using Org.BouncyCastle.Asn1.X509;
+using static Mysqlx.Notice.Warning.Types;
 
 namespace LastChaos_ToolBox_2024.Editors
 {
@@ -27,7 +29,8 @@ namespace LastChaos_ToolBox_2024.Editors
 		private bool bUnsavedChanges = false;
 		private ListBoxItem pLastSelected;
 		private System.Windows.Forms.ToolTip pToolTip;
-		private DataRow pTempRow;
+		private DataRow pTempItemRow;
+		private DataRow pTempFortuneHead;
 		private int nSearchPosition = 0;
 		private string[] strArrayZones;
 		private Dictionary<Control, ToolTip> pToolTips = new Dictionary<Control, ToolTip>();
@@ -98,7 +101,7 @@ namespace LastChaos_ToolBox_2024.Editors
 				listQueryCompose.Add("a_descr_" + strNation);
 			}
 
-			if (pMain.pItemTable == null)	// NOTE: If the global table is empty, directly indicate that a query must be executed requesting all previously defined columns
+			if (pMain.pItemTable == null)   // NOTE: If the global table is empty, directly indicate that a query must be executed requesting all previously defined columns
 			{
 				bRequestNeeded = true;
 			}
@@ -162,7 +165,7 @@ namespace LastChaos_ToolBox_2024.Editors
 				"a_name_" + pMain.pSettings.WorkLocale, "a_client_description_" + pMain.pSettings.WorkLocale, "a_client_icon_texid", "a_client_icon_row", "a_client_icon_col"
 			};
 
-			
+
 			if (pMain.pSkillTable == null)
 			{
 				bRequestNeeded = true;
@@ -317,11 +320,38 @@ namespace LastChaos_ToolBox_2024.Editors
 
 			cbRvRValueSelector.EndUpdate();
 			/****************************************/
+			cbFortuneEnable.Visible = false;
+			cbIFortuneProbType.Visible = false;
+			btnAddFortune.Visible = false;
+			gridFortune.Enabled = false;
+
+			cbIFortuneProbType.Items.Clear();
+
+			cbIFortuneProbType.BeginUpdate();
+
+			foreach (string strProbType in Defs.FortuneItemProbTypes)
+				cbIFortuneProbType.Items.Add(strProbType);
+
+			cbIFortuneProbType.EndUpdate();
+			/****************************************/
 			gridFortune.TopLeftHeaderCell.Value = "N°";
-			gridFortune.Columns.Add("skill", "Skill ID");
-			gridFortune.Columns.Add("level", "Skill Level");
+
+			DataGridViewButtonColumn cSkill = new DataGridViewButtonColumn();
+			cSkill.Name = "skill";
+			cSkill.HeaderText = "Skill";
+			gridFortune.Columns.Add(cSkill);
+
+			DataGridViewComboBoxColumn cSkillLevel = new DataGridViewComboBoxColumn();
+			cSkillLevel.Name = "level";
+			cSkillLevel.HeaderText = "Skill Level";
+			gridFortune.Columns.Add(cSkillLevel);
+
 			gridFortune.Columns.Add("prob", "Probability");
-			gridFortune.Columns.Add("string", "String ID");
+
+			DataGridViewButtonColumn cString = new DataGridViewButtonColumn();
+			cString.Name = "string";
+			cString.HeaderText = "String ID";
+			gridFortune.Columns.Add(cString);
 
 			gridFortune.AdvancedRowHeadersBorderStyle.All = DataGridViewAdvancedCellBorderStyle.Single;
 			gridFortune.RowHeadersDefaultCellStyle.BackColor = Color.FromArgb(28, 30, 31);
@@ -337,6 +367,8 @@ namespace LastChaos_ToolBox_2024.Editors
 			gridFortune.DefaultCellStyle.BackColor = Color.FromArgb(40, 40, 40);
 			gridFortune.DefaultCellStyle.ForeColor = Color.FromArgb(208, 203, 148);
 			gridFortune.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+
+			gridFortune.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
 			/****************************************/
 #if DEBUG
 			Stopwatch stopwatch = new Stopwatch();
@@ -346,7 +378,7 @@ namespace LastChaos_ToolBox_2024.Editors
 				LoadItemDataAsync(),    // Populate pItemTable
 				LoadZoneDataAsync(),    // Populate pZoneTable
 				LoadSkillDataAsync(),    // Populate pSkillTable & pSkillLevelTable
-				LoadRareOptionDataAsync()	// Populate pRateoptionTable
+				LoadRareOptionDataAsync()   // Populate pRateoptionTable
 			);
 #if DEBUG
 			stopwatch.Stop();
@@ -415,7 +447,9 @@ namespace LastChaos_ToolBox_2024.Editors
 				if (pRenderDialog != null)
 					pRenderDialog.Close();
 
-				pTempRow = null;
+				// TODO: Add here all used tables
+				pTempItemRow = null;
+				pTempFortuneHead = null;
 
 				strArrayZones = null;
 			}
@@ -443,27 +477,32 @@ namespace LastChaos_ToolBox_2024.Editors
 			cbTypeSelector.SelectedIndex = -1;
 			cbSubTypeSelector.SelectedIndex = -1;
 			cbWearingPositionSelector.SelectedIndex = -1;
+
+			cbFortuneEnable.Visible = false;
+			cbIFortuneProbType.Visible = false;
+			btnAddFortune.Visible = false;
 			gridFortune.Rows.Clear();
+			gridFortune.Enabled = false;
 
 			foreach (var toolTip in pToolTips.Values)
 				toolTip.Dispose();
 			/****************************************/
 			// Replicate struct in temp row val
-			pTempRow = pMain.pItemTable.NewRow();
+			pTempItemRow = pMain.pItemTable.NewRow();
 			// Copy data from main table to temp one
-			pTempRow.ItemArray = (object[])pMain.pItemTable.Select("a_index = " + nItemID)[0].ItemArray.Clone();
+			pTempItemRow.ItemArray = (object[])pMain.pItemTable.Select("a_index = " + nItemID)[0].ItemArray.Clone();
 
 			// General
 			tbID.Text = nItemID.ToString();
 			/****************************************/
-			if (pTempRow["a_enable"].ToString() == "1")
+			if (pTempItemRow["a_enable"].ToString() == "1")
 				cbEnable.Checked = true;
 			else
 				cbEnable.Checked = false;
 			/****************************************/
-			string strTexID = pTempRow["a_texture_id"].ToString();
-			string strTexRow = pTempRow["a_texture_row"].ToString();
-			string strTexCol = pTempRow["a_texture_col"].ToString();
+			string strTexID = pTempItemRow["a_texture_id"].ToString();
+			string strTexRow = pTempItemRow["a_texture_row"].ToString();
+			string strTexCol = pTempItemRow["a_texture_col"].ToString();
 
 			Image pIcon = pMain.GetIcon("ItemBtn", strTexID, Convert.ToInt32(strTexRow), Convert.ToInt32(strTexCol));
 			if (pIcon != null)
@@ -475,7 +514,7 @@ namespace LastChaos_ToolBox_2024.Editors
 				pToolTips[pbIcon] = pToolTip;
 			}
 			/****************************************/
-			string strSMCPath = pTempRow["a_file_smc"].ToString();
+			string strSMCPath = pTempItemRow["a_file_smc"].ToString();
 
 			tbSMC.Text = strSMCPath.Replace("Data\\", "");
 
@@ -483,7 +522,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			pToolTip.SetToolTip(tbSMC, "Double Click to edit");
 			pToolTips[tbSMC] = pToolTip;
 			/****************************************/
-			int nWearingPosition = Convert.ToInt32(pTempRow["a_wearing"]);
+			int nWearingPosition = Convert.ToInt32(pTempItemRow["a_wearing"]);
 
 			if (pMain.pSettings.ShowRenderDialog[this.Name] == "true")
 			{
@@ -496,21 +535,21 @@ namespace LastChaos_ToolBox_2024.Editors
 				pRenderDialog.SetModel(pMain.pSettings.ClientPath + "\\" + strSMCPath, "small", nWearingPosition);
 			}
 			/****************************************/
-			tbMaxStack.Text = pTempRow["a_weight"].ToString();
+			tbMaxStack.Text = pTempItemRow["a_weight"].ToString();
 
-			tbPrice.Text = pTempRow["a_price"].ToString();
+			tbPrice.Text = pTempItemRow["a_price"].ToString();
 
-			tbMinLevel.Text = pTempRow["a_level"].ToString();
+			tbMinLevel.Text = pTempItemRow["a_level"].ToString();
 
-			tbMaxLevel.Text = pTempRow["a_level2"].ToString();
+			tbMaxLevel.Text = pTempItemRow["a_level2"].ToString();
 
-			tbDurability.Text = pTempRow["a_durability"].ToString();
+			tbDurability.Text = pTempItemRow["a_durability"].ToString();
 
-			tbFame.Text = pTempRow["a_fame"].ToString();
+			tbFame.Text = pTempItemRow["a_fame"].ToString();
 
-			tbMaxUse.Text = pTempRow["a_max_use"].ToString();
+			tbMaxUse.Text = pTempItemRow["a_max_use"].ToString();
 			/****************************************/
-			int nAPetType = Convert.ToInt32(pTempRow["a_grade"]);
+			int nAPetType = Convert.ToInt32(pTempItemRow["a_grade"]);
 
 			if (nAPetType < 0 || nAPetType > Defs.ItemCastleTypes.Length)
 				pMain.PrintLog("Item Editor > Item: " + nItemID + " Error: a_grade out of range", Color.Red);
@@ -519,10 +558,10 @@ namespace LastChaos_ToolBox_2024.Editors
 			/****************************************/
 			string strNation = cbNationSelector.SelectedItem.ToString().ToLower();
 
-			tbName.Text = pTempRow["a_name_" + strNation].ToString();
-			tbDescription.Text = pTempRow["a_descr_" + strNation].ToString();
+			tbName.Text = pTempItemRow["a_name_" + strNation].ToString();
+			tbDescription.Text = pTempItemRow["a_descr_" + strNation].ToString();
 			/****************************************/
-			int nCastleType = Convert.ToInt32(pTempRow["a_castle_war"]);
+			int nCastleType = Convert.ToInt32(pTempItemRow["a_castle_war"]);
 
 			if (nCastleType < 0 || nCastleType > Defs.ItemCastleTypes.Length)
 				pMain.PrintLog("Item Editor > Item: " + nItemID + " Error: a_castle_war out of range", Color.Red);
@@ -547,11 +586,11 @@ namespace LastChaos_ToolBox_2024.Editors
 				cbWearingPositionSelector.SelectedIndex = nWearingPosition;
 			}
 			/****************************************/
-			btnClassFlag.Text = pTempRow["a_job_flag"].ToString();
+			btnClassFlag.Text = pTempItemRow["a_job_flag"].ToString();
 
 			StringBuilder strTooltip = new StringBuilder();
 
-			long nJobFlag = Convert.ToInt32(pTempRow["a_job_flag"]);
+			long nJobFlag = Convert.ToInt32(pTempItemRow["a_job_flag"]);
 
 			for (int i = 0; i < Defs.ItemClass.Length; i++)
 			{
@@ -566,7 +605,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			pToolTip.SetToolTip(btnClassFlag, strTooltip.ToString());
 			pToolTips[btnClassFlag] = pToolTip;
 			/****************************************/
-			string strZoneFlag = pTempRow["a_zone_flag"].ToString();
+			string strZoneFlag = pTempItemRow["a_zone_flag"].ToString();
 
 #if ALLOWED_ZONE_SYSTEM
 			btnAllowedZoneFlag.Text = strZoneFlag;
@@ -590,7 +629,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			tbAllowedZoneFlag.Text = strFlag;
 #endif
 			/****************************************/
-			string strItemFlag = pTempRow["a_flag"].ToString();
+			string strItemFlag = pTempItemRow["a_flag"].ToString();
 
 			btnItemFlag.Text = strItemFlag;
 
@@ -612,7 +651,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			pToolTip.SetToolTip(btnItemFlag, strTooltip.ToString());
 			pToolTips[btnItemFlag] = pToolTip;
 			/****************************************/
-			int nType = Convert.ToInt32(pTempRow["a_type_idx"]);
+			int nType = Convert.ToInt32(pTempItemRow["a_type_idx"]);
 
 			if (nType < 0 || nType > Defs.ItemTypesNSubTypes.Keys.Count)
 			{
@@ -630,7 +669,7 @@ namespace LastChaos_ToolBox_2024.Editors
 				cbTypeSelector.Enabled = true;
 				cbTypeSelector.SelectedIndex = nType;
 
-				int nSubType = Convert.ToInt32(pTempRow["a_subtype_idx"]);
+				int nSubType = Convert.ToInt32(pTempItemRow["a_subtype_idx"]);
 
 				if (nSubType < 0 || nSubType > Defs.ItemTypesNSubTypes[Defs.ItemTypesNSubTypes.Keys.ElementAt(nType)].Count)
 				{
@@ -646,7 +685,7 @@ namespace LastChaos_ToolBox_2024.Editors
 				}
 			}
 			/****************************************/
-			int nRvRValue = Convert.ToInt32(pTempRow["a_rvr_value"]);
+			int nRvRValue = Convert.ToInt32(pTempItemRow["a_rvr_value"]);
 			if (nRvRValue > Defs.SyndicateTypesNGrades.Keys.Count)
 			{
 				pMain.PrintLog("Item Editor > Item: " + nItemID + " Error: a_rvr_value out of range", Color.Red);
@@ -663,16 +702,16 @@ namespace LastChaos_ToolBox_2024.Editors
 				}
 				else
 				{
-					cbRvRGradeSelector.SelectedIndex = Convert.ToInt32(pTempRow["a_rvr_grade"]);
+					cbRvRGradeSelector.SelectedIndex = Convert.ToInt32(pTempItemRow["a_rvr_grade"]);
 				}
 			}
 			/****************************************/
-			tbEffectNormal.Text = pTempRow["a_effect_name"].ToString();
-			tbEffectAttack.Text = pTempRow["a_attack_effect_name"].ToString();
-			tbEffectDamage.Text = pTempRow["a_damage_effect_name"].ToString();
+			tbEffectNormal.Text = pTempItemRow["a_effect_name"].ToString();
+			tbEffectAttack.Text = pTempItemRow["a_attack_effect_name"].ToString();
+			tbEffectDamage.Text = pTempItemRow["a_damage_effect_name"].ToString();
 			/****************************************/
 			for (int i = 1; i <= 6; i++)
-				((TextBox)this.Controls.Find("tbVariation" + i, true)[0]).Text = pTempRow["a_origin_variation" + i].ToString();
+				((TextBox)this.Controls.Find("tbVariation" + i, true)[0]).Text = pTempItemRow["a_origin_variation" + i].ToString();
 			/****************************************/
 			DataRow pItemTableRow;
 
@@ -683,7 +722,7 @@ namespace LastChaos_ToolBox_2024.Editors
 
 				if (strArrayZones != null)
 				{
-					int nZoneID = Convert.ToInt32(pTempRow["a_set_0"]);
+					int nZoneID = Convert.ToInt32(pTempItemRow["a_set_0"]);
 
 					if (nZoneID <= strArrayZones.Length)
 						cbSet0.SelectedIndex = nZoneID;
@@ -692,7 +731,7 @@ namespace LastChaos_ToolBox_2024.Editors
 				}
 
 				for (int i = 1; i <= 4; i++)
-					((TextBox)this.Controls.Find("tbSet" + i, true)[0]).Text = pTempRow["a_set_" + i].ToString();
+					((TextBox)this.Controls.Find("tbSet" + i, true)[0]).Text = pTempItemRow["a_set_" + i].ToString();
 			}
 			else
 			{
@@ -701,7 +740,7 @@ namespace LastChaos_ToolBox_2024.Editors
 
 				for (int i = 0; i <= 4; i++)
 				{
-					int nSetItemID = Convert.ToInt32(pTempRow["a_set_" + i]);
+					int nSetItemID = Convert.ToInt32(pTempItemRow["a_set_" + i]);
 					string strItemID = nSetItemID.ToString();
 
 					if (nSetItemID != 0)
@@ -721,10 +760,10 @@ namespace LastChaos_ToolBox_2024.Editors
 			}
 			/****************************************/
 			for (int i = 0; i <= 4; i++)
-				((TextBox)this.Controls.Find("tbOption" + i, true)[0]).Text = pTempRow["a_num_" + i].ToString();
+				((TextBox)this.Controls.Find("tbOption" + i, true)[0]).Text = pTempItemRow["a_num_" + i].ToString();
 
 			// Crafting
-			int iSkillNeededID = Convert.ToInt32(pTempRow["a_need_sskill"]);
+			int iSkillNeededID = Convert.ToInt32(pTempItemRow["a_need_sskill"]);
 			string strSkillName = iSkillNeededID.ToString();
 
 			if (iSkillNeededID != -1)
@@ -740,7 +779,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			}
 
 			btnSkill1RequiredID.Text = strSkillName;
-			tbSkill1RequiredLevel.Text = pTempRow["a_need_sskill_level"].ToString();
+			tbSkill1RequiredLevel.Text = pTempItemRow["a_need_sskill_level"].ToString();
 
 #if NEED_SECOND_SKILL_TO_CRAFT
 			iSkillNeededID = Convert.ToInt32(pTempRow["a_need_sskill2"]);
@@ -765,7 +804,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			/****************************************/
 			for (int i = 0; i <= 9; i++)
 			{
-				int nRequiredItemID = Convert.ToInt32(pTempRow["a_need_item" + i]);
+				int nRequiredItemID = Convert.ToInt32(pTempItemRow["a_need_item" + i]);
 				string strRequiredItemID = nRequiredItemID.ToString();
 
 				if (nRequiredItemID != -1)
@@ -782,7 +821,7 @@ namespace LastChaos_ToolBox_2024.Editors
 
 				((Button)this.Controls.Find("btnItem" + i + "Required", true)[0]).Text = strRequiredItemID;
 
-				((TextBox)this.Controls.Find("tbItem" + i + "RequiredAmount", true)[0]).Text = pTempRow["a_need_item_count" + i].ToString();
+				((TextBox)this.Controls.Find("tbItem" + i + "RequiredAmount", true)[0]).Text = pTempItemRow["a_need_item_count" + i].ToString();
 			}
 
 			// Rare
@@ -790,9 +829,9 @@ namespace LastChaos_ToolBox_2024.Editors
 
 			for (int i = 0; i <= 9; i++)
 			{
-				int nRareOptionID = Convert.ToInt32(pTempRow["a_rare_index_" + i]);
+				int nRareOptionID = Convert.ToInt32(pTempItemRow["a_rare_index_" + i]);
 				string strRateOptionID = nRareOptionID.ToString();
-				int nRateOptionProb = Convert.ToInt32(pTempRow["a_rare_prob_" + i]);
+				int nRateOptionProb = Convert.ToInt32(pTempItemRow["a_rare_prob_" + i]);
 
 				if (nRareOptionID != -1)
 				{
@@ -807,7 +846,7 @@ namespace LastChaos_ToolBox_2024.Editors
 				((Button)this.Controls.Find("btnRareIndex" + i, true)[0]).Text = strRateOptionID;
 
 				((TextBox)this.Controls.Find("tbRareProb" + i, true)[0]).Text = nRateOptionProb.ToString();
-				
+
 				((Label)this.Controls.Find("lRareProb" + i + "Percentage", true)[0]).Text = ((nRateOptionProb * 100.0f) / 10000.0f) + "%";
 			}
 
@@ -818,29 +857,110 @@ namespace LastChaos_ToolBox_2024.Editors
 			Stopwatch stopwatch = new Stopwatch();
 			stopwatch.Start();
 #endif
-            bool bRequestNeeded = (pMain.pItemFortuneTable == null) || (pMain.pItemFortuneTable.Select("a_item_idx = " + nItemID).Length <= 0);
+			bool bHaveFortune = false;
+
+			bool bRequestNeeded = (pMain.pItemFortuneHeadTable == null) || (pMain.pItemFortuneHeadTable.Select("a_item_idx = " + nItemID).Length <= 0);
 			if (bRequestNeeded)
 			{
-				// NOTE: I tried with "select count(*)" first but, was more slower.
-				pMain.pItemFortuneTable = pMain.QuerySelect(pMain.pSettings.DBCharset, $"SELECT a_item_idx, a_skill_index , a_skill_level, a_string_index, a_prob FROM {pMain.pSettings.DBData}.t_fortune_data WHERE a_item_idx = " + nItemID + " ORDER BY a_string_index;"); // NOTE: I don't know what column use to sort
-            }
-#if DEBUG
-            stopwatch.Stop();
-            pMain.PrintLog($"Fortune Data load took: {stopwatch.ElapsedMilliseconds} ms", Color.CornflowerBlue);
-#endif
-            if (pMain.pItemFortuneTable != null)
-			{
-				List<DataRow> listItemFortune = pMain.pItemFortuneTable.AsEnumerable().Where(row => row.Field<int>("a_item_idx") == nItemID).ToList();
-				if (listItemFortune.Any())
+				pMain.pItemFortuneHeadTable = pMain.QuerySelect(pMain.pSettings.DBCharset, $"SELECT a_item_idx, a_prob_type, a_enable FROM {pMain.pSettings.DBData}.t_fortune_head WHERE a_item_idx = " + nItemID);
+
+				bRequestNeeded = (pMain.pItemFortuneDataTable == null) || (pMain.pItemFortuneDataTable.Select("a_item_idx = " + nItemID).Length <= 0);
+
+				if (bRequestNeeded)
 				{
-					int i = 0;
-					foreach (DataRow pRow in listItemFortune)
+					// NOTE: I tried with "select count(*)" first but, was more slower.
+					pMain.pItemFortuneDataTable = pMain.QuerySelect(pMain.pSettings.DBCharset, $"SELECT a_item_idx, a_skill_index, a_skill_level, a_string_index, a_prob FROM {pMain.pSettings.DBData}.t_fortune_data WHERE a_item_idx = " + nItemID + " ORDER BY a_string_index;"); // NOTE: I don't know what column use to sort
+				}
+			}
+#if DEBUG
+			stopwatch.Stop();
+			pMain.PrintLog($"Fortune Head & Data load took: {stopwatch.ElapsedMilliseconds} ms", Color.CornflowerBlue);
+#endif
+			if (pMain.pItemFortuneHeadTable != null)
+			{
+				DataRow[] pFortuneHead = pMain.pItemFortuneHeadTable.Select("a_item_idx = " + nItemID);
+
+				if (pFortuneHead.Length > 0)
+				{
+					cbFortuneEnable.Visible = true;
+					cbIFortuneProbType.Visible = true;
+					gridFortune.Enabled = true;
+
+					pTempFortuneHead = pMain.pItemFortuneHeadTable.NewRow();
+					pTempFortuneHead.ItemArray = (object[])pFortuneHead[0].ItemArray.Clone();
+
+					if (pTempFortuneHead["a_enable"].ToString() == "1")
+						cbFortuneEnable.Checked = true;
+					else
+						cbFortuneEnable.Checked = false;
+
+					cbIFortuneProbType.SelectedIndex = Convert.ToInt32(pTempFortuneHead["a_prob_type"]);
+
+					/****************************************/
+					if (pMain.pItemFortuneDataTable != null)
 					{
-						gridFortune.Rows.Insert(i, "skill id - name", "0", "0", "999");
-						gridFortune.Rows[i].HeaderCell.Value = (i + 1).ToString();
-						i++;
+						List<DataRow> listItemFortune = pMain.pItemFortuneDataTable.AsEnumerable().Where(row => row.Field<int>("a_item_idx") == nItemID).ToList();
+						if (listItemFortune.Any())
+						{
+							bHaveFortune = true;
+
+							gridFortune.SuspendLayout();    // NOTE: Esto no parece estar funcionando...
+							
+							int i = 0;
+							foreach (DataRow pFortuneRow in listItemFortune)
+							{
+								int iSkillID = Convert.ToInt32(pFortuneRow["a_skill_index"]);
+								int iSkillLevel = Convert.ToInt32(pFortuneRow["a_skill_level"]);
+								string strSkillID = iSkillID.ToString();
+
+								DataRow pSkillRow = pMain.pSkillTable.Select("a_index = " + strSkillID).FirstOrDefault();
+								if (pSkillRow != null)
+								{
+									gridFortune.Rows.Insert(i);
+
+									gridFortune.Rows[i].HeaderCell.Value = (i + 1).ToString();
+
+									gridFortune.Rows[i].Cells["skill"].Value = strSkillID + " - " + pSkillRow["a_name_" + pMain.pSettings.WorkLocale];
+
+									using (DataGridViewComboBoxCell cSkillLevel = (DataGridViewComboBoxCell)gridFortune.Rows[i].Cells["level"])
+									{
+										List<DataRow> listSkillLevels = pMain.pSkillLevelTable.AsEnumerable().Where(row => row.Field<int>("a_index") == iSkillID).ToList();
+
+										foreach (var pRowSkillLevel in listSkillLevels)
+										{
+											int iFortuneSkillLevel = Convert.ToInt32(pRowSkillLevel["a_level"]);
+
+											cSkillLevel.Items.Add("Level: " + iFortuneSkillLevel + " - Power: " + pRowSkillLevel["a_dummypower"].ToString());
+
+											if (iSkillLevel == iFortuneSkillLevel)
+												cSkillLevel.Value = cSkillLevel.Items[cSkillLevel.Items.Count - 1];
+										}
+									}
+								}
+
+								pSkillRow = null;
+
+								i++;
+							}
+
+							gridFortune.ResumeLayout();
+						}
+						else
+						{
+							pMain.PrintLog("Item Editor > Item: " + nItemID + " Warning: This item have a entry in a_fortune_head, but not in a_fortune_data", Color.Yellow);
+						}
 					}
 				}
+
+				pFortuneHead = null;
+			}
+
+			if (!bHaveFortune)
+			{
+				cbFortuneEnable.Visible = false;
+				cbIFortuneProbType.Visible = false;
+				btnAddFortune.Visible = true;
+				gridFortune.Enabled = false;
 			}
 
 			bUserAction = true;
@@ -953,8 +1073,11 @@ namespace LastChaos_ToolBox_2024.Editors
 			pMain.pRareOptionTable.Dispose();
 			pMain.pRareOptionTable = null;
 
-			pMain.pItemFortuneTable.Dispose();
-			pMain.pItemFortuneTable = null;
+			pMain.pItemFortuneHeadTable.Dispose();
+			pMain.pItemFortuneHeadTable = null;
+
+			pMain.pItemFortuneDataTable.Dispose();
+			pMain.pItemFortuneDataTable = null;
 
 			btnCopy.Enabled = false;
 			btnDelete.Enabled = false;
@@ -1006,7 +1129,7 @@ namespace LastChaos_ToolBox_2024.Editors
 				if (cbEnable.Checked)
 					strEnable = "1";
 
-				pTempRow["a_enable"] = strEnable;
+				pTempItemRow["a_enable"] = strEnable;
 
 				bUnsavedChanges = true;
 			}
@@ -1026,9 +1149,9 @@ namespace LastChaos_ToolBox_2024.Editors
 				Image pIcon = pMain.GetIcon("ItemBtn", strArray[0], Convert.ToInt32(strArray[1]), Convert.ToInt32(strArray[2]));
 				if (pIcon != null)
 				{
-					pTempRow["a_texture_id"] = strArray[0];
-					pTempRow["a_texture_row"] = strArray[1];
-					pTempRow["a_texture_col"] = strArray[2];
+					pTempItemRow["a_texture_id"] = strArray[0];
+					pTempItemRow["a_texture_row"] = strArray[1];
+					pTempItemRow["a_texture_col"] = strArray[2];
 
 					pbIcon.Image = pIcon;
 
@@ -1053,7 +1176,7 @@ namespace LastChaos_ToolBox_2024.Editors
 				{
 					tbSMC.Text = pFileDialog.FileName.Replace(pMain.pSettings.ClientPath + "\\", "");
 
-					pTempRow["a_file_smc"] = tbSMC.Text;
+					pTempItemRow["a_file_smc"] = tbSMC.Text;
 
 					bUnsavedChanges = true;
 				}
@@ -1064,7 +1187,7 @@ namespace LastChaos_ToolBox_2024.Editors
 		{
 			if (bUserAction)
 			{
-				pTempRow["a_weight"] = tbMaxStack.Text;
+				pTempItemRow["a_weight"] = tbMaxStack.Text;
 
 				bUnsavedChanges = true;
 			}
@@ -1074,7 +1197,7 @@ namespace LastChaos_ToolBox_2024.Editors
 		{
 			if (bUserAction)
 			{
-				pTempRow["a_price"] = tbPrice.Text;
+				pTempItemRow["a_price"] = tbPrice.Text;
 
 				bUnsavedChanges = true;
 			}
@@ -1084,7 +1207,7 @@ namespace LastChaos_ToolBox_2024.Editors
 		{
 			if (bUserAction)
 			{
-				pTempRow["a_level"] = tbMinLevel.Text;
+				pTempItemRow["a_level"] = tbMinLevel.Text;
 
 				bUnsavedChanges = true;
 			}
@@ -1094,7 +1217,7 @@ namespace LastChaos_ToolBox_2024.Editors
 		{
 			if (bUserAction)
 			{
-				pTempRow["a_level2"] = tbMaxLevel.Text;
+				pTempItemRow["a_level2"] = tbMaxLevel.Text;
 
 				bUnsavedChanges = true;
 			}
@@ -1104,7 +1227,7 @@ namespace LastChaos_ToolBox_2024.Editors
 		{
 			if (bUserAction)
 			{
-				pTempRow["a_durability"] = tbDurability.Text;
+				pTempItemRow["a_durability"] = tbDurability.Text;
 
 				bUnsavedChanges = true;
 			}
@@ -1114,7 +1237,7 @@ namespace LastChaos_ToolBox_2024.Editors
 		{
 			if (bUserAction)
 			{
-				pTempRow["a_fame"] = tbFame.Text;
+				pTempItemRow["a_fame"] = tbFame.Text;
 
 				bUnsavedChanges = true;
 			}
@@ -1124,7 +1247,7 @@ namespace LastChaos_ToolBox_2024.Editors
 		{
 			if (bUserAction)
 			{
-				pTempRow["a_max_use"] = tbMaxUse.Text;
+				pTempItemRow["a_max_use"] = tbMaxUse.Text;
 
 				bUnsavedChanges = true;
 			}
@@ -1138,7 +1261,7 @@ namespace LastChaos_ToolBox_2024.Editors
 
 				if (nType != -1)
 				{
-					pTempRow["a_grade"] = nType.ToString();
+					pTempItemRow["a_grade"] = nType.ToString();
 
 					bUnsavedChanges = true;
 				}
@@ -1153,9 +1276,9 @@ namespace LastChaos_ToolBox_2024.Editors
 
 				string strNation = cbNationSelector.SelectedItem.ToString().ToLower();
 
-				tbName.Text = pTempRow["a_name_" + strNation].ToString();
+				tbName.Text = pTempItemRow["a_name_" + strNation].ToString();
 
-				tbDescription.Text = pTempRow["a_descr_" + strNation].ToString();
+				tbDescription.Text = pTempItemRow["a_descr_" + strNation].ToString();
 
 				bUserAction = true;
 			}
@@ -1165,7 +1288,7 @@ namespace LastChaos_ToolBox_2024.Editors
 		{
 			if (bUserAction)
 			{
-				pTempRow["a_name_" + cbNationSelector.SelectedItem.ToString().ToLower()] = tbName.Text;
+				pTempItemRow["a_name_" + cbNationSelector.SelectedItem.ToString().ToLower()] = tbName.Text;
 
 				bUnsavedChanges = true;
 			}
@@ -1175,7 +1298,7 @@ namespace LastChaos_ToolBox_2024.Editors
 		{
 			if (bUserAction)
 			{
-				pTempRow["a_descr_" + cbNationSelector.SelectedItem.ToString().ToLower()] = tbDescription.Text;
+				pTempItemRow["a_descr_" + cbNationSelector.SelectedItem.ToString().ToLower()] = tbDescription.Text;
 
 				bUnsavedChanges = true;
 			}
@@ -1189,7 +1312,7 @@ namespace LastChaos_ToolBox_2024.Editors
 
 				if (nType != -1)
 				{
-					pTempRow["a_castle_war"] = nType;
+					pTempItemRow["a_castle_war"] = nType;
 
 					bUnsavedChanges = true;
 				}
@@ -1220,7 +1343,7 @@ namespace LastChaos_ToolBox_2024.Editors
 
 				pToolTips[btnClassFlag].SetToolTip(btnClassFlag, strTooltip.ToString());
 
-				pTempRow["a_job_flag"] = strFlag;
+				pTempItemRow["a_job_flag"] = strFlag;
 
 				bUnsavedChanges = true;
 			}
@@ -1252,7 +1375,7 @@ namespace LastChaos_ToolBox_2024.Editors
 
 				pToolTips[btnAllowedZoneFlag].SetToolTip(btnAllowedZoneFlag, strTooltip.ToString());
 
-				pTempRow["a_zone_flag"] = strFlag;
+				pTempItemRow["a_zone_flag"] = strFlag;
 
 				bUnsavedChanges = true;
 			}
@@ -1303,16 +1426,16 @@ namespace LastChaos_ToolBox_2024.Editors
 
 					if (strArrayZones != null)
 					{
-						int nZoneID = Convert.ToInt32(pTempRow["a_set_0"]);
+						int nZoneID = Convert.ToInt32(pTempItemRow["a_set_0"]);
 
 						if (nZoneID <= strArrayZones.Length)
 							cbSet0.SelectedIndex = nZoneID;
 						else
-							pMain.PrintLog("Item Editor > Item: " + pTempRow["a_index"].ToString() + " Error: a_set_0 out of range", Color.Red);
+							pMain.PrintLog("Item Editor > Item: " + pTempItemRow["a_index"].ToString() + " Error: a_set_0 out of range", Color.Red);
 					}
 
 					for (int i = 1; i <= 4; i++)
-						((TextBox)this.Controls.Find("tbSet" + i, true)[0]).Text = pTempRow["a_set_" + i].ToString();
+						((TextBox)this.Controls.Find("tbSet" + i, true)[0]).Text = pTempItemRow["a_set_" + i].ToString();
 				}
 				else
 				{
@@ -1323,7 +1446,7 @@ namespace LastChaos_ToolBox_2024.Editors
 
 					for (int i = 0; i <= 4; i++)
 					{
-						int nSetItemID = Convert.ToInt32(pTempRow["a_set_" + i]);
+						int nSetItemID = Convert.ToInt32(pTempItemRow["a_set_" + i]);
 						string strItemID = nSetItemID.ToString();
 
 						if (nSetItemID != 0)
@@ -1344,7 +1467,7 @@ namespace LastChaos_ToolBox_2024.Editors
 
 				pToolTips[btnItemFlag].SetToolTip(btnItemFlag, strTooltip.ToString());
 
-				pTempRow["a_flag"] = strFlag;
+				pTempItemRow["a_flag"] = strFlag;
 
 				bUnsavedChanges = true;
 			}
@@ -1371,7 +1494,7 @@ namespace LastChaos_ToolBox_2024.Editors
 
 				if (bUserAction)
 				{
-					pTempRow["a_type_idx"] = nType.ToString();
+					pTempItemRow["a_type_idx"] = nType.ToString();
 
 					bUnsavedChanges = true;
 				}
@@ -1386,7 +1509,7 @@ namespace LastChaos_ToolBox_2024.Editors
 
 				if (nType != -1)
 				{
-					pTempRow["a_subtype_idx"] = nType.ToString();
+					pTempItemRow["a_subtype_idx"] = nType.ToString();
 
 					bUnsavedChanges = true;
 				}
@@ -1401,7 +1524,7 @@ namespace LastChaos_ToolBox_2024.Editors
 
 				if (nType != -1)
 				{
-					pTempRow["a_wearing"] = nType.ToString();
+					pTempItemRow["a_wearing"] = nType.ToString();
 
 					bUnsavedChanges = true;
 				}
@@ -1430,7 +1553,7 @@ namespace LastChaos_ToolBox_2024.Editors
 
 			if (bUserAction)
 			{
-				pTempRow["a_rvr_value"] = nType.ToString();
+				pTempItemRow["a_rvr_value"] = nType.ToString();
 
 				bUnsavedChanges = true;
 			}
@@ -1444,7 +1567,7 @@ namespace LastChaos_ToolBox_2024.Editors
 
 				if (nType != -1)
 				{
-					pTempRow["a_rvr_grade"] = nType.ToString();
+					pTempItemRow["a_rvr_grade"] = nType.ToString();
 
 					bUnsavedChanges = true;
 				}
@@ -1455,7 +1578,7 @@ namespace LastChaos_ToolBox_2024.Editors
 		{
 			if (bUserAction)
 			{
-				pTempRow["a_effect_name"] = tbEffectNormal.Text;
+				pTempItemRow["a_effect_name"] = tbEffectNormal.Text;
 
 				bUnsavedChanges = true;
 			}
@@ -1465,7 +1588,7 @@ namespace LastChaos_ToolBox_2024.Editors
 		{
 			if (bUserAction)
 			{
-				pTempRow["a_attack_effect_name"] = tbEffectAttack.Text;
+				pTempItemRow["a_attack_effect_name"] = tbEffectAttack.Text;
 
 				bUnsavedChanges = true;
 			}
@@ -1475,7 +1598,7 @@ namespace LastChaos_ToolBox_2024.Editors
 		{
 			if (bUserAction)
 			{
-				pTempRow["a_damage_effect_name"] = tbEffectDamage.Text;
+				pTempItemRow["a_damage_effect_name"] = tbEffectDamage.Text;
 
 				bUnsavedChanges = true;
 			}
@@ -1485,7 +1608,7 @@ namespace LastChaos_ToolBox_2024.Editors
 		{
 			if (bUserAction)
 			{
-				pTempRow["a_origin_variation" + nNumber] = cTextBox.Text;
+				pTempItemRow["a_origin_variation" + nNumber] = cTextBox.Text;
 
 				bUnsavedChanges = true;
 			}
@@ -1507,13 +1630,14 @@ namespace LastChaos_ToolBox_2024.Editors
 
 				if (nType != -1)
 				{
-					pTempRow["a_set_0"] = nType.ToString();
+					pTempItemRow["a_set_0"] = nType.ToString();
 
 					bUnsavedChanges = true;
 				}
 			}
 		}
-		private void btnSetAction(int nNumber) {
+		private void btnSetAction(int nNumber)
+		{
 			// TODO: Completas estas funciones
 			/*
 			Aca hay que actuar en base a la flag seleccionada
@@ -1521,16 +1645,16 @@ namespace LastChaos_ToolBox_2024.Editors
 		}
 
 		private void btnSet0_Click(object sender, EventArgs e) { btnSetAction(0); }
-		private void btnSet1_Click(object sender, EventArgs e){ btnSetAction(1); }
-		private void btnSet2_Click(object sender, EventArgs e){ btnSetAction(2); }
-		private void btnSet3_Click(object sender, EventArgs e){ btnSetAction(3); }
+		private void btnSet1_Click(object sender, EventArgs e) { btnSetAction(1); }
+		private void btnSet2_Click(object sender, EventArgs e) { btnSetAction(2); }
+		private void btnSet3_Click(object sender, EventArgs e) { btnSetAction(3); }
 		private void btnSet4_Click(object sender, EventArgs e) { btnSetAction(4); }
 		/****************************************/
 		private void ChangeSetAction(TextBox cTextBox, int nNumber)
 		{
 			if (bUserAction)
 			{
-				pTempRow["a_set_" + nNumber] = cTextBox.Text;
+				pTempItemRow["a_set_" + nNumber] = cTextBox.Text;
 
 				bUnsavedChanges = true;
 			}
@@ -1545,7 +1669,7 @@ namespace LastChaos_ToolBox_2024.Editors
 		{
 			if (bUserAction)
 			{
-				pTempRow["a_num_" + nNumber] = cTextBox.Text;
+				pTempItemRow["a_num_" + nNumber] = cTextBox.Text;
 
 				bUnsavedChanges = true;
 			}
@@ -1564,7 +1688,7 @@ namespace LastChaos_ToolBox_2024.Editors
 				string strIDColumn = "a_need_sskill";
 				string strLevelColumn = "a_need_sskill_level";
 
-				SkillPicker pSkillSelector = new SkillPicker(pMain, this, new object[] { Convert.ToInt32(pTempRow[strIDColumn]), pTempRow[strLevelColumn].ToString() });
+				SkillPicker pSkillSelector = new SkillPicker(pMain, this, new object[] { Convert.ToInt32(pTempItemRow[strIDColumn]), pTempItemRow[strLevelColumn].ToString() });
 
 				if (pSkillSelector.ShowDialog() != DialogResult.OK)
 					return;
@@ -1586,8 +1710,8 @@ namespace LastChaos_ToolBox_2024.Editors
 
 				tbSkill1RequiredLevel.Text = strSkillLevelNeeded;
 
-				pTempRow[strIDColumn] = iSkillNeededID.ToString();
-				pTempRow[strLevelColumn] = strSkillLevelNeeded;
+				pTempItemRow[strIDColumn] = iSkillNeededID.ToString();
+				pTempItemRow[strLevelColumn] = strSkillLevelNeeded;
 
 				bUnsavedChanges = true;
 			}
@@ -1597,7 +1721,7 @@ namespace LastChaos_ToolBox_2024.Editors
 		{
 			if (bUserAction)
 			{
-				pTempRow["a_need_sskill_level"] = tbSkill1RequiredLevel.Text;
+				pTempItemRow["a_need_sskill_level"] = tbSkill1RequiredLevel.Text;
 
 				bUnsavedChanges = true;
 			}
@@ -1658,7 +1782,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			{
 				string strItemIDColumn = "a_need_item" + nNumber;
 
-				ItemPicker pItemSelector = new ItemPicker(pMain, this, Convert.ToInt32(pTempRow[strItemIDColumn]));
+				ItemPicker pItemSelector = new ItemPicker(pMain, this, Convert.ToInt32(pTempItemRow[strItemIDColumn]));
 
 				if (pItemSelector.ShowDialog() != DialogResult.OK)
 					return;
@@ -1676,10 +1800,10 @@ namespace LastChaos_ToolBox_2024.Editors
 				}
 
 				((Button)this.Controls.Find("btnItem" + nNumber + "Required", true)[0]).Text = strItemName;
-				
+
 				((TextBox)this.Controls.Find("tbItem" + nNumber + "RequiredAmount", true)[0]).Focus();
 
-				pTempRow[strItemIDColumn] = iItemNeededID.ToString();
+				pTempItemRow[strItemIDColumn] = iItemNeededID.ToString();
 
 				bUnsavedChanges = true;
 			}
@@ -1700,7 +1824,7 @@ namespace LastChaos_ToolBox_2024.Editors
 		{
 			if (bUserAction)
 			{
-				pTempRow["a_need_item_count" + nNumber] = cTextBox.Text;
+				pTempItemRow["a_need_item_count" + nNumber] = cTextBox.Text;
 
 				bUnsavedChanges = true;
 			}
@@ -1723,7 +1847,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			{
 				string strRareOptionIDColumn = "a_rare_index_" + nNumber;
 
-				ItemPicker pItemSelector = new ItemPicker(pMain, this, Convert.ToInt32(pTempRow[strRareOptionIDColumn]));
+				ItemPicker pItemSelector = new ItemPicker(pMain, this, Convert.ToInt32(pTempItemRow[strRareOptionIDColumn]));
 
 				RareOptionPicker pRareOptionSelector = new RareOptionPicker(pMain, this, 512);
 
@@ -1746,7 +1870,7 @@ namespace LastChaos_ToolBox_2024.Editors
 
 				((TextBox)this.Controls.Find("tbRareProb" + nNumber, true)[0]).Focus();
 
-				pTempRow[strRareOptionIDColumn] = iRareOptionID.ToString();
+				pTempItemRow[strRareOptionIDColumn] = iRareOptionID.ToString();
 
 				bUnsavedChanges = true;
 			}
@@ -1771,7 +1895,7 @@ namespace LastChaos_ToolBox_2024.Editors
 
 				((Label)this.Controls.Find("lRareProb" + nNumber + "Percentage", true)[0]).Text = ((Convert.ToInt32(strProb) * 100.0f) / 10000.0f) + "%";
 
-				pTempRow["a_rare_prob_" + nNumber] = strProb;
+				pTempItemRow["a_rare_prob_" + nNumber] = strProb;
 
 				bUnsavedChanges = true;
 			}
@@ -1788,23 +1912,58 @@ namespace LastChaos_ToolBox_2024.Editors
 		private void tbRareProb8_TextChanged(object sender, EventArgs e) { ChangeRareProbAction((TextBox)sender, 8); }
 		private void tbRareProb9_TextChanged(object sender, EventArgs e) { ChangeRareProbAction((TextBox)sender, 9); }
 		/****************************************/
+
+		private void cbFortuneEnable_CheckedChanged(object sender, EventArgs e)
+		{
+			if (bUserAction)
+			{
+				string strEnable = "0";
+
+				if (cbFortuneEnable.Checked)
+					strEnable = "1";
+
+				pTempFortuneHead["a_enable"] = strEnable;
+
+				bUnsavedChanges = true;
+			}
+		}
+
+		private void cbIFortuneProbType_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			if (bUserAction)
+			{
+				int nType = cbIFortuneProbType.SelectedIndex;
+
+				if (nType != -1)
+				{
+					pTempFortuneHead["a_prob_type"] = nType.ToString();
+
+					bUnsavedChanges = true;
+				}
+			}
+		}
+
 		private void btnUpdate_Click(object sender, EventArgs e)
 		{
 			DataRow pItemTableRow = pMain.pItemTable.Select("a_index = " + Convert.ToInt32(tbID.Text)).FirstOrDefault();
 			if (pItemTableRow != null)
 			{
-				foreach (DataColumn column in pTempRow.Table.Columns)
+				foreach (DataColumn column in pTempItemRow.Table.Columns)
 				{
 					if (!pMain.pItemTable.Columns.Contains(column.ColumnName))
 						pMain.pItemTable.Columns.Add(column.ColumnName, column.DataType);
 
 					// TODO: Compose query to insert/update, if work update local global table.
 
-					pItemTableRow[column.ColumnName] = pTempRow[column.ColumnName];
+					// TODO: UPDATE pMain.pItemTable, pMain.pItemFortuneHeadTable & pMain.pItemFortuneDataTable	(Check if have row in pItemFortuneHeadTable but not in pItemFortuneDataTable execute a delete from a_fortune_head)
+
+					pItemTableRow[column.ColumnName] = pTempItemRow[column.ColumnName];
 				}
 
 				bUnsavedChanges = false;
 			}
+
+			pItemTableRow = null;
 		}
-    }
+	}
 }

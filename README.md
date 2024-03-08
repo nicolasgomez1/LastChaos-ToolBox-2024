@@ -23,6 +23,8 @@ This↑ is super common situation so...
 
 
 Analyzing the situation... the simplest thing would be to put TextBoxs and that's it, but I would like to make the tool foolproof.
+
+UPDATE: Podría más o menos intentar definir los tipos en base a las flags que ya conozco, y luego agregar una opción, permitir que al dar click derecho se pueda introducir un valor numérico.
 ~~~
 
 # Concept of Global Tables

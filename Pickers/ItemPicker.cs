@@ -179,7 +179,9 @@ namespace LastChaos_ToolBox_2024
 
 				tbDescription.Text = pRowItem["a_descr_" + pMain.pSettings.WorkLocale].ToString();
 
-                btnSelect.Enabled = true;
+				pRowItem = null;
+
+				btnSelect.Enabled = true;
 			}
 		}
 
