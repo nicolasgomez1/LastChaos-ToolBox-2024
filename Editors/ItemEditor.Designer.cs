@@ -31,8 +31,8 @@ namespace LastChaos_ToolBox_2024.Editors
         /// </summary>
         private void InitializeComponent()
         {
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.btnReload = new System.Windows.Forms.Button();
 			this.btnAddNew = new System.Windows.Forms.Button();
 			this.MainList = new System.Windows.Forms.ListBox();
@@ -41,8 +41,9 @@ namespace LastChaos_ToolBox_2024.Editors
 			this.GeneralPanel = new System.Windows.Forms.Panel();
 			this.cbGrade = new System.Windows.Forms.ComboBox();
 			this.gbFortune = new System.Windows.Forms.GroupBox();
-			this.cbIFortuneProbType = new System.Windows.Forms.ComboBox();
+			this.cbFortuneProbType = new System.Windows.Forms.ComboBox();
 			this.cbFortuneEnable = new System.Windows.Forms.CheckBox();
+			this.lProbType = new System.Windows.Forms.Label();
 			this.gridFortune = new System.Windows.Forms.DataGridView();
 			this.btnAddFortune = new System.Windows.Forms.Button();
 			this.groupBox3 = new System.Windows.Forms.GroupBox();
@@ -248,7 +249,6 @@ namespace LastChaos_ToolBox_2024.Editors
 			this.btnCopy = new System.Windows.Forms.Button();
 			this.btnDelete = new System.Windows.Forms.Button();
 			this.tbSearch = new System.Windows.Forms.TextBox();
-			this.lProbType = new System.Windows.Forms.Label();
 			this.groupBox1.SuspendLayout();
 			this.GeneralPanel.SuspendLayout();
 			this.gbFortune.SuspendLayout();
@@ -421,7 +421,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			this.gbFortune.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.gbFortune.Controls.Add(this.cbIFortuneProbType);
+			this.gbFortune.Controls.Add(this.cbFortuneProbType);
 			this.gbFortune.Controls.Add(this.cbFortuneEnable);
 			this.gbFortune.Controls.Add(this.lProbType);
 			this.gbFortune.Controls.Add(this.gridFortune);
@@ -433,17 +433,17 @@ namespace LastChaos_ToolBox_2024.Editors
 			this.gbFortune.TabStop = false;
 			this.gbFortune.Text = "Fortune Data";
 			// 
-			// cbIFortuneProbType
+			// cbFortuneProbType
 			// 
-			this.cbIFortuneProbType.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
-			this.cbIFortuneProbType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.cbIFortuneProbType.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-			this.cbIFortuneProbType.FormattingEnabled = true;
-			this.cbIFortuneProbType.Location = new System.Drawing.Point(159, 17);
-			this.cbIFortuneProbType.Name = "cbIFortuneProbType";
-			this.cbIFortuneProbType.Size = new System.Drawing.Size(86, 21);
-			this.cbIFortuneProbType.TabIndex = 1044;
-			this.cbIFortuneProbType.SelectedIndexChanged += new System.EventHandler(this.cbIFortuneProbType_SelectedIndexChanged);
+			this.cbFortuneProbType.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+			this.cbFortuneProbType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.cbFortuneProbType.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.cbFortuneProbType.FormattingEnabled = true;
+			this.cbFortuneProbType.Location = new System.Drawing.Point(159, 17);
+			this.cbFortuneProbType.Name = "cbFortuneProbType";
+			this.cbFortuneProbType.Size = new System.Drawing.Size(86, 21);
+			this.cbFortuneProbType.TabIndex = 1044;
+			this.cbFortuneProbType.SelectedIndexChanged += new System.EventHandler(this.cbIFortuneProbType_SelectedIndexChanged);
 			// 
 			// cbFortuneEnable
 			// 
@@ -457,31 +457,43 @@ namespace LastChaos_ToolBox_2024.Editors
 			this.cbFortuneEnable.UseVisualStyleBackColor = true;
 			this.cbFortuneEnable.CheckedChanged += new System.EventHandler(this.cbFortuneEnable_CheckedChanged);
 			// 
+			// lProbType
+			// 
+			this.lProbType.AutoSize = true;
+			this.lProbType.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.lProbType.Location = new System.Drawing.Point(71, 21);
+			this.lProbType.Name = "lProbType";
+			this.lProbType.Size = new System.Drawing.Size(82, 13);
+			this.lProbType.TabIndex = 1087;
+			this.lProbType.Text = "Probability Type";
+			this.lProbType.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			// 
 			// gridFortune
 			// 
 			this.gridFortune.AllowUserToAddRows = false;
+			this.gridFortune.AllowUserToDeleteRows = false;
 			this.gridFortune.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.gridFortune.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
 			this.gridFortune.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
-			dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.WindowText;
-			dataGridViewCellStyle5.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
-			dataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.Red;
-			dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-			this.gridFortune.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
+			dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
+			dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+			dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
+			dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Red;
+			dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.gridFortune.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
 			this.gridFortune.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-			dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
-			dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.ControlText;
-			dataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
-			dataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-			dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-			this.gridFortune.DefaultCellStyle = dataGridViewCellStyle6;
+			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+			dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+			dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
+			dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+			this.gridFortune.DefaultCellStyle = dataGridViewCellStyle2;
 			this.gridFortune.EnableHeadersVisualStyles = false;
 			this.gridFortune.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
 			this.gridFortune.Location = new System.Drawing.Point(6, 44);
@@ -491,9 +503,9 @@ namespace LastChaos_ToolBox_2024.Editors
 			this.gridFortune.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
 			this.gridFortune.Size = new System.Drawing.Size(986, 224);
 			this.gridFortune.TabIndex = 2;
-			this.gridFortune.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridFortune_CellContentClick);
-			this.gridFortune.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridFortune_CellValueChanged);
+			this.gridFortune.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.gridFortune_CellMouseClick);
 			this.gridFortune.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.gridFortune_EditingControlShowing);
+			this.gridFortune.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridFortune_CellValueChanged);
 			// 
 			// btnAddFortune
 			// 
@@ -3067,17 +3079,6 @@ namespace LastChaos_ToolBox_2024.Editors
 			this.tbSearch.Text = "11016";
 			this.tbSearch.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tbSearch_KeyDown);
 			// 
-			// lProbType
-			// 
-			this.lProbType.AutoSize = true;
-			this.lProbType.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-			this.lProbType.Location = new System.Drawing.Point(71, 21);
-			this.lProbType.Name = "lProbType";
-			this.lProbType.Size = new System.Drawing.Size(82, 13);
-			this.lProbType.TabIndex = 1087;
-			this.lProbType.Text = "Probability Type";
-			this.lProbType.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			// 
 			// ItemEditor
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -3342,7 +3343,7 @@ namespace LastChaos_ToolBox_2024.Editors
         private Button btnSet3;
 		private DataGridView gridFortune;
 		private CheckBox cbFortuneEnable;
-		private ComboBox cbIFortuneProbType;
+		private ComboBox cbFortuneProbType;
 		private Button btnAddFortune;
 		private Label lProbType;
 	}

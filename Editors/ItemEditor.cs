@@ -18,6 +18,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Definitions;
+using static Google.Protobuf.Reflection.SourceCodeInfo.Types;
 
 namespace LastChaos_ToolBox_2024.Editors
 {
@@ -100,7 +101,6 @@ namespace LastChaos_ToolBox_2024.Editors
 			gridFortune.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
 
 			gridFortune.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-			/****************************************/
 		}
 
 		public class ListBoxItem
@@ -312,12 +312,12 @@ namespace LastChaos_ToolBox_2024.Editors
 					if (bRequestNeeded)
 					{
 						pMain.pItemFortuneDataTable = pMain.QuerySelect(pMain.pSettings.DBCharset, $"SELECT a_item_idx, a_skill_index, a_skill_level, a_string_index, a_prob FROM {pMain.pSettings.DBData}.t_fortune_data WHERE a_item_idx = " + nItemID + " ORDER BY a_string_index;"); // NOTE: I don't know what column use to sort
+					}
 
-						if (pMain.pItemFortuneHeadTable != null)
-						{
-							pTempFortuneHead = pMain.pItemFortuneHeadTable.NewRow();
-							pTempFortuneHead.ItemArray = (object[])pFortuneHead[0].ItemArray.Clone();
-						}
+					if (pMain.pItemFortuneHeadTable != null)
+					{
+						pTempFortuneHead = pMain.pItemFortuneHeadTable.NewRow();
+						pTempFortuneHead.ItemArray = (object[])pFortuneHead[0].ItemArray.Clone();
 					}
 				}
 
@@ -346,7 +346,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			{
 				cbFortuneEnable.Visible = true;
 				lProbType.Visible = true;
-				cbIFortuneProbType.Visible = true;
+				cbFortuneProbType.Visible = true;
 				gridFortune.Enabled = true;
 
 				if (pTempFortuneHead["a_enable"].ToString() == "1")
@@ -354,7 +354,7 @@ namespace LastChaos_ToolBox_2024.Editors
 				else
 					cbFortuneEnable.Checked = false;
 
-				cbIFortuneProbType.SelectedIndex = Convert.ToInt32(pTempFortuneHead["a_prob_type"]);
+				cbFortuneProbType.SelectedIndex = Convert.ToInt32(pTempFortuneHead["a_prob_type"]);
 
 				/****************************************/
 
@@ -490,18 +490,18 @@ namespace LastChaos_ToolBox_2024.Editors
 			/****************************************/
 			cbFortuneEnable.Visible = false;
 			lProbType.Visible = false;
-			cbIFortuneProbType.Visible = false;
+			cbFortuneProbType.Visible = false;
 			btnAddFortune.Visible = false;
 			gridFortune.Enabled = false;
 
-			cbIFortuneProbType.Items.Clear();
+			cbFortuneProbType.Items.Clear();
 
-			cbIFortuneProbType.BeginUpdate();
+			cbFortuneProbType.BeginUpdate();
 
 			foreach (string strProbType in Defs.FortuneItemProbTypes)
-				cbIFortuneProbType.Items.Add(strProbType);
+				cbFortuneProbType.Items.Add(strProbType);
 
-			cbIFortuneProbType.EndUpdate();
+			cbFortuneProbType.EndUpdate();
 #if DEBUG
 			Stopwatch stopwatch = new Stopwatch();
 			stopwatch.Start();
@@ -616,7 +616,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			bFortuneLoaded = false;
 			cbFortuneEnable.Visible = false;
 			lProbType.Visible = false;
-			cbIFortuneProbType.Visible = false;
+			cbFortuneProbType.Visible = false;
 			btnAddFortune.Visible = false;
 			gridFortune.Enabled = false;
 
@@ -1140,6 +1140,7 @@ namespace LastChaos_ToolBox_2024.Editors
 
 		private void btnAddNew_Click(object sender, EventArgs e)
 		{
+			// TODO:
 			/*bool bReturn = pMain.QueryUpdateInsert("utf8", "INSERT INTO lc_data_nov.t_clientversion (a_min, a_max) VALUES('0', '9199')");
 
 		   if (bReturn)
@@ -1687,6 +1688,7 @@ namespace LastChaos_ToolBox_2024.Editors
 				}
 			}
 		}
+
 		private void btnSetAction(int nNumber)
 		{
 			// TODO: Here have to do something depending on flag selected.
@@ -1981,7 +1983,30 @@ namespace LastChaos_ToolBox_2024.Editors
 
 		private void btnAddFortune_Click(object sender, EventArgs e)
 		{
-			// TODO: agregar una nueva linea en pTempFortuneHead
+			try
+			{
+				pTempFortuneHead = pMain.pItemFortuneHeadTable.NewRow();
+
+				pTempFortuneHead["a_item_idx"] = pTempItemRow["a_index"].ToString();
+				pTempFortuneHead["a_prob_type"] = "0";
+				pTempFortuneHead["a_enable"] = "1";
+			}
+			finally
+			{
+				btnAddFortune.Visible = false;
+
+				cbFortuneEnable.Visible = true;
+				cbFortuneEnable.Checked = true;
+
+				lProbType.Visible = true;
+
+				cbFortuneProbType.Visible = true;
+				cbFortuneProbType.SelectedIndex = 0;
+
+				gridFortune.Enabled = true;
+
+				bUnsavedChanges = true;
+			}
 		}
 
 		private void cbFortuneEnable_CheckedChanged(object sender, EventArgs e)
@@ -2003,7 +2028,7 @@ namespace LastChaos_ToolBox_2024.Editors
 		{
 			if (bUserAction)
 			{
-				int nType = cbIFortuneProbType.SelectedIndex;
+				int nType = cbFortuneProbType.SelectedIndex;
 
 				if (nType != -1)
 				{
@@ -2014,19 +2039,45 @@ namespace LastChaos_ToolBox_2024.Editors
 			}
 		}
 
-		private void gridFortune_CellContentClick(object sender, DataGridViewCellEventArgs e)
+		private void gridFortune_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
 		{
 			if (bUserAction)
 			{
-				if (gridFortune.Columns[e.ColumnIndex] is DataGridViewButtonColumn && e.RowIndex >= 0)
+				if (e.Button == MouseButtons.Left && e.ColumnIndex == 0 && e.RowIndex >= 0) // Skill Selector
 				{
-					// TODO: Check if row exist, if not add it.
-					// pTempFortuneData
+					// TODO: SkillPicker
+				}
+				else if (e.Button == MouseButtons.Left && e.ColumnIndex == 3 && e.RowIndex >= 0) // String Selector
+				{
+					// TODO: StringPicker
+				}
+				else if (e.Button == MouseButtons.Right && e.ColumnIndex == -1) // Header Column
+				{
+					ContextMenuStrip ContextMenu = new ContextMenuStrip();
+
+					ToolStripMenuItem addItem = new ToolStripMenuItem("Add New");
+					addItem.Click += (menuItemSender, menuItemEventArgs) => {
+						// TODO: Add new row
+					};
+
+					ToolStripMenuItem deleteItem = new ToolStripMenuItem("Delete");
+					deleteItem.Click += (menuItemSender, menuItemEventArgs) => {
+						int nRow = e.RowIndex;
+
+						if (nRow >= 0)
+						{
+							// TODO: Delete selected row
+						}
+					};
+
+					ContextMenu.Items.AddRange(new ToolStripItem[] { addItem, deleteItem });
+
+					ContextMenu.Show(Cursor.Position);
 				}
 			}
 		}
 
-		private void gridFortune_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
+		private void gridFortune_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)	// Skill Level Selector
 		{
 			if (bUserAction)
 			{
@@ -2037,15 +2088,14 @@ namespace LastChaos_ToolBox_2024.Editors
 					{
 						comboBox.SelectedIndexChanged += (s, args) =>
 						{
-							// TODO: Check if row exist, if not add it.
-							// pTempFortuneData
+							// TODO: Set skill level
 						};
 					}
 				}
 			}
 		}
 
-		private void gridFortune_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+		private void gridFortune_CellValueChanged(object sender, DataGridViewCellEventArgs e)	// Skill Prob Editor
 		{
 			if (bUserAction)
 			{
@@ -2056,8 +2106,7 @@ namespace LastChaos_ToolBox_2024.Editors
 					if (pCell is DataGridViewTextBoxCell)
 					{
 						string strProbValue = pCell.Value?.ToString();
-						// TODO: Check if row exist, if not add it.
-						// pTempFortuneData
+						// TODO: Set skill prob
 					}
 				}
 			}
@@ -2073,7 +2122,7 @@ namespace LastChaos_ToolBox_2024.Editors
 					if (!pMain.pItemTable.Columns.Contains(column.ColumnName))
 						pMain.pItemTable.Columns.Add(column.ColumnName, column.DataType);
 
-					// TODO: Compose query to insert/update, if work update local global table.
+					// TODO: BEGIN TRANSACTION; Compose query to insert/update, if work update local global table. COMMIT;
 
 					// TODO: UPDATE pMain.pItemTable, pMain.pItemFortuneHeadTable & pMain.pItemFortuneDataTable	(Check if have row in pItemFortuneHeadTable but not in pItemFortuneDataTable execute a delete from a_fortune_head)
 
