@@ -379,6 +379,7 @@ namespace LastChaos_ToolBox_2024.Editors
 								gridFortune.Rows[i].HeaderCell.Value = (i + 1).ToString();
 
 								gridFortune.Rows[i].Cells["skill"].Value = strSkillID + " - " + pSkillRow["a_name_" + pMain.pSettings.WorkLocale];
+								gridFortune.Rows[i].Cells["skill"].Tag = iSkillID;
 
 								using (DataGridViewComboBoxCell cSkillLevel = (DataGridViewComboBoxCell)gridFortune.Rows[i].Cells["level"])
 								{
@@ -1177,6 +1178,7 @@ namespace LastChaos_ToolBox_2024.Editors
 		private void btnDelete_Click(object sender, EventArgs e)
 		{
 			// TODO:
+			// En caso de eliminarse de la db, la funcion sería: pMain.pItemTable.Delete();
 		}
 
 		private void cbEnable_CheckedChanged(object sender, EventArgs e)
@@ -2110,7 +2112,6 @@ namespace LastChaos_ToolBox_2024.Editors
 						}
 						finally
 						{
-							// TODO: Add row to grid
 							DataRow pSkillRow = pMain.pSkillTable.Select("a_index = " + nDefaultSkillID).FirstOrDefault();
 							if (pSkillRow != null)
 							{
@@ -2121,6 +2122,7 @@ namespace LastChaos_ToolBox_2024.Editors
 								gridFortune.Rows[i].HeaderCell.Value = (i + 1).ToString();
 
 								gridFortune.Rows[i].Cells["skill"].Value = nDefaultSkillID + " - " + pSkillRow["a_name_" + pMain.pSettings.WorkLocale];
+								gridFortune.Rows[i].Cells["skill"].Tag = nDefaultSkillID;
 
 								using (DataGridViewComboBoxCell cSkillLevel = (DataGridViewComboBoxCell)gridFortune.Rows[i].Cells["level"])
 								{
@@ -2152,8 +2154,26 @@ namespace LastChaos_ToolBox_2024.Editors
 
 						if (nRow >= 0)
 						{
-							// TODO: Delete selected row
-							// TODO: Al remover una fila, recalcular el valor de la columna N° de todas las filas
+							try
+							{
+								int nSkillID = Convert.ToInt32(((DataGridViewButtonCell)gridFortune.Rows[nRow].Cells["skill"]).Tag);
+								MessageBox.Show("Skill to delete: " + nSkillID, "",0);
+								DataRow pFortuneLastSkillRow = pTempFortuneData.Cast<DataRow>().Where(row => row.RowState != DataRowState.Deleted && row["a_skill_index"].ToString() == nSkillID.ToString()).LastOrDefault();
+								if (pFortuneLastSkillRow != null)
+									pTempFortuneData.ElementAt(Array.IndexOf(pTempFortuneData, pFortuneLastSkillRow)).Delete();
+							}
+							finally
+							{
+								gridFortune.Rows.RemoveAt(nRow);
+
+								int i = 1;
+								foreach (DataGridViewRow row in gridFortune.Rows)
+								{
+									row.HeaderCell.Value = i.ToString();
+
+									i++;
+								}
+							}
 						}
 					};
 
