@@ -428,7 +428,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			this.gbFortune.Controls.Add(this.btnAddFortune);
 			this.gbFortune.Location = new System.Drawing.Point(0, 543);
 			this.gbFortune.Name = "gbFortune";
-			this.gbFortune.Size = new System.Drawing.Size(998, 274);
+			this.gbFortune.Size = new System.Drawing.Size(998, 288);
 			this.gbFortune.TabIndex = 1041;
 			this.gbFortune.TabStop = false;
 			this.gbFortune.Text = "Fortune Data";
@@ -501,11 +501,11 @@ namespace LastChaos_ToolBox_2024.Editors
 			this.gridFortune.Name = "gridFortune";
 			this.gridFortune.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
 			this.gridFortune.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-			this.gridFortune.Size = new System.Drawing.Size(986, 224);
+			this.gridFortune.Size = new System.Drawing.Size(986, 238);
 			this.gridFortune.TabIndex = 2;
 			this.gridFortune.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.gridFortune_CellMouseClick);
-			this.gridFortune.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.gridFortune_EditingControlShowing);
 			this.gridFortune.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridFortune_CellValueChanged);
+			this.gridFortune.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.gridFortune_EditingControlShowing);
 			// 
 			// btnAddFortune
 			// 

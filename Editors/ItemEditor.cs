@@ -1096,46 +1096,53 @@ namespace LastChaos_ToolBox_2024.Editors
 
 		private void btnReload_Click(object sender, EventArgs e)    // NOTE: Here is an example on how to manage the reloading of information from global tables
 		{
-			MainList.Enabled = false;
-			btnReload.Enabled = false;
+			DialogResult pDialogReturn = MessageBox.Show("There are unsaved changes. If you proceed, your changes will be discarded.\nDo you want to continue?", "Item Editor", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
-			nSearchPosition = 0;
-
-			// TODO: Add dispose to all global tables
-			pMain.pItemTable.Dispose();
-			pMain.pItemTable = null;
-
-			pMain.pZoneTable.Dispose();
-			pMain.pZoneTable = null;
-
-			pMain.pSkillTable.Dispose();
-			pMain.pSkillTable = null;
-
-			pMain.pSkillLevelTable.Dispose();
-			pMain.pSkillLevelTable = null;
-
-			pMain.pRareOptionTable.Dispose();
-			pMain.pRareOptionTable = null;
-
-			if (pMain.pItemFortuneHeadTable != null)
+			if (pDialogReturn == DialogResult.Yes)
 			{
-				pMain.pItemFortuneHeadTable.Dispose();
-				pMain.pItemFortuneHeadTable = null;
+				bUnsavedChanges = false;
+
+				MainList.Enabled = false;
+				btnReload.Enabled = false;
+
+				nSearchPosition = 0;
+
+				// TODO: Add dispose to all global tables
+				pMain.pItemTable.Dispose();
+				pMain.pItemTable = null;
+
+				pMain.pZoneTable.Dispose();
+				pMain.pZoneTable = null;
+
+				pMain.pSkillTable.Dispose();
+				pMain.pSkillTable = null;
+
+				pMain.pSkillLevelTable.Dispose();
+				pMain.pSkillLevelTable = null;
+
+				pMain.pRareOptionTable.Dispose();
+				pMain.pRareOptionTable = null;
+
+				if (pMain.pItemFortuneHeadTable != null)
+				{
+					pMain.pItemFortuneHeadTable.Dispose();
+					pMain.pItemFortuneHeadTable = null;
+				}
+
+				if (pMain.pItemFortuneDataTable != null)
+				{
+					pMain.pItemFortuneDataTable.Dispose();
+					pMain.pItemFortuneDataTable = null;
+				}
+
+				btnUpdate.Enabled = false;
+
+				btnAddNew.Enabled = false;
+				btnCopy.Enabled = false;
+				btnDelete.Enabled = false;
+
+				ItemEditor_LoadAsync(sender, e);
 			}
-
-			if (pMain.pItemFortuneDataTable != null)
-			{
-				pMain.pItemFortuneDataTable.Dispose();
-				pMain.pItemFortuneDataTable = null;
-			}
-
-			btnUpdate.Enabled = false;
-
-			btnAddNew.Enabled = false;
-			btnCopy.Enabled = false;
-			btnDelete.Enabled = false;
-
-			ItemEditor_LoadAsync(sender, e);
 		}
 
 		private void btnAddNew_Click(object sender, EventArgs e)
@@ -1983,29 +1990,41 @@ namespace LastChaos_ToolBox_2024.Editors
 
 		private void btnAddFortune_Click(object sender, EventArgs e)
 		{
-			try
+			if (bUserAction)
 			{
-				pTempFortuneHead = pMain.pItemFortuneHeadTable.NewRow();
+				try
+				{
+					if (pMain.pItemFortuneHeadTable == null)    // NOTE: This condition theoretically should not be met, but just in case
+					{
+						pMain.pItemFortuneHeadTable = new DataTable();
 
-				pTempFortuneHead["a_item_idx"] = pTempItemRow["a_index"].ToString();
-				pTempFortuneHead["a_prob_type"] = "0";
-				pTempFortuneHead["a_enable"] = "1";
-			}
-			finally
-			{
-				btnAddFortune.Visible = false;
+						pMain.pItemFortuneHeadTable.Columns.Add("a_item_idx", typeof(int));		// int
+						pMain.pItemFortuneHeadTable.Columns.Add("a_prob_type", typeof(byte));	// tinyint unsigned
+						pMain.pItemFortuneHeadTable.Columns.Add("a_enable", typeof(byte));      // tinyint unsigned
+					}
 
-				cbFortuneEnable.Visible = true;
-				cbFortuneEnable.Checked = true;
+					pTempFortuneHead = pMain.pItemFortuneHeadTable.NewRow();
 
-				lProbType.Visible = true;
+					pTempFortuneHead["a_item_idx"] = pTempItemRow["a_index"];
+					pTempFortuneHead["a_prob_type"] = 0;
+					pTempFortuneHead["a_enable"] = 1;
+				}
+				finally
+				{
+					btnAddFortune.Visible = false;
 
-				cbFortuneProbType.Visible = true;
-				cbFortuneProbType.SelectedIndex = 0;
+					cbFortuneEnable.Visible = true;
+					cbFortuneEnable.Checked = true;
 
-				gridFortune.Enabled = true;
+					lProbType.Visible = true;
 
-				bUnsavedChanges = true;
+					cbFortuneProbType.Visible = true;
+					cbFortuneProbType.SelectedIndex = 0;
+
+					gridFortune.Enabled = true;
+
+					bUnsavedChanges = true;
+				}
 			}
 		}
 
@@ -2056,8 +2075,75 @@ namespace LastChaos_ToolBox_2024.Editors
 					ContextMenuStrip ContextMenu = new ContextMenuStrip();
 
 					ToolStripMenuItem addItem = new ToolStripMenuItem("Add New");
-					addItem.Click += (menuItemSender, menuItemEventArgs) => {
-						// TODO: Add new row
+					addItem.Click += (menuItemSender, menuItemEventArgs) =>
+					{
+						int nDefaultSkillID = 1708;
+						int nDefaultSkillLevel = 1;
+						int nDefaultStringID = 5870;
+						int nDefaultProb = 0;
+
+						try
+						{
+							if (pTempFortuneData == null)
+								pTempFortuneData = new DataRow[1];
+
+							int nPosition = pTempFortuneData.Length - 1;
+
+							if (pMain.pItemFortuneDataTable == null)
+							{
+								pMain.pItemFortuneDataTable = new DataTable();
+
+								pMain.pItemFortuneDataTable.Columns.Add("a_item_idx", typeof(int));			// int
+								pMain.pItemFortuneDataTable.Columns.Add("a_skill_index", typeof(int));		// int
+								pMain.pItemFortuneDataTable.Columns.Add("a_skill_level", typeof(sbyte));	// tinyint
+								pMain.pItemFortuneDataTable.Columns.Add("a_string_index", typeof(int));		// int
+								pMain.pItemFortuneDataTable.Columns.Add("a_prob", typeof(int));				// int
+							}
+
+							pTempFortuneData[nPosition] = pMain.pItemFortuneDataTable.NewRow();
+
+							pTempFortuneData[nPosition]["a_item_idx"] = pTempItemRow["a_index"];
+							pTempFortuneData[nPosition]["a_skill_index"] = nDefaultSkillID;
+							pTempFortuneData[nPosition]["a_skill_level"] = nDefaultSkillLevel;
+							pTempFortuneData[nPosition]["a_string_index"] = nDefaultStringID;
+							pTempFortuneData[nPosition]["a_prob"] = nDefaultProb;
+						}
+						finally
+						{
+							// TODO: Add row to grid
+							DataRow pSkillRow = pMain.pSkillTable.Select("a_index = " + nDefaultSkillID).FirstOrDefault();
+							if (pSkillRow != null)
+							{
+								int i = gridFortune.Rows.Count;
+
+								gridFortune.Rows.Insert(i);
+
+								gridFortune.Rows[i].HeaderCell.Value = (i + 1).ToString();
+
+								gridFortune.Rows[i].Cells["skill"].Value = nDefaultSkillID + " - " + pSkillRow["a_name_" + pMain.pSettings.WorkLocale];
+
+								using (DataGridViewComboBoxCell cSkillLevel = (DataGridViewComboBoxCell)gridFortune.Rows[i].Cells["level"])
+								{
+									List<DataRow> listSkillLevels = pMain.pSkillLevelTable.AsEnumerable().Where(row => row.Field<int>("a_index") == nDefaultSkillID).ToList();
+
+									foreach (var pRowSkillLevel in listSkillLevels)
+									{
+										int iFortuneSkillLevel = Convert.ToInt32(pRowSkillLevel["a_level"]);
+
+										cSkillLevel.Items.Add("Level: " + iFortuneSkillLevel + " - Power: " + pRowSkillLevel["a_dummypower"].ToString());
+
+										if (nDefaultSkillLevel == iFortuneSkillLevel)
+											cSkillLevel.Value = cSkillLevel.Items[cSkillLevel.Items.Count - 1];
+									}
+								}
+
+								gridFortune.Rows[i].Cells["prob"].Value = nDefaultProb;
+
+								gridFortune.Rows[i].Cells["string"].Value = nDefaultStringID;
+							}
+
+							bUnsavedChanges = true;
+						}
 					};
 
 					ToolStripMenuItem deleteItem = new ToolStripMenuItem("Delete");
@@ -2067,6 +2153,7 @@ namespace LastChaos_ToolBox_2024.Editors
 						if (nRow >= 0)
 						{
 							// TODO: Delete selected row
+							// TODO: Al remover una fila, recalcular el valor de la columna N° de todas las filas
 						}
 					};
 
@@ -2083,10 +2170,10 @@ namespace LastChaos_ToolBox_2024.Editors
 			{
 				if (gridFortune.CurrentCell is DataGridViewComboBoxCell)
 				{
-					ComboBox comboBox = e.Control as ComboBox;
-					if (comboBox != null)
+					ComboBox ComboBox = e.Control as ComboBox;
+					if (ComboBox != null)
 					{
-						comboBox.SelectedIndexChanged += (s, args) =>
+						ComboBox.SelectedIndexChanged += (s, args) =>
 						{
 							// TODO: Set skill level
 						};
@@ -2099,7 +2186,7 @@ namespace LastChaos_ToolBox_2024.Editors
 		{
 			if (bUserAction)
 			{
-				if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
+				if (e.RowIndex >= 0 && e.ColumnIndex == 2)
 				{
 					DataGridViewCell pCell = gridFortune.Rows[e.RowIndex].Cells["prob"];
 
@@ -2119,8 +2206,8 @@ namespace LastChaos_ToolBox_2024.Editors
 			{
 				foreach (DataColumn column in pTempItemRow.Table.Columns)
 				{
-					if (!pMain.pItemTable.Columns.Contains(column.ColumnName))
-						pMain.pItemTable.Columns.Add(column.ColumnName, column.DataType);
+					/*if (!pMain.pItemTable.Columns.Contains(column.ColumnName))	// NOTE: Esto, en realidad no debería ser necesario. pero lo dejo a modo de ejemplo...
+						pMain.pItemTable.Columns.Add(column.ColumnName, column.DataType);*/
 
 					// TODO: BEGIN TRANSACTION; Compose query to insert/update, if work update local global table. COMMIT;
 
