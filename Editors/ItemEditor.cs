@@ -367,9 +367,9 @@ namespace LastChaos_ToolBox_2024.Editors
 						int i = 0;
 						foreach (DataRow pFortuneRow in pTempFortuneData)
 						{
-							int iSkillID = Convert.ToInt32(pFortuneRow["a_skill_index"]);
-							int iSkillLevel = Convert.ToInt32(pFortuneRow["a_skill_level"]);
-							string strSkillID = iSkillID.ToString();
+							int iFortuneSkillID = Convert.ToInt32(pFortuneRow["a_skill_index"]);
+							int iFortuneSkillLevel = Convert.ToInt32(pFortuneRow["a_skill_level"]);
+							string strSkillID = iFortuneSkillID.ToString();
 
 							DataRow pSkillRow = pMain.pSkillTable.Select("a_index = " + strSkillID).FirstOrDefault();
 							if (pSkillRow != null)
@@ -379,22 +379,25 @@ namespace LastChaos_ToolBox_2024.Editors
 								gridFortune.Rows[i].HeaderCell.Value = (i + 1).ToString();
 
 								gridFortune.Rows[i].Cells["skill"].Value = strSkillID + " - " + pSkillRow["a_name_" + pMain.pSettings.WorkLocale];
-								gridFortune.Rows[i].Cells["skill"].Tag = iSkillID;
+								gridFortune.Rows[i].Cells["skill"].Tag = iFortuneSkillID;
+								gridFortune.Rows[i].Cells["skill"].ToolTipText = pSkillRow["a_client_description_" + pMain.pSettings.WorkLocale].ToString();
 
 								using (DataGridViewComboBoxCell cSkillLevel = (DataGridViewComboBoxCell)gridFortune.Rows[i].Cells["level"])
 								{
-									List<DataRow> listSkillLevels = pMain.pSkillLevelTable.AsEnumerable().Where(row => row.Field<int>("a_index") == iSkillID).ToList();
+									List<DataRow> listSkillLevels = pMain.pSkillLevelTable.AsEnumerable().Where(row => row.Field<int>("a_index") == iFortuneSkillID).ToList();
 
 									foreach (var pRowSkillLevel in listSkillLevels)
 									{
-										int iFortuneSkillLevel = Convert.ToInt32(pRowSkillLevel["a_level"]);
+										int iSkillLevel = Convert.ToInt32(pRowSkillLevel["a_level"]);
 
-										cSkillLevel.Items.Add("Level: " + iFortuneSkillLevel + " - Power: " + pRowSkillLevel["a_dummypower"].ToString());
+										cSkillLevel.Items.Add("Level: " + iSkillLevel + " - Power: " + pRowSkillLevel["a_dummypower"].ToString());
 
-										if (iSkillLevel == iFortuneSkillLevel)
+										if (iFortuneSkillLevel == iSkillLevel)
 											cSkillLevel.Value = cSkillLevel.Items[cSkillLevel.Items.Count - 1];
 									}
 								}
+
+								gridFortune.Rows[i].Cells["level"].Tag = iFortuneSkillLevel;
 
 								gridFortune.Rows[i].Cells["prob"].Value = pFortuneRow["a_prob"].ToString();
 
@@ -582,7 +585,7 @@ namespace LastChaos_ToolBox_2024.Editors
 				if (pRenderDialog != null)
 					pRenderDialog.Close();
 
-				// TODO: Add here all used tables
+				// TODO: Add here all used tables, arrays etc etc
 				pTempItemRow = null;
 				pTempFortuneHead = null;
 				pTempFortuneData = null;
@@ -1108,7 +1111,7 @@ namespace LastChaos_ToolBox_2024.Editors
 
 				nSearchPosition = 0;
 
-				// TODO: Add dispose to all global tables
+				// TODO: Add dispose to all global tables used by this tool
 				pMain.pItemTable.Dispose();
 				pMain.pItemTable = null;
 
@@ -1757,13 +1760,7 @@ namespace LastChaos_ToolBox_2024.Editors
 				string strSkillName = iSkillNeededID.ToString();
 
 				if (iSkillNeededID != -1)
-				{
-					DataRow pSkillTableRow = pMain.pSkillTable.Select("a_index = " + iSkillNeededID).FirstOrDefault();
-
-					strSkillName += " - " + pSkillTableRow["a_name_" + pMain.pSettings.WorkLocale];
-
-					pSkillTableRow = null;
-				}
+					strSkillName += " - " + pSkillSelector.ReturnValues[2];
 
 				btnSkill1RequiredID.Text = strSkillName;
 
@@ -1804,13 +1801,7 @@ namespace LastChaos_ToolBox_2024.Editors
 				string strSkillName = iSkillNeededID.ToString();
 
 				if (iSkillNeededID != -1)
-				{
-					DataRow pSkillTableRow = pMain.pSkillTable.Select("a_index = " + iSkillNeededID).FirstOrDefault();
-
-					strSkillName += " - " + pSkillTableRow["a_name_" + pMain.pSettings.WorkLocale];
-
-					pSkillTableRow = null;
-				}
+					strSkillName += " - " + pSkillSelector.ReturnValues[2];
 
 				btnSkill2RequiredID.Text = strSkillName;
 				tbSkill2RequiredLevel.Text = strSkillLevelNeeded;
@@ -2066,11 +2057,42 @@ namespace LastChaos_ToolBox_2024.Editors
 			{
 				if (e.Button == MouseButtons.Left && e.ColumnIndex == 0 && e.RowIndex >= 0) // Skill Selector
 				{
-					// TODO: SkillPicker
+					int nSkillID = Convert.ToInt32(((DataGridViewButtonCell)gridFortune.Rows[e.RowIndex].Cells["skill"]).Tag);
+					string strSkillLevel = gridFortune.Rows[e.RowIndex].Cells["level"].Tag.ToString();
+
+					SkillPicker pSkillSelector = new SkillPicker(pMain, this, new object[] { nSkillID, strSkillLevel, false });
+
+					if (pSkillSelector.ShowDialog() != DialogResult.OK)
+						return;
+
+					nSkillID = Convert.ToInt32(pSkillSelector.ReturnValues[0]);
+					int iSelectedSkillLevel = Convert.ToInt32(pSkillSelector.ReturnValues[1]);
+					strSkillLevel = pSkillSelector.ReturnValues[1].ToString();
+
+					gridFortune.Rows[e.RowIndex].Cells["skill"].Value = nSkillID + " - " + pSkillSelector.ReturnValues[2];
+					gridFortune.Rows[e.RowIndex].Cells["skill"].Tag = nSkillID;
+					gridFortune.Rows[e.RowIndex].Cells["skill"].ToolTipText = pSkillSelector.ReturnValues[3].ToString();
+
+					using (DataGridViewComboBoxCell cSkillLevel = (DataGridViewComboBoxCell)gridFortune.Rows[e.RowIndex].Cells["level"])
+					{
+						List<DataRow> listSkillLevels = pMain.pSkillLevelTable.AsEnumerable().Where(row => row.Field<int>("a_index") == nSkillID).ToList();
+
+						foreach (var pRowSkillLevel in listSkillLevels)
+						{
+							int iSkillLevel = Convert.ToInt32(pRowSkillLevel["a_level"]);
+
+							cSkillLevel.Items.Add("Level: " + iSkillLevel + " - Power: " + pRowSkillLevel["a_dummypower"].ToString());
+
+							if (iSelectedSkillLevel == iSkillLevel)
+								cSkillLevel.Value = cSkillLevel.Items[cSkillLevel.Items.Count - 1];
+						}
+					}
+
+					gridFortune.Rows[e.RowIndex].Cells["level"].Tag = iSelectedSkillLevel;
 				}
 				else if (e.Button == MouseButtons.Left && e.ColumnIndex == 3 && e.RowIndex >= 0) // String Selector
 				{
-					// TODO: StringPicker
+					// TODO: StringPicker dialog
 				}
 				else if (e.Button == MouseButtons.Right && e.ColumnIndex == -1) // Header Column
 				{
@@ -2123,6 +2145,7 @@ namespace LastChaos_ToolBox_2024.Editors
 
 								gridFortune.Rows[i].Cells["skill"].Value = nDefaultSkillID + " - " + pSkillRow["a_name_" + pMain.pSettings.WorkLocale];
 								gridFortune.Rows[i].Cells["skill"].Tag = nDefaultSkillID;
+								gridFortune.Rows[i].Cells["skill"].ToolTipText = pSkillRow["a_client_description_" + pMain.pSettings.WorkLocale].ToString();
 
 								using (DataGridViewComboBoxCell cSkillLevel = (DataGridViewComboBoxCell)gridFortune.Rows[i].Cells["level"])
 								{
@@ -2139,6 +2162,8 @@ namespace LastChaos_ToolBox_2024.Editors
 									}
 								}
 
+								gridFortune.Rows[i].Cells["level"].Tag = nDefaultSkillLevel;
+
 								gridFortune.Rows[i].Cells["prob"].Value = nDefaultProb;
 
 								gridFortune.Rows[i].Cells["string"].Value = nDefaultStringID;
@@ -2149,6 +2174,7 @@ namespace LastChaos_ToolBox_2024.Editors
 					};
 
 					ToolStripMenuItem deleteItem = new ToolStripMenuItem("Delete");
+					deleteItem.Enabled = e.RowIndex >= 0;
 					deleteItem.Click += (menuItemSender, menuItemEventArgs) => {
 						int nRow = e.RowIndex;
 
@@ -2157,7 +2183,7 @@ namespace LastChaos_ToolBox_2024.Editors
 							try
 							{
 								int nSkillID = Convert.ToInt32(((DataGridViewButtonCell)gridFortune.Rows[nRow].Cells["skill"]).Tag);
-								MessageBox.Show("Skill to delete: " + nSkillID, "",0);
+								
 								DataRow pFortuneLastSkillRow = pTempFortuneData.Cast<DataRow>().Where(row => row.RowState != DataRowState.Deleted && row["a_skill_index"].ToString() == nSkillID.ToString()).LastOrDefault();
 								if (pFortuneLastSkillRow != null)
 									pTempFortuneData.ElementAt(Array.IndexOf(pTempFortuneData, pFortuneLastSkillRow)).Delete();
@@ -2195,7 +2221,9 @@ namespace LastChaos_ToolBox_2024.Editors
 					{
 						ComboBox.SelectedIndexChanged += (s, args) =>
 						{
-							// TODO: Set skill level
+							// TODO: Remember set tooltip: gridFortune.Rows[i].Cells["skill"].ToolTipText = pSkillRow["a_client_description_" + pMain.pSettings.WorkLocale].ToString();
+							// TODO: Remember set tag: gridFortune.Rows[i].Cells["level"].Tag = iFortuneSkillLevel;
+							// TODO: Set skill level in ptemp
 						};
 					}
 				}
@@ -2212,8 +2240,8 @@ namespace LastChaos_ToolBox_2024.Editors
 
 					if (pCell is DataGridViewTextBoxCell)
 					{
-						string strProbValue = pCell.Value?.ToString();
-						// TODO: Set skill prob
+						string strProbValue = pCell.Value.ToString();
+						// TODO: Set skill prob in ptemp
 					}
 				}
 			}

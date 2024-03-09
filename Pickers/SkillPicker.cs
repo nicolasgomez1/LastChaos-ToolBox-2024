@@ -13,12 +13,13 @@ using System.Windows.Forms;
 
 namespace LastChaos_ToolBox_2024
 {
-    /* Args:
+	/* Args:
 	 *	Main<Pointer to Main Form>
 	 *	Form<Parent Form to center the Window>
 	 *	Int array with default Skill ID and Level to select<Skill data Array>
+	 *	Boolean<Enable/Disable "Remove Skill" Button>
 	 * Returns:
-	 *		Array<Int<Skill ID>, String<Skill Level>>
+	 *		Array<Int<Skill ID>, String<Skill Level>, String<Skill Name>, String<Skill Description>>
 	// Call and receive implementation
 	SkillPicker pSkillSelector = new SkillPicker(pMain, this, new object[] { Convert.ToInt32(pTempRow[strIDColumn]), pTempRow[strLevelColumn].ToString() });
 
@@ -28,14 +29,14 @@ namespace LastChaos_ToolBox_2024
 	int iSkillNeededID = Convert.ToInt32(pSkillSelector.ReturnValues[0]);
     string strSkillLevelNeeded = pSkillSelector.ReturnValues[1].ToString();
     /****************************************/
-    public partial class SkillPicker : Form
+	public partial class SkillPicker : Form
 	{
 		private Form pParentForm;
 		private Main pMain;
         private int nSearchPosition = 0;
-        public object[] ReturnValues = new object[2];
+        public object[] ReturnValues = new object[4];
 
-        public SkillPicker(Main mainForm, Form ParentForm, object[] iArray)
+        public SkillPicker(Main mainForm, Form ParentForm, object[] iArray, bool bRemoveSkillEnable = true)
 		{
 			InitializeComponent();
 
@@ -44,6 +45,12 @@ namespace LastChaos_ToolBox_2024
             pMain = mainForm;
             pParentForm = ParentForm;
             ReturnValues = iArray;
+			Array.Resize(ref ReturnValues, 4);
+			ReturnValues[2] = "";
+			ReturnValues[3] = "";
+
+			if (!bRemoveSkillEnable)
+                btnRemoveSkill.Enabled = false;
 		}
 
         public class ListBoxItem
@@ -212,9 +219,14 @@ namespace LastChaos_ToolBox_2024
                 if (pIcon != null)
                     pbIcon.Image = pIcon;
 
-                tbDescription.Text = pRowSkill["a_client_description_" + pMain.pSettings.WorkLocale].ToString();
+                string strSkillDescription = pRowSkill["a_client_description_" + pMain.pSettings.WorkLocale].ToString();
 
-                string strOriginalSkillLevel = ReturnValues[1].ToString();
+				tbDescription.Text = strSkillDescription;
+
+				ReturnValues[2] = pRowSkill["a_name_" + pMain.pSettings.WorkLocale].ToString();
+				ReturnValues[3] = strSkillDescription;
+
+				string strOriginalSkillLevel = ReturnValues[1].ToString();
                 List<DataRow> listSkillLevels = pMain.pSkillLevelTable.AsEnumerable().Where(row => row.Field<int>("a_index") == nItemID).ToList();
 
                 foreach (var pRowSkillLevel in listSkillLevels)
@@ -255,7 +267,8 @@ namespace LastChaos_ToolBox_2024
 
                 DialogResult = DialogResult.OK;
 
-                ReturnValues = new object[] { pSelectedItem.ID, (nSelectedSkillLevel + 1).ToString() };
+                ReturnValues[0] = pSelectedItem.ID;
+                ReturnValues[1] = (nSelectedSkillLevel + 1).ToString();
 
                 Close();
             }
@@ -265,9 +278,9 @@ namespace LastChaos_ToolBox_2024
         {
             DialogResult = DialogResult.OK;
 
-            ReturnValues = new object[] { -1, "0" };
+            ReturnValues = new object[] { -1, "0", "", "" };
 
-            Close();
+			Close();
         }
     }
 }
