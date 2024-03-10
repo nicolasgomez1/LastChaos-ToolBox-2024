@@ -413,6 +413,9 @@ namespace LastChaos_ToolBox_2024
 
 		private void button4_Click(object sender, EventArgs e)
 		{
+			if (pItemFortuneHeadTable.Select("a_item_idx = 11016").FirstOrDefault() == null)
+				MessageBox.Show("11016 not found in pMain.pItemFortuneHeadTable", "", 0);
+			return;
 			int nIters = 100000;
 
 			Stopwatch stopwatch = new Stopwatch();

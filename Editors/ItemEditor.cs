@@ -1,5 +1,5 @@
 ﻿//#define NEED_SECOND_SKILL_TO_CRAFT	// NOTE: These values are required by the server, but are not actually used
-#define ALLOWED_ZONE_SYSTEM // NOTE: Custom system made by NicolasG, disable that to use normal a_zone_flag                                                                                
+#define ALLOWED_ZONE_SYSTEM	// NOTE: Custom system made by NicolasG, disable that to use normal a_zone_flag
 
 using System;
 using System.Collections.Generic;
@@ -253,7 +253,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			{
 				foreach (var column in listQueryCompose.ToList())
 				{
-					if (!pMain.pZoneTable.Columns.Contains(column))
+					if (!pMain.pSkillTable.Columns.Contains(column))
 						bRequestNeeded = true;
 					else
 						listQueryCompose.Remove(column);
@@ -266,35 +266,35 @@ namespace LastChaos_ToolBox_2024.Editors
 				{
 					return pMain.QuerySelect(pMain.pSettings.DBCharset, $"SELECT a_index, {string.Join(",", listQueryCompose)} FROM {pMain.pSettings.DBData}.t_skill ORDER BY a_index;");
 				});
+			}
 
-				// Reset vals & Populate pSkillLevelTable
-				bRequestNeeded = false;
-				listQueryCompose.Clear();
+			// Reset vals & Populate pSkillLevelTable
+			bRequestNeeded = false;
+			listQueryCompose.Clear();
 
-				listQueryCompose = new List<string> { "a_level", "a_dummypower" };
+			listQueryCompose = new List<string> { "a_level", "a_dummypower" };
 
-				if (pMain.pSkillLevelTable == null)
+			if (pMain.pSkillLevelTable == null)
+			{
+				bRequestNeeded = true;
+			}
+			else
+			{
+				foreach (var column in listQueryCompose.ToList())
 				{
-					bRequestNeeded = true;
+					if (!pMain.pSkillLevelTable.Columns.Contains(column))
+						bRequestNeeded = true;
+					else
+						listQueryCompose.Remove(column);
 				}
-				else
-				{
-					foreach (var column in listQueryCompose.ToList())
-					{
-						if (!pMain.pSkillLevelTable.Columns.Contains(column))
-							bRequestNeeded = true;
-						else
-							listQueryCompose.Remove(column);
-					}
-				}
+			}
 
-				if (bRequestNeeded)
+			if (bRequestNeeded)
+			{
+				pMain.pSkillLevelTable = await Task.Run(() =>
 				{
-					pMain.pSkillLevelTable = await Task.Run(() =>
-					{
-						return pMain.QuerySelect(pMain.pSettings.DBCharset, $"SELECT a_index, {string.Join(",", listQueryCompose)} FROM {pMain.pSettings.DBData}.t_skilllevel ORDER BY a_level");
-					});
-				}
+					return pMain.QuerySelect(pMain.pSettings.DBCharset, $"SELECT a_index, {string.Join(",", listQueryCompose)} FROM {pMain.pSettings.DBData}.t_skilllevel ORDER BY a_level");
+				});
 			}
 		}
 
@@ -335,34 +335,20 @@ namespace LastChaos_ToolBox_2024.Editors
 			stopwatch.Start();
 #endif
 			int nItemID = Convert.ToInt32(pTempItemRow["a_index"]);
-			bool bHaveFortune = false;
 
-			bool bRequestNeeded = (pMain.pItemFortuneHeadTable == null) || (pMain.pItemFortuneHeadTable.Select("a_item_idx = " + nItemID).Length <= 0);
+			bool bRequestNeeded = pMain.pItemFortuneHeadTable == null || pMain.pItemFortuneHeadTable.Select("a_item_idx = " + nItemID).FirstOrDefault() == null;
 			if (bRequestNeeded)
 			{
-				if (pTempFortuneHead == null)
-					pMain.pItemFortuneHeadTable = pMain.QuerySelect(pMain.pSettings.DBCharset, $"SELECT a_item_idx, a_prob_type, a_enable FROM {pMain.pSettings.DBData}.t_fortune_head WHERE a_item_idx = " + nItemID);
-			}
+				var pResult = pMain.QuerySelect(pMain.pSettings.DBCharset, $"SELECT a_item_idx, a_prob_type, a_enable FROM {pMain.pSettings.DBData}.t_fortune_head WHERE a_item_idx = " + nItemID);
 
-			if (pMain.pItemFortuneHeadTable != null)
-			{
-				DataRow[] pFortuneHead = pMain.pItemFortuneHeadTable.Select("a_item_idx = " + nItemID);
-
-				if (pFortuneHead.Length > 0)
+				if (pResult != null && pResult.Rows.Count > 0)
 				{
-					bRequestNeeded = (pMain.pItemFortuneDataTable == null) || (pMain.pItemFortuneDataTable.Select("a_item_idx = " + nItemID).Length <= 0);
-
+					pMain.pItemFortuneHeadTable = pResult;
+					/****************************************/
+					bRequestNeeded = pMain.pItemFortuneDataTable == null || pMain.pItemFortuneDataTable.Select("a_item_idx = " + nItemID).Length <= 0;
 					if (bRequestNeeded)
-					{
 						pMain.pItemFortuneDataTable = pMain.QuerySelect(pMain.pSettings.DBCharset, $"SELECT a_item_idx, a_skill_index, a_skill_level, a_string_index, a_prob FROM {pMain.pSettings.DBData}.t_fortune_data WHERE a_item_idx = " + nItemID + " ORDER BY a_string_index;"); // NOTE: I don't know what column use to sort
-					}
-
-
-					pTempFortuneHead = pMain.pItemFortuneHeadTable.NewRow();
-					pTempFortuneHead.ItemArray = (object[])pFortuneHead[0].ItemArray.Clone();
 				}
-
-				pFortuneHead = null;
 			}
 #if DEBUG
 			stopwatch.Stop();
@@ -383,9 +369,13 @@ namespace LastChaos_ToolBox_2024.Editors
 
 			int nItemID = Convert.ToInt32(pTempItemRow["a_index"]);
 
-			DataRow[] pFortuneHead = pMain.pItemFortuneHeadTable.Select("a_item_idx = " + nItemID);
+			if (pMain.pItemFortuneHeadTable != null && pMain.pItemFortuneHeadTable.Select("a_item_idx = " + nItemID).Length > 0)
+			{
+				pTempFortuneHead = pMain.pItemFortuneHeadTable.NewRow();
+				pTempFortuneHead.ItemArray = (object[])pMain.pItemFortuneHeadTable.Select("a_item_idx = " + nItemID)[0].ItemArray.Clone();
+			}
 
-			if (pFortuneHead.Length > 0)
+			if (pTempFortuneHead != null)
 			{
 				cbFortuneEnable.Visible = true;
 				lProbType.Visible = true;
@@ -398,9 +388,7 @@ namespace LastChaos_ToolBox_2024.Editors
 					cbFortuneEnable.Checked = false;
 
 				cbFortuneProbType.SelectedIndex = Convert.ToInt32(pTempFortuneHead["a_prob_type"]);
-
 				/****************************************/
-
 				if (pMain.pItemFortuneDataTable != null)
 				{
 					pTempFortuneData = pMain.pItemFortuneDataTable.AsEnumerable().Where(row => row.RowState != DataRowState.Deleted && row.Field<int>("a_item_idx") == nItemID).ToArray();
@@ -2014,7 +2002,7 @@ namespace LastChaos_ToolBox_2024.Editors
 				if (pMain.pItemTable != null)
 				{
 					bUserAction = false;
-
+					
 					LoadFortuneData();
 
 					SetFortuneData();
@@ -2033,7 +2021,7 @@ namespace LastChaos_ToolBox_2024.Editors
 					if (pMain.pItemFortuneHeadTable == null)    // NOTE: This condition theoretically should not be met, but just in case
 					{
 						pMain.pItemFortuneHeadTable = new DataTable();
-
+						
 						pMain.pItemFortuneHeadTable.Columns.Add("a_item_idx", typeof(int));     // int
 						pMain.pItemFortuneHeadTable.Columns.Add("a_prob_type", typeof(byte));   // tinyint unsigned
 						pMain.pItemFortuneHeadTable.Columns.Add("a_enable", typeof(byte));      // tinyint unsigned
