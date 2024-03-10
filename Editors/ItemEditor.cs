@@ -1,5 +1,5 @@
 ﻿//#define NEED_SECOND_SKILL_TO_CRAFT	// NOTE: These values are required by the server, but are not actually used
-#define ALLOWED_ZONE_SYSTEM	// NOTE: Custom system made by NicolasG, disable that to use normal a_zone_flag
+#define ALLOWED_ZONE_SYSTEM // NOTE: Custom system made by NicolasG, disable that to use normal a_zone_flag                                                                                
 
 using System;
 using System.Collections.Generic;
@@ -119,7 +119,7 @@ namespace LastChaos_ToolBox_2024.Editors
 
 			FileIniDataParser pParser = new FileIniDataParser();
 			IniData pData = pParser.ReadFile(pMain.pSettings.SettingsFile);
-			
+
 			pData["RenderDialog"]["ItemEditor"] = strState;
 
 			pParser.WriteFile(pMain.pSettings.SettingsFile, pData);
@@ -340,8 +340,12 @@ namespace LastChaos_ToolBox_2024.Editors
 			bool bRequestNeeded = (pMain.pItemFortuneHeadTable == null) || (pMain.pItemFortuneHeadTable.Select("a_item_idx = " + nItemID).Length <= 0);
 			if (bRequestNeeded)
 			{
-				pMain.pItemFortuneHeadTable = pMain.QuerySelect(pMain.pSettings.DBCharset, $"SELECT a_item_idx, a_prob_type, a_enable FROM {pMain.pSettings.DBData}.t_fortune_head WHERE a_item_idx = " + nItemID);
+				if (pTempFortuneHead == null)
+					pMain.pItemFortuneHeadTable = pMain.QuerySelect(pMain.pSettings.DBCharset, $"SELECT a_item_idx, a_prob_type, a_enable FROM {pMain.pSettings.DBData}.t_fortune_head WHERE a_item_idx = " + nItemID);
+			}
 
+			if (pMain.pItemFortuneHeadTable != null)
+			{
 				DataRow[] pFortuneHead = pMain.pItemFortuneHeadTable.Select("a_item_idx = " + nItemID);
 
 				if (pFortuneHead.Length > 0)
@@ -353,11 +357,9 @@ namespace LastChaos_ToolBox_2024.Editors
 						pMain.pItemFortuneDataTable = pMain.QuerySelect(pMain.pSettings.DBCharset, $"SELECT a_item_idx, a_skill_index, a_skill_level, a_string_index, a_prob FROM {pMain.pSettings.DBData}.t_fortune_data WHERE a_item_idx = " + nItemID + " ORDER BY a_string_index;"); // NOTE: I don't know what column use to sort
 					}
 
-					if (pMain.pItemFortuneHeadTable != null)
-					{
-						pTempFortuneHead = pMain.pItemFortuneHeadTable.NewRow();
-						pTempFortuneHead.ItemArray = (object[])pFortuneHead[0].ItemArray.Clone();
-					}
+
+					pTempFortuneHead = pMain.pItemFortuneHeadTable.NewRow();
+					pTempFortuneHead.ItemArray = (object[])pFortuneHead[0].ItemArray.Clone();
 				}
 
 				pFortuneHead = null;
@@ -655,7 +657,7 @@ namespace LastChaos_ToolBox_2024.Editors
 		private void LoadItemData(int nItemID)
 		{
 			bUserAction = false;
-			
+
 			// Reset Controls
 			cbTypeSelector.SelectedIndex = -1;
 			cbSubTypeSelector.SelectedIndex = -1;
@@ -667,6 +669,9 @@ namespace LastChaos_ToolBox_2024.Editors
 			cbFortuneProbType.Visible = false;
 			btnAddFortune.Visible = false;
 			gridFortune.Enabled = false;
+
+			pTempFortuneHead = null;
+			pTempFortuneData = null;
 
 			foreach (var toolTip in pToolTips.Values)
 				toolTip.Dispose();
@@ -1038,6 +1043,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			if (pMain.pSettings.ItemEditorAutoShowFortune == "true")
 			{
 				LoadFortuneData();
+
 				SetFortuneData();
 			}
 			else
@@ -2010,6 +2016,7 @@ namespace LastChaos_ToolBox_2024.Editors
 					bUserAction = false;
 
 					LoadFortuneData();
+
 					SetFortuneData();
 
 					bUserAction = true;
@@ -2027,8 +2034,8 @@ namespace LastChaos_ToolBox_2024.Editors
 					{
 						pMain.pItemFortuneHeadTable = new DataTable();
 
-						pMain.pItemFortuneHeadTable.Columns.Add("a_item_idx", typeof(int));		// int
-						pMain.pItemFortuneHeadTable.Columns.Add("a_prob_type", typeof(byte));	// tinyint unsigned
+						pMain.pItemFortuneHeadTable.Columns.Add("a_item_idx", typeof(int));     // int
+						pMain.pItemFortuneHeadTable.Columns.Add("a_prob_type", typeof(byte));   // tinyint unsigned
 						pMain.pItemFortuneHeadTable.Columns.Add("a_enable", typeof(byte));      // tinyint unsigned
 					}
 
@@ -2163,11 +2170,11 @@ namespace LastChaos_ToolBox_2024.Editors
 							{
 								pMain.pItemFortuneDataTable = new DataTable();
 
-								pMain.pItemFortuneDataTable.Columns.Add("a_item_idx", typeof(int));			// int
-								pMain.pItemFortuneDataTable.Columns.Add("a_skill_index", typeof(int));		// int
-								pMain.pItemFortuneDataTable.Columns.Add("a_skill_level", typeof(sbyte));	// tinyint
-								pMain.pItemFortuneDataTable.Columns.Add("a_string_index", typeof(int));		// int
-								pMain.pItemFortuneDataTable.Columns.Add("a_prob", typeof(int));				// int
+								pMain.pItemFortuneDataTable.Columns.Add("a_item_idx", typeof(int));         // int
+								pMain.pItemFortuneDataTable.Columns.Add("a_skill_index", typeof(int));      // int
+								pMain.pItemFortuneDataTable.Columns.Add("a_skill_level", typeof(sbyte));    // tinyint
+								pMain.pItemFortuneDataTable.Columns.Add("a_string_index", typeof(int));     // int
+								pMain.pItemFortuneDataTable.Columns.Add("a_prob", typeof(int));             // int
 							}
 
 							pTempFortuneData[nPosition] = pMain.pItemFortuneDataTable.NewRow();
@@ -2229,7 +2236,7 @@ namespace LastChaos_ToolBox_2024.Editors
 							try
 							{
 								int nSkillID = Convert.ToInt32(((DataGridViewButtonCell)gridFortune.Rows[nRow].Cells["skill"]).Tag);
-								
+
 								DataRow pFortuneLastSkillRow = pTempFortuneData.Cast<DataRow>().Where(row => row.RowState != DataRowState.Deleted && row["a_skill_index"].ToString() == nSkillID.ToString()).LastOrDefault();
 								if (pFortuneLastSkillRow != null)
 									pTempFortuneData.ElementAt(Array.IndexOf(pTempFortuneData, pFortuneLastSkillRow)).Delete();
@@ -2258,7 +2265,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			}
 		}
 
-		private void gridFortune_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)	// Skill Level Selector
+		private void gridFortune_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e) // Skill Level Selector
 		{
 			if (bUserAction)
 			{
@@ -2278,7 +2285,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			}
 		}
 
-		private void gridFortune_CellValueChanged(object sender, DataGridViewCellEventArgs e)	// Skill Prob Editor
+		private void gridFortune_CellValueChanged(object sender, DataGridViewCellEventArgs e)   // Skill Prob Editor
 		{
 			if (bUserAction)
 			{
