@@ -23,203 +23,202 @@ namespace LastChaos_ToolBox_2024
 	// Call and receive implementation
 	SkillPicker pSkillSelector = new SkillPicker(pMain, this, new object[] { Convert.ToInt32(pTempRow[strIDColumn]), pTempRow[strLevelColumn].ToString() });
 
-    if (pSkillSelector.ShowDialog() != DialogResult.OK)
+	if (pSkillSelector.ShowDialog() != DialogResult.OK)
 		return;
 
 	int iSkillNeededID = Convert.ToInt32(pSkillSelector.ReturnValues[0]);
-    string strSkillLevelNeeded = pSkillSelector.ReturnValues[1].ToString();
-    /****************************************/
+	string strSkillLevelNeeded = pSkillSelector.ReturnValues[1].ToString();
+	/****************************************/
 	public partial class SkillPicker : Form
 	{
 		private Form pParentForm;
 		private Main pMain;
-        private int nSearchPosition = 0;
-        public object[] ReturnValues = new object[4];
+		private int nSearchPosition = 0;
+		public object[] ReturnValues = new object[4];
 
-        public SkillPicker(Main mainForm, Form ParentForm, object[] iArray, bool bRemoveSkillEnable = true)
+		public SkillPicker(Main mainForm, Form ParentForm, object[] iArray, bool bRemoveSkillEnable = true)
 		{
 			InitializeComponent();
 
 			this.FormBorderStyle = FormBorderStyle.FixedSingle;
 
-            pMain = mainForm;
-            pParentForm = ParentForm;
-            ReturnValues = iArray;
+			pMain = mainForm;
+			pParentForm = ParentForm;
+			ReturnValues = iArray;
 			Array.Resize(ref ReturnValues, 4);
 			ReturnValues[2] = "";
 			ReturnValues[3] = "";
 
-			if (!bRemoveSkillEnable)
-                btnRemoveSkill.Enabled = false;
+			btnRemoveSkill.Enabled = bRemoveSkillEnable;
 		}
 
-        public class ListBoxItem
-        {
-            public int ID { get; set; }
-            public string Text { get; set; }
-            public override string ToString() { return Text; }
-        }
+		public class ListBoxItem
+		{
+			public int ID { get; set; }
+			public string Text { get; set; }
+			public override string ToString() { return Text; }
+		}
 
-        private async void SkillPicker_LoadAsync(object sender, EventArgs e)
+		private async void SkillPicker_LoadAsync(object sender, EventArgs e)
 		{
 			this.Location = new Point((int)pParentForm.Location.X + (pParentForm.Width - this.Width) / 2, (int)pParentForm.Location.Y + (pParentForm.Height - this.Height) / 2);
 
-            bool bRequestNeeded = false;
+			bool bRequestNeeded = false;
 
-            List<string> listQueryCompose = new List<string> {
-                "a_name_" + pMain.pSettings.WorkLocale, "a_client_description_" + pMain.pSettings.WorkLocale, "a_client_icon_texid", "a_client_icon_row", "a_client_icon_col"
-            };
+			List<string> listQueryCompose = new List<string> {
+				"a_name_" + pMain.pSettings.WorkLocale, "a_client_description_" + pMain.pSettings.WorkLocale, "a_client_icon_texid", "a_client_icon_row", "a_client_icon_col"
+			};
 
-            if (pMain.pSkillTable == null)
-            {
-                bRequestNeeded = true;
-            }
-            else
-            {
-                foreach (var column in listQueryCompose.ToList())
-                {
-                    if (!pMain.pZoneTable.Columns.Contains(column))
-                        bRequestNeeded = true;
-                    else
-                        listQueryCompose.Remove(column);
-                }
-            }
-
-            if (bRequestNeeded)
-            {
-                pMain.pSkillTable = await Task.Run(() =>
-                {
-                    return pMain.QuerySelect(pMain.pSettings.DBCharset, $"SELECT a_index, {string.Join(",", listQueryCompose)} FROM {pMain.pSettings.DBData}.t_skill ORDER BY a_index;");
-                });
-
-                bRequestNeeded = false;
-                listQueryCompose.Clear();
-
-                listQueryCompose = new List<string> { "a_level", "a_dummypower" };
-
-                if (pMain.pSkillLevelTable == null)
-                {
-                    bRequestNeeded = true;
-                }
-                else
-                {
-                    foreach (var column in listQueryCompose.ToList())
-                    {
-                        if (!pMain.pSkillLevelTable.Columns.Contains(column))
-                            bRequestNeeded = true;
-                        else
-                            listQueryCompose.Remove(column);
-                    }
-                }
-
-                if (bRequestNeeded)
-                {
-                    pMain.pSkillLevelTable = await Task.Run(() =>
-                    {
-                        return pMain.QuerySelect(pMain.pSettings.DBCharset, $"SELECT a_index, {string.Join(",", listQueryCompose)} FROM {pMain.pSettings.DBData}.t_skilllevel ORDER BY a_level");
-                    });
-                }
-            }
-
-            if (pMain.pSkillTable != null && pMain.pSkillLevelTable != null)
+			if (pMain.pSkillTable == null)
 			{
-                MainList.Items.Clear();
+				bRequestNeeded = true;
+			}
+			else
+			{
+				foreach (var column in listQueryCompose.ToList())
+				{
+					if (!pMain.pZoneTable.Columns.Contains(column))
+						bRequestNeeded = true;
+					else
+						listQueryCompose.Remove(column);
+				}
+			}
 
-                MainList.BeginUpdate();
+			if (bRequestNeeded)
+			{
+				pMain.pSkillTable = await Task.Run(() =>
+				{
+					return pMain.QuerySelect(pMain.pSettings.DBCharset, $"SELECT a_index, {string.Join(",", listQueryCompose)} FROM {pMain.pSettings.DBData}.t_skill ORDER BY a_index;");
+				});
 
-                int nOriginalSkillID = Convert.ToInt32(ReturnValues[0]);
+				bRequestNeeded = false;
+				listQueryCompose.Clear();
 
-                foreach (DataRow pRow in pMain.pSkillTable.Rows)
-                {
-                    int nSkillID = Convert.ToInt32(pRow["a_index"]);
+				listQueryCompose = new List<string> { "a_level", "a_dummypower" };
 
-                    MainList.Items.Add(new ListBoxItem
-                    {
-                        ID = nSkillID,
-                        Text = pRow["a_index"] + " - " + pRow["a_name_" + pMain.pSettings.WorkLocale].ToString()
-                    });
+				if (pMain.pSkillLevelTable == null)
+				{
+					bRequestNeeded = true;
+				}
+				else
+				{
+					foreach (var column in listQueryCompose.ToList())
+					{
+						if (!pMain.pSkillLevelTable.Columns.Contains(column))
+							bRequestNeeded = true;
+						else
+							listQueryCompose.Remove(column);
+					}
+				}
 
-                    if (nSkillID == nOriginalSkillID)
-                        MainList.SelectedIndex = MainList.Items.Count - 1;
-                }
+				if (bRequestNeeded)
+				{
+					pMain.pSkillLevelTable = await Task.Run(() =>
+					{
+						return pMain.QuerySelect(pMain.pSettings.DBCharset, $"SELECT a_index, {string.Join(",", listQueryCompose)} FROM {pMain.pSettings.DBData}.t_skilllevel ORDER BY a_level");
+					});
+				}
+			}
 
-                if (MainList.SelectedIndex == -1)
-                    MainList.SelectedIndex = 0;
+			if (pMain.pSkillTable != null && pMain.pSkillLevelTable != null)
+			{
+				MainList.Items.Clear();
 
-                MainList.EndUpdate();
-            }
-        }
+				MainList.BeginUpdate();
 
-        private void tbSearch_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                void Search()
-                {
-                    string strStringToSearch = tbSearch.Text;
+				int nOriginalSkillID = Convert.ToInt32(ReturnValues[0]);
 
-                    for (int i = 0; i < MainList.Items.Count; i++)
-                    {
-                        if (MainList.GetItemText(MainList.Items[i]).IndexOf(strStringToSearch, StringComparison.OrdinalIgnoreCase) != -1 && i > nSearchPosition)
-                        {
-                            MainList.SetSelected(i, true);
+				foreach (DataRow pRow in pMain.pSkillTable.Rows)
+				{
+					int nSkillID = Convert.ToInt32(pRow["a_index"]);
 
-                            nSearchPosition = i;
+					MainList.Items.Add(new ListBoxItem
+					{
+						ID = nSkillID,
+						Text = pRow["a_index"] + " - " + pRow["a_name_" + pMain.pSettings.WorkLocale].ToString()
+					});
 
-                            return;
-                        }
-                    }
+					if (nSkillID == nOriginalSkillID)
+						MainList.SelectedIndex = MainList.Items.Count - 1;
+				}
 
-                    for (int i = 0; i <= nSearchPosition; i++)
-                    {
-                        if (MainList.GetItemText(MainList.Items[i]).IndexOf(strStringToSearch, StringComparison.OrdinalIgnoreCase) != -1)
-                        {
-                            MainList.SetSelected(i, true);
+				if (MainList.SelectedIndex == -1)
+					MainList.SelectedIndex = 0;
 
-                            nSearchPosition = i;
+				MainList.EndUpdate();
+			}
+		}
 
-                            return;
-                        }
-                    }
-                }
+		private void tbSearch_KeyDown(object sender, KeyEventArgs e)
+		{
+			if (e.KeyCode == Keys.Enter)
+			{
+				void Search()
+				{
+					string strStringToSearch = tbSearch.Text;
 
-                int nSelected = MainList.SelectedIndex;
+					for (int i = 0; i < MainList.Items.Count; i++)
+					{
+						if (MainList.GetItemText(MainList.Items[i]).IndexOf(strStringToSearch, StringComparison.OrdinalIgnoreCase) != -1 && i > nSearchPosition)
+						{
+							MainList.SetSelected(i, true);
 
-                if (nSelected != -1)
-                {
-                    if (nSelected < nSearchPosition)
-                        nSearchPosition = nSelected;
+							nSearchPosition = i;
 
-                    Search();
-                }
+							return;
+						}
+					}
 
-                e.Handled = true;
-                e.SuppressKeyPress = true;
-            }
-        }
+					for (int i = 0; i <= nSearchPosition; i++)
+					{
+						if (MainList.GetItemText(MainList.Items[i]).IndexOf(strStringToSearch, StringComparison.OrdinalIgnoreCase) != -1)
+						{
+							MainList.SetSelected(i, true);
 
-        private void MainList_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            ListBoxItem pSelectedItem = (ListBoxItem)MainList.SelectedItem;
+							nSearchPosition = i;
 
-            if (pSelectedItem != null)
-            {
-                cbLevelSelector.Enabled = false;
-                btnSelect.Enabled = false;
+							return;
+						}
+					}
+				}
 
-                cbLevelSelector.Items.Clear();
+				int nSelected = MainList.SelectedIndex;
 
-                cbLevelSelector.BeginUpdate();
+				if (nSelected != -1)
+				{
+					if (nSelected < nSearchPosition)
+						nSearchPosition = nSelected;
 
-                int nItemID = pSelectedItem.ID;
+					Search();
+				}
 
-                DataRow pRowSkill = pMain.pSkillTable.Select("a_index = " + nItemID).FirstOrDefault();
+				e.Handled = true;
+				e.SuppressKeyPress = true;
+			}
+		}
 
-                Image pIcon = pMain.GetIcon("SkillBtn", pRowSkill["a_client_icon_texid"].ToString(), Convert.ToInt32(pRowSkill["a_client_icon_row"]), Convert.ToInt32(pRowSkill["a_client_icon_col"]));
-                if (pIcon != null)
-                    pbIcon.Image = pIcon;
+		private void MainList_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			ListBoxItem pSelectedItem = (ListBoxItem)MainList.SelectedItem;
 
-                string strSkillDescription = pRowSkill["a_client_description_" + pMain.pSettings.WorkLocale].ToString();
+			if (pSelectedItem != null)
+			{
+				cbLevelSelector.Enabled = false;
+				btnSelect.Enabled = false;
+
+				cbLevelSelector.Items.Clear();
+
+				cbLevelSelector.BeginUpdate();
+
+				int nItemID = pSelectedItem.ID;
+
+				DataRow pRowSkill = pMain.pSkillTable.Select("a_index = " + nItemID).FirstOrDefault();
+
+				Image pIcon = pMain.GetIcon("SkillBtn", pRowSkill["a_client_icon_texid"].ToString(), Convert.ToInt32(pRowSkill["a_client_icon_row"]), Convert.ToInt32(pRowSkill["a_client_icon_col"]));
+				if (pIcon != null)
+					pbIcon.Image = pIcon;
+
+				string strSkillDescription = pRowSkill["a_client_description_" + pMain.pSettings.WorkLocale].ToString();
 
 				tbDescription.Text = strSkillDescription;
 
@@ -227,60 +226,60 @@ namespace LastChaos_ToolBox_2024
 				ReturnValues[3] = strSkillDescription;
 
 				string strOriginalSkillLevel = ReturnValues[1].ToString();
-                List<DataRow> listSkillLevels = pMain.pSkillLevelTable.AsEnumerable().Where(row => row.Field<int>("a_index") == nItemID).ToList();
+				List<DataRow> listSkillLevels = pMain.pSkillLevelTable.AsEnumerable().Where(row => row.Field<int>("a_index") == nItemID).ToList();
 
-                foreach (var pRowSkillLevel in listSkillLevels)
-                {
-                    string strSkillLevel = pRowSkillLevel["a_level"].ToString();
-                    
-                    cbLevelSelector.Items.Add("Level: " + strSkillLevel + " - Power: " + pRowSkillLevel["a_dummypower"].ToString());
+				foreach (var pRowSkillLevel in listSkillLevels)
+				{
+					string strSkillLevel = pRowSkillLevel["a_level"].ToString();
+					
+					cbLevelSelector.Items.Add("Level: " + strSkillLevel + " - Power: " + pRowSkillLevel["a_dummypower"].ToString());
 
-                    if (strOriginalSkillLevel == strSkillLevel)
-                        cbLevelSelector.SelectedIndex = cbLevelSelector.Items.Count - 1;
-                }
+					if (strOriginalSkillLevel == strSkillLevel)
+						cbLevelSelector.SelectedIndex = cbLevelSelector.Items.Count - 1;
+				}
 
-                pRowSkill = null;
+				pRowSkill = null;
 				listSkillLevels = null;
 
 				if (cbLevelSelector.SelectedIndex == -1)
-                    cbLevelSelector.SelectedIndex = 0;
+					cbLevelSelector.SelectedIndex = 0;
 
-                cbLevelSelector.EndUpdate();
+				cbLevelSelector.EndUpdate();
 
-                cbLevelSelector.Enabled = true;
-                btnSelect.Enabled = true;
-            }
-        }
+				cbLevelSelector.Enabled = true;
+				btnSelect.Enabled = true;
+			}
+		}
 
-        private void btnSelect_Click(object sender, EventArgs e)
-        {
-            ListBoxItem pSelectedItem = (ListBoxItem)MainList.SelectedItem;
-            int nSelectedSkillLevel = cbLevelSelector.SelectedIndex;
+		private void btnSelect_Click(object sender, EventArgs e)
+		{
+			ListBoxItem pSelectedItem = (ListBoxItem)MainList.SelectedItem;
+			int nSelectedSkillLevel = cbLevelSelector.SelectedIndex;
 
-            if (pSelectedItem != null && nSelectedSkillLevel != -1)
-            {
-                cbLevelSelector.Enabled = false;
+			if (pSelectedItem != null && nSelectedSkillLevel != -1)
+			{
+				cbLevelSelector.Enabled = false;
 
-                cbLevelSelector.Items.Clear();
+				cbLevelSelector.Items.Clear();
 
-                cbLevelSelector.BeginUpdate();
+				cbLevelSelector.BeginUpdate();
 
-                DialogResult = DialogResult.OK;
+				DialogResult = DialogResult.OK;
 
-                ReturnValues[0] = pSelectedItem.ID;
-                ReturnValues[1] = (nSelectedSkillLevel + 1).ToString();
+				ReturnValues[0] = pSelectedItem.ID;
+				ReturnValues[1] = (nSelectedSkillLevel + 1).ToString();
 
-                Close();
-            }
-        }
+				Close();
+			}
+		}
 
-        private void btnRemoveSkill_Click(object sender, EventArgs e)
-        {
-            DialogResult = DialogResult.OK;
+		private void btnRemoveSkill_Click(object sender, EventArgs e)
+		{
+			DialogResult = DialogResult.OK;
 
-            ReturnValues = new object[] { -1, "0", "", "" };
+			ReturnValues = new object[] { -1, "0", "", "" };
 
 			Close();
-        }
-    }
+		}
+	}
 }

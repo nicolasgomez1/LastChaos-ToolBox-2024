@@ -417,6 +417,8 @@ namespace LastChaos_ToolBox_2024.Editors
 			}
 			else
 			{
+				rtFortuneWarning.Visible = false;
+
 				btnAddFortune.Visible = true;
 			}
 		}
@@ -1005,6 +1007,8 @@ namespace LastChaos_ToolBox_2024.Editors
 			}
 			else
 			{
+				rtFortuneWarning.Visible = true;
+
 				gridFortune.Rows.Clear();
 			}
 
@@ -2060,7 +2064,7 @@ namespace LastChaos_ToolBox_2024.Editors
 					int nSkillID = Convert.ToInt32(((DataGridViewButtonCell)gridFortune.Rows[e.RowIndex].Cells["skill"]).Tag);
 					string strSkillLevel = gridFortune.Rows[e.RowIndex].Cells["level"].Tag.ToString();
 
-					SkillPicker pSkillSelector = new SkillPicker(pMain, this, new object[] { nSkillID, strSkillLevel, false });
+					SkillPicker pSkillSelector = new SkillPicker(pMain, this, new object[] { nSkillID, strSkillLevel }, false);
 
 					if (pSkillSelector.ShowDialog() != DialogResult.OK)
 						return;
