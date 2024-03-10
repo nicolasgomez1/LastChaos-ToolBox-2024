@@ -401,7 +401,7 @@ namespace LastChaos_ToolBox_2024.Editors
 
 				if (pMain.pItemFortuneDataTable != null)
 				{
-					pTempFortuneData = pMain.pItemFortuneDataTable.AsEnumerable().Where(row => row.Field<int>("a_item_idx") == nItemID).ToArray();
+					pTempFortuneData = pMain.pItemFortuneDataTable.AsEnumerable().Where(row => row.RowState != DataRowState.Deleted && row.Field<int>("a_item_idx") == nItemID).ToArray();
 
 					if (pTempFortuneData.Length > 0)
 					{
