@@ -375,6 +375,8 @@ namespace LastChaos_ToolBox_2024.Editors
 
 			bFortuneLoaded = true;
 
+			rtFortuneWarning.Visible = false;
+
 			gridFortune.Rows.Clear();
 
 			int nItemID = Convert.ToInt32(pTempItemRow["a_index"]);
@@ -456,7 +458,8 @@ namespace LastChaos_ToolBox_2024.Editors
 			}
 			else
 			{
-				rtFortuneWarning.Visible = false;
+				if (pMain.pSettings.ItemEditorAutoShowFortune == "false")
+					rtFortuneWarning.Visible = false;
 
 				btnAddFortune.Visible = true;
 			}
@@ -653,7 +656,7 @@ namespace LastChaos_ToolBox_2024.Editors
 		{
 			bUserAction = false;
 			
-			// Reset some Controls
+			// Reset Controls
 			cbTypeSelector.SelectedIndex = -1;
 			cbSubTypeSelector.SelectedIndex = -1;
 			cbWearingPositionSelector.SelectedIndex = -1;
@@ -1034,15 +1037,8 @@ namespace LastChaos_ToolBox_2024.Editors
 			// Fortune
 			if (pMain.pSettings.ItemEditorAutoShowFortune == "true")
 			{
-				if (pMain.pItemFortuneHeadTable == null || pMain.pItemFortuneDataTable == null)
-				{
-					LoadFortuneData();
-					SetFortuneData();
-				}
-				else
-				{
-					SetFortuneData();
-				}
+				LoadFortuneData();
+				SetFortuneData();
 			}
 			else
 			{
@@ -2005,22 +2001,19 @@ namespace LastChaos_ToolBox_2024.Editors
 		private void tbRareProb8_TextChanged(object sender, EventArgs e) { ChangeRareProbAction((TextBox)sender, 8); }
 		private void tbRareProb9_TextChanged(object sender, EventArgs e) { ChangeRareProbAction((TextBox)sender, 9); }
 		/****************************************/
-		private void gbFortune_MouseEnter(object sender, EventArgs e) {
-			if (pMain.pItemTable != null)
+		private void gbFortune_MouseEnter(object sender, EventArgs e)
+		{
+			if (bUserAction)
 			{
-				bUserAction = false;
-
-				if (pMain.pItemFortuneHeadTable == null || pMain.pItemFortuneDataTable == null)
+				if (pMain.pItemTable != null)
 				{
+					bUserAction = false;
+
 					LoadFortuneData();
 					SetFortuneData();
-				}
-				else
-				{
-					SetFortuneData();
-				}
 
-				bUserAction = true;
+					bUserAction = true;
+				}
 			}
 		}
 
