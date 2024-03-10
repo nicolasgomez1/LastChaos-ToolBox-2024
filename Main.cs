@@ -129,7 +129,6 @@ namespace LastChaos_ToolBox_2024
 				pStringTable.Dispose();
 				pStringTable = null;
 			}
-
 			/****************************************/
 			List<Form> formsToClose = new List<Form>();
 
@@ -160,7 +159,6 @@ namespace LastChaos_ToolBox_2024
 			ItemEditor pItemEditor = new ItemEditor(this);
 			pItemEditor.Show();
 		}
-
 		/****************************************/
 		private static StreamWriter pStreamWriter = new StreamWriter("Logs.log", true);
 
@@ -216,14 +214,13 @@ namespace LastChaos_ToolBox_2024
 				for (int i = 0; i < strArrayNations.Length; i++)
 					pSettings.NationSupported[i] = strArrayNations[i];
 				/****************************************/
-				pSettings.ItemEditorAutoShowFortune = pData["Settings"]["ItemEditorAutoShowFortune"].ToLower();
+				pSettings.ItemEditorAutoShowFortune = pData["Settings"]["ItemEditorAutoLoadFortune"].ToLower();
 				/****************************************/
 				KeyDataCollection arrayKeys = pData["RenderDialog"];
 
 				foreach (KeyData pKey in arrayKeys)
 					pSettings.ShowRenderDialog[pKey.KeyName] = pKey.Value.ToLower();
 				/****************************************/
-
 				PrintLog("Settings load finished.", Color.Lime);
 			}
 			else
@@ -392,7 +389,7 @@ namespace LastChaos_ToolBox_2024
 
 				mysqlConn = new MySqlConnection(strConnect);
 
-				PrintLog("MySQL > Trying to connect to Database (" + strConnect + ")");
+				PrintLog("MySQL > Trying to connect to Database (" + strConnect + ")...");
 
 				mysqlConn.Open();
 
@@ -413,9 +410,6 @@ namespace LastChaos_ToolBox_2024
 
 		private void button4_Click(object sender, EventArgs e)
 		{
-			if (pItemFortuneHeadTable.Select("a_item_idx = 11016").FirstOrDefault() == null)
-				MessageBox.Show("11016 not found in pMain.pItemFortuneHeadTable", "", 0);
-			return;
 			int nIters = 100000;
 
 			Stopwatch stopwatch = new Stopwatch();
@@ -426,7 +420,7 @@ namespace LastChaos_ToolBox_2024
 				strConcatenate += i + "\n";
 
 			stopwatch.Stop();
-			PrintLog($"String Concatenate Test took: {stopwatch.ElapsedMilliseconds} ms", Color.CornflowerBlue);
+			PrintLog($"String Concatenate Test took: {stopwatch.ElapsedMilliseconds} ms.");
 			
 			stopwatch.Reset();
 			stopwatch.Start();
@@ -438,7 +432,7 @@ namespace LastChaos_ToolBox_2024
 			strBuilder.ToString();
 
 			stopwatch.Stop();
-			PrintLog($"String Builder Test took: {stopwatch.ElapsedMilliseconds} ms", Color.CornflowerBlue);
+			PrintLog($"String Builder Test took: {stopwatch.ElapsedMilliseconds} ms.");
 
 			stopwatch.Reset();
 			stopwatch.Start();
@@ -450,7 +444,7 @@ namespace LastChaos_ToolBox_2024
 			string.Join("\n", listString);
 
 			stopwatch.Stop();
-			PrintLog($"List Add and Join Test took: {stopwatch.ElapsedMilliseconds} ms", Color.CornflowerBlue);
+			PrintLog($"List Add and Join Test took: {stopwatch.ElapsedMilliseconds} ms.");
 
 			stopwatch.Reset();
 			stopwatch.Start();
@@ -462,7 +456,7 @@ namespace LastChaos_ToolBox_2024
 			string.Join("\n", hashsetString);
 
 			stopwatch.Stop();
-			PrintLog($"HashSet Add and Join Test took: {stopwatch.ElapsedMilliseconds} ms", Color.CornflowerBlue);
+			PrintLog($"HashSet Add and Join Test took: {stopwatch.ElapsedMilliseconds} ms.");
 			
 			/*
 			String Concatenate Test took: 14260 ms

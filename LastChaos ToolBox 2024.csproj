@@ -214,6 +214,9 @@
     <EmbeddedResource Include="RenderDialog.resx">
       <DependentUpon>RenderDialog.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="ItemBtn\Put your ItemBtn.png Files here">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -229,6 +232,12 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="Settings.ini">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SkillBtn\Put your SkillBtn.png Files here">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

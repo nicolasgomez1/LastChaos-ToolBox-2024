@@ -226,7 +226,7 @@ namespace LastChaos_ToolBox_2024
 				ReturnValues[3] = strSkillDescription;
 
 				string strOriginalSkillLevel = ReturnValues[1].ToString();
-				List<DataRow> listSkillLevels = pMain.pSkillLevelTable.AsEnumerable().Where(row => row.Field<int>("a_index") == nItemID).ToList();
+				List<DataRow> listSkillLevels = pMain.pSkillLevelTable.AsEnumerable().Where(row => row.RowState != DataRowState.Deleted && row.Field<int>("a_index") == nItemID).ToList();
 
 				foreach (var pRowSkillLevel in listSkillLevels)
 				{

@@ -20,7 +20,7 @@ using System.Windows.Forms;
 using Definitions;
 using IniParser.Model;
 using IniParser;
-using static Google.Protobuf.Reflection.SourceCodeInfo.Types;
+using System.IO;
 
 namespace LastChaos_ToolBox_2024.Editors
 {
@@ -137,7 +137,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			FileIniDataParser pParser = new FileIniDataParser();
 			IniData pData = pParser.ReadFile(pMain.pSettings.SettingsFile);
 
-			pData["Settings"]["ItemEditorAutoShowFortune"] = strState;
+			pData["Settings"]["ItemEditorAutoLoadFortune"] = strState;
 
 			pParser.WriteFile(pMain.pSettings.SettingsFile, pData);
 		}
@@ -339,20 +339,25 @@ namespace LastChaos_ToolBox_2024.Editors
 			bool bRequestNeeded = pMain.pItemFortuneHeadTable == null || pMain.pItemFortuneHeadTable.Select("a_item_idx = " + nItemID).FirstOrDefault() == null;
 			if (bRequestNeeded)
 			{
-				var pResult = pMain.QuerySelect(pMain.pSettings.DBCharset, $"SELECT a_item_idx, a_prob_type, a_enable FROM {pMain.pSettings.DBData}.t_fortune_head WHERE a_item_idx = " + nItemID);
+				var pHeadResult = pMain.QuerySelect(pMain.pSettings.DBCharset, $"SELECT a_item_idx, a_prob_type, a_enable FROM {pMain.pSettings.DBData}.t_fortune_head WHERE a_item_idx = " + nItemID);
 
-				if (pResult != null && pResult.Rows.Count > 0)
+				if (pHeadResult != null && pHeadResult.Rows.Count > 0)
 				{
-					pMain.pItemFortuneHeadTable = pResult;
+					pMain.pItemFortuneHeadTable = pHeadResult;
 					/****************************************/
 					bRequestNeeded = pMain.pItemFortuneDataTable == null || pMain.pItemFortuneDataTable.Select("a_item_idx = " + nItemID).Length <= 0;
 					if (bRequestNeeded)
-						pMain.pItemFortuneDataTable = pMain.QuerySelect(pMain.pSettings.DBCharset, $"SELECT a_item_idx, a_skill_index, a_skill_level, a_string_index, a_prob FROM {pMain.pSettings.DBData}.t_fortune_data WHERE a_item_idx = " + nItemID + " ORDER BY a_string_index;"); // NOTE: I don't know what column use to sort
+					{
+						var pDataResult = pMain.QuerySelect(pMain.pSettings.DBCharset, $"SELECT a_item_idx, a_skill_index, a_skill_level, a_string_index, a_prob FROM {pMain.pSettings.DBData}.t_fortune_data WHERE a_item_idx = " + nItemID + " ORDER BY a_string_index;"); // NOTE: I don't know what column use to sort
+
+						if (pDataResult != null && pDataResult.Rows.Count > 0)
+							pMain.pItemFortuneDataTable = pDataResult;
+					}
 				}
 			}
 #if DEBUG
 			stopwatch.Stop();
-			pMain.PrintLog($"Check and Fortune Head & Data load took: {stopwatch.ElapsedMilliseconds} ms", Color.CornflowerBlue);
+			pMain.PrintLog($"Check and Fortune Head & Data load took: {stopwatch.ElapsedMilliseconds} ms.");
 #endif
 		}
 
@@ -442,7 +447,7 @@ namespace LastChaos_ToolBox_2024.Editors
 					}
 					else
 					{
-						pMain.PrintLog("Item Editor > Item: " + nItemID + " Warning: This item have a entry in a_fortune_head, but not in a_fortune_data", Color.Yellow);
+						pMain.PrintLog("Item Editor > Item: " + nItemID + " Warning: This item have a entry in a_fortune_head, but not in a_fortune_data.", Color.Yellow);
 					}
 				}
 			}
@@ -552,7 +557,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			);
 #if DEBUG
 			stopwatch.Stop();
-			pMain.PrintLog($"Items, Zones, Skill & Skills Level Data load took: {stopwatch.ElapsedMilliseconds} ms", Color.CornflowerBlue);
+			pMain.PrintLog($"Items, Zones, Skill & Skills Level Data load took: {stopwatch.ElapsedMilliseconds} ms.");
 #endif
 			/****************************************/
 			if (pMain.pItemTable != null && pMain.pZoneTable != null && pMain.pSkillTable != null && pMain.pSkillLevelTable != null && pMain.pRareOptionTable != null)
@@ -596,8 +601,11 @@ namespace LastChaos_ToolBox_2024.Editors
 			}
 			/****************************************/
 			pToolTip = new ToolTip();
+
 			pToolTip.SetToolTip(btnReload, "Reload Items, Zones, Skills, Rare Options & Fortune Data from Database");
-			pToolTips[btnReload] = pToolTip;    // For Dispose
+			pToolTip.SetToolTip(cbAutoLoadFortuneData, "When this is checked The Fortune Data are requested to server (If are not stored yet) automatically when select and Item from List.");
+
+			pToolTips[cbAutoLoadFortuneData] = pToolTip;    // For Dispose
 			/****************************************/
 			MainList.Enabled = true;
 
@@ -707,7 +715,10 @@ namespace LastChaos_ToolBox_2024.Editors
 				if (!pRenderDialog.Visible)
 					pRenderDialog.Show();
 
-				pRenderDialog.SetModel(pMain.pSettings.ClientPath + "\\" + strSMCPath, "small", nWearingPosition);
+				if (!File.Exists(pMain.pSettings.ClientPath + "\\" + strSMCPath))
+					pMain.PrintLog("Item Editor > Item: " + nItemID + " Error: a_file_smc path not exist or empty.", Color.Red);
+				else
+					pRenderDialog.SetModel(pMain.pSettings.ClientPath + "\\" + strSMCPath, "small", nWearingPosition);
 			}
 			/****************************************/
 			tbMaxStack.Text = pTempItemRow["a_weight"].ToString();
@@ -727,7 +738,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			int nAPetType = Convert.ToInt32(pTempItemRow["a_grade"]);
 
 			if (nAPetType < 0 || nAPetType > Defs.ItemCastleTypes.Length)
-				pMain.PrintLog("Item Editor > Item: " + nItemID + " Error: a_grade out of range", Color.Red);
+				pMain.PrintLog("Item Editor > Item: " + nItemID + " Error: a_grade out of range.", Color.Red);
 			else
 				cbGrade.SelectedIndex = nAPetType;
 			/****************************************/
@@ -739,7 +750,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			int nCastleType = Convert.ToInt32(pTempItemRow["a_castle_war"]);
 
 			if (nCastleType < 0 || nCastleType > Defs.ItemCastleTypes.Length)
-				pMain.PrintLog("Item Editor > Item: " + nItemID + " Error: a_castle_war out of range", Color.Red);
+				pMain.PrintLog("Item Editor > Item: " + nItemID + " Error: a_castle_war out of range.", Color.Red);
 			else
 				cbCastleType.SelectedIndex = nCastleType;
 			/****************************************/
@@ -748,7 +759,7 @@ namespace LastChaos_ToolBox_2024.Editors
 				cbWearingPositionSelector.Enabled = false;
 				cbWearingPositionSelector.Text = "";
 
-				pMain.PrintLog("Item Editor > Item: " + nItemID + " Error: a_wearing out of range", Color.Red);
+				pMain.PrintLog("Item Editor > Item: " + nItemID + " Error: a_wearing out of range.", Color.Red);
 			}
 			else
 			{
@@ -774,7 +785,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			}
 
 			if (nJobFlag != 0 && strTooltip.Length <= 0)
-				pMain.PrintLog("Item Editor > Item: " + nItemID + " Error: a_job_flag out of range", Color.Red);
+				pMain.PrintLog("Item Editor > Item: " + nItemID + " Error: a_job_flag out of range.", Color.Red);
 
 			pToolTip = new ToolTip();
 			pToolTip.SetToolTip(btnClassFlag, strTooltip.ToString());
@@ -795,7 +806,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			}
 
 			if (nZoneFlag != 0 && strTooltip.Length <= 0)
-				pMain.PrintLog("Item Editor > Item: " + nItemID + " Error: a_zone_flag out of range", Color.Red);
+				pMain.PrintLog("Item Editor > Item: " + nItemID + " Error: a_zone_flag out of range.", Color.Red);
 
 			pToolTip = new ToolTip();
 			pToolTip.SetToolTip(btnAllowedZoneFlag, strTooltip.ToString());
@@ -818,7 +829,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			}
 
 			if (nItemFlag != 0 && strTooltip.Length <= 0)
-				pMain.PrintLog("Item Editor > Item: " + nItemID + " Error: a_flag out of range", Color.Red);
+				pMain.PrintLog("Item Editor > Item: " + nItemID + " Error: a_flag out of range.", Color.Red);
 
 			// TODO: Add check for conflicts in flag config
 
@@ -837,7 +848,7 @@ namespace LastChaos_ToolBox_2024.Editors
 				cbSubTypeSelector.Enabled = false;
 				cbSubTypeSelector.Text = "";
 
-				pMain.PrintLog("Item Editor > Item: " + nItemID + " Error: a_type_idx out of range", Color.Red);
+				pMain.PrintLog("Item Editor > Item: " + nItemID + " Error: a_type_idx out of range.", Color.Red);
 			}
 			else
 			{
@@ -852,7 +863,7 @@ namespace LastChaos_ToolBox_2024.Editors
 					cbSubTypeSelector.Enabled = false;
 					cbSubTypeSelector.Text = "";
 
-					pMain.PrintLog("Item Editor > Item: " + nItemID + " Error: a_subtype_idx out of range", Color.Red);
+					pMain.PrintLog("Item Editor > Item: " + nItemID + " Error: a_subtype_idx out of range.", Color.Red);
 				}
 				else
 				{
@@ -863,7 +874,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			int nRvRValue = Convert.ToInt32(pTempItemRow["a_rvr_value"]);
 			if (nRvRValue > Defs.SyndicateTypesNGrades.Keys.Count)
 			{
-				pMain.PrintLog("Item Editor > Item: " + nItemID + " Error: a_rvr_value out of range", Color.Red);
+				pMain.PrintLog("Item Editor > Item: " + nItemID + " Error: a_rvr_value out of range.", Color.Red);
 			}
 			else
 			{
@@ -902,7 +913,7 @@ namespace LastChaos_ToolBox_2024.Editors
 					if (nZoneID <= strArrayZones.Length)
 						cbSet0.SelectedIndex = nZoneID;
 					else
-						pMain.PrintLog("Item Editor > Item: " + nItemID + " Error: a_set_0 out of range", Color.Red);
+						pMain.PrintLog("Item Editor > Item: " + nItemID + " Error: a_set_0 out of range.", Color.Red);
 				}
 
 				for (int i = 1; i <= 4; i++)
@@ -1185,14 +1196,14 @@ namespace LastChaos_ToolBox_2024.Editors
 		private void btnAddNew_Click(object sender, EventArgs e)
 		{
 			// TODO:
-			/*bool bReturn = pMain.QueryUpdateInsert("utf8", "INSERT INTO lc_data_nov.t_clientversion (a_min, a_max) VALUES('0', '9199')");
+			/*bool bReturn = pMain.QueryUpdateInsert(pMain.pSettings.DBCharset, "INSERT INTO lc_data_nov.t_clientversion (a_min, a_max) VALUES('0', '9199')");
 
 		   if (bReturn)
 			   pMain.PrintLog("suc");
 		   else
 			   pMain.PrintLog("failed");
 			/////
-			DataTable pData = pMain.QuerySelect("utf8", "SELECT * FROM lc_data_nov.t_clientversion;");
+			DataTable pData = pMain.QuerySelect(pMain.pSettings.DBCharset, "SELECT * FROM lc_data_nov.t_clientversion;");
 
 			if (pData != null)
 			{
@@ -1528,7 +1539,7 @@ namespace LastChaos_ToolBox_2024.Editors
 						if (nZoneID <= strArrayZones.Length)
 							cbSet0.SelectedIndex = nZoneID;
 						else
-							pMain.PrintLog("Item Editor > Item: " + pTempItemRow["a_index"].ToString() + " Error: a_set_0 out of range", Color.Red);
+							pMain.PrintLog("Item Editor > Item: " + pTempItemRow["a_index"].ToString() + " Error: a_set_0 out of range.", Color.Red);
 					}
 
 					for (int i = 1; i <= 4; i++)
@@ -1997,7 +2008,7 @@ namespace LastChaos_ToolBox_2024.Editors
 		/****************************************/
 		private void gbFortune_MouseEnter(object sender, EventArgs e)
 		{
-			if (bUserAction)
+			if (bUserAction && pMain.pSettings.ItemEditorAutoShowFortune == "false")
 			{
 				if (pMain.pItemTable != null)
 				{
@@ -2292,8 +2303,76 @@ namespace LastChaos_ToolBox_2024.Editors
 
 		private void btnUpdate_Click(object sender, EventArgs e)
 		{
+			int nItemID = Convert.ToInt32(pTempItemRow["a_index"]);
+			StringBuilder strQuery = new StringBuilder();
+
+			// Init trans
+			strQuery.Append("BEGIN TRANSACTION;\n");
+
+			// TODO: Need request for fortune data here
+			if (pTempFortuneHead == null || pTempFortuneData == null)
+				LoadFortuneData();
+
+			if (pTempFortuneHead != null)
+			{
+				// Delete all rows in t_fortune_head related to nItemID
+				strQuery.Append("DELETE FROM " + pMain.pSettings.DBData + ".t_fortune_head WHERE a_item_idx = " + nItemID + ";\n");
+
+				// Compose t_fortune_head insert query
+				StringBuilder strColumnsNames = new StringBuilder();
+				StringBuilder strColumnsValues = new StringBuilder();
+
+				foreach (DataColumn pColumn in pTempFortuneHead.Table.Columns)
+				{
+					strColumnsNames.Append(pColumn.ColumnName + ", ");
+
+					strColumnsValues.Append((object)pTempFortuneHead[pColumn] + ", ");
+				}
+
+				strColumnsNames.Length -= 2;
+				strColumnsValues.Length -= 2;
+
+				strQuery.Append("INSERT INTO " + pMain.pSettings.DBData + ".t_fortune_head (" + strColumnsNames + ") VALUES (" + strColumnsValues + ");\n");
+
+				if (pTempFortuneData != null)
+				{
+					// Delete all rows in t_fortune_data related to nItemID
+					strQuery.Append("DELETE FROM " + pMain.pSettings.DBData + ".t_fortune_data WHERE a_item_idx = " + nItemID + ";\n");
+
+					// Compose t_fortune_data insert query
+					strColumnsNames = new StringBuilder();
+					strColumnsValues = new StringBuilder();
+
+					foreach (DataRow pTempFortuneDaraRow in pTempFortuneData)
+					{
+						strColumnsValues.Append("(");
+
+						foreach (DataColumn pColumn in pTempFortuneDaraRow.Table.Columns)
+						{
+							string strColumnName = pColumn.ColumnName;
+
+							if (!strColumnsNames.ToString().Contains(strColumnName))
+								strColumnsNames.Append(strColumnName + ", ");
+
+							strColumnsValues.Append((object)pTempFortuneDaraRow[pColumn] + ", ");
+						}
+
+						strColumnsValues.Length -= 2;
+
+						strColumnsValues.Append("), ");
+					}
+
+					strColumnsNames.Length -= 2;
+					strColumnsValues.Length -= 2;
+
+					strQuery.Append("INSERT INTO " + pMain.pSettings.DBData + ".t_fortune_data (" + strColumnsNames + ") VALUES " + strColumnsValues + ";\n");
+				}
+			}
+
+			// Check if item exist in Global Table, if exist do a update, if not, do a insert.
+			// TODO: In both cases, check strings, probably need add a scapechars function for varchar columns.
 			DataRow pItemTableRow = pMain.pItemTable.Select("a_index = " + Convert.ToInt32(tbID.Text)).FirstOrDefault();
-			if (pItemTableRow != null)
+			if (pItemTableRow != null)  // UPDATE
 			{
 				foreach (DataColumn column in pTempItemRow.Table.Columns)
 				{
@@ -2304,13 +2383,24 @@ namespace LastChaos_ToolBox_2024.Editors
 
 					// TODO: UPDATE pMain.pItemTable, pMain.pItemFortuneHeadTable & pMain.pItemFortuneDataTable	(Check if have row in pItemFortuneHeadTable but not in pItemFortuneDataTable execute a delete from a_fortune_head)
 
-					pItemTableRow[column.ColumnName] = pTempItemRow[column.ColumnName];
+					//pItemTableRow[column.ColumnName] = pTempItemRow[column.ColumnName];
 				}
 
 				bUnsavedChanges = false;
 			}
+			else    // INSERT
+			{
+
+			}
 
 			pItemTableRow = null;
+
+			strQuery.Append("COMMIT;\n");
+
+			pMain.PrintLog(strQuery.ToString());
+			// TODO: Exec the query QueryUpdateInsert
+			// TODO: If query not fail, transfer from temps to globals (using try, catch and finally)
+			// TODO: If transfers run without errors, do: bUnsavedChanges = false;, else throw error.
 		}
 	}
 }

@@ -145,7 +145,7 @@ namespace LastChaos_ToolBox_2024
 				}
 				else
 				{
-					pMain.PrintLog("Icon Picker > Something went wrong while try load: " + strPathCompose, Color.Red);
+					pMain.PrintLog("Icon Picker > Something went wrong while try load: (" + strPathCompose + ").", Color.Red);
 				}
 			}
 		}
