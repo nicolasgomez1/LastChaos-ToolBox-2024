@@ -31,6 +31,7 @@ namespace LastChaos_ToolBox_2024
 		public DataTable pRareOptionTable = null;
 		public DataTable pItemFortuneHeadTable = null;
 		public DataTable pItemFortuneDataTable = null;
+		public DataTable pStringTable = null;
 
 		public class Settings
 		{
@@ -122,6 +123,13 @@ namespace LastChaos_ToolBox_2024
 				pItemFortuneDataTable.Dispose();
 				pItemFortuneDataTable = null;
 			}
+
+			if (pStringTable != null)
+			{
+				pStringTable.Dispose();
+				pStringTable = null;
+			}
+
 			/****************************************/
 			List<Form> formsToClose = new List<Form>();
 

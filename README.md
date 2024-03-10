@@ -44,7 +44,7 @@ UPDATE: Podría más o menos intentar definir los tipos en base a las flags que 
 3) [Skill Picker Implementation Example](Pickers/SkillPicker.cs)
 4) [Item Picker Implementation Example](Pickers/ItemPicker.cs)
 5) [Rare Option Picker Implementation Example](Pickers/RareOptionPicker.cs)
-
+6) [String Picker Implementation Example](Pickers/StringPicker.cs)
 
 - NOTE: Picker Dialogs are intended to complement larger Tools, however, they have the ability to request information autonomously. This means that you can make the decision to load, for example, t_skill names to be able to display them in your Tool, which will increase loading times. On the other hand, you could not request this information and work only with IDS, but when invoking the Skill Picker Dialog, it will request data such as the name and description of the skills automatically if necessary.
 

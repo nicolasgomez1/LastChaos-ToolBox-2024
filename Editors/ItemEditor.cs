@@ -18,6 +18,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Definitions;
+using IniParser.Model;
+using IniParser;
 using static Google.Protobuf.Reflection.SourceCodeInfo.Types;
 
 namespace LastChaos_ToolBox_2024.Editors
@@ -101,6 +103,43 @@ namespace LastChaos_ToolBox_2024.Editors
 			gridFortune.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
 
 			gridFortune.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+			/****************************************/
+			cbRenderDialog.Checked = bool.Parse(pMain.pSettings.ShowRenderDialog[this.Name]);
+			cbAutoLoadFortuneData.Checked = bool.Parse(pMain.pSettings.ItemEditorAutoShowFortune);
+		}
+
+		private void cbRenderDialog_CheckedChanged(object sender, EventArgs e)
+		{
+			string strState = "false";
+
+			if (cbRenderDialog.Checked)
+				strState = "true";
+
+			pMain.pSettings.ShowRenderDialog[this.Name] = strState;
+
+			FileIniDataParser pParser = new FileIniDataParser();
+			IniData pData = pParser.ReadFile(pMain.pSettings.SettingsFile);
+			
+			pData["RenderDialog"]["ItemEditor"] = strState;
+
+			pParser.WriteFile(pMain.pSettings.SettingsFile, pData);
+		}
+
+		private void cbAutoLoadFortuneData_CheckedChanged(object sender, EventArgs e)
+		{
+			string strState = "false";
+
+			if (cbAutoLoadFortuneData.Checked)
+				strState = "true";
+
+			pMain.pSettings.ItemEditorAutoShowFortune = strState;
+
+			FileIniDataParser pParser = new FileIniDataParser();
+			IniData pData = pParser.ReadFile(pMain.pSettings.SettingsFile);
+
+			pData["Settings"]["ItemEditorAutoShowFortune"] = strState;
+
+			pParser.WriteFile(pMain.pSettings.SettingsFile, pData);
 		}
 
 		public class ListBoxItem
@@ -2093,10 +2132,20 @@ namespace LastChaos_ToolBox_2024.Editors
 					}
 
 					gridFortune.Rows[e.RowIndex].Cells["level"].Tag = iSelectedSkillLevel;
+
+					bUnsavedChanges = true;
 				}
 				else if (e.Button == MouseButtons.Left && e.ColumnIndex == 3 && e.RowIndex >= 0) // String Selector
 				{
-					// TODO: StringPicker dialog
+					StringPicker pStringSelector = new StringPicker(pMain, this, 1, false);
+
+					if (pStringSelector.ShowDialog() != DialogResult.OK)
+						return;
+
+					gridFortune.Rows[e.RowIndex].Cells["string"].Value = pStringSelector.ReturnValues[0];
+					gridFortune.Rows[e.RowIndex].Cells["string"].ToolTipText = pStringSelector.ReturnValues[1].ToString();
+
+					bUnsavedChanges = true;
 				}
 				else if (e.Button == MouseButtons.Right && e.ColumnIndex == -1) // Header Column
 				{
@@ -2203,6 +2252,8 @@ namespace LastChaos_ToolBox_2024.Editors
 
 									i++;
 								}
+
+								bUnsavedChanges = true;
 							}
 						}
 					};

@@ -143,6 +143,12 @@
     <Compile Include="Pickers\ItemPicker.Designer.cs">
       <DependentUpon>ItemPicker.cs</DependentUpon>
     </Compile>
+    <Compile Include="Pickers\StringPicker.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Pickers\StringPicker.Designer.cs">
+      <DependentUpon>StringPicker.cs</DependentUpon>
+    </Compile>
     <Compile Include="Pickers\SkillPicker.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -184,6 +190,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Pickers\ItemPicker.resx">
       <DependentUpon>ItemPicker.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pickers\StringPicker.resx">
+      <DependentUpon>StringPicker.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Pickers\SkillPicker.resx">
       <DependentUpon>SkillPicker.cs</DependentUpon>
