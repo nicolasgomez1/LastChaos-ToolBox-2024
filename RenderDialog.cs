@@ -327,9 +327,9 @@ namespace LastChaos_ToolBox_2024
 						lcTex.imageData = null;
 					}
 				}
-				catch (Exception e)
+				catch (Exception ex)
 				{
-					pMain.Logger("Render Dialog > " + e.Message + "(SMC: " + pstrFilePath + ").", Color.Red);
+					pMain.Logger("Render Dialog > " + ex.Message + "(SMC: " + pstrFilePath + ").", Color.Red);
 					lcTex.imageData = null;
 				}
 			}

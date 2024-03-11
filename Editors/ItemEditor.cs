@@ -608,9 +608,7 @@ namespace LastChaos_ToolBox_2024.Editors
 
 				for (int i = 0; i < nTotalZones; i++)
 					strArrayZones[i] = pMain.pZoneTable.Rows[i]["a_name"].ToString();
-
 				/****************************************/
-
 				cbSet0.Items.Clear();
 
 				cbSet0.BeginUpdate();
@@ -1246,12 +1244,109 @@ namespace LastChaos_ToolBox_2024.Editors
 		private void btnCopy_Click(object sender, EventArgs e)
 		{
 			// TODO:
+
+			// TODO: Cuando termine es código y el de btnAddNew, hacer una branch ChangeUIOnFlag para en algún momento retomar la idea de modificar la ui dependiendo de la flag.
+			// TODO: En mis otras herramientas usaba una columna temporal indicando que el item era justamente, temporal, se aplicaba esa flag a items copiados o nuevos, pero aquí lo que podría hacer es: un check cuando se selecciona un elemento de MainList, y verificar si int nItemID = Convert.ToInt32(pTempItemRow["a_index"]); existe en pItemTable.
+			/*
+			 DataRow pRow = pMain.pItemFortuneDataTable.NewRow();
+					
+					pRow["a_item_idx"] = pTempItemRow["a_index"];
+					pRow["a_skill_index"] = row.Cells["skill"].Tag;
+					pRow["a_skill_level"] = row.Cells["level"].Value.ToString().Split(new string[] { " - " }, StringSplitOptions.None)[0].Replace("Level: ", "").Trim(); // DUDE LOOK THAT SHIT HAHA, NOTE: in theory, the element index is equivalent to level, but i'm not trust so, by go in this way have not room to errors.	//row.Cells["level"].Tag;
+					pRow["a_string_index"] = row.Cells["string"].Value;
+					pRow["a_prob"] = row.Cells["prob"].Value;
+
+					pTempFortuneDataRows[i] = pRow;
+			 */
 		}
 
 		private void btnDelete_Click(object sender, EventArgs e)
 		{
-			// TODO:
-			// En caso de eliminarse de la db, la funcion sería: pMain.pItemTable.Delete();
+			bool bSuccess = true;
+			int nItemID = Convert.ToInt32(pTempItemRow["a_index"]);
+
+			DataRow pItemTableRow = pMain.pItemTable.Select("a_index = " + nItemID).FirstOrDefault();
+			if (pItemTableRow != null)
+			{
+				StringBuilder strbuilderQuery = new StringBuilder();
+
+				strbuilderQuery.Append("BEGIN;\n");
+
+				strbuilderQuery.Append("DELETE FROM " + pMain.pSettings.DBData + ".t_fortune_head WHERE a_item_idx = " + nItemID + ";\n");
+
+				strbuilderQuery.Append("DELETE FROM " + pMain.pSettings.DBData + ".t_fortune_data WHERE a_item_idx = " + nItemID + ";\n");
+
+				strbuilderQuery.Append("DELETE FROM " + pMain.pSettings.DBData + ".t_item WHERE a_index = " + nItemID + ";\n");
+
+				string strQuery = strbuilderQuery.Append("COMMIT;\n").ToString();
+
+				if (!(bSuccess = pMain.QueryUpdateInsert(pMain.pSettings.DBCharset, strQuery)))
+				{
+					string strError = "Item Editor > Item: " + nItemID + " Something got wrong while trying to execute the MySQL Transaction. Changes not applied.";
+
+					pMain.Logger(strError, Color.Red);
+
+					MessageBox.Show(strError, "Item Editor", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				}
+			}
+
+			pItemTableRow = null;
+
+			if (bSuccess)
+			{
+				try
+				{
+					DataRow pRow;
+
+					if (pMain.pItemFortuneHeadTable != null)
+					{
+						pRow = pMain.pItemFortuneHeadTable.Select("a_item_idx = " + nItemID).FirstOrDefault();
+
+						if (pRow != null)
+							pMain.pItemFortuneHeadTable.Rows.Remove(pRow);
+					}
+
+					if (pMain.pItemFortuneDataTable != null)
+					{
+						DataRow[] pRows = pMain.pItemFortuneDataTable.Select("a_item_idx = " + nItemID);
+
+						if (pRows.Length > 0)
+						{
+							foreach (DataRow pDataRow in pRows)
+								pMain.pItemFortuneDataTable.Rows.Remove(pDataRow);
+						}
+
+						pRows = null;
+					}
+
+					pRow = pMain.pItemTable.Select("a_index = " + nItemID).FirstOrDefault();
+
+					if (pRow != null)
+						pMain.pItemTable.Rows.Remove(pRow);
+
+					pRow = null;
+				}
+				catch (Exception ex)
+				{
+					string strError = "Item Editor > Item: " + nItemID + " Changes applied in DataBase, but something got wrong while transferring temp item data to main tables. Please restart the application (" + ex.Message + ").";
+
+					pMain.Logger(strError, Color.Red);
+
+					MessageBox.Show(strError, "Item Editor", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				}
+				finally
+				{
+					MessageBox.Show("Item Deleted successfully!", "Item Editor", MessageBoxButtons.OK);
+
+					int nPrevObjectID = MainList.SelectedIndex <= 0 ? 0 : MainList.SelectedIndex - 1;
+
+					MainList.Items.Remove(MainList.SelectedItem);
+
+					MainList.SelectedIndex = nPrevObjectID;
+
+					bUnsavedChanges = false;
+				}
+			}
 		}
 
 		private void cbEnable_CheckedChanged(object sender, EventArgs e)
@@ -2233,6 +2328,8 @@ namespace LastChaos_ToolBox_2024.Editors
 								gridFortune.Rows[i].Cells["string"].Value = nDefaultStringID;
 							}
 
+							pSkillRow = null;
+
 							bUnsavedChanges = true;
 						}
 					};
@@ -2252,6 +2349,8 @@ namespace LastChaos_ToolBox_2024.Editors
 								DataRow pFortuneLastSkillRow = pTempFortuneDataRows.Cast<DataRow>().Where(row => row.RowState != DataRowState.Deleted && row["a_skill_index"].ToString() == nSkillID.ToString()).LastOrDefault();
 								if (pFortuneLastSkillRow != null)
 									pTempFortuneDataRows.ElementAt(Array.IndexOf(pTempFortuneDataRows, pFortuneLastSkillRow)).Delete();
+
+								pFortuneLastSkillRow = null;
 							}
 							finally
 							{
@@ -2379,6 +2478,9 @@ namespace LastChaos_ToolBox_2024.Editors
 
 					strbuilderQuery.Append("INSERT INTO " + pMain.pSettings.DBData + ".t_fortune_data (" + strColumnsNames + ") VALUES " + strColumnsValues + ";\n");
 				}
+
+				strColumnsNames = null;
+				strColumnsValues = null;
 			}
 
 			// Check if item exist in Global Table, if exist, do a UPDATE. If not, do a INSERT.
@@ -2412,15 +2514,12 @@ namespace LastChaos_ToolBox_2024.Editors
 				strColumnsValues.Length -= 2;
 
 				strbuilderQuery.Append("INSERT INTO " + pMain.pSettings.DBData + ".t_item (" + strColumnsNames + ") VALUES (" + strColumnsValues + ");\n");
+
+				strColumnsNames = null;
+				strColumnsValues = null;
 			}
 
-			string strQuery = strbuilderQuery.Append("COMMIT;\n").ToString();
-
-			strbuilderQuery = null;
-
-			pMain.Logger(strQuery);
-
-			if (pMain.QueryUpdateInsert(pMain.pSettings.DBCharset, strQuery))
+			if (pMain.QueryUpdateInsert(pMain.pSettings.DBCharset, strbuilderQuery.Append("COMMIT;\n").ToString()))
 			{
 				try
 				{
@@ -2451,6 +2550,8 @@ namespace LastChaos_ToolBox_2024.Editors
 							DataRow pItemFortuneHeadTableRow = pMain.pItemFortuneHeadTable.NewRow();
 							pItemFortuneHeadTableRow.ItemArray = (object[])pTempFortuneHeadRow.ItemArray.Clone();
 							pMain.pItemFortuneHeadTable.Rows.Add(pItemFortuneHeadTableRow);
+
+							pItemFortuneHeadTableRow = null;
 						}
 					}
 
@@ -2502,12 +2603,10 @@ namespace LastChaos_ToolBox_2024.Editors
 						pItemTableRow.ItemArray = (object[])pTempItemRow.ItemArray.Clone();
 						pMain.pItemTable.Rows.Add(pItemTableRow);
 					}
-
-					MessageBox.Show("Changes applied successfully!", "Item Editor", MessageBoxButtons.OK);
 				}
 				catch (Exception ex)
 				{
-					string strError = "Item Editor > Item: " + nItemID + " Changes applied in DataBase, but something got wrong while transferring temp item data to main tables. Please restart the application.";
+					string strError = "Item Editor > Item: " + nItemID + " Changes applied in DataBase, but something got wrong while transferring temp item data to main tables. Please restart the application (" + ex.Message + ").";
 
 					pMain.Logger(strError, Color.Red);
 
@@ -2515,6 +2614,8 @@ namespace LastChaos_ToolBox_2024.Editors
 				}
 				finally
 				{
+					MessageBox.Show("Changes applied successfully!", "Item Editor", MessageBoxButtons.OK);
+
 					pItemTableRow = null;
 
 					bUnsavedChanges = false;
@@ -2529,7 +2630,7 @@ namespace LastChaos_ToolBox_2024.Editors
 				MessageBox.Show(strError, "Item Editor", MessageBoxButtons.OK, MessageBoxIcon.Error);
 			}
 
-			strQuery = null;
+			strbuilderQuery = null;
 #if DEBUG
 			stopwatch.Stop();
 			pMain.Logger($"Compose query, run it, and transfer Data from Temp to Global took: {stopwatch.ElapsedMilliseconds}.{stopwatch.ElapsedTicks} MS.TICKS");

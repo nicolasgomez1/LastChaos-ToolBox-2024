@@ -63,8 +63,6 @@ namespace LastChaos_ToolBox_2024
 			Assembly pAssembly = Assembly.GetAssembly(typeof(Main));
 
 			this.Text = strWindowsTitle = pAssembly.GetName().Name + " Build: " + pAssembly.GetName().Version.Revision;
-
-			//WindowUtils.EnableAcrylic(this, Color.FromArgb(0, 0, 0, 255));	// For fun
 		}
 
 		private void Main_Load(object sender, EventArgs e)
@@ -423,7 +421,7 @@ namespace LastChaos_ToolBox_2024
 
 		private void button4_Click(object sender, EventArgs e)
 		{
-			int nIters = 100000;
+			/*int nIters = 100000;
 
 			Stopwatch stopwatch = new Stopwatch();
 			stopwatch.Start();
@@ -471,7 +469,6 @@ namespace LastChaos_ToolBox_2024
 			stopwatch.Stop();
 			Logger($"HashSet Add and Join Test took: {stopwatch.ElapsedMilliseconds} ms.");
 
-			/*
 			String Concatenate Test took: 14260 ms
 			String Builder Test took: 10 ms
 			List Add and Join Test took: 9 ms
