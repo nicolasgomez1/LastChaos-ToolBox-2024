@@ -21,6 +21,7 @@ using Definitions;
 using IniParser.Model;
 using IniParser;
 using System.IO;
+using System.Data.SqlClient;
 
 namespace LastChaos_ToolBox_2024.Editors
 {
@@ -34,8 +35,8 @@ namespace LastChaos_ToolBox_2024.Editors
 		private int nSearchPosition = 0;
 		private ListBoxItem pLastSelected;
 		private DataRow pTempItemRow;
-		private DataRow pTempFortuneHead;
-		private DataRow[] pTempFortuneData;
+		private DataRow pTempFortuneHeadRow;
+		private DataRow[] pTempFortuneDataRows;
 		private string[] strArrayZones;
 		private System.Windows.Forms.ToolTip pToolTip;
 		private Dictionary<Control, ToolTip> pToolTips = new Dictionary<Control, ToolTip>();
@@ -376,32 +377,32 @@ namespace LastChaos_ToolBox_2024.Editors
 
 			if (pMain.pItemFortuneHeadTable != null && pMain.pItemFortuneHeadTable.Select("a_item_idx = " + nItemID).Length > 0)
 			{
-				pTempFortuneHead = pMain.pItemFortuneHeadTable.NewRow();
-				pTempFortuneHead.ItemArray = (object[])pMain.pItemFortuneHeadTable.Select("a_item_idx = " + nItemID)[0].ItemArray.Clone();
+				pTempFortuneHeadRow = pMain.pItemFortuneHeadTable.NewRow();
+				pTempFortuneHeadRow.ItemArray = (object[])pMain.pItemFortuneHeadTable.Select("a_item_idx = " + nItemID)[0].ItemArray.Clone();
 			}
 
-			if (pTempFortuneHead != null)
+			if (pTempFortuneHeadRow != null)
 			{
 				cbFortuneEnable.Visible = true;
 				lProbType.Visible = true;
 				cbFortuneProbType.Visible = true;
 				gridFortune.Enabled = true;
 
-				if (pTempFortuneHead["a_enable"].ToString() == "1")
+				if (pTempFortuneHeadRow["a_enable"].ToString() == "1")
 					cbFortuneEnable.Checked = true;
 				else
 					cbFortuneEnable.Checked = false;
 
-				cbFortuneProbType.SelectedIndex = Convert.ToInt32(pTempFortuneHead["a_prob_type"]);
+				cbFortuneProbType.SelectedIndex = Convert.ToInt32(pTempFortuneHeadRow["a_prob_type"]);
 				/****************************************/
 				if (pMain.pItemFortuneDataTable != null)
 				{
-					pTempFortuneData = pMain.pItemFortuneDataTable.AsEnumerable().Where(row => row.RowState != DataRowState.Deleted && row.Field<int>("a_item_idx") == nItemID).ToArray();
+					pTempFortuneDataRows = pMain.pItemFortuneDataTable.AsEnumerable().Where(row => row.RowState != DataRowState.Deleted && row.Field<int>("a_item_idx") == nItemID).ToArray();
 
-					if (pTempFortuneData.Length > 0)
+					if (pTempFortuneDataRows.Length > 0)
 					{
 						int i = 0;
-						foreach (DataRow pFortuneRow in pTempFortuneData)
+						foreach (DataRow pFortuneRow in pTempFortuneDataRows)
 						{
 							int iFortuneSkillID = Convert.ToInt32(pFortuneRow["a_skill_index"]);
 							int iFortuneSkillLevel = Convert.ToInt32(pFortuneRow["a_skill_level"]);
@@ -629,8 +630,8 @@ namespace LastChaos_ToolBox_2024.Editors
 
 				// TODO: Add here all used tables, arrays etc etc
 				pTempItemRow = null;
-				pTempFortuneHead = null;
-				pTempFortuneData = null;
+				pTempFortuneHeadRow = null;
+				pTempFortuneDataRows = null;
 
 				strArrayZones = null;
 			}
@@ -666,8 +667,8 @@ namespace LastChaos_ToolBox_2024.Editors
 			btnAddFortune.Visible = false;
 			gridFortune.Enabled = false;
 
-			pTempFortuneHead = null;
-			pTempFortuneData = null;
+			pTempFortuneHeadRow = null;
+			pTempFortuneDataRows = null;
 
 			foreach (var toolTip in pToolTips.Values)
 				toolTip.Dispose();
@@ -2013,7 +2014,7 @@ namespace LastChaos_ToolBox_2024.Editors
 				if (pMain.pItemTable != null)
 				{
 					bUserAction = false;
-					
+
 					LoadFortuneData();
 
 					SetFortuneData();
@@ -2032,17 +2033,17 @@ namespace LastChaos_ToolBox_2024.Editors
 					if (pMain.pItemFortuneHeadTable == null)    // NOTE: This condition theoretically should not be met, but just in case
 					{
 						pMain.pItemFortuneHeadTable = new DataTable();
-						
+
 						pMain.pItemFortuneHeadTable.Columns.Add("a_item_idx", typeof(int));     // int
 						pMain.pItemFortuneHeadTable.Columns.Add("a_prob_type", typeof(byte));   // tinyint unsigned
 						pMain.pItemFortuneHeadTable.Columns.Add("a_enable", typeof(byte));      // tinyint unsigned
 					}
 
-					pTempFortuneHead = pMain.pItemFortuneHeadTable.NewRow();
+					pTempFortuneHeadRow = pMain.pItemFortuneHeadTable.NewRow();
 
-					pTempFortuneHead["a_item_idx"] = pTempItemRow["a_index"];
-					pTempFortuneHead["a_prob_type"] = 0;
-					pTempFortuneHead["a_enable"] = 1;
+					pTempFortuneHeadRow["a_item_idx"] = pTempItemRow["a_index"];
+					pTempFortuneHeadRow["a_prob_type"] = 0;
+					pTempFortuneHeadRow["a_enable"] = 1;
 				}
 				finally
 				{
@@ -2072,7 +2073,7 @@ namespace LastChaos_ToolBox_2024.Editors
 				if (cbFortuneEnable.Checked)
 					strEnable = "1";
 
-				pTempFortuneHead["a_enable"] = strEnable;
+				pTempFortuneHeadRow["a_enable"] = strEnable;
 
 				bUnsavedChanges = true;
 			}
@@ -2086,7 +2087,7 @@ namespace LastChaos_ToolBox_2024.Editors
 
 				if (nType != -1)
 				{
-					pTempFortuneHead["a_prob_type"] = nType.ToString();
+					pTempFortuneHeadRow["a_prob_type"] = nType.ToString();
 
 					bUnsavedChanges = true;
 				}
@@ -2160,10 +2161,10 @@ namespace LastChaos_ToolBox_2024.Editors
 
 						try
 						{
-							if (pTempFortuneData == null)
-								pTempFortuneData = new DataRow[1];
+							if (pTempFortuneDataRows == null)
+								pTempFortuneDataRows = new DataRow[1];
 
-							int nPosition = pTempFortuneData.Length - 1;
+							int nPosition = pTempFortuneDataRows.Length - 1;
 
 							if (pMain.pItemFortuneDataTable == null)
 							{
@@ -2176,13 +2177,13 @@ namespace LastChaos_ToolBox_2024.Editors
 								pMain.pItemFortuneDataTable.Columns.Add("a_prob", typeof(int));             // int
 							}
 
-							pTempFortuneData[nPosition] = pMain.pItemFortuneDataTable.NewRow();
+							pTempFortuneDataRows[nPosition] = pMain.pItemFortuneDataTable.NewRow();
 
-							pTempFortuneData[nPosition]["a_item_idx"] = pTempItemRow["a_index"];
-							pTempFortuneData[nPosition]["a_skill_index"] = nDefaultSkillID;
-							pTempFortuneData[nPosition]["a_skill_level"] = nDefaultSkillLevel;
-							pTempFortuneData[nPosition]["a_string_index"] = nDefaultStringID;
-							pTempFortuneData[nPosition]["a_prob"] = nDefaultProb;
+							pTempFortuneDataRows[nPosition]["a_item_idx"] = pTempItemRow["a_index"];
+							pTempFortuneDataRows[nPosition]["a_skill_index"] = nDefaultSkillID;
+							pTempFortuneDataRows[nPosition]["a_skill_level"] = nDefaultSkillLevel;
+							pTempFortuneDataRows[nPosition]["a_string_index"] = nDefaultStringID;
+							pTempFortuneDataRows[nPosition]["a_prob"] = nDefaultProb;
 						}
 						finally
 						{
@@ -2227,7 +2228,8 @@ namespace LastChaos_ToolBox_2024.Editors
 
 					ToolStripMenuItem deleteItem = new ToolStripMenuItem("Delete");
 					deleteItem.Enabled = e.RowIndex >= 0;
-					deleteItem.Click += (menuItemSender, menuItemEventArgs) => {
+					deleteItem.Click += (menuItemSender, menuItemEventArgs) =>
+					{
 						int nRow = e.RowIndex;
 
 						if (nRow >= 0)
@@ -2236,9 +2238,9 @@ namespace LastChaos_ToolBox_2024.Editors
 							{
 								int nSkillID = Convert.ToInt32(((DataGridViewButtonCell)gridFortune.Rows[nRow].Cells["skill"]).Tag);
 
-								DataRow pFortuneLastSkillRow = pTempFortuneData.Cast<DataRow>().Where(row => row.RowState != DataRowState.Deleted && row["a_skill_index"].ToString() == nSkillID.ToString()).LastOrDefault();
+								DataRow pFortuneLastSkillRow = pTempFortuneDataRows.Cast<DataRow>().Where(row => row.RowState != DataRowState.Deleted && row["a_skill_index"].ToString() == nSkillID.ToString()).LastOrDefault();
 								if (pFortuneLastSkillRow != null)
-									pTempFortuneData.ElementAt(Array.IndexOf(pTempFortuneData, pFortuneLastSkillRow)).Delete();
+									pTempFortuneDataRows.ElementAt(Array.IndexOf(pTempFortuneDataRows, pFortuneLastSkillRow)).Delete();
 							}
 							finally
 							{
@@ -2303,58 +2305,62 @@ namespace LastChaos_ToolBox_2024.Editors
 
 		private void btnUpdate_Click(object sender, EventArgs e)
 		{
+#if DEBUG
+			Stopwatch stopwatch = new Stopwatch();
+			stopwatch.Start();
+#endif
 			int nItemID = Convert.ToInt32(pTempItemRow["a_index"]);
-			StringBuilder strQuery = new StringBuilder();
+			StringBuilder strbuilderQuery = new StringBuilder();
 
-			// Init trans
-			strQuery.Append("BEGIN TRANSACTION;\n");
+			// Init transaction.
+			strbuilderQuery.Append("BEGIN;\n");	//strbuilderQuery.Append("BEGIN TRANSACTION;\n");
 
-			// TODO: Need request for fortune data here
-			if (pTempFortuneHead == null || pTempFortuneData == null)
+			// Request for Fortune Data.
+			if (pTempFortuneHeadRow == null || pTempFortuneDataRows == null)
 				LoadFortuneData();
 
-			if (pTempFortuneHead != null)
+			if (pTempFortuneHeadRow != null)
 			{
-				// Delete all rows in t_fortune_head related to nItemID
-				strQuery.Append("DELETE FROM " + pMain.pSettings.DBData + ".t_fortune_head WHERE a_item_idx = " + nItemID + ";\n");
+				// Delete all rows in t_fortune_head related to nItemID.
+				strbuilderQuery.Append("DELETE FROM " + pMain.pSettings.DBData + ".t_fortune_head WHERE a_item_idx = " + nItemID + ";\n");
 
-				// Compose t_fortune_head insert query
+				// Compose t_fortune_head INSERT Query.
 				StringBuilder strColumnsNames = new StringBuilder();
 				StringBuilder strColumnsValues = new StringBuilder();
 
-				foreach (DataColumn pColumn in pTempFortuneHead.Table.Columns)
+				foreach (DataColumn pColumn in pTempFortuneHeadRow.Table.Columns)
 				{
 					strColumnsNames.Append(pColumn.ColumnName + ", ");
 
-					strColumnsValues.Append((object)pTempFortuneHead[pColumn] + ", ");
+					strColumnsValues.Append((object)pTempFortuneHeadRow[pColumn] + ", ");
 				}
 
 				strColumnsNames.Length -= 2;
 				strColumnsValues.Length -= 2;
 
-				strQuery.Append("INSERT INTO " + pMain.pSettings.DBData + ".t_fortune_head (" + strColumnsNames + ") VALUES (" + strColumnsValues + ");\n");
+				strbuilderQuery.Append("INSERT INTO " + pMain.pSettings.DBData + ".t_fortune_head (" + strColumnsNames + ") VALUES (" + strColumnsValues + ");\n");
 
-				if (pTempFortuneData != null)
+				if (pTempFortuneDataRows != null)
 				{
-					// Delete all rows in t_fortune_data related to nItemID
-					strQuery.Append("DELETE FROM " + pMain.pSettings.DBData + ".t_fortune_data WHERE a_item_idx = " + nItemID + ";\n");
+					// Delete all rows in t_fortune_data related to nItemID.
+					strbuilderQuery.Append("DELETE FROM " + pMain.pSettings.DBData + ".t_fortune_data WHERE a_item_idx = " + nItemID + ";\n");
 
-					// Compose t_fortune_data insert query
+					// Compose t_fortune_data INSERT Query.
 					strColumnsNames = new StringBuilder();
 					strColumnsValues = new StringBuilder();
 
-					foreach (DataRow pTempFortuneDaraRow in pTempFortuneData)
+					foreach (DataRow pRow in pTempFortuneDataRows)
 					{
 						strColumnsValues.Append("(");
 
-						foreach (DataColumn pColumn in pTempFortuneDaraRow.Table.Columns)
+						foreach (DataColumn pColumn in pRow.Table.Columns)
 						{
 							string strColumnName = pColumn.ColumnName;
 
 							if (!strColumnsNames.ToString().Contains(strColumnName))
 								strColumnsNames.Append(strColumnName + ", ");
 
-							strColumnsValues.Append((object)pTempFortuneDaraRow[pColumn] + ", ");
+							strColumnsValues.Append((object)pRow[pColumn] + ", ");
 						}
 
 						strColumnsValues.Length -= 2;
@@ -2365,42 +2371,180 @@ namespace LastChaos_ToolBox_2024.Editors
 					strColumnsNames.Length -= 2;
 					strColumnsValues.Length -= 2;
 
-					strQuery.Append("INSERT INTO " + pMain.pSettings.DBData + ".t_fortune_data (" + strColumnsNames + ") VALUES " + strColumnsValues + ";\n");
+					strbuilderQuery.Append("INSERT INTO " + pMain.pSettings.DBData + ".t_fortune_data (" + strColumnsNames + ") VALUES " + strColumnsValues + ";\n");
 				}
 			}
 
-			// Check if item exist in Global Table, if exist do a update, if not, do a insert.
-			// TODO: In both cases, check strings, probably need add a scapechars function for varchar columns.
-			DataRow pItemTableRow = pMain.pItemTable.Select("a_index = " + Convert.ToInt32(tbID.Text)).FirstOrDefault();
+			// Check if item exist in Global Table, if exist, do a UPDATE. If not, do a INSERT.
+			DataRow pItemTableRow = pMain.pItemTable.Select("a_index = " + nItemID).FirstOrDefault();
 			if (pItemTableRow != null)  // UPDATE
 			{
-				foreach (DataColumn column in pTempItemRow.Table.Columns)
-				{
-					/*if (!pMain.pItemTable.Columns.Contains(column.ColumnName))	// NOTE: Esto, en realidad no debería ser necesario. pero lo dejo a modo de ejemplo...
-						pMain.pItemTable.Columns.Add(column.ColumnName, column.DataType);*/
+				// Compose UPDATE Query.
+				strbuilderQuery.Append("UPDATE " + pMain.pSettings.DBData + ".t_item SET");
 
-					// TODO: BEGIN TRANSACTION; Compose query to insert/update, if work update local global table. COMMIT;
+				foreach (DataColumn pColumn in pTempItemRow.Table.Columns)
+					strbuilderQuery.Append(" " + pColumn.ColumnName + " = '" + pMain.EscapeChars(pTempItemRow[pColumn].ToString()) + "',");
 
-					// TODO: UPDATE pMain.pItemTable, pMain.pItemFortuneHeadTable & pMain.pItemFortuneDataTable	(Check if have row in pItemFortuneHeadTable but not in pItemFortuneDataTable execute a delete from a_fortune_head)
+				strbuilderQuery.Length -= 1;
 
-					//pItemTableRow[column.ColumnName] = pTempItemRow[column.ColumnName];
-				}
-
-				bUnsavedChanges = false;
+				strbuilderQuery.Append(" WHERE a_index = " + nItemID + ";\n");
 			}
 			else    // INSERT
 			{
+				// Compose INSERT Query.
+				StringBuilder strColumnsNames = new StringBuilder();
+				StringBuilder strColumnsValues = new StringBuilder();
 
+				foreach(DataColumn pColumn in pTempItemRow.Table.Columns)
+				{
+					strColumnsNames.Append(pColumn.ColumnName + ", ");
+
+					strColumnsValues.Append("'" + pMain.EscapeChars(pTempItemRow[pColumn].ToString()) + "', ");
+				}
+
+				strColumnsNames.Length -= 2;
+				strColumnsValues.Length -= 2;
+
+				strbuilderQuery.Append("INSERT INTO " + pMain.pSettings.DBData + ".t_item (" + strColumnsNames + ") VALUES (" + strColumnsValues + ");\n");
 			}
 
-			pItemTableRow = null;
+			/*if (!pMain.pItemTable.Columns.Contains(column.ColumnName))	// NOTE: Esto, en realidad no debería ser necesario. pero lo dejo a modo de ejemplo...
+				pMain.pItemTable.Columns.Add(column.ColumnName, column.DataType);*/
 
-			strQuery.Append("COMMIT;\n");
+			// TODO: UPDATE pMain.pItemTable, pMain.pItemFortuneHeadTable & pMain.pItemFortuneDataTable	(Check if have row in pItemFortuneHeadTable but not in pItemFortuneDataTable execute a delete from a_fortune_head)
 
-			pMain.PrintLog(strQuery.ToString());
-			// TODO: Exec the query QueryUpdateInsert
-			// TODO: If query not fail, transfer from temps to globals (using try, catch and finally)
-			// TODO: If transfers run without errors, do: bUnsavedChanges = false;, else throw error.
+			//pItemTableRow[column.ColumnName] = pTempItemRow[column.ColumnName];
+
+			string strQuery = strbuilderQuery.Append("COMMIT;\n").ToString();
+
+			strbuilderQuery = null;
+
+			pMain.PrintLog(strQuery);
+
+			if (pMain.QueryUpdateInsert(pMain.pSettings.DBCharset, strQuery))
+			{
+				try
+				{
+					// Transfer from pTempFortuneHead To pMain.pItemFortuneHeadTable.
+					if (pTempFortuneHeadRow != null)
+					{
+						if (pMain.pItemFortuneHeadTable != null)    // If Global Table is not null.
+						{
+							DataRow pItemFortuneHeadTableRow = pMain.pItemFortuneHeadTable.Select("a_item_idx = " + nItemID).FirstOrDefault();
+
+							if (pItemFortuneHeadTableRow != null)   // Row exist in Global Table.
+							{
+								pItemFortuneHeadTableRow.ItemArray = (object[])pTempFortuneHeadRow.ItemArray.Clone();
+							}
+							else    // Row not exist in Global Table.
+							{
+								pItemFortuneHeadTableRow = pMain.pItemFortuneHeadTable.NewRow();
+								pItemFortuneHeadTableRow.ItemArray = (object[])pTempFortuneHeadRow.ItemArray.Clone();
+								pMain.pItemFortuneHeadTable.Rows.Add(pItemFortuneHeadTableRow);
+							}
+
+							pItemFortuneHeadTableRow = null;
+						}
+						else    // If Global Table is null.
+						{
+							pMain.pItemFortuneHeadTable = new DataTable();
+
+							pMain.pItemFortuneHeadTable.Columns.Add("a_item_idx", typeof(int));     // int
+							pMain.pItemFortuneHeadTable.Columns.Add("a_prob_type", typeof(byte));   // tinyint unsigned
+							pMain.pItemFortuneHeadTable.Columns.Add("a_enable", typeof(byte));      // tinyint unsigned
+
+							DataRow pItemFortuneHeadTableRow = pMain.pItemFortuneHeadTable.NewRow();
+							pItemFortuneHeadTableRow.ItemArray = (object[])pTempFortuneHeadRow.ItemArray.Clone();
+							pMain.pItemFortuneHeadTable.Rows.Add(pItemFortuneHeadTableRow);
+						}
+					}
+
+					// Transfer from pTempFortuneData To pMain.pItemFortuneDataTable.
+					if (pTempFortuneDataRows != null && pTempFortuneDataRows.Length > 0)
+					{
+						if (pMain.pItemFortuneDataTable != null)    // If Global Table is not null.
+						{
+							DataRow[] pItemFortuneDataTableRows = pMain.pItemFortuneDataTable.Select("a_item_idx = " + nItemID);
+
+							if (pItemFortuneDataTableRows.Length > 0)   // Rows exist in Global Table.
+							{
+								for (int i = 0; i < pItemFortuneDataTableRows.Length && i < pTempFortuneDataRows.Length; i++)
+									pItemFortuneDataTableRows[i].ItemArray = (object[])pTempFortuneDataRows[i].ItemArray.Clone();
+							}
+							else    // Rows not exist in Global Table.
+							{
+								foreach (DataRow pTempFortuneDataRow in pTempFortuneDataRows)
+								{
+									DataRow newDataRow = pMain.pItemFortuneDataTable.NewRow();
+									newDataRow.ItemArray = (object[])pTempFortuneDataRow.ItemArray.Clone();
+									pMain.pItemFortuneDataTable.Rows.Add(newDataRow);
+								}
+							}
+
+							pItemFortuneDataTableRows = null;
+						}
+						else    // If Global Table is null.
+						{
+							pMain.pItemFortuneDataTable = new DataTable();
+
+							pMain.pItemFortuneDataTable.Columns.Add("a_item_idx", typeof(int));         // int
+							pMain.pItemFortuneDataTable.Columns.Add("a_skill_index", typeof(int));      // int
+							pMain.pItemFortuneDataTable.Columns.Add("a_skill_level", typeof(sbyte));    // tinyint
+							pMain.pItemFortuneDataTable.Columns.Add("a_string_index", typeof(int));     // int
+							pMain.pItemFortuneDataTable.Columns.Add("a_prob", typeof(int));             // int
+
+							foreach (DataRow pTempFortuneDataRow in pTempFortuneDataRows)
+							{
+								DataRow newDataRow = pMain.pItemFortuneDataTable.NewRow();
+								newDataRow.ItemArray = (object[])pTempFortuneDataRow.ItemArray.Clone();
+								pMain.pItemFortuneDataTable.Rows.Add(newDataRow);
+							}
+						}
+					}
+
+					// Transfer from pTempItemRow To pMain.pItemTable.
+					if (pItemTableRow != null)  // Row exist in Global Table, update it.
+					{
+						pItemTableRow.ItemArray = (object[])pTempItemRow.ItemArray.Clone();
+					}
+					else // Row not exist in Global Table, insert it.
+					{
+						pItemTableRow = pMain.pItemTable.NewRow();
+						pItemTableRow.ItemArray = (object[])pTempItemRow.ItemArray.Clone();
+						pMain.pItemTable.Rows.Add(pItemTableRow);
+					}
+					
+					MessageBox.Show("Changes applied successfully!", "Item Editor", MessageBoxButtons.OK);
+				}
+				catch (Exception ex)
+				{
+					string strError = "Item Editor > Item: " + nItemID + " Changes applied in DataBase, but something got wrong while transferring temp item data to main tables. Please restart the application.";
+
+					pMain.PrintLog(strError, Color.Red);
+
+					MessageBox.Show(strError, "Item Editor", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				}
+				finally
+				{
+					pItemTableRow = null;
+
+					bUnsavedChanges = false;
+				}
+			}
+			else
+			{
+				string strError = "Item Editor > Item: " + nItemID + " Something got wrong while trying to execute the MySQL Transaction. Changes not applied.";
+
+				pMain.PrintLog(strError, Color.Red);
+
+				MessageBox.Show(strError, "Item Editor", MessageBoxButtons.OK, MessageBoxIcon.Error);
+			}
+
+			strQuery = null;
+#if DEBUG
+			stopwatch.Stop();
+			pMain.PrintLog($"Compose query, run it, and transfer Data from Temp to Global took: {stopwatch.ElapsedMilliseconds}.{stopwatch.ElapsedTicks} MS.TICKS");
+#endif
 		}
 	}
 }

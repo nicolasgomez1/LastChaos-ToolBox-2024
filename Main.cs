@@ -72,10 +72,7 @@ namespace LastChaos_ToolBox_2024
 			ConnectToDatabase();
 		}
 
-		private void monitor_Tick(object sender, EventArgs e)
-		{
-			this.Text = strWindowsTitle + " (Ram Usage: " + (GC.GetTotalMemory(true) / 1024) + "KB's)";
-		}
+		private void monitor_Tick(object sender, EventArgs e) { this.Text = strWindowsTitle + " (Ram Usage: " + (GC.GetTotalMemory(true) / 1024) + "KB's)"; }
 
 		private void ReloadSettings_Click(object sender, EventArgs e) { LoadSettings(); }
 
@@ -185,7 +182,7 @@ namespace LastChaos_ToolBox_2024
 			});
 		}
 		/****************************************/
-		void LoadSettings()
+		private void LoadSettings()
 		{
 			PrintLog("Loading Settings...");
 
@@ -230,6 +227,17 @@ namespace LastChaos_ToolBox_2024
 		}
 
 		// General Help Functions
+		public string EscapeChars(string strInput)
+		{
+			// Escape \ to \\
+			strInput = strInput.Replace("\\", "\\\\");
+
+			// Escape ' to \'
+			strInput = strInput.Replace("'", "\\'");
+
+			return strInput;
+		}
+
 		public Bitmap GetIcon(string BtnType, string nImage, int nRow, int nCol)
 		{
 			string strComposePath = BtnType + "/" + BtnType + nImage + ".png";
