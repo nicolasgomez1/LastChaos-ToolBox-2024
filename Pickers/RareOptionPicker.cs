@@ -39,8 +39,6 @@ namespace LastChaos_ToolBox_2024
 		{
 			InitializeComponent();
 
-			this.FormBorderStyle = FormBorderStyle.FixedSingle;
-
 			pMain = mainForm;
 			pParentForm = ParentForm;
 			ReturnValues = iActualRareOptionID;

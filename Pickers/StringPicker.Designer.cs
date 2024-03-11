@@ -90,6 +90,7 @@
 			this.Icon = global::LastChaos_ToolBox_2024.Properties.Resources.NG;
 			this.MinimizeBox = false;
 			this.Name = "StringPicker";
+			this.ShowInTaskbar = false;
 			this.Text = "String Picker";
 			this.Load += new System.EventHandler(this.StringPicker_LoadAsync);
 			this.ResumeLayout(false);

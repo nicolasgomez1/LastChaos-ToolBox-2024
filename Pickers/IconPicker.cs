@@ -39,8 +39,6 @@ namespace LastChaos_ToolBox_2024
 		{
 			InitializeComponent();
 
-			this.FormBorderStyle = FormBorderStyle.FixedSingle;
-
 			//this.MouseMove += IconPicker_MouseMove;
 			foreach (Control control in Controls)
 				control.MouseMove += IconPicker_MouseMove;

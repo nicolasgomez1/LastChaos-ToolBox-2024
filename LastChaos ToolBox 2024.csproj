@@ -133,6 +133,12 @@
     <Compile Include="Editors\ItemEditor.Designer.cs">
       <DependentUpon>ItemEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="MessageBox_Input.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MessageBox_Input.Designer.cs">
+      <DependentUpon>MessageBox_Input.cs</DependentUpon>
+    </Compile>
     <Compile Include="Pickers\RareOptionPicker.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -186,6 +192,9 @@
     </Compile>
     <EmbeddedResource Include="Editors\ItemEditor.resx">
       <DependentUpon>ItemEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MessageBox_Input.resx">
+      <DependentUpon>MessageBox_Input.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Pickers\RareOptionPicker.resx">
       <DependentUpon>RareOptionPicker.cs</DependentUpon>

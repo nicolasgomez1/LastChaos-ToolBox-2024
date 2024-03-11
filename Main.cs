@@ -421,6 +421,12 @@ namespace LastChaos_ToolBox_2024
 
 		private void button4_Click(object sender, EventArgs e)
 		{
+			MessageBox_Input pInput = new MessageBox_Input(this, "Please enter a value:");
+
+			if (pInput.ShowDialog() != DialogResult.OK)
+				return;
+
+			MessageBox.Show(pInput.strOutput);
 			/*int nIters = 100000;
 
 			Stopwatch stopwatch = new Stopwatch();

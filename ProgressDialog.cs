@@ -49,7 +49,7 @@ namespace LastChaos_ToolBox_2024
 			ResizeForm();
 		}
 
-		private void ResizeForm() { pDialogForm.Size = new Size((int)pLabel.CreateGraphics().MeasureString(pLabel.Text, pLabel.Font).Width + 2 * 10, pDialogForm.Height); }
+		private void ResizeForm() { pDialogForm.Size = new Size((int)pLabel.CreateGraphics().MeasureString(pLabel.Text, pLabel.Font).Width + 2 * 9, pDialogForm.Height); }
 
 		public void UpdateText(string strText)
 		{

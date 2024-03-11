@@ -220,7 +220,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			}
 			else    // NOTE: If the global table is not empty, check if any of the columns to request are already present. To remove it from the query and not request redundant information.
 			{
-				foreach (string strColumnName in listQueryCompose)
+				foreach (string strColumnName in listQueryCompose.ToList())
 				{
 					if (!pMain.pItemTable.Columns.Contains(strColumnName))
 						bRequestNeeded = true;
@@ -254,7 +254,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			}
 			else
 			{
-				foreach (string strColumnName in listQueryCompose)
+				foreach (string strColumnName in listQueryCompose.ToList())
 				{
 					if (!pMain.pZoneTable.Columns.Contains(strColumnName))
 						bRequestNeeded = true;
@@ -288,7 +288,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			}
 			else
 			{
-				foreach (string strColumnName in listQueryCompose)
+				foreach (string strColumnName in listQueryCompose.ToList())
 				{
 					if (!pMain.pSkillTable.Columns.Contains(strColumnName))
 						bRequestNeeded = true;
@@ -317,7 +317,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			}
 			else
 			{
-				foreach (string strColumnName in listQueryCompose)
+				foreach (string strColumnName in listQueryCompose.ToList())
 				{
 					if (!pMain.pSkillLevelTable.Columns.Contains(strColumnName))
 						bRequestNeeded = true;
@@ -349,7 +349,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			}
 			else
 			{
-				foreach (string strColumnName in listQueryCompose)
+				foreach (string strColumnName in listQueryCompose.ToList())
 				{
 					if (!pMain.pRareOptionTable.Columns.Contains(strColumnName))
 						bRequestNeeded = true;
@@ -696,7 +696,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			}
 		}
 
-		private void LoadItemData(int nItemID)
+		private void LoadItemData(int nItemID, bool bLoadFrompItemTable)
 		{
 			bUserAction = false;
 
@@ -718,9 +718,12 @@ namespace LastChaos_ToolBox_2024.Editors
 			foreach (var toolTip in pToolTips.Values)
 				toolTip.Dispose();
 			/****************************************/
-			pTempItemRow = pMain.pItemTable.NewRow();   // Replicate struct in temp row val.
-			pTempItemRow.ItemArray = (object[])pMain.pItemTable.Select("a_index = " + nItemID)[0].ItemArray.Clone();    // Copy data from main table to temp one.
-			
+			if (bLoadFrompItemTable)
+			{
+				pTempItemRow = pMain.pItemTable.NewRow();   // Replicate struct in temp row val.
+				pTempItemRow.ItemArray = (object[])pMain.pItemTable.Select("a_index = " + nItemID)[0].ItemArray.Clone();    // Copy data from main table to temp one.
+			}
+
 			// General
 			tbID.Text = nItemID.ToString();
 			/****************************************/
@@ -1164,24 +1167,46 @@ namespace LastChaos_ToolBox_2024.Editors
 
 				if (bUnsavedChanges)
 				{
-					DialogResult pDialogReturn = MessageBox.Show("There are unsaved changes. If you proceed, your changes will be discarded.\nDo you want to continue?", "Item Editor", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-
-					if (pDialogReturn == DialogResult.Yes)
+					if (pMain.pItemTable.AsEnumerable().Any(row => DataRow.ReferenceEquals(row, pTempItemRow)))
 					{
-						bUnsavedChanges = false;
+						DialogResult pDialogReturn = MessageBox.Show("There are unsaved changes. If you proceed, your changes will be discarded.\nDo you want to continue?", "Item Editor", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
-						LoadItemData(nItemID);
+						if (pDialogReturn == DialogResult.Yes)
+						{
+							bUnsavedChanges = false;
+
+							LoadItemData(nItemID, true);
+						}
+						else
+						{
+							MainList.SelectedIndexChanged -= MainList_SelectedIndexChanged;
+							MainList.SelectedItem = pLastSelected;
+							MainList.SelectedIndexChanged += MainList_SelectedIndexChanged;
+						}
 					}
-					else
+					else	// Is temporary Item (Added or copied).
 					{
-						MainList.SelectedIndexChanged -= MainList_SelectedIndexChanged;
-						MainList.SelectedItem = pLastSelected;
-						MainList.SelectedIndexChanged += MainList_SelectedIndexChanged;
+						DialogResult pDialogReturn = MessageBox.Show("The current Item is temporary, if you don't press Update. Do you want to continue and lose all the information regarding it?", "Item Editor", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+						if (pDialogReturn == DialogResult.Yes)
+						{
+							bUnsavedChanges = false;
+
+							MainList.Items.RemoveAt(MainList.Items.Count - 1);
+
+							LoadItemData(((ListBoxItem)MainList.Items[0]).ID, true);
+						}
+						else
+						{
+							MainList.SelectedIndexChanged -= MainList_SelectedIndexChanged;
+							MainList.SelectedItem = pLastSelected;
+							MainList.SelectedIndexChanged += MainList_SelectedIndexChanged;
+						}
 					}
 				}
 				else
 				{
-					LoadItemData(nItemID);
+					LoadItemData(nItemID, true);
 				}
 
 				pLastSelected = pSelectedItem;
@@ -1237,6 +1262,32 @@ namespace LastChaos_ToolBox_2024.Editors
 
 				ItemEditor_LoadAsync(sender, e);
 			}
+		}
+
+		private int AskForIndex()
+		{
+			DialogResult pDialogReturn = MessageBox.Show("The database was queried for the highest a_index value, but failed. You will have to enter a value yourself, do you want to continue?", "Item Editor", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+			if (pDialogReturn == DialogResult.Yes)
+			{
+				MessageBox_Input pInput = new MessageBox_Input(this, "Please enter a Item ID:");
+
+				if (pInput.ShowDialog() != DialogResult.OK)
+				{
+					pDialogReturn = MessageBox.Show("Do you want to cancel?", "Item Editor", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+					if (pDialogReturn == DialogResult.Yes)
+						return -1;
+					else
+						return AskForIndex();
+				}
+				else
+				{
+					return Convert.ToInt32(pInput.strOutput);
+				}
+			}
+
+			return -1;
 		}
 
 		private void btnAddNew_Click(object sender, EventArgs e)
@@ -1398,15 +1449,21 @@ namespace LastChaos_ToolBox_2024.Editors
 
 				DataTable QueryReturn = pMain.QuerySelect(pMain.pSettings.DBCharset, "SELECT a_index FROM " + pMain.pSettings.DBData + ".t_item ORDER BY a_index DESC LIMIT 1");
 				if (QueryReturn != null && QueryReturn.Rows.Count > 0)
+				{
 					nItemID = Convert.ToInt32(QueryReturn.Rows[0]["a_index"]);
+				}
 				else
-					// TODO: MSG input asking for index
+				{
+					if ((nItemID = AskForIndex()) == -1)	// I don't test it...
+						return;
+				}
 
 				QueryReturn = null;
 			}
 			else
 			{
-				nItemID = Convert.ToInt32(pMain.pItemTable.Select().LastOrDefault()["a_index"]);
+				nItemID = Convert.ToInt32(pMain.pItemTable.Select().LastOrDefault()["a_index"]) + 1;
+
 				pRow = pMain.pItemTable.NewRow();
 			}
 
@@ -1501,8 +1558,8 @@ namespace LastChaos_ToolBox_2024.Editors
 
 				listDefaultValue.AddRange(new List<string>
 				{
-					"a_name_" + strNation,
-					"a_descr_" + strNation
+					"New Item",
+					"Created with NicolasG LastChaos ToolBox 2024"
 				});
 			}
 
@@ -1534,8 +1591,40 @@ namespace LastChaos_ToolBox_2024.Editors
 
 			pRow["a_index"] = nItemID;
 
-			// finally pass new DataRow to temp one. (Maybe add try catch finally here?)
-			pTempItemRow = pRow;
+			string strItemName = nItemID + " - New Item";
+
+			pRow["a_name_" + pMain.pSettings.WorkLocale] = strItemName;
+
+			try
+			{
+				pTempItemRow = pRow;
+			}
+			catch(Exception ex)
+			{
+				string strError = "Item Editor > Item: " + nItemID + " Something got wrong. Please restart the application (" + ex.Message + ").";
+
+				pMain.Logger(strError, Color.Red);
+
+				MessageBox.Show(strError, "Item Editor", MessageBoxButtons.OK, MessageBoxIcon.Error);
+			}
+			finally
+			{
+				MainList.Items.Add(new ListBoxItem
+				{
+					ID = nItemID,
+					Text = strItemName
+				});
+
+				LoadItemData(nItemID, false);
+
+				MainList.SelectedIndexChanged -= MainList_SelectedIndexChanged;
+
+				MainList.SelectedIndex = MainList.Items.Count - 1;
+
+				MainList.SelectedIndexChanged += MainList_SelectedIndexChanged;
+
+				bUnsavedChanges = true;
+			}
 
 			listUIntColumns = null;
 			listIntColumns = null;
