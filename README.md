@@ -50,7 +50,7 @@ UPDATE: Podría más o menos intentar definir los tipos en base a las flags que 
 
 * Others
 1) [Progress Dialog Implementation Example](ProgressDialog.cs)
-2) [MessageBox with Input Dialog Implementation Example](MessageBox_Input_.cs)
+2) [MessageBox with Text Input Dialog Implementation Example](MessageBox_Input.cs)
 
 
 # Practical examples

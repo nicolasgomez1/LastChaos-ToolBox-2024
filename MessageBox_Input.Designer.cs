@@ -60,7 +60,6 @@
 			this.tbInput.Name = "tbInput";
 			this.tbInput.Size = new System.Drawing.Size(260, 20);
 			this.tbInput.TabIndex = 1013;
-			this.tbInput.KeyDown += textBox1_KeyDown;
 			// 
 			// rtbMessage
 			// 
@@ -90,6 +89,7 @@
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
 			this.Name = "MessageBox_Input";
+			this.ShowInTaskbar = false;
 			this.Text = "User Input";
 			this.Load += new System.EventHandler(this.MessageBox_Input_Load);
 			this.ResumeLayout(false);

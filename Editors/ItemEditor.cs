@@ -1195,6 +1195,10 @@ namespace LastChaos_ToolBox_2024.Editors
 							MainList.Items.RemoveAt(MainList.Items.Count - 1);
 
 							LoadItemData(((ListBoxItem)MainList.Items[0]).ID, true);
+
+							MainList.SelectedIndexChanged -= MainList_SelectedIndexChanged;
+							MainList.SelectedItem = MainList.Items[0];
+							MainList.SelectedIndexChanged += MainList_SelectedIndexChanged;
 						}
 						else
 						{
@@ -1215,12 +1219,8 @@ namespace LastChaos_ToolBox_2024.Editors
 
 		private void btnReload_Click(object sender, EventArgs e)    // NOTE: Here is an example on how to manage the reloading of information from global tables.
 		{
-			DialogResult pDialogReturn = MessageBox.Show("There are unsaved changes. If you proceed, your changes will be discarded.\nDo you want to continue?", "Item Editor", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-
-			if (pDialogReturn == DialogResult.Yes)
+			void Reload()
 			{
-				bUnsavedChanges = false;
-
 				MainList.Enabled = false;
 				btnReload.Enabled = false;
 
@@ -1261,6 +1261,22 @@ namespace LastChaos_ToolBox_2024.Editors
 				btnDelete.Enabled = false;
 
 				ItemEditor_LoadAsync(sender, e);
+			}
+
+			if (bUnsavedChanges)
+			{
+				DialogResult pDialogReturn = MessageBox.Show("There are unsaved changes. If you proceed, your changes will be discarded.\nDo you want to continue?", "Item Editor", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+				if (pDialogReturn == DialogResult.Yes)
+				{
+					bUnsavedChanges = false;
+
+					Reload();
+				}
+			}
+			else
+			{
+				Reload();
 			}
 		}
 
@@ -1591,10 +1607,6 @@ namespace LastChaos_ToolBox_2024.Editors
 
 			pRow["a_index"] = nItemID;
 
-			string strItemName = nItemID + " - New Item";
-
-			pRow["a_name_" + pMain.pSettings.WorkLocale] = strItemName;
-
 			try
 			{
 				pTempItemRow = pRow;
@@ -1612,15 +1624,13 @@ namespace LastChaos_ToolBox_2024.Editors
 				MainList.Items.Add(new ListBoxItem
 				{
 					ID = nItemID,
-					Text = strItemName
+					Text = nItemID + " - New Item"
 				});
 
 				LoadItemData(nItemID, false);
 
 				MainList.SelectedIndexChanged -= MainList_SelectedIndexChanged;
-
 				MainList.SelectedIndex = MainList.Items.Count - 1;
-
 				MainList.SelectedIndexChanged += MainList_SelectedIndexChanged;
 
 				bUnsavedChanges = true;
@@ -1725,11 +1735,11 @@ namespace LastChaos_ToolBox_2024.Editors
 				}
 				finally
 				{
-					MessageBox.Show("Item Deleted successfully!", "Item Editor", MessageBoxButtons.OK);
-
 					int nPrevObjectID = MainList.SelectedIndex <= 0 ? 0 : MainList.SelectedIndex - 1;
 
 					MainList.Items.Remove(MainList.SelectedItem);
+
+					MessageBox.Show("Item Deleted successfully!", "Item Editor", MessageBoxButtons.OK);
 
 					MainList.SelectedIndex = nPrevObjectID;
 
@@ -3007,6 +3017,15 @@ namespace LastChaos_ToolBox_2024.Editors
 				}
 				finally
 				{
+					int nSelectedIndex = MainList.SelectedIndex;
+					ListBoxItem pSelectedItem = (ListBoxItem)MainList.Items[nSelectedIndex];
+					pSelectedItem.ID = nItemID;
+					pSelectedItem.Text = nItemID + " - " + tbName.Text.ToString();
+
+					MainList.SelectedIndexChanged -= MainList_SelectedIndexChanged;
+					MainList.Items[nSelectedIndex] = pSelectedItem;
+					MainList.SelectedIndexChanged += MainList_SelectedIndexChanged;
+
 					MessageBox.Show("Changes applied successfully!", "Item Editor", MessageBoxButtons.OK);
 
 					pItemTableRow = null;
