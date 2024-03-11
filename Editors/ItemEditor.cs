@@ -147,20 +147,30 @@ namespace LastChaos_ToolBox_2024.Editors
 		{
 			pMain.pItemFortuneHeadTable = new DataTable();
 
-			pMain.pItemFortuneHeadTable.Columns.Add("a_item_idx", typeof(int));     // int
-			pMain.pItemFortuneHeadTable.Columns.Add("a_prob_type", typeof(byte));   // tinyint unsigned
-			pMain.pItemFortuneHeadTable.Columns.Add("a_enable", typeof(byte));      // tinyint unsigned
+			var columnsToAdd = new List<DataColumn>
+			{
+				new DataColumn("a_item_idx", typeof(int)),     // int
+				new DataColumn("a_prob_type", typeof(byte)),   // tinyint unsigned
+				new DataColumn("a_enable", typeof(byte))        // tinyint unsigned
+			};
+
+			pMain.pItemFortuneHeadTable.Columns.AddRange(columnsToAdd.ToArray());
 		}
 
 		private void MakepItemFortuneDataTableStructure()
 		{
 			pMain.pItemFortuneDataTable = new DataTable();
 
-			pMain.pItemFortuneDataTable.Columns.Add("a_item_idx", typeof(int));         // int
-			pMain.pItemFortuneDataTable.Columns.Add("a_skill_index", typeof(int));      // int
-			pMain.pItemFortuneDataTable.Columns.Add("a_skill_level", typeof(sbyte));    // tinyint
-			pMain.pItemFortuneDataTable.Columns.Add("a_string_index", typeof(int));     // int
-			pMain.pItemFortuneDataTable.Columns.Add("a_prob", typeof(int));             // int
+			var columnsToAdd = new List<DataColumn>
+			{
+				new DataColumn("a_item_idx", typeof(int)),         // int
+				new DataColumn("a_skill_index", typeof(int)),      // int
+				new DataColumn("a_skill_level", typeof(sbyte)),    // tinyint
+				new DataColumn("a_string_index", typeof(int)),     // int
+				new DataColumn("a_prob", typeof(int))              // int
+			};
+
+			pMain.pItemFortuneDataTable.Columns.AddRange(columnsToAdd.ToArray());
 		}
 
 		public class ListBoxItem
@@ -197,22 +207,25 @@ namespace LastChaos_ToolBox_2024.Editors
 			{
 				string strNation = pMain.pSettings.NationSupported[i].ToLower();
 
-				listQueryCompose.Add("a_name_" + strNation);
-				listQueryCompose.Add("a_descr_" + strNation);
+				listQueryCompose.AddRange(new List<string>
+				{
+					"a_name_" + strNation,
+					"a_descr_" + strNation
+				});
 			}
 
-			if (pMain.pItemTable == null)   // NOTE: If the global table is empty, directly indicate that a query must be executed requesting all previously defined columns
+			if (pMain.pItemTable == null)   // NOTE: If the global table is empty, directly indicate that a query must be executed requesting all previously defined columns.
 			{
 				bRequestNeeded = true;
 			}
 			else    // NOTE: If the global table is not empty, check if any of the columns to request are already present. To remove it from the query and not request redundant information.
 			{
-				foreach (var column in listQueryCompose.ToList())
+				foreach (string strColumnName in listQueryCompose)
 				{
-					if (!pMain.pItemTable.Columns.Contains(column))
+					if (!pMain.pItemTable.Columns.Contains(strColumnName))
 						bRequestNeeded = true;
 					else
-						listQueryCompose.Remove(column);
+						listQueryCompose.Remove(strColumnName);
 				}
 			}
 
@@ -225,6 +238,8 @@ namespace LastChaos_ToolBox_2024.Editors
 					return pMain.QuerySelect(pMain.pSettings.DBCharset, $"SELECT a_index, {string.Join(",", listQueryCompose)} FROM {pMain.pSettings.DBData}.t_item ORDER BY a_index;");
 				});
 			}
+
+			listQueryCompose = null;
 		}
 
 		private async Task LoadZoneDataAsync()
@@ -239,12 +254,12 @@ namespace LastChaos_ToolBox_2024.Editors
 			}
 			else
 			{
-				foreach (var column in listQueryCompose.ToList())
+				foreach (string strColumnName in listQueryCompose)
 				{
-					if (!pMain.pZoneTable.Columns.Contains(column))
+					if (!pMain.pZoneTable.Columns.Contains(strColumnName))
 						bRequestNeeded = true;
 					else
-						listQueryCompose.Remove(column);
+						listQueryCompose.Remove(strColumnName);
 				}
 			}
 
@@ -255,6 +270,8 @@ namespace LastChaos_ToolBox_2024.Editors
 					return pMain.QuerySelect(pMain.pSettings.DBCharset, $"SELECT a_zone_index, {string.Join(",", listQueryCompose)} FROM {pMain.pSettings.DBData}.t_zonedata ORDER BY a_zone_index;");
 				});
 			}
+
+			listQueryCompose = null;
 		}
 
 		private async Task LoadSkillDataAsync()
@@ -265,19 +282,18 @@ namespace LastChaos_ToolBox_2024.Editors
 				"a_name_" + pMain.pSettings.WorkLocale, "a_client_description_" + pMain.pSettings.WorkLocale, "a_client_icon_texid", "a_client_icon_row", "a_client_icon_col"
 			};
 
-
 			if (pMain.pSkillTable == null)
 			{
 				bRequestNeeded = true;
 			}
 			else
 			{
-				foreach (var column in listQueryCompose.ToList())
+				foreach (string strColumnName in listQueryCompose)
 				{
-					if (!pMain.pSkillTable.Columns.Contains(column))
+					if (!pMain.pSkillTable.Columns.Contains(strColumnName))
 						bRequestNeeded = true;
 					else
-						listQueryCompose.Remove(column);
+						listQueryCompose.Remove(strColumnName);
 				}
 			}
 
@@ -289,7 +305,7 @@ namespace LastChaos_ToolBox_2024.Editors
 				});
 			}
 
-			// Reset vals & Populate pSkillLevelTable
+			// Reset vals & Populate pSkillLevelTable.
 			bRequestNeeded = false;
 			listQueryCompose.Clear();
 
@@ -301,12 +317,12 @@ namespace LastChaos_ToolBox_2024.Editors
 			}
 			else
 			{
-				foreach (var column in listQueryCompose.ToList())
+				foreach (string strColumnName in listQueryCompose)
 				{
-					if (!pMain.pSkillLevelTable.Columns.Contains(column))
+					if (!pMain.pSkillLevelTable.Columns.Contains(strColumnName))
 						bRequestNeeded = true;
 					else
-						listQueryCompose.Remove(column);
+						listQueryCompose.Remove(strColumnName);
 				}
 			}
 
@@ -317,6 +333,8 @@ namespace LastChaos_ToolBox_2024.Editors
 					return pMain.QuerySelect(pMain.pSettings.DBCharset, $"SELECT a_index, {string.Join(",", listQueryCompose)} FROM {pMain.pSettings.DBData}.t_skilllevel ORDER BY a_level");
 				});
 			}
+
+			listQueryCompose = null;
 		}
 
 		private async Task LoadRareOptionDataAsync()
@@ -331,12 +349,12 @@ namespace LastChaos_ToolBox_2024.Editors
 			}
 			else
 			{
-				foreach (var column in listQueryCompose.ToList())
+				foreach (string strColumnName in listQueryCompose)
 				{
-					if (!pMain.pRareOptionTable.Columns.Contains(column))
+					if (!pMain.pRareOptionTable.Columns.Contains(strColumnName))
 						bRequestNeeded = true;
 					else
-						listQueryCompose.Remove(column);
+						listQueryCompose.Remove(strColumnName);
 				}
 			}
 
@@ -347,6 +365,8 @@ namespace LastChaos_ToolBox_2024.Editors
 					return pMain.QuerySelect(pMain.pSettings.DBCharset, $"SELECT a_index, {string.Join(",", listQueryCompose)} FROM {pMain.pSettings.DBData}.t_rareoption ORDER BY a_index;");
 				});
 			}
+
+			listQueryCompose = null;
 		}
 
 		private void LoadFortuneData()
@@ -443,7 +463,7 @@ namespace LastChaos_ToolBox_2024.Editors
 								{
 									List<DataRow> listSkillLevels = pMain.pSkillLevelTable.AsEnumerable().Where(row => row.Field<int>("a_index") == iFortuneSkillID).ToList();
 
-									foreach (var pRowSkillLevel in listSkillLevels)
+									foreach (DataRow pRowSkillLevel in listSkillLevels)
 									{
 										int iSkillLevel = Convert.ToInt32(pRowSkillLevel["a_level"]);
 
@@ -452,6 +472,8 @@ namespace LastChaos_ToolBox_2024.Editors
 										if (iFortuneSkillLevel == iSkillLevel)
 											cSkillLevel.Value = cSkillLevel.Items[cSkillLevel.Items.Count - 1];
 									}
+
+									listSkillLevels = null;
 								}
 
 								gridFortune.Rows[i].Cells["level"].Tag = iFortuneSkillLevel;
@@ -571,10 +593,10 @@ namespace LastChaos_ToolBox_2024.Editors
 			stopwatch.Start();
 #endif
 			await Task.WhenAll( // NOTE: Here information is requested from the mysql server asynchronously, thus reducing waiting times to the minimum possible.
-				LoadItemDataAsync(),    // Populate pItemTable
-				LoadZoneDataAsync(),    // Populate pZoneTable
-				LoadSkillDataAsync(),    // Populate pSkillTable & pSkillLevelTable
-				LoadRareOptionDataAsync()   // Populate pRateoptionTable
+				LoadItemDataAsync(),    // Populate pItemTable.
+				LoadZoneDataAsync(),    // Populate pZoneTable.
+				LoadSkillDataAsync(),    // Populate pSkillTable & pSkillLevelTable.
+				LoadRareOptionDataAsync()   // Populate pRateoptionTable.
 			);
 #if DEBUG
 			stopwatch.Stop();
@@ -624,7 +646,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			pToolTip.SetToolTip(btnReload, "Reload Items, Zones, Skills, Rare Options & Fortune Data from Database");
 			pToolTip.SetToolTip(cbAutoLoadFortuneData, "When this is checked The Fortune Data are requested to server (If are not stored yet) automatically when select and Item from List.");
 
-			pToolTips[cbAutoLoadFortuneData] = pToolTip;    // For Dispose
+			pToolTips[cbAutoLoadFortuneData] = pToolTip;    // For Dispose.
 			/****************************************/
 			MainList.Enabled = true;
 
@@ -678,7 +700,7 @@ namespace LastChaos_ToolBox_2024.Editors
 		{
 			bUserAction = false;
 
-			// Reset Controls
+			// Reset Controls.
 			cbTypeSelector.SelectedIndex = -1;
 			cbSubTypeSelector.SelectedIndex = -1;
 			cbWearingPositionSelector.SelectedIndex = -1;
@@ -696,9 +718,9 @@ namespace LastChaos_ToolBox_2024.Editors
 			foreach (var toolTip in pToolTips.Values)
 				toolTip.Dispose();
 			/****************************************/
-			pTempItemRow = pMain.pItemTable.NewRow();   // Replicate struct in temp row val
-			pTempItemRow.ItemArray = (object[])pMain.pItemTable.Select("a_index = " + nItemID)[0].ItemArray.Clone();    // Copy data from main table to temp one
-
+			pTempItemRow = pMain.pItemTable.NewRow();   // Replicate struct in temp row val.
+			pTempItemRow.ItemArray = (object[])pMain.pItemTable.Select("a_index = " + nItemID)[0].ItemArray.Clone();    // Copy data from main table to temp one.
+			
 			// General
 			tbID.Text = nItemID.ToString();
 			/****************************************/
@@ -855,7 +877,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			if (nItemFlag != 0 && strTooltip.Length <= 0)
 				pMain.Logger("Item Editor > Item: " + nItemID + " Error: a_flag out of range.", Color.Red);
 
-			// TODO: Add check for conflicts in flag config
+			// TODO: Add check for conflicts in flag config.
 
 			pToolTip = new ToolTip();
 			pToolTip.SetToolTip(btnItemFlag, strTooltip.ToString());
@@ -1166,7 +1188,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			}
 		}
 
-		private void btnReload_Click(object sender, EventArgs e)    // NOTE: Here is an example on how to manage the reloading of information from global tables
+		private void btnReload_Click(object sender, EventArgs e)    // NOTE: Here is an example on how to manage the reloading of information from global tables.
 		{
 			DialogResult pDialogReturn = MessageBox.Show("There are unsaved changes. If you proceed, your changes will be discarded.\nDo you want to continue?", "Item Editor", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
@@ -1179,7 +1201,7 @@ namespace LastChaos_ToolBox_2024.Editors
 
 				nSearchPosition = 0;
 
-				// TODO: Add dispose to all global tables used by this tool
+				// TODO: Add dispose to all global tables used by this tool.
 				pMain.pItemTable.Dispose();
 				pMain.pItemTable = null;
 
@@ -1219,33 +1241,316 @@ namespace LastChaos_ToolBox_2024.Editors
 
 		private void btnAddNew_Click(object sender, EventArgs e)
 		{
-			// TODO:
-			/*bool bReturn = pMain.QueryUpdateInsert(pMain.pSettings.DBCharset, "INSERT INTO lc_data_nov.t_clientversion (a_min, a_max) VALUES('0', '9199')");
+			int nItemID = 9999;
+			DataRow pRow;
 
-		   if (bReturn)
-			   pMain.PrintLog("suc");
-		   else
-			   pMain.PrintLog("failed");
-			/////
-			DataTable pData = pMain.QuerySelect(pMain.pSettings.DBCharset, "SELECT * FROM lc_data_nov.t_clientversion;");
+			List<string> listUIntColumns = new List<string> { "a_durability" };  // Here add all unsigned int columns.
 
-			if (pData != null)
+			List<string> listIntColumns = new List<string>	// Here add all int columns.
 			{
-				foreach (DataRow row in pData.Rows)
-				{
-					foreach (DataColumn col in pData.Columns)
-						Console.Write(col.ColumnName + " " +row[col] + "\t");
+				"a_index",
+				"a_enable",
+				"a_weight",
+				"a_price",
+				"a_level",
+				"a_level2",
+				"a_fame",
+				"a_max_use",
+				"a_grade",
+				"a_type_idx",
+				"a_subtype_idx",
+				"a_job_flag",
+#if !ALLOWED_ZONE_SYSTEM
+				"a_zone_flag",
+#endif
+				"a_set_0",
+				"a_set_1",
+				"a_set_2",
+				"a_set_3",
+				"a_set_4",
+				"a_num_0",
+				"a_num_1",
+				"a_num_2",
+				"a_num_3",
+				"a_num_4",
+				"a_need_sskill",
+#if NEED_SECOND_SKILL_TO_CRAFT
+				"a_need_sskill2",
+#endif
+				"a_need_item0",
+				"a_need_item1",
+				"a_need_item2",
+				"a_need_item3",
+				"a_need_item4",
+				"a_need_item5",
+				"a_need_item6",
+				"a_need_item7",
+				"a_need_item8",
+				"a_need_item9",
+				"a_rare_index_0", "a_rare_prob_0",
+				"a_rare_index_1", "a_rare_prob_1",
+				"a_rare_index_2", "a_rare_prob_2",
+				"a_rare_index_3", "a_rare_prob_3",
+				"a_rare_index_4", "a_rare_prob_4",
+				"a_rare_index_5", "a_rare_prob_5",
+				"a_rare_index_6", "a_rare_prob_6",
+				"a_rare_index_7", "a_rare_prob_7",
+				"a_rare_index_8", "a_rare_prob_8",
+				"a_rare_index_9", "a_rare_prob_9"
+			};
 
-					Console.WriteLine();
-				}
-			}*/
+			List<string> listUTinyIntColumns = new List<string>  // Here add all unsigned tinyint columns.
+			{
+				"a_origin_variation1",
+				"a_origin_variation2",
+				"a_origin_variation3",
+				"a_origin_variation4",
+				"a_origin_variation5",
+				"a_origin_variation6",
+				"a_rvr_value",
+				"a_rvr_grade",
+				"a_castle_war"
+			};
+
+			List<string> listTinyIntColumns = new List<string>	// Here add all tinyint columns.
+			{
+				"a_texture_id",
+				"a_texture_row",
+				"a_texture_col",
+				"a_wearing",
+				"a_need_sskill_level",
+#if NEED_SECOND_SKILL_TO_CRAFT
+				"a_need_sskill_level2"
+#endif
+			};
+
+			List<string> listVarcharColumns = new List<string>	// Here add all varchar columns.
+			{
+				"a_file_smc",
+				"a_effect_name",
+				"a_attack_effect_name",
+				"a_damage_effect_name"
+			};
+
+			int i = 0;
+			for (i = 0; i < pMain.pSettings.NationSupported.Length; i++)
+			{
+				string strNation = pMain.pSettings.NationSupported[i].ToLower();
+
+				listVarcharColumns.AddRange(new List<string>
+				{
+					"a_name_" + strNation,
+					"a_descr_" + strNation
+				});
+			}
+
+			List<string> listBigIntColumns = new List<string>	// Here add all bigint columns.
+			{
+#if ALLOWED_ZONE_SYSTEM
+				"a_zone_flag",
+#endif
+				"a_flag"
+			};
+
+			List<string> listSmallIntColumns = new List<string>	// Here add all smallint columns.
+			{
+				"a_need_item_count0",
+				"a_need_item_count1",
+				"a_need_item_count2",
+				"a_need_item_count3",
+				"a_need_item_count4",
+				"a_need_item_count5",
+				"a_need_item_count6",
+				"a_need_item_count7",
+				"a_need_item_count8",
+				"a_need_item_count9"
+			};
+
+			if (pMain.pItemTable == null)   // If is null, create new DataTable and set schema (column name & datatype).
+			{
+				DataTable pItemTableStruct = new DataTable();
+
+				foreach (string strColumnName in listUIntColumns)
+					pItemTableStruct.Columns.Add(strColumnName, typeof(uint));
+
+				foreach (string strColumnName in listIntColumns)
+					pItemTableStruct.Columns.Add(strColumnName, typeof(int));
+
+				foreach (string strColumnName in listUTinyIntColumns)
+					pItemTableStruct.Columns.Add(strColumnName, typeof(byte));
+
+				foreach (string strColumnName in listTinyIntColumns)
+					pItemTableStruct.Columns.Add(strColumnName, typeof(sbyte));
+
+				foreach (string strColumnName in listVarcharColumns)
+					pItemTableStruct.Columns.Add(strColumnName, typeof(string));
+
+				foreach (string strColumnName in listBigIntColumns)
+					pItemTableStruct.Columns.Add(strColumnName, typeof(long));
+
+				foreach (string strColumnName in listSmallIntColumns)
+					pItemTableStruct.Columns.Add(strColumnName, typeof(short));
+
+				pRow = pItemTableStruct.NewRow();
+
+				pItemTableStruct.Dispose();
+				pItemTableStruct = null;
+
+				DataTable QueryReturn = pMain.QuerySelect(pMain.pSettings.DBCharset, "SELECT a_index FROM " + pMain.pSettings.DBData + ".t_item ORDER BY a_index DESC LIMIT 1");
+				if (QueryReturn != null && QueryReturn.Rows.Count > 0)
+					nItemID = Convert.ToInt32(QueryReturn.Rows[0]["a_index"]);
+				else
+					// TODO: MSG input asking for index
+
+				QueryReturn = null;
+			}
+			else
+			{
+				nItemID = Convert.ToInt32(pMain.pItemTable.Select().LastOrDefault()["a_index"]);
+				pRow = pMain.pItemTable.NewRow();
+			}
+
+			List<object> listDefaultValue = new List<object>
+			{
+				0,  // a_durability
+				0,	// a_index
+				0,	// a_enable
+				0,	// a_weight
+				0,	// a_price
+				0,	// a_level
+				0,	// a_level2
+				-1,	// a_fame
+				-1,	// a_max_use
+				0,	// a_grade
+				0,	// a_type_idx
+				0,	// a_subtype_idx
+				0,	// a_job_flag
+#if !ALLOWED_ZONE_SYSTEM
+				0,	// a_zone_flag
+#endif
+				0,	// a_set_0
+				0,	// a_set_1
+				0,	// a_set_2
+				0,	// a_set_3
+				0,	// a_set_4
+				0,	// a_num_0
+				0,	// a_num_1
+				0,	// a_num_2
+				0,	// a_num_3
+				0,	// a_num_4
+				-1,	// a_need_sskill
+#if NEED_SECOND_SKILL_TO_CRAFT
+				-1,	// a_need_sskill2
+#endif
+				-1,	// a_need_item0
+				-1,	// a_need_item1
+				-1,	// a_need_item2
+				-1,	// a_need_item3
+				-1,	// a_need_item4
+				-1,	// a_need_item5
+				-1,	// a_need_item6
+				-1,	// a_need_item7
+				-1,	// a_need_item8
+				-1,	// a_need_item9
+				-1,	// a_rare_index_0
+				0,	// a_rare_prob_0
+				-1,	// a_rare_index_1
+				0,	// a_rare_prob_1
+				-1,	// a_rare_index_2
+				0,	// a_rare_prob_2
+				-1,	// a_rare_index_3
+				0,	// a_rare_prob_3
+				-1,	// a_rare_index_4
+				0,	// a_rare_prob_4
+				-1,	// a_rare_index_5
+				0,	// a_rare_prob_5
+				-1,	// a_rare_index_6
+				0,	// a_rare_prob_6
+				-1,	// a_rare_index_7
+				0,	// a_rare_prob_7
+				-1,	// a_rare_index_8
+				0,	// a_rare_prob_8
+				-1,	// a_rare_index_9
+				0,	// a_rare_prob_9
+				0,	// a_origin_variation1
+				0,	// a_origin_variation2
+				0,	// a_origin_variation3
+				0,	// a_origin_variation4
+				0,	// a_origin_variation5
+				0,	// a_origin_variation6
+				0,	// a_rvr_value
+				0,	// a_rvr_grade
+				0,	// a_castle_war
+				0,	// a_texture_id
+				1,	// a_texture_row
+				1,	// a_texture_col
+				-1,	// a_wearing
+				0,  // a_need_sskill_level
+#if NEED_SECOND_SKILL_TO_CRAFT
+				0,	// a_need_sskill_level2
+#endif
+				"Item\\Common\\ITEM_treasure02.smc",	// a_file_smc
+				"",	// a_effect_name
+				"",	// a_attack_effect_name
+				"", // a_damage_effect_name
+			};
+
+			for (i = 0; i < pMain.pSettings.NationSupported.Length; i++)
+			{
+				string strNation = pMain.pSettings.NationSupported[i].ToLower();
+
+				listDefaultValue.AddRange(new List<string>
+				{
+					"a_name_" + strNation,
+					"a_descr_" + strNation
+				});
+			}
+
+			listDefaultValue.AddRange(new List<object>
+			{
+#if ALLOWED_ZONE_SYSTEM
+			0,  // a_zone_flag
+#endif
+				0,  // a_flag
+				0,  // a_need_item_count0
+				0,  // a_need_item_count1
+				0,  // a_need_item_count2
+				0,  // a_need_item_count3
+				0,  // a_need_item_count4
+				0,  // a_need_item_count5
+				0,  // a_need_item_count6
+				0,  // a_need_item_count7
+				0,  // a_need_item_count8
+				0   // a_need_item_count9
+			});
+
+			i = 0;
+			foreach (string strColumnName in listUIntColumns.Concat(listIntColumns).Concat(listUTinyIntColumns).Concat(listTinyIntColumns).Concat(listVarcharColumns).Concat(listBigIntColumns).Concat(listSmallIntColumns))
+			{
+				pRow[strColumnName] = listDefaultValue[i];
+
+				i++;
+			}
+
+			pRow["a_index"] = nItemID;
+
+			// finally pass new DataRow to temp one. (Maybe add try catch finally here?)
+			pTempItemRow = pRow;
+
+			listUIntColumns = null;
+			listIntColumns = null;
+			listUTinyIntColumns = null;
+			listTinyIntColumns = null;
+			listVarcharColumns = null;
+			listBigIntColumns = null;
+			listSmallIntColumns = null;
 		}
 
 		private void btnCopy_Click(object sender, EventArgs e)
 		{
 			// TODO:
 
-			// TODO: Cuando termine es código y el de btnAddNew, hacer una branch ChangeUIOnFlag para en algún momento retomar la idea de modificar la ui dependiendo de la flag.
+			// TODO: Cuando termine es código de add, copy y delete, hacer una branch ChangeUIOnFlag para en algún momento retomar la idea de modificar la ui dependiendo de la flag.
 			// TODO: En mis otras herramientas usaba una columna temporal indicando que el item era justamente, temporal, se aplicaba esa flag a items copiados o nuevos, pero aquí lo que podría hacer es: un check cuando se selecciona un elemento de MainList, y verificar si int nItemID = Convert.ToInt32(pTempItemRow["a_index"]); existe en pItemTable.
 			/*
 			 DataRow pRow = pMain.pItemFortuneDataTable.NewRow();
@@ -1266,6 +1571,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			int nItemID = Convert.ToInt32(pTempItemRow["a_index"]);
 
 			DataRow pItemTableRow = pMain.pItemTable.Select("a_index = " + nItemID).FirstOrDefault();
+			
 			if (pItemTableRow != null)
 			{
 				StringBuilder strbuilderQuery = new StringBuilder();
@@ -1290,20 +1596,18 @@ namespace LastChaos_ToolBox_2024.Editors
 				}
 			}
 
-			pItemTableRow = null;
-
 			if (bSuccess)
 			{
 				try
 				{
-					DataRow pRow;
-
 					if (pMain.pItemFortuneHeadTable != null)
 					{
-						pRow = pMain.pItemFortuneHeadTable.Select("a_item_idx = " + nItemID).FirstOrDefault();
+						DataRow pRow = pMain.pItemFortuneHeadTable.Select("a_item_idx = " + nItemID).FirstOrDefault();
 
 						if (pRow != null)
 							pMain.pItemFortuneHeadTable.Rows.Remove(pRow);
+
+						pRow = null;
 					}
 
 					if (pMain.pItemFortuneDataTable != null)
@@ -1312,19 +1616,15 @@ namespace LastChaos_ToolBox_2024.Editors
 
 						if (pRows.Length > 0)
 						{
-							foreach (DataRow pDataRow in pRows)
-								pMain.pItemFortuneDataTable.Rows.Remove(pDataRow);
+							foreach (DataRow pRow in pRows)
+								pMain.pItemFortuneDataTable.Rows.Remove(pRow);
 						}
 
 						pRows = null;
 					}
 
-					pRow = pMain.pItemTable.Select("a_index = " + nItemID).FirstOrDefault();
-
-					if (pRow != null)
-						pMain.pItemTable.Rows.Remove(pRow);
-
-					pRow = null;
+					if (pItemTableRow != null)
+						pMain.pItemTable.Rows.Remove(pItemTableRow);
 				}
 				catch (Exception ex)
 				{
@@ -1347,6 +1647,8 @@ namespace LastChaos_ToolBox_2024.Editors
 					bUnsavedChanges = false;
 				}
 			}
+
+			pItemTableRow = null;
 		}
 
 		private void cbEnable_CheckedChanged(object sender, EventArgs e)
@@ -2234,7 +2536,7 @@ namespace LastChaos_ToolBox_2024.Editors
 					{
 						List<DataRow> listSkillLevels = pMain.pSkillLevelTable.AsEnumerable().Where(row => row.Field<int>("a_index") == nSkillID).ToList();
 
-						foreach (var pRowSkillLevel in listSkillLevels)
+						foreach (DataRow pRowSkillLevel in listSkillLevels)
 						{
 							int iSkillLevel = Convert.ToInt32(pRowSkillLevel["a_level"]);
 
@@ -2243,6 +2545,8 @@ namespace LastChaos_ToolBox_2024.Editors
 							if (iSelectedSkillLevel == iSkillLevel)
 								cSkillLevel.Value = cSkillLevel.Items[cSkillLevel.Items.Count - 1];
 						}
+
+						listSkillLevels = null;
 					}
 
 					gridFortune.Rows[e.RowIndex].Cells["level"].Tag = iSelectedSkillLevel;
@@ -2310,7 +2614,7 @@ namespace LastChaos_ToolBox_2024.Editors
 								{
 									List<DataRow> listSkillLevels = pMain.pSkillLevelTable.AsEnumerable().Where(row => row.Field<int>("a_index") == nDefaultSkillID).ToList();
 
-									foreach (var pRowSkillLevel in listSkillLevels)
+									foreach (DataRow pRowSkillLevel in listSkillLevels)
 									{
 										int iFortuneSkillLevel = Convert.ToInt32(pRowSkillLevel["a_level"]);
 
