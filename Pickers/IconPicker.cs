@@ -71,12 +71,12 @@ namespace LastChaos_ToolBox_2024
 				}
 				catch (Exception ex)
 				{
-					pMain.PrintLog($"Icon Picker > {ex.Message}");
+					pMain.Logger($"Icon Picker > {ex.Message}");
 				}
 			}
 			else
 			{
-				pMain.PrintLog("Icon Picker > Folder: " + strBtnType + " not exist.", Color.Red);
+				pMain.Logger("Icon Picker > Folder: " + strBtnType + " not exist.", Color.Red);
 			}
 
 			cbFileSelector.EndUpdate();
@@ -145,7 +145,7 @@ namespace LastChaos_ToolBox_2024
 				}
 				else
 				{
-					pMain.PrintLog("Icon Picker > Something went wrong while try load: (" + strPathCompose + ").", Color.Red);
+					pMain.Logger("Icon Picker > Something went wrong while try load: (" + strPathCompose + ").", Color.Red);
 				}
 			}
 		}

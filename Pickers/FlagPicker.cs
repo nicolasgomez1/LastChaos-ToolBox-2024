@@ -45,7 +45,7 @@ namespace LastChaos_ToolBox_2024
 			pMain = mainForm;
 			pParentForm = ParentForm;
 			this.strArrayFlag = strArray;
-            ReturnValues = nFlag;
+			ReturnValues = nFlag;
 		}
 
 		private void FlagPicker_Load(object sender, EventArgs e)

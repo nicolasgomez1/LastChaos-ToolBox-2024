@@ -1,12 +1,14 @@
 ﻿//#define NEED_SECOND_SKILL_TO_CRAFT	// NOTE: These values are required by the server, but are not actually used
-#define ALLOWED_ZONE_SYSTEM	// NOTE: Custom system made by NicolasG, disable that to use normal a_zone_flag
+#define ALLOWED_ZONE_SYSTEM // NOTE: Custom system made by NicolasG, disable that to use normal a_zone_flag
 
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Management;
 using System.Reflection;
@@ -18,10 +20,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Definitions;
-using IniParser.Model;
 using IniParser;
-using System.IO;
-using System.Data.SqlClient;
+using IniParser.Model;
 
 namespace LastChaos_ToolBox_2024.Editors
 {
@@ -141,6 +141,26 @@ namespace LastChaos_ToolBox_2024.Editors
 			pData["Settings"]["ItemEditorAutoLoadFortune"] = strState;
 
 			pParser.WriteFile(pMain.pSettings.SettingsFile, pData);
+		}
+
+		private void MakepItemFortuneHeadTableStructure()
+		{
+			pMain.pItemFortuneHeadTable = new DataTable();
+
+			pMain.pItemFortuneHeadTable.Columns.Add("a_item_idx", typeof(int));     // int
+			pMain.pItemFortuneHeadTable.Columns.Add("a_prob_type", typeof(byte));   // tinyint unsigned
+			pMain.pItemFortuneHeadTable.Columns.Add("a_enable", typeof(byte));      // tinyint unsigned
+		}
+
+		private void MakepItemFortuneDataTableStructure()
+		{
+			pMain.pItemFortuneDataTable = new DataTable();
+
+			pMain.pItemFortuneDataTable.Columns.Add("a_item_idx", typeof(int));         // int
+			pMain.pItemFortuneDataTable.Columns.Add("a_skill_index", typeof(int));      // int
+			pMain.pItemFortuneDataTable.Columns.Add("a_skill_level", typeof(sbyte));    // tinyint
+			pMain.pItemFortuneDataTable.Columns.Add("a_string_index", typeof(int));     // int
+			pMain.pItemFortuneDataTable.Columns.Add("a_prob", typeof(int));             // int
 		}
 
 		public class ListBoxItem
@@ -358,7 +378,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			}
 #if DEBUG
 			stopwatch.Stop();
-			pMain.PrintLog($"Check and Fortune Head & Data load took: {stopwatch.ElapsedMilliseconds} ms.");
+			pMain.Logger($"Check and Fortune Head & Data load took: {stopwatch.ElapsedMilliseconds} ms.");
 #endif
 		}
 
@@ -448,7 +468,7 @@ namespace LastChaos_ToolBox_2024.Editors
 					}
 					else
 					{
-						pMain.PrintLog("Item Editor > Item: " + nItemID + " Warning: This item have a entry in a_fortune_head, but not in a_fortune_data.", Color.Yellow);
+						pMain.Logger("Item Editor > Item: " + nItemID + " Warning: This item have a entry in a_fortune_head, but not in a_fortune_data.", Color.Yellow);
 					}
 				}
 			}
@@ -558,7 +578,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			);
 #if DEBUG
 			stopwatch.Stop();
-			pMain.PrintLog($"Items, Zones, Skill & Skills Level Data load took: {stopwatch.ElapsedMilliseconds} ms.");
+			pMain.Logger($"Items, Zones, Skill & Skills Level Data load took: {stopwatch.ElapsedMilliseconds} ms.");
 #endif
 			/****************************************/
 			if (pMain.pItemTable != null && pMain.pZoneTable != null && pMain.pSkillTable != null && pMain.pSkillLevelTable != null && pMain.pRareOptionTable != null)
@@ -614,6 +634,8 @@ namespace LastChaos_ToolBox_2024.Editors
 			btnAddNew.Enabled = true;
 
 			pProgressDialog.Close();
+
+			MainList.Focus();
 		}
 
 		private void ItemEditor_FormClosing(object sender, FormClosingEventArgs e)  // NOTE: Here is an example of the unsaved data warning messages in case want to close the form.
@@ -626,9 +648,12 @@ namespace LastChaos_ToolBox_2024.Editors
 				pToolTips = null;
 
 				if (pRenderDialog != null)
+				{
 					pRenderDialog.Close();
+					pRenderDialog = null;
+				}
 
-				// TODO: Add here all used tables, arrays etc etc
+				// TODO: Add here all used tables, arrays, etc
 				pTempItemRow = null;
 				pTempFortuneHeadRow = null;
 				pTempFortuneDataRows = null;
@@ -717,7 +742,7 @@ namespace LastChaos_ToolBox_2024.Editors
 					pRenderDialog.Show();
 
 				if (!File.Exists(pMain.pSettings.ClientPath + "\\" + strSMCPath))
-					pMain.PrintLog("Item Editor > Item: " + nItemID + " Error: a_file_smc path not exist or empty.", Color.Red);
+					pMain.Logger("Item Editor > Item: " + nItemID + " Error: a_file_smc path not exist or empty.", Color.Red);
 				else
 					pRenderDialog.SetModel(pMain.pSettings.ClientPath + "\\" + strSMCPath, "small", nWearingPosition);
 			}
@@ -739,7 +764,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			int nAPetType = Convert.ToInt32(pTempItemRow["a_grade"]);
 
 			if (nAPetType < 0 || nAPetType > Defs.ItemCastleTypes.Length)
-				pMain.PrintLog("Item Editor > Item: " + nItemID + " Error: a_grade out of range.", Color.Red);
+				pMain.Logger("Item Editor > Item: " + nItemID + " Error: a_grade out of range.", Color.Red);
 			else
 				cbGrade.SelectedIndex = nAPetType;
 			/****************************************/
@@ -751,7 +776,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			int nCastleType = Convert.ToInt32(pTempItemRow["a_castle_war"]);
 
 			if (nCastleType < 0 || nCastleType > Defs.ItemCastleTypes.Length)
-				pMain.PrintLog("Item Editor > Item: " + nItemID + " Error: a_castle_war out of range.", Color.Red);
+				pMain.Logger("Item Editor > Item: " + nItemID + " Error: a_castle_war out of range.", Color.Red);
 			else
 				cbCastleType.SelectedIndex = nCastleType;
 			/****************************************/
@@ -760,7 +785,7 @@ namespace LastChaos_ToolBox_2024.Editors
 				cbWearingPositionSelector.Enabled = false;
 				cbWearingPositionSelector.Text = "";
 
-				pMain.PrintLog("Item Editor > Item: " + nItemID + " Error: a_wearing out of range.", Color.Red);
+				pMain.Logger("Item Editor > Item: " + nItemID + " Error: a_wearing out of range.", Color.Red);
 			}
 			else
 			{
@@ -786,7 +811,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			}
 
 			if (nJobFlag != 0 && strTooltip.Length <= 0)
-				pMain.PrintLog("Item Editor > Item: " + nItemID + " Error: a_job_flag out of range.", Color.Red);
+				pMain.Logger("Item Editor > Item: " + nItemID + " Error: a_job_flag out of range.", Color.Red);
 
 			pToolTip = new ToolTip();
 			pToolTip.SetToolTip(btnClassFlag, strTooltip.ToString());
@@ -807,7 +832,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			}
 
 			if (nZoneFlag != 0 && strTooltip.Length <= 0)
-				pMain.PrintLog("Item Editor > Item: " + nItemID + " Error: a_zone_flag out of range.", Color.Red);
+				pMain.Logger("Item Editor > Item: " + nItemID + " Error: a_zone_flag out of range.", Color.Red);
 
 			pToolTip = new ToolTip();
 			pToolTip.SetToolTip(btnAllowedZoneFlag, strTooltip.ToString());
@@ -830,7 +855,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			}
 
 			if (nItemFlag != 0 && strTooltip.Length <= 0)
-				pMain.PrintLog("Item Editor > Item: " + nItemID + " Error: a_flag out of range.", Color.Red);
+				pMain.Logger("Item Editor > Item: " + nItemID + " Error: a_flag out of range.", Color.Red);
 
 			// TODO: Add check for conflicts in flag config
 
@@ -849,7 +874,7 @@ namespace LastChaos_ToolBox_2024.Editors
 				cbSubTypeSelector.Enabled = false;
 				cbSubTypeSelector.Text = "";
 
-				pMain.PrintLog("Item Editor > Item: " + nItemID + " Error: a_type_idx out of range.", Color.Red);
+				pMain.Logger("Item Editor > Item: " + nItemID + " Error: a_type_idx out of range.", Color.Red);
 			}
 			else
 			{
@@ -864,7 +889,7 @@ namespace LastChaos_ToolBox_2024.Editors
 					cbSubTypeSelector.Enabled = false;
 					cbSubTypeSelector.Text = "";
 
-					pMain.PrintLog("Item Editor > Item: " + nItemID + " Error: a_subtype_idx out of range.", Color.Red);
+					pMain.Logger("Item Editor > Item: " + nItemID + " Error: a_subtype_idx out of range.", Color.Red);
 				}
 				else
 				{
@@ -875,7 +900,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			int nRvRValue = Convert.ToInt32(pTempItemRow["a_rvr_value"]);
 			if (nRvRValue > Defs.SyndicateTypesNGrades.Keys.Count)
 			{
-				pMain.PrintLog("Item Editor > Item: " + nItemID + " Error: a_rvr_value out of range.", Color.Red);
+				pMain.Logger("Item Editor > Item: " + nItemID + " Error: a_rvr_value out of range.", Color.Red);
 			}
 			else
 			{
@@ -914,7 +939,7 @@ namespace LastChaos_ToolBox_2024.Editors
 					if (nZoneID <= strArrayZones.Length)
 						cbSet0.SelectedIndex = nZoneID;
 					else
-						pMain.PrintLog("Item Editor > Item: " + nItemID + " Error: a_set_0 out of range.", Color.Red);
+						pMain.Logger("Item Editor > Item: " + nItemID + " Error: a_set_0 out of range.", Color.Red);
 				}
 
 				for (int i = 1; i <= 4; i++)
@@ -937,7 +962,7 @@ namespace LastChaos_ToolBox_2024.Editors
 						if (pItemTableRow != null)
 							strItemID += " - " + pItemTableRow["a_name_" + pMain.pSettings.WorkLocale];
 						else
-							pMain.PrintLog("Item Editor > Item: " + nSetItemID + " Error: a_set_" + i + " not exist.", Color.Red);
+							pMain.Logger("Item Editor > Item: " + nSetItemID + " Error: a_set_" + i + " not exist.", Color.Red);
 
 						pItemTableRow = null;
 					}
@@ -960,7 +985,7 @@ namespace LastChaos_ToolBox_2024.Editors
 				if (pSkillData != null)
 					strSkillName += " - " + pSkillData["a_name_" + pMain.pSettings.WorkLocale];
 				else
-					pMain.PrintLog("Item Editor > Item: " + nItemID + " Error: a_need_sskill " + iSkillNeededID + " not exist.", Color.Red);
+					pMain.Logger("Item Editor > Item: " + nItemID + " Error: a_need_sskill " + iSkillNeededID + " not exist.", Color.Red);
 
 				pSkillData = null;
 			}
@@ -1001,7 +1026,7 @@ namespace LastChaos_ToolBox_2024.Editors
 					if (pItemTableRow != null)
 						strRequiredItemID += " - " + pItemTableRow["a_name_" + pMain.pSettings.WorkLocale];
 					else
-						pMain.PrintLog("Item Editor > Item: " + nItemID + " Error: a_need_item" + i + " not exist.", Color.Red);
+						pMain.Logger("Item Editor > Item: " + nItemID + " Error: a_need_item" + i + " not exist.", Color.Red);
 
 					pItemTableRow = null;
 				}
@@ -1027,7 +1052,7 @@ namespace LastChaos_ToolBox_2024.Editors
 					if (pRareOptionTableRow != null)
 						strRateOptionID += " - " + pRareOptionTableRow["a_prefix_" + pMain.pSettings.WorkLocale];
 					else
-						pMain.PrintLog("Item Editor > Item: " + nItemID + " Error: a_rare_index_" + i + " not exist.", Color.Red);
+						pMain.Logger("Item Editor > Item: " + nItemID + " Error: a_rare_index_" + i + " not exist.", Color.Red);
 				}
 
 				((Button)this.Controls.Find("btnRareIndex" + i, true)[0]).Text = strRateOptionID;
@@ -1540,7 +1565,7 @@ namespace LastChaos_ToolBox_2024.Editors
 						if (nZoneID <= strArrayZones.Length)
 							cbSet0.SelectedIndex = nZoneID;
 						else
-							pMain.PrintLog("Item Editor > Item: " + pTempItemRow["a_index"].ToString() + " Error: a_set_0 out of range.", Color.Red);
+							pMain.Logger("Item Editor > Item: " + pTempItemRow["a_index"].ToString() + " Error: a_set_0 out of range.", Color.Red);
 					}
 
 					for (int i = 1; i <= 4; i++)
@@ -1565,7 +1590,7 @@ namespace LastChaos_ToolBox_2024.Editors
 							if (pItemTableRow != null)
 								strItemID += " - " + pItemTableRow["a_name_" + pMain.pSettings.WorkLocale];
 							else
-								pMain.PrintLog("Item Editor > Item: " + nSetItemID + " Error: a_set_" + i + " not exist.", Color.Red);
+								pMain.Logger("Item Editor > Item: " + nSetItemID + " Error: a_set_" + i + " not exist.", Color.Red);
 
 							pItemTableRow = null;
 						}
@@ -2031,13 +2056,7 @@ namespace LastChaos_ToolBox_2024.Editors
 				try
 				{
 					if (pMain.pItemFortuneHeadTable == null)    // NOTE: This condition theoretically should not be met, but just in case
-					{
-						pMain.pItemFortuneHeadTable = new DataTable();
-
-						pMain.pItemFortuneHeadTable.Columns.Add("a_item_idx", typeof(int));     // int
-						pMain.pItemFortuneHeadTable.Columns.Add("a_prob_type", typeof(byte));   // tinyint unsigned
-						pMain.pItemFortuneHeadTable.Columns.Add("a_enable", typeof(byte));      // tinyint unsigned
-					}
+						MakepItemFortuneHeadTableStructure();
 
 					pTempFortuneHeadRow = pMain.pItemFortuneHeadTable.NewRow();
 
@@ -2167,15 +2186,7 @@ namespace LastChaos_ToolBox_2024.Editors
 							int nPosition = pTempFortuneDataRows.Length - 1;
 
 							if (pMain.pItemFortuneDataTable == null)
-							{
-								pMain.pItemFortuneDataTable = new DataTable();
-
-								pMain.pItemFortuneDataTable.Columns.Add("a_item_idx", typeof(int));         // int
-								pMain.pItemFortuneDataTable.Columns.Add("a_skill_index", typeof(int));      // int
-								pMain.pItemFortuneDataTable.Columns.Add("a_skill_level", typeof(sbyte));    // tinyint
-								pMain.pItemFortuneDataTable.Columns.Add("a_string_index", typeof(int));     // int
-								pMain.pItemFortuneDataTable.Columns.Add("a_prob", typeof(int));             // int
-							}
+								MakepItemFortuneDataTableStructure();
 
 							pTempFortuneDataRows[nPosition] = pMain.pItemFortuneDataTable.NewRow();
 
@@ -2266,43 +2277,6 @@ namespace LastChaos_ToolBox_2024.Editors
 			}
 		}
 
-		private void gridFortune_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e) // Skill Level Selector
-		{
-			if (bUserAction)
-			{
-				if (gridFortune.CurrentCell is DataGridViewComboBoxCell)
-				{
-					ComboBox ComboBox = e.Control as ComboBox;
-					if (ComboBox != null)
-					{
-						ComboBox.SelectedIndexChanged += (s, args) =>
-						{
-							// TODO: Remember set tooltip: gridFortune.Rows[i].Cells["skill"].ToolTipText = pSkillRow["a_client_description_" + pMain.pSettings.WorkLocale].ToString();
-							// TODO: Remember set tag: gridFortune.Rows[i].Cells["level"].Tag = iFortuneSkillLevel;
-							// TODO: Set skill level in ptemp
-						};
-					}
-				}
-			}
-		}
-
-		private void gridFortune_CellValueChanged(object sender, DataGridViewCellEventArgs e)   // Skill Prob Editor
-		{
-			if (bUserAction)
-			{
-				if (e.RowIndex >= 0 && e.ColumnIndex == 2)
-				{
-					DataGridViewCell pCell = gridFortune.Rows[e.RowIndex].Cells["prob"];
-
-					if (pCell is DataGridViewTextBoxCell)
-					{
-						string strProbValue = pCell.Value.ToString();
-						// TODO: Set skill prob in ptemp
-					}
-				}
-			}
-		}
-
 		private void btnUpdate_Click(object sender, EventArgs e)
 		{
 #if DEBUG
@@ -2313,11 +2287,43 @@ namespace LastChaos_ToolBox_2024.Editors
 			StringBuilder strbuilderQuery = new StringBuilder();
 
 			// Init transaction.
-			strbuilderQuery.Append("BEGIN;\n");	//strbuilderQuery.Append("BEGIN TRANSACTION;\n");
+			strbuilderQuery.Append("BEGIN;\n"); //strbuilderQuery.Append("BEGIN TRANSACTION;\n");
 
-			// Request for Fortune Data.
-			if (pTempFortuneHeadRow == null || pTempFortuneDataRows == null)
-				LoadFortuneData();
+			if (gridFortune.Rows.Count == 0)
+			{
+				// Request for Fortune Data.
+				if (pTempFortuneHeadRow == null || pTempFortuneDataRows == null)
+				{
+					LoadFortuneData();
+
+					SetFortuneData();   // NOTE: I need call that to populate pTempFortuneHeadRow & pTempFortuneDataRows, but it do some redraws and can make the UI looks laggy... anyway is not too important.
+				}
+			}
+			else
+			{
+				// First clear and set size of DataRow Array
+				pTempFortuneDataRows = new DataRow[gridFortune.Rows.Count];
+
+				// Check if Global Table is not null. If is, set the structure, cos i need use to after.
+				if (pMain.pItemFortuneDataTable == null)
+					MakepItemFortuneDataTableStructure();
+
+				int i = 0;
+				foreach (DataGridViewRow row in gridFortune.Rows)
+				{
+					DataRow pRow = pMain.pItemFortuneDataTable.NewRow();
+					
+					pRow["a_item_idx"] = pTempItemRow["a_index"];
+					pRow["a_skill_index"] = row.Cells["skill"].Tag;
+					pRow["a_skill_level"] = row.Cells["level"].Value.ToString().Split(new string[] { " - " }, StringSplitOptions.None)[0].Replace("Level: ", "").Trim(); // DUDE LOOK THAT SHIT HAHA, NOTE: in theory, the element index is equivalent to level, but i'm not trust so, by go in this way have not room to errors.	//row.Cells["level"].Tag;
+					pRow["a_string_index"] = row.Cells["string"].Value;
+					pRow["a_prob"] = row.Cells["prob"].Value;
+
+					pTempFortuneDataRows[i] = pRow;
+
+					i++;
+				}
+			}
 
 			if (pTempFortuneHeadRow != null)
 			{
@@ -2395,7 +2401,7 @@ namespace LastChaos_ToolBox_2024.Editors
 				StringBuilder strColumnsNames = new StringBuilder();
 				StringBuilder strColumnsValues = new StringBuilder();
 
-				foreach(DataColumn pColumn in pTempItemRow.Table.Columns)
+				foreach (DataColumn pColumn in pTempItemRow.Table.Columns)
 				{
 					strColumnsNames.Append(pColumn.ColumnName + ", ");
 
@@ -2408,18 +2414,11 @@ namespace LastChaos_ToolBox_2024.Editors
 				strbuilderQuery.Append("INSERT INTO " + pMain.pSettings.DBData + ".t_item (" + strColumnsNames + ") VALUES (" + strColumnsValues + ");\n");
 			}
 
-			/*if (!pMain.pItemTable.Columns.Contains(column.ColumnName))	// NOTE: Esto, en realidad no debería ser necesario. pero lo dejo a modo de ejemplo...
-				pMain.pItemTable.Columns.Add(column.ColumnName, column.DataType);*/
-
-			// TODO: UPDATE pMain.pItemTable, pMain.pItemFortuneHeadTable & pMain.pItemFortuneDataTable	(Check if have row in pItemFortuneHeadTable but not in pItemFortuneDataTable execute a delete from a_fortune_head)
-
-			//pItemTableRow[column.ColumnName] = pTempItemRow[column.ColumnName];
-
 			string strQuery = strbuilderQuery.Append("COMMIT;\n").ToString();
 
 			strbuilderQuery = null;
 
-			pMain.PrintLog(strQuery);
+			pMain.Logger(strQuery);
 
 			if (pMain.QueryUpdateInsert(pMain.pSettings.DBCharset, strQuery))
 			{
@@ -2447,11 +2446,7 @@ namespace LastChaos_ToolBox_2024.Editors
 						}
 						else    // If Global Table is null.
 						{
-							pMain.pItemFortuneHeadTable = new DataTable();
-
-							pMain.pItemFortuneHeadTable.Columns.Add("a_item_idx", typeof(int));     // int
-							pMain.pItemFortuneHeadTable.Columns.Add("a_prob_type", typeof(byte));   // tinyint unsigned
-							pMain.pItemFortuneHeadTable.Columns.Add("a_enable", typeof(byte));      // tinyint unsigned
+							MakepItemFortuneHeadTableStructure();
 
 							DataRow pItemFortuneHeadTableRow = pMain.pItemFortuneHeadTable.NewRow();
 							pItemFortuneHeadTableRow.ItemArray = (object[])pTempFortuneHeadRow.ItemArray.Clone();
@@ -2485,13 +2480,7 @@ namespace LastChaos_ToolBox_2024.Editors
 						}
 						else    // If Global Table is null.
 						{
-							pMain.pItemFortuneDataTable = new DataTable();
-
-							pMain.pItemFortuneDataTable.Columns.Add("a_item_idx", typeof(int));         // int
-							pMain.pItemFortuneDataTable.Columns.Add("a_skill_index", typeof(int));      // int
-							pMain.pItemFortuneDataTable.Columns.Add("a_skill_level", typeof(sbyte));    // tinyint
-							pMain.pItemFortuneDataTable.Columns.Add("a_string_index", typeof(int));     // int
-							pMain.pItemFortuneDataTable.Columns.Add("a_prob", typeof(int));             // int
+							MakepItemFortuneDataTableStructure();
 
 							foreach (DataRow pTempFortuneDataRow in pTempFortuneDataRows)
 							{
@@ -2513,14 +2502,14 @@ namespace LastChaos_ToolBox_2024.Editors
 						pItemTableRow.ItemArray = (object[])pTempItemRow.ItemArray.Clone();
 						pMain.pItemTable.Rows.Add(pItemTableRow);
 					}
-					
+
 					MessageBox.Show("Changes applied successfully!", "Item Editor", MessageBoxButtons.OK);
 				}
 				catch (Exception ex)
 				{
 					string strError = "Item Editor > Item: " + nItemID + " Changes applied in DataBase, but something got wrong while transferring temp item data to main tables. Please restart the application.";
 
-					pMain.PrintLog(strError, Color.Red);
+					pMain.Logger(strError, Color.Red);
 
 					MessageBox.Show(strError, "Item Editor", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				}
@@ -2535,7 +2524,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			{
 				string strError = "Item Editor > Item: " + nItemID + " Something got wrong while trying to execute the MySQL Transaction. Changes not applied.";
 
-				pMain.PrintLog(strError, Color.Red);
+				pMain.Logger(strError, Color.Red);
 
 				MessageBox.Show(strError, "Item Editor", MessageBoxButtons.OK, MessageBoxIcon.Error);
 			}
@@ -2543,7 +2532,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			strQuery = null;
 #if DEBUG
 			stopwatch.Stop();
-			pMain.PrintLog($"Compose query, run it, and transfer Data from Temp to Global took: {stopwatch.ElapsedMilliseconds}.{stopwatch.ElapsedTicks} MS.TICKS");
+			pMain.Logger($"Compose query, run it, and transfer Data from Temp to Global took: {stopwatch.ElapsedMilliseconds}.{stopwatch.ElapsedTicks} MS.TICKS");
 #endif
 		}
 	}

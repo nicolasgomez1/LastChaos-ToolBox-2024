@@ -56,35 +56,35 @@ namespace LastChaos_ToolBox_2024
 		{
 			this.Location = new Point((int)pParentForm.Location.X + (pParentForm.Width - this.Width) / 2, (int)pParentForm.Location.Y + (pParentForm.Height - this.Height) / 2);
 
-            bool bRequestNeeded = false;
-            List<string> listQueryCompose = new List<string> {
+			bool bRequestNeeded = false;
+			List<string> listQueryCompose = new List<string> {
 				"a_texture_id", "a_texture_row", "a_texture_col", "a_name_" + pMain.pSettings.WorkLocale, "a_descr_" + pMain.pSettings.WorkLocale
 			};
 
-            if (pMain.pItemTable == null)
-            {
-                bRequestNeeded = true;
-            }
-            else
-            {
-                foreach (var column in listQueryCompose.ToList())
-                {
-                    if (!pMain.pItemTable.Columns.Contains(column))
-                        bRequestNeeded = true;
-                    else
-                        listQueryCompose.Remove(column);
-                }
-            }
+			if (pMain.pItemTable == null)
+			{
+				bRequestNeeded = true;
+			}
+			else
+			{
+				foreach (var column in listQueryCompose.ToList())
+				{
+					if (!pMain.pItemTable.Columns.Contains(column))
+						bRequestNeeded = true;
+					else
+						listQueryCompose.Remove(column);
+				}
+			}
 
-            if (bRequestNeeded)
-            {
-                pMain.pItemTable = await Task.Run(() =>
-                {
-                    return pMain.QuerySelect(pMain.pSettings.DBCharset, $"SELECT a_index, {string.Join(",", listQueryCompose)} FROM {pMain.pSettings.DBData}.t_item ORDER BY a_index;");
-                });
-            }
+			if (bRequestNeeded)
+			{
+				pMain.pItemTable = await Task.Run(() =>
+				{
+					return pMain.QuerySelect(pMain.pSettings.DBCharset, $"SELECT a_index, {string.Join(",", listQueryCompose)} FROM {pMain.pSettings.DBData}.t_item ORDER BY a_index;");
+				});
+			}
 
-            if (pMain.pItemTable != null)
+			if (pMain.pItemTable != null)
 			{
 				MainList.Items.Clear();
 

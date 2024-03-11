@@ -13,7 +13,7 @@ using System.Windows.Forms;
 
 namespace LastChaos_ToolBox_2024
 {
-    /* Args:
+	/* Args:
 	 *	Main<Pointer to Main Form>
 	 *	Form<Parent Form to center the Window>
 	 *	Int <Actual Rare Option ID>
@@ -27,13 +27,13 @@ namespace LastChaos_ToolBox_2024
 
 	int iRareOptionID = pRareOptionSelector.ReturnValues;
 	/****************************************/
-    public partial class RareOptionPicker : Form
+	public partial class RareOptionPicker : Form
 	{
 		private Form pParentForm;
 		private Main pMain;
 		private int nSearchPosition = 0;
-        private bool bUserAction = false;
-        public int ReturnValues = -1;
+		private bool bUserAction = false;
+		public int ReturnValues = -1;
 
 		public RareOptionPicker(Main mainForm, Form ParentForm, int iActualRareOptionID)
 		{
@@ -57,38 +57,38 @@ namespace LastChaos_ToolBox_2024
 		{
 			this.Location = new Point((int)pParentForm.Location.X + (pParentForm.Width - this.Width) / 2, (int)pParentForm.Location.Y + (pParentForm.Height - this.Height) / 2);
 
-            bool bRequestNeeded = false;
+			bool bRequestNeeded = false;
 
-            List<string> listQueryCompose = new List<string> { "a_prefix_" + pMain.pSettings.WorkLocale };
+			List<string> listQueryCompose = new List<string> { "a_prefix_" + pMain.pSettings.WorkLocale };
 
-            if (pMain.pRareOptionTable == null)
-            {
-                bRequestNeeded = true;
-            }
-            else
-            {
-                foreach (var column in listQueryCompose.ToList())
-                {
-                    if (!pMain.pRareOptionTable.Columns.Contains(column))
-                        bRequestNeeded = true;
-                    else
-                        listQueryCompose.Remove(column);
-                }
-            }
-
-            if (bRequestNeeded)
-            {
-                pMain.pRareOptionTable = await Task.Run(() =>
-                {
-                    return pMain.QuerySelect(pMain.pSettings.DBCharset, $"SELECT a_index, {string.Join(",", listQueryCompose)} FROM {pMain.pSettings.DBData}.t_rareoption ORDER BY a_index;");
-                });
-            }
-
-            if (pMain.pRareOptionTable != null)
+			if (pMain.pRareOptionTable == null)
 			{
-                bUserAction = false;
+				bRequestNeeded = true;
+			}
+			else
+			{
+				foreach (var column in listQueryCompose.ToList())
+				{
+					if (!pMain.pRareOptionTable.Columns.Contains(column))
+						bRequestNeeded = true;
+					else
+						listQueryCompose.Remove(column);
+				}
+			}
 
-                MainList.Items.Clear();
+			if (bRequestNeeded)
+			{
+				pMain.pRareOptionTable = await Task.Run(() =>
+				{
+					return pMain.QuerySelect(pMain.pSettings.DBCharset, $"SELECT a_index, {string.Join(",", listQueryCompose)} FROM {pMain.pSettings.DBData}.t_rareoption ORDER BY a_index;");
+				});
+			}
+
+			if (pMain.pRareOptionTable != null)
+			{
+				bUserAction = false;
+
+				MainList.Items.Clear();
 
 				MainList.BeginUpdate();
 
@@ -113,8 +113,8 @@ namespace LastChaos_ToolBox_2024
 
 				MainList.EndUpdate();
 
-                bUserAction = true;
-            }
+				bUserAction = true;
+			}
 		}
 
 		private void tbSearch_KeyDown(object sender, KeyEventArgs e)

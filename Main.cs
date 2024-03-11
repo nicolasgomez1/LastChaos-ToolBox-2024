@@ -1,29 +1,32 @@
-﻿using System;
+﻿using IniParser;
+using IniParser.Model;
+using LastChaos_ToolBox_2024.Editors;
+using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Diagnostics;
-using MySql.Data.MySqlClient;
-using System.Reflection;
-using System.IO;
-using IniParser;
-using IniParser.Model;
-using LastChaos_ToolBox_2024.Editors;
 
 namespace LastChaos_ToolBox_2024
 {
 	public partial class Main : Form
 	{
 		private string strWindowsTitle;
+		private MySqlConnection mysqlConn;
 
 		// Global Vals
 		public Settings pSettings = new Settings();
-		public MySqlConnection mysqlConn;
+
+		// { get; set; }
 		public DataTable pItemTable = null;
 		public DataTable pZoneTable = null;
 		public DataTable pSkillTable = null;
@@ -60,6 +63,8 @@ namespace LastChaos_ToolBox_2024
 			Assembly pAssembly = Assembly.GetAssembly(typeof(Main));
 
 			this.Text = strWindowsTitle = pAssembly.GetName().Name + " Build: " + pAssembly.GetName().Version.Revision;
+
+			//WindowUtils.EnableAcrylic(this, Color.FromArgb(0, 0, 0, 255));	// For fun
 		}
 
 		private void Main_Load(object sender, EventArgs e)
@@ -143,7 +148,7 @@ namespace LastChaos_ToolBox_2024
 		{
 			if (mysqlConn.State == ConnectionState.Open)
 			{
-				PrintLog("MySQL > Closing existing connection.");
+				Logger("MySQL > Closing existing connection.");
 
 				mysqlConn.Close();
 			}
@@ -159,7 +164,7 @@ namespace LastChaos_ToolBox_2024
 		/****************************************/
 		private static StreamWriter pStreamWriter = new StreamWriter("Logs.log", true);
 
-		public void PrintLog(string strMsg, Color? ColorMsg = null)
+		public void Logger(string strMsg, Color? ColorMsg = null)
 		{
 			StackFrame stackFrame = new StackFrame(1, true);
 
@@ -184,7 +189,7 @@ namespace LastChaos_ToolBox_2024
 		/****************************************/
 		private void LoadSettings()
 		{
-			PrintLog("Loading Settings...");
+			Logger("Loading Settings...");
 
 			if (File.Exists(pSettings.SettingsFile))
 			{
@@ -218,11 +223,11 @@ namespace LastChaos_ToolBox_2024
 				foreach (KeyData pKey in arrayKeys)
 					pSettings.ShowRenderDialog[pKey.KeyName] = pKey.Value.ToLower();
 				/****************************************/
-				PrintLog("Settings load finished.", Color.Lime);
+				Logger("Settings load finished.", Color.Lime);
 			}
 			else
 			{
-				PrintLog($"Settings load failed ({pSettings.SettingsFile} not exist).", Color.Red);
+				Logger($"Settings load failed ({pSettings.SettingsFile} not exist).", Color.Red);
 			}
 		}
 
@@ -257,7 +262,7 @@ namespace LastChaos_ToolBox_2024
 			}
 			else
 			{
-				PrintLog("Error while trying to get Icon. Path: " + strComposePath, Color.Red);
+				Logger("Error while trying to get Icon. Path: " + strComposePath, Color.Red);
 
 				return null;
 			}
@@ -281,7 +286,7 @@ namespace LastChaos_ToolBox_2024
 
 						mysqlConnection.Close();
 
-						PrintLog("MySql Query (Charset: " + strCharset + ")\n" + strQuery + "\nExecute successfully.", Color.Lime);
+						Logger("MySql Query (Charset: " + strCharset + ")\n" + strQuery + "\nExecute successfully.", Color.Lime);
 
 						return pTable;
 					}
@@ -289,7 +294,7 @@ namespace LastChaos_ToolBox_2024
 			}
 			catch (Exception ex)
 			{
-				PrintLog($"MySql Query (Charset: {strCharset})\n{strQuery}\nFail > {ex.Message}", Color.Red);
+				Logger($"MySql Query (Charset: {strCharset})\n{strQuery}\nFail > {ex.Message}", Color.Red);
 
 				return null;
 			}
@@ -311,7 +316,7 @@ namespace LastChaos_ToolBox_2024
 
 						mysqlConnection.Close();
 
-						PrintLog("MySql Query (Charset: " + strCharset + ")\n" + strQuery + "\nExecute successfully.", Color.Lime);
+						Logger("MySql Query (Charset: " + strCharset + ")\n" + strQuery + "\nExecute successfully.", Color.Lime);
 
 						return true;
 					}
@@ -319,7 +324,7 @@ namespace LastChaos_ToolBox_2024
 			}
 			catch (Exception ex)
 			{
-				PrintLog($"MySql Query (Charset: {strCharset})\n{strQuery}\nFail > {ex.Message}", Color.Red);
+				Logger($"MySql Query (Charset: {strCharset})\n{strQuery}\nFail > {ex.Message}", Color.Red);
 
 				return false;
 			}
@@ -397,15 +402,15 @@ namespace LastChaos_ToolBox_2024
 
 				mysqlConn = new MySqlConnection(strConnect);
 
-				PrintLog("MySQL > Trying to connect to Database (" + strConnect + ")...");
+				Logger("MySQL > Trying to connect to Database (" + strConnect + ")...");
 
 				mysqlConn.Open();
 
-				PrintLog("MySQL > Connected successfully.", Color.Lime);
+				Logger("MySQL > Connected successfully.", Color.Lime);
 			}
 			catch (Exception ex)
 			{
-				PrintLog($"MySQL > {ex.Message}", Color.Red);
+				Logger($"MySQL > {ex.Message}", Color.Red);
 
 				DialogResult pDialogReturn = MessageBox.Show($"{ex.Message}\n\nWould you like to retry the connection?", "LastChaos ToolBox", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
 
@@ -422,17 +427,17 @@ namespace LastChaos_ToolBox_2024
 
 			Stopwatch stopwatch = new Stopwatch();
 			stopwatch.Start();
-			
+
 			string strConcatenate = "";
 			for (int i = 0; i < nIters; i++)
 				strConcatenate += i + "\n";
 
 			stopwatch.Stop();
-			PrintLog($"String Concatenate Test took: {stopwatch.ElapsedMilliseconds} ms.");
-			
+			Logger($"String Concatenate Test took: {stopwatch.ElapsedMilliseconds} ms.");
+
 			stopwatch.Reset();
 			stopwatch.Start();
-			
+
 			StringBuilder strBuilder = new StringBuilder();
 			for (int i = 0; i < nIters; i++)
 				strBuilder.Append(i + "\n");
@@ -440,32 +445,32 @@ namespace LastChaos_ToolBox_2024
 			strBuilder.ToString();
 
 			stopwatch.Stop();
-			PrintLog($"String Builder Test took: {stopwatch.ElapsedMilliseconds} ms.");
+			Logger($"String Builder Test took: {stopwatch.ElapsedMilliseconds} ms.");
 
 			stopwatch.Reset();
 			stopwatch.Start();
-			
-			List<int> listString = new List<int>();	// allowed duplicity
+
+			List<int> listString = new List<int>(); // allowed duplicity
 			for (int i = 0; i < nIters; i++)
 				listString.Add(i);
 
 			string.Join("\n", listString);
 
 			stopwatch.Stop();
-			PrintLog($"List Add and Join Test took: {stopwatch.ElapsedMilliseconds} ms.");
+			Logger($"List Add and Join Test took: {stopwatch.ElapsedMilliseconds} ms.");
 
 			stopwatch.Reset();
 			stopwatch.Start();
 
-			HashSet<int> hashsetString = new HashSet<int>();	// uniqueness
+			HashSet<int> hashsetString = new HashSet<int>();    // uniqueness
 			for (int i = 0; i < nIters; i++)
 				hashsetString.Add(i);
 
 			string.Join("\n", hashsetString);
 
 			stopwatch.Stop();
-			PrintLog($"HashSet Add and Join Test took: {stopwatch.ElapsedMilliseconds} ms.");
-			
+			Logger($"HashSet Add and Join Test took: {stopwatch.ElapsedMilliseconds} ms.");
+
 			/*
 			String Concatenate Test took: 14260 ms
 			String Builder Test took: 10 ms

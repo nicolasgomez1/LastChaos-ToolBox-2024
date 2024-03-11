@@ -18,5 +18,5 @@ namespace LastChaos_ToolBox_2024
 			Application.SetCompatibleTextRenderingDefault(false);
 			Application.Run(new Main());
 		}
-    }
+	}
 }

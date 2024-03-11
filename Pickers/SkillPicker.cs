@@ -77,7 +77,7 @@ namespace LastChaos_ToolBox_2024
 			{
 				foreach (var column in listQueryCompose.ToList())
 				{
-					if (!pMain.pZoneTable.Columns.Contains(column))
+					if (!pMain.pSkillTable.Columns.Contains(column))
 						bRequestNeeded = true;
 					else
 						listQueryCompose.Remove(column);
@@ -231,7 +231,7 @@ namespace LastChaos_ToolBox_2024
 				foreach (var pRowSkillLevel in listSkillLevels)
 				{
 					string strSkillLevel = pRowSkillLevel["a_level"].ToString();
-					
+
 					cbLevelSelector.Items.Add("Level: " + strSkillLevel + " - Power: " + pRowSkillLevel["a_dummypower"].ToString());
 
 					if (strOriginalSkillLevel == strSkillLevel)

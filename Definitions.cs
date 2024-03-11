@@ -229,7 +229,7 @@ namespace Definitions
 			"Arch-Mage",
 			"Pet",
 			"APet",
-            "Unknown"	// NOTE: Some apet items have 2048, are too much items to be a error, but flag only goest up to APET, i'm not sure of that.
+			"Unknown"	// NOTE: Some apet items have 2048, are too much items to be a error, but flag only goest up to APET, i'm not sure of that.
         };
 
 		public static string[] ItemFlag =
