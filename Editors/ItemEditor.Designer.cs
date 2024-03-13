@@ -31,8 +31,8 @@ namespace LastChaos_ToolBox_2024.Editors
         /// </summary>
         private void InitializeComponent()
         {
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.btnReload = new System.Windows.Forms.Button();
 			this.btnAddNew = new System.Windows.Forms.Button();
 			this.MainList = new System.Windows.Forms.ListBox();
@@ -48,6 +48,16 @@ namespace LastChaos_ToolBox_2024.Editors
 			this.gridFortune = new System.Windows.Forms.DataGridView();
 			this.btnAddFortune = new System.Windows.Forms.Button();
 			this.groupBox3 = new System.Windows.Forms.GroupBox();
+			this.tbRareIndex9 = new System.Windows.Forms.TextBox();
+			this.tbRareIndex8 = new System.Windows.Forms.TextBox();
+			this.tbRareIndex7 = new System.Windows.Forms.TextBox();
+			this.tbRareIndex6 = new System.Windows.Forms.TextBox();
+			this.tbRareIndex5 = new System.Windows.Forms.TextBox();
+			this.tbRareIndex4 = new System.Windows.Forms.TextBox();
+			this.tbRareIndex3 = new System.Windows.Forms.TextBox();
+			this.tbRareIndex2 = new System.Windows.Forms.TextBox();
+			this.tbRareIndex1 = new System.Windows.Forms.TextBox();
+			this.tbRareIndex0 = new System.Windows.Forms.TextBox();
 			this.lRareProb9Percentage = new System.Windows.Forms.Label();
 			this.lRareProbType9 = new System.Windows.Forms.Label();
 			this.label81 = new System.Windows.Forms.Label();
@@ -231,16 +241,18 @@ namespace LastChaos_ToolBox_2024.Editors
 			this.tbSearch = new System.Windows.Forms.TextBox();
 			this.cbRenderDialog = new System.Windows.Forms.CheckBox();
 			this.cbAutoLoadFortuneData = new System.Windows.Forms.CheckBox();
-			this.tbRareIndex0 = new System.Windows.Forms.TextBox();
-			this.tbRareIndex1 = new System.Windows.Forms.TextBox();
-			this.tbRareIndex2 = new System.Windows.Forms.TextBox();
-			this.tbRareIndex3 = new System.Windows.Forms.TextBox();
-			this.tbRareIndex4 = new System.Windows.Forms.TextBox();
-			this.tbRareIndex5 = new System.Windows.Forms.TextBox();
-			this.tbRareIndex6 = new System.Windows.Forms.TextBox();
-			this.tbRareIndex7 = new System.Windows.Forms.TextBox();
-			this.tbRareIndex8 = new System.Windows.Forms.TextBox();
-			this.tbRareIndex9 = new System.Windows.Forms.TextBox();
+			this.gbQuestData = new System.Windows.Forms.GroupBox();
+			this.cbSet0 = new System.Windows.Forms.ComboBox();
+			this.lSet4 = new System.Windows.Forms.Label();
+			this.textBox1 = new System.Windows.Forms.TextBox();
+			this.lSet3 = new System.Windows.Forms.Label();
+			this.textBox2 = new System.Windows.Forms.TextBox();
+			this.lSet2 = new System.Windows.Forms.Label();
+			this.textBox3 = new System.Windows.Forms.TextBox();
+			this.lSet1 = new System.Windows.Forms.Label();
+			this.textBox4 = new System.Windows.Forms.TextBox();
+			this.lSet0 = new System.Windows.Forms.Label();
+			this.btnRareIndex0 = new System.Windows.Forms.Button();
 			this.groupBox1.SuspendLayout();
 			this.GeneralPanel.SuspendLayout();
 			this.gbFortune.SuspendLayout();
@@ -254,6 +266,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			this.groupBox6.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pbIcon)).BeginInit();
 			this.groupBox2.SuspendLayout();
+			this.gbQuestData.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// btnReload
@@ -344,6 +357,8 @@ namespace LastChaos_ToolBox_2024.Editors
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.GeneralPanel.AutoScroll = true;
+			this.GeneralPanel.Controls.Add(this.btnRareIndex0);
+			this.GeneralPanel.Controls.Add(this.gbQuestData);
 			this.GeneralPanel.Controls.Add(this.cbGrade);
 			this.GeneralPanel.Controls.Add(this.gbFortune);
 			this.GeneralPanel.Controls.Add(this.groupBox3);
@@ -488,23 +503,23 @@ namespace LastChaos_ToolBox_2024.Editors
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.gridFortune.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
 			this.gridFortune.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
-			dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText;
-			dataGridViewCellStyle7.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
-			dataGridViewCellStyle7.SelectionForeColor = System.Drawing.Color.Red;
-			dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-			this.gridFortune.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
+			dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
+			dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+			dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
+			dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Red;
+			dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.gridFortune.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
 			this.gridFortune.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-			dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
-			dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText;
-			dataGridViewCellStyle8.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
-			dataGridViewCellStyle8.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-			dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-			this.gridFortune.DefaultCellStyle = dataGridViewCellStyle8;
+			dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+			dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText;
+			dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
+			dataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+			this.gridFortune.DefaultCellStyle = dataGridViewCellStyle4;
 			this.gridFortune.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
 			this.gridFortune.EnableHeadersVisualStyles = false;
 			this.gridFortune.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
@@ -588,12 +603,132 @@ namespace LastChaos_ToolBox_2024.Editors
 			this.groupBox3.Controls.Add(this.label65);
 			this.groupBox3.Controls.Add(this.tbRareProb3);
 			this.groupBox3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-			this.groupBox3.Location = new System.Drawing.Point(348, 192);
+			this.groupBox3.Location = new System.Drawing.Point(398, 192);
 			this.groupBox3.Name = "groupBox3";
 			this.groupBox3.Size = new System.Drawing.Size(308, 315);
 			this.groupBox3.TabIndex = 1039;
 			this.groupBox3.TabStop = false;
 			this.groupBox3.Text = "Origin / Rare / Costume Suit Options Data";
+			// 
+			// tbRareIndex9
+			// 
+			this.tbRareIndex9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+			this.tbRareIndex9.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.tbRareIndex9.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.tbRareIndex9.Location = new System.Drawing.Point(59, 283);
+			this.tbRareIndex9.Name = "tbRareIndex9";
+			this.tbRareIndex9.Size = new System.Drawing.Size(120, 20);
+			this.tbRareIndex9.TabIndex = 1145;
+			this.tbRareIndex9.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.tbRareIndex9.TextChanged += new System.EventHandler(this.tbRareIndex9_TextChanged);
+			// 
+			// tbRareIndex8
+			// 
+			this.tbRareIndex8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+			this.tbRareIndex8.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.tbRareIndex8.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.tbRareIndex8.Location = new System.Drawing.Point(59, 254);
+			this.tbRareIndex8.Name = "tbRareIndex8";
+			this.tbRareIndex8.Size = new System.Drawing.Size(120, 20);
+			this.tbRareIndex8.TabIndex = 1144;
+			this.tbRareIndex8.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.tbRareIndex8.TextChanged += new System.EventHandler(this.tbRareIndex8_TextChanged);
+			// 
+			// tbRareIndex7
+			// 
+			this.tbRareIndex7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+			this.tbRareIndex7.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.tbRareIndex7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.tbRareIndex7.Location = new System.Drawing.Point(59, 225);
+			this.tbRareIndex7.Name = "tbRareIndex7";
+			this.tbRareIndex7.Size = new System.Drawing.Size(120, 20);
+			this.tbRareIndex7.TabIndex = 1143;
+			this.tbRareIndex7.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.tbRareIndex7.TextChanged += new System.EventHandler(this.tbRareIndex7_TextChanged);
+			// 
+			// tbRareIndex6
+			// 
+			this.tbRareIndex6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+			this.tbRareIndex6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.tbRareIndex6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.tbRareIndex6.Location = new System.Drawing.Point(59, 196);
+			this.tbRareIndex6.Name = "tbRareIndex6";
+			this.tbRareIndex6.Size = new System.Drawing.Size(120, 20);
+			this.tbRareIndex6.TabIndex = 1142;
+			this.tbRareIndex6.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.tbRareIndex6.TextChanged += new System.EventHandler(this.tbRareIndex6_TextChanged);
+			// 
+			// tbRareIndex5
+			// 
+			this.tbRareIndex5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+			this.tbRareIndex5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.tbRareIndex5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.tbRareIndex5.Location = new System.Drawing.Point(59, 167);
+			this.tbRareIndex5.Name = "tbRareIndex5";
+			this.tbRareIndex5.Size = new System.Drawing.Size(120, 20);
+			this.tbRareIndex5.TabIndex = 1141;
+			this.tbRareIndex5.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.tbRareIndex5.TextChanged += new System.EventHandler(this.tbRareIndex5_TextChanged);
+			// 
+			// tbRareIndex4
+			// 
+			this.tbRareIndex4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+			this.tbRareIndex4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.tbRareIndex4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.tbRareIndex4.Location = new System.Drawing.Point(59, 138);
+			this.tbRareIndex4.Name = "tbRareIndex4";
+			this.tbRareIndex4.Size = new System.Drawing.Size(120, 20);
+			this.tbRareIndex4.TabIndex = 1140;
+			this.tbRareIndex4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.tbRareIndex4.TextChanged += new System.EventHandler(this.tbRareIndex4_TextChanged);
+			// 
+			// tbRareIndex3
+			// 
+			this.tbRareIndex3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+			this.tbRareIndex3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.tbRareIndex3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.tbRareIndex3.Location = new System.Drawing.Point(59, 109);
+			this.tbRareIndex3.Name = "tbRareIndex3";
+			this.tbRareIndex3.Size = new System.Drawing.Size(120, 20);
+			this.tbRareIndex3.TabIndex = 1139;
+			this.tbRareIndex3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.tbRareIndex3.TextChanged += new System.EventHandler(this.tbRareIndex3_TextChanged);
+			// 
+			// tbRareIndex2
+			// 
+			this.tbRareIndex2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+			this.tbRareIndex2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.tbRareIndex2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.tbRareIndex2.Location = new System.Drawing.Point(59, 80);
+			this.tbRareIndex2.Name = "tbRareIndex2";
+			this.tbRareIndex2.Size = new System.Drawing.Size(120, 20);
+			this.tbRareIndex2.TabIndex = 1138;
+			this.tbRareIndex2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.tbRareIndex2.TextChanged += new System.EventHandler(this.tbRareIndex2_TextChanged);
+			// 
+			// tbRareIndex1
+			// 
+			this.tbRareIndex1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+			this.tbRareIndex1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.tbRareIndex1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.tbRareIndex1.Location = new System.Drawing.Point(59, 51);
+			this.tbRareIndex1.Name = "tbRareIndex1";
+			this.tbRareIndex1.Size = new System.Drawing.Size(120, 20);
+			this.tbRareIndex1.TabIndex = 1137;
+			this.tbRareIndex1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.tbRareIndex1.TextChanged += new System.EventHandler(this.tbRareIndex1_TextChanged);
+			// 
+			// tbRareIndex0
+			// 
+			this.tbRareIndex0.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+			this.tbRareIndex0.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.tbRareIndex0.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.tbRareIndex0.Location = new System.Drawing.Point(59, 22);
+			this.tbRareIndex0.Name = "tbRareIndex0";
+			this.tbRareIndex0.Size = new System.Drawing.Size(120, 20);
+			this.tbRareIndex0.TabIndex = 1136;
+			this.tbRareIndex0.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.tbRareIndex0.TextChanged += new System.EventHandler(this.tbRareIndex0_TextChanged);
 			// 
 			// lRareProb9Percentage
 			// 
@@ -2828,125 +2963,149 @@ namespace LastChaos_ToolBox_2024.Editors
 			this.cbAutoLoadFortuneData.UseVisualStyleBackColor = true;
 			this.cbAutoLoadFortuneData.CheckedChanged += new System.EventHandler(this.cbAutoLoadFortuneData_CheckedChanged);
 			// 
-			// tbRareIndex0
+			// gbQuestData
 			// 
-			this.tbRareIndex0.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
-			this.tbRareIndex0.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.tbRareIndex0.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-			this.tbRareIndex0.Location = new System.Drawing.Point(59, 22);
-			this.tbRareIndex0.Name = "tbRareIndex0";
-			this.tbRareIndex0.Size = new System.Drawing.Size(120, 20);
-			this.tbRareIndex0.TabIndex = 1136;
-			this.tbRareIndex0.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			this.tbRareIndex0.TextChanged += new System.EventHandler(this.tbRareIndex0_TextChanged);
+			this.gbQuestData.Controls.Add(this.cbSet0);
+			this.gbQuestData.Controls.Add(this.lSet4);
+			this.gbQuestData.Controls.Add(this.textBox1);
+			this.gbQuestData.Controls.Add(this.lSet3);
+			this.gbQuestData.Controls.Add(this.textBox2);
+			this.gbQuestData.Controls.Add(this.lSet2);
+			this.gbQuestData.Controls.Add(this.textBox3);
+			this.gbQuestData.Controls.Add(this.lSet1);
+			this.gbQuestData.Controls.Add(this.textBox4);
+			this.gbQuestData.Controls.Add(this.lSet0);
+			this.gbQuestData.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.gbQuestData.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.gbQuestData.Location = new System.Drawing.Point(714, 418);
+			this.gbQuestData.Name = "gbQuestData";
+			this.gbQuestData.Size = new System.Drawing.Size(256, 103);
+			this.gbQuestData.TabIndex = 1044;
+			this.gbQuestData.TabStop = false;
+			this.gbQuestData.Text = "Quest Data";
+			this.gbQuestData.Visible = false;
 			// 
-			// tbRareIndex1
+			// cbSet0
 			// 
-			this.tbRareIndex1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
-			this.tbRareIndex1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.tbRareIndex1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-			this.tbRareIndex1.Location = new System.Drawing.Point(59, 51);
-			this.tbRareIndex1.Name = "tbRareIndex1";
-			this.tbRareIndex1.Size = new System.Drawing.Size(120, 20);
-			this.tbRareIndex1.TabIndex = 1137;
-			this.tbRareIndex1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			this.tbRareIndex1.TextChanged += new System.EventHandler(this.tbRareIndex1_TextChanged);
+			this.cbSet0.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+			this.cbSet0.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.cbSet0.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.cbSet0.FormattingEnabled = true;
+			this.cbSet0.Location = new System.Drawing.Point(48, 19);
+			this.cbSet0.Name = "cbSet0";
+			this.cbSet0.Size = new System.Drawing.Size(195, 21);
+			this.cbSet0.TabIndex = 1042;
 			// 
-			// tbRareIndex2
+			// lSet4
 			// 
-			this.tbRareIndex2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
-			this.tbRareIndex2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.tbRareIndex2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-			this.tbRareIndex2.Location = new System.Drawing.Point(59, 80);
-			this.tbRareIndex2.Name = "tbRareIndex2";
-			this.tbRareIndex2.Size = new System.Drawing.Size(120, 20);
-			this.tbRareIndex2.TabIndex = 1138;
-			this.tbRareIndex2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			this.tbRareIndex2.TextChanged += new System.EventHandler(this.tbRareIndex2_TextChanged);
+			this.lSet4.AutoSize = true;
+			this.lSet4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.lSet4.Location = new System.Drawing.Point(10, 76);
+			this.lSet4.Name = "lSet4";
+			this.lSet4.Size = new System.Drawing.Size(39, 13);
+			this.lSet4.TabIndex = 1030;
+			this.lSet4.Text = "Range";
+			this.lSet4.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			// 
-			// tbRareIndex3
+			// textBox1
 			// 
-			this.tbRareIndex3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
-			this.tbRareIndex3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.tbRareIndex3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-			this.tbRareIndex3.Location = new System.Drawing.Point(59, 109);
-			this.tbRareIndex3.Name = "tbRareIndex3";
-			this.tbRareIndex3.Size = new System.Drawing.Size(120, 20);
-			this.tbRareIndex3.TabIndex = 1139;
-			this.tbRareIndex3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			this.tbRareIndex3.TextChanged += new System.EventHandler(this.tbRareIndex3_TextChanged);
+			this.textBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+			this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.textBox1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.textBox1.Location = new System.Drawing.Point(55, 72);
+			this.textBox1.Name = "textBox1";
+			this.textBox1.Size = new System.Drawing.Size(187, 20);
+			this.textBox1.TabIndex = 1031;
 			// 
-			// tbRareIndex4
+			// lSet3
 			// 
-			this.tbRareIndex4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
-			this.tbRareIndex4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.tbRareIndex4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-			this.tbRareIndex4.Location = new System.Drawing.Point(59, 138);
-			this.tbRareIndex4.Name = "tbRareIndex4";
-			this.tbRareIndex4.Size = new System.Drawing.Size(120, 20);
-			this.tbRareIndex4.TabIndex = 1140;
-			this.tbRareIndex4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			this.tbRareIndex4.TextChanged += new System.EventHandler(this.tbRareIndex4_TextChanged);
+			this.lSet3.AutoSize = true;
+			this.lSet3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.lSet3.Location = new System.Drawing.Point(184, 50);
+			this.lSet3.Name = "lSet3";
+			this.lSet3.Size = new System.Drawing.Size(14, 13);
+			this.lSet3.TabIndex = 1028;
+			this.lSet3.Text = "Y";
+			this.lSet3.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			// 
-			// tbRareIndex5
+			// textBox2
 			// 
-			this.tbRareIndex5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
-			this.tbRareIndex5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.tbRareIndex5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-			this.tbRareIndex5.Location = new System.Drawing.Point(59, 167);
-			this.tbRareIndex5.Name = "tbRareIndex5";
-			this.tbRareIndex5.Size = new System.Drawing.Size(120, 20);
-			this.tbRareIndex5.TabIndex = 1141;
-			this.tbRareIndex5.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			this.tbRareIndex5.TextChanged += new System.EventHandler(this.tbRareIndex5_TextChanged);
+			this.textBox2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+			this.textBox2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.textBox2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.textBox2.Location = new System.Drawing.Point(203, 46);
+			this.textBox2.Name = "textBox2";
+			this.textBox2.Size = new System.Drawing.Size(40, 20);
+			this.textBox2.TabIndex = 1029;
+			this.textBox2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			// 
-			// tbRareIndex6
+			// lSet2
 			// 
-			this.tbRareIndex6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
-			this.tbRareIndex6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.tbRareIndex6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-			this.tbRareIndex6.Location = new System.Drawing.Point(59, 196);
-			this.tbRareIndex6.Name = "tbRareIndex6";
-			this.tbRareIndex6.Size = new System.Drawing.Size(120, 20);
-			this.tbRareIndex6.TabIndex = 1142;
-			this.tbRareIndex6.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			this.tbRareIndex6.TextChanged += new System.EventHandler(this.tbRareIndex6_TextChanged);
+			this.lSet2.AutoSize = true;
+			this.lSet2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.lSet2.Location = new System.Drawing.Point(97, 50);
+			this.lSet2.Name = "lSet2";
+			this.lSet2.Size = new System.Drawing.Size(14, 13);
+			this.lSet2.TabIndex = 1026;
+			this.lSet2.Text = "Z";
+			this.lSet2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			// 
-			// tbRareIndex7
+			// textBox3
 			// 
-			this.tbRareIndex7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
-			this.tbRareIndex7.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.tbRareIndex7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-			this.tbRareIndex7.Location = new System.Drawing.Point(59, 225);
-			this.tbRareIndex7.Name = "tbRareIndex7";
-			this.tbRareIndex7.Size = new System.Drawing.Size(120, 20);
-			this.tbRareIndex7.TabIndex = 1143;
-			this.tbRareIndex7.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			this.tbRareIndex7.TextChanged += new System.EventHandler(this.tbRareIndex7_TextChanged);
+			this.textBox3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+			this.textBox3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.textBox3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.textBox3.Location = new System.Drawing.Point(116, 46);
+			this.textBox3.Name = "textBox3";
+			this.textBox3.Size = new System.Drawing.Size(40, 20);
+			this.textBox3.TabIndex = 1027;
+			this.textBox3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			// 
-			// tbRareIndex8
+			// lSet1
 			// 
-			this.tbRareIndex8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
-			this.tbRareIndex8.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.tbRareIndex8.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-			this.tbRareIndex8.Location = new System.Drawing.Point(59, 254);
-			this.tbRareIndex8.Name = "tbRareIndex8";
-			this.tbRareIndex8.Size = new System.Drawing.Size(120, 20);
-			this.tbRareIndex8.TabIndex = 1144;
-			this.tbRareIndex8.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			this.tbRareIndex8.TextChanged += new System.EventHandler(this.tbRareIndex8_TextChanged);
+			this.lSet1.AutoSize = true;
+			this.lSet1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.lSet1.Location = new System.Drawing.Point(10, 50);
+			this.lSet1.Name = "lSet1";
+			this.lSet1.Size = new System.Drawing.Size(14, 13);
+			this.lSet1.TabIndex = 1024;
+			this.lSet1.Text = "X";
+			this.lSet1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			// 
-			// tbRareIndex9
+			// textBox4
 			// 
-			this.tbRareIndex9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
-			this.tbRareIndex9.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.tbRareIndex9.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-			this.tbRareIndex9.Location = new System.Drawing.Point(59, 283);
-			this.tbRareIndex9.Name = "tbRareIndex9";
-			this.tbRareIndex9.Size = new System.Drawing.Size(120, 20);
-			this.tbRareIndex9.TabIndex = 1145;
-			this.tbRareIndex9.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			this.tbRareIndex9.TextChanged += new System.EventHandler(this.tbRareIndex9_TextChanged);
+			this.textBox4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+			this.textBox4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.textBox4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.textBox4.Location = new System.Drawing.Point(29, 46);
+			this.textBox4.Name = "textBox4";
+			this.textBox4.Size = new System.Drawing.Size(40, 20);
+			this.textBox4.TabIndex = 1025;
+			this.textBox4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			// 
+			// lSet0
+			// 
+			this.lSet0.AutoSize = true;
+			this.lSet0.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.lSet0.Location = new System.Drawing.Point(10, 23);
+			this.lSet0.Name = "lSet0";
+			this.lSet0.Size = new System.Drawing.Size(32, 13);
+			this.lSet0.TabIndex = 1022;
+			this.lSet0.Text = "Zone";
+			this.lSet0.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			// 
+			// btnRareIndex0
+			// 
+			this.btnRareIndex0.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(85)))), ((int)(((byte)(76)))));
+			this.btnRareIndex0.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+			this.btnRareIndex0.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
+			this.btnRareIndex0.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.btnRareIndex0.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.btnRareIndex0.Location = new System.Drawing.Point(457, 513);
+			this.btnRareIndex0.Name = "btnRareIndex0";
+			this.btnRareIndex0.Size = new System.Drawing.Size(120, 23);
+			this.btnRareIndex0.TabIndex = 1103;
+			this.btnRareIndex0.UseVisualStyleBackColor = true;
 			// 
 			// ItemEditor
 			// 
@@ -2992,6 +3151,8 @@ namespace LastChaos_ToolBox_2024.Editors
 			((System.ComponentModel.ISupportInitialize)(this.pbIcon)).EndInit();
 			this.groupBox2.ResumeLayout(false);
 			this.groupBox2.PerformLayout();
+			this.gbQuestData.ResumeLayout(false);
+			this.gbQuestData.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -3207,5 +3368,17 @@ namespace LastChaos_ToolBox_2024.Editors
 		private TextBox tbRareIndex3;
 		private TextBox tbRareIndex2;
 		private TextBox tbRareIndex1;
+		private GroupBox gbQuestData;
+		private ComboBox cbSet0;
+		private Label lSet4;
+		private TextBox textBox1;
+		private Label lSet3;
+		private TextBox textBox2;
+		private Label lSet2;
+		private TextBox textBox3;
+		private Label lSet1;
+		private TextBox textBox4;
+		private Label lSet0;
+		private Button btnRareIndex0;
 	}
 }
