@@ -35,6 +35,13 @@ namespace LastChaos_ToolBox_2024
 		private bool bUserAction = false;
 		public int ReturnValues = -1;
 
+		public class ListBoxItem
+		{
+			public int ID { get; set; }
+			public string Text { get; set; }
+			public override string ToString() { return Text; }
+		}
+
 		public RareOptionPicker(Main mainForm, Form ParentForm, int iActualRareOptionID)
 		{
 			InitializeComponent();
@@ -42,13 +49,6 @@ namespace LastChaos_ToolBox_2024
 			pMain = mainForm;
 			pParentForm = ParentForm;
 			ReturnValues = iActualRareOptionID;
-		}
-
-		public class ListBoxItem
-		{
-			public int ID { get; set; }
-			public string Text { get; set; }
-			public override string ToString() { return Text; }
 		}
 
 		private async void RareOptionPicker_LoadAsync(object sender, EventArgs e)

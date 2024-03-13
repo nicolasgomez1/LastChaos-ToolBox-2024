@@ -1,4 +1,4 @@
-﻿//#define NEED_SECOND_SKILL_TO_CRAFT	// NOTE: These values are required by the server, but are not actually used
+﻿//#define ENABLE_SECOND_SKILL_TO_CRAFT	// NOTE: These values are required by the server, but are not actually used
 #define ALLOWED_ZONE_SYSTEM // NOTE: Custom system made by NicolasG, disable that to use normal a_zone_flag
 
 using System;
@@ -54,7 +54,7 @@ namespace LastChaos_ToolBox_2024.Editors
 
 			InitializeComponent();
 
-#if NEED_SECOND_SKILL_TO_CRAFT
+#if ENABLE_SECOND_SKILL_TO_CRAFT
 			label44.Visible = true;
 
 			btnSkill2RequiredID.Visible = true;
@@ -242,7 +242,7 @@ namespace LastChaos_ToolBox_2024.Editors
 				"a_damage_effect_name", "a_castle_war", "a_job_flag", "a_zone_flag", "a_flag", "a_origin_variation1", "a_origin_variation2", "a_origin_variation3",
 				"a_origin_variation4", "a_origin_variation5", "a_origin_variation6", "a_set_0", "a_set_1", "a_set_2", "a_set_3", "a_set_4", "a_num_0", "a_num_1",
 				"a_num_2", "a_num_3", "a_num_4", "a_need_sskill", "a_need_sskill_level",
-#if NEED_SECOND_SKILL_TO_CRAFT
+#if ENABLE_SECOND_SKILL_TO_CRAFT
 				"a_need_sskill2", "a_need_sskill_level2",
 #endif
 				"a_need_item0", "a_need_item_count0", "a_need_item1", "a_need_item_count1", "a_need_item2", "a_need_item_count2", "a_need_item3", "a_need_item_count3",
@@ -670,15 +670,6 @@ namespace LastChaos_ToolBox_2024.Editors
 
 				for (int i = 0; i < nTotalZones; i++)
 					strArrayZones[i] = pMain.pZoneTable.Rows[i]["a_name"].ToString();
-				/****************************************/
-				cbSet0.Items.Clear();
-
-				cbSet0.BeginUpdate();
-
-				for (int i = 0; i < nTotalZones; i++)
-					cbSet0.Items.Add(pMain.pZoneTable.Rows[i]["a_name"].ToString());
-
-				cbSet0.EndUpdate();
 			}
 			/****************************************/
 			pToolTip = new ToolTip();
@@ -901,7 +892,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			pToolTip.SetToolTip(btnAllowedZoneFlag, strTooltip.ToString());
 			pToolTips[btnAllowedZoneFlag] = pToolTip;
 #else
-			tbAllowedZoneFlag.Text = strFlag;
+			tbAllowedZoneFlag.Text = strZoneFlag;
 #endif
 			/****************************************/
 			string strItemFlag = pTempItemRow["a_flag"].ToString();
@@ -919,8 +910,6 @@ namespace LastChaos_ToolBox_2024.Editors
 
 			if (nItemFlag != 0 && strTooltip.Length <= 0)
 				pMain.Logger("Item Editor > Item: " + nItemID + " Error: a_flag out of range.", Color.Red);
-
-			// TODO: Add check for conflicts in flag config.
 
 			pToolTip = new ToolTip();
 			pToolTip.SetToolTip(btnItemFlag, strTooltip.ToString());
@@ -988,51 +977,8 @@ namespace LastChaos_ToolBox_2024.Editors
 			for (int i = 1; i <= 6; i++)
 				((TextBox)this.Controls.Find("tbVariation" + i, true)[0]).Text = pTempItemRow["a_origin_variation" + i].ToString();
 			/****************************************/
-			DataRow pItemTableRow;
-
-			if ((nItemFlag & 1L << 22 /*ITEM_FLAG_QUEST*/) != 0)
-			{
-				gbSetData.Visible = false;
-				gbQuestData.Visible = true;
-
-				if (strArrayZones != null)
-				{
-					int nZoneID = Convert.ToInt32(pTempItemRow["a_set_0"]);
-
-					if (nZoneID <= strArrayZones.Length)
-						cbSet0.SelectedIndex = nZoneID;
-					else
-						pMain.Logger("Item Editor > Item: " + nItemID + " Error: a_set_0 out of range.", Color.Red);
-				}
-
-				for (int i = 1; i <= 4; i++)
-					((TextBox)this.Controls.Find("tbSet" + i, true)[0]).Text = pTempItemRow["a_set_" + i].ToString();
-			}
-			else
-			{
-				gbQuestData.Visible = false;
-				gbSetData.Visible = true;
-
-				for (int i = 0; i <= 4; i++)
-				{
-					int nSetItemID = Convert.ToInt32(pTempItemRow["a_set_" + i]);
-					string strItemID = nSetItemID.ToString();
-
-					if (nSetItemID != 0)
-					{
-						pItemTableRow = pMain.pItemTable.Select("a_index = " + nSetItemID).FirstOrDefault();
-
-						if (pItemTableRow != null)
-							strItemID += " - " + pItemTableRow["a_name_" + pMain.pSettings.WorkLocale];
-						else
-							pMain.Logger("Item Editor > Item: " + nSetItemID + " Error: a_set_" + i + " not exist.", Color.Red);
-
-						pItemTableRow = null;
-					}
-
-					((Button)this.Controls.Find("btnSet" + i, true)[0]).Text = strItemID;
-				}
-			}
+			for (int i = 0; i <= 4; i++)
+				((TextBox)this.Controls.Find("tbSet" + i, true)[0]).Text = pTempItemRow["a_set_" + i].ToString();
 			/****************************************/
 			for (int i = 0; i <= 4; i++)
 				((TextBox)this.Controls.Find("tbOption" + i, true)[0]).Text = pTempItemRow["a_num_" + i].ToString();
@@ -1056,7 +1002,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			btnSkill1RequiredID.Text = strSkillName;
 			tbSkill1RequiredLevel.Text = pTempItemRow["a_need_sskill_level"].ToString();
 
-#if NEED_SECOND_SKILL_TO_CRAFT
+#if ENABLE_SECOND_SKILL_TO_CRAFT
 			iSkillNeededID = Convert.ToInt32(pTempRow["a_need_sskill2"]);
 			strSkillName = iSkillNeededID.ToString();
 			pSkillData = pMain.pSkillTable.Select("a_index = " + iSkillNeededID).FirstOrDefault();
@@ -1077,6 +1023,8 @@ namespace LastChaos_ToolBox_2024.Editors
 			tbSkill2RequiredLevel.Text = pTempRow["a_need_sskill_level2"].ToString();
 #endif
 			/****************************************/
+			DataRow pItemTableRow;
+
 			for (int i = 0; i <= 9; i++)
 			{
 				int nRequiredItemID = Convert.ToInt32(pTempItemRow["a_need_item" + i]);
@@ -1090,8 +1038,6 @@ namespace LastChaos_ToolBox_2024.Editors
 						strRequiredItemID += " - " + pItemTableRow["a_name_" + pMain.pSettings.WorkLocale];
 					else
 						pMain.Logger("Item Editor > Item: " + nItemID + " Error: a_need_item" + i + " not exist.", Color.Red);
-
-					pItemTableRow = null;
 				}
 
 				((Button)this.Controls.Find("btnItem" + i + "Required", true)[0]).Text = strRequiredItemID;
@@ -1099,33 +1045,19 @@ namespace LastChaos_ToolBox_2024.Editors
 				((TextBox)this.Controls.Find("tbItem" + i + "RequiredAmount", true)[0]).Text = pTempItemRow["a_need_item_count" + i].ToString();
 			}
 
-			// Rare
-			DataRow pRareOptionTableRow;
+			pItemTableRow = null;
 
+			// Rare
 			for (int i = 0; i <= 9; i++)
 			{
-				int nRareOptionID = Convert.ToInt32(pTempItemRow["a_rare_index_" + i]);
-				string strRateOptionID = nRareOptionID.ToString();
 				int nRateOptionProb = Convert.ToInt32(pTempItemRow["a_rare_prob_" + i]);
 
-				if (nRareOptionID != -1)
-				{
-					pRareOptionTableRow = pMain.pRareOptionTable.Select("a_index = " + nRareOptionID).FirstOrDefault();
-
-					if (pRareOptionTableRow != null)
-						strRateOptionID += " - " + pRareOptionTableRow["a_prefix_" + pMain.pSettings.WorkLocale];
-					else
-						pMain.Logger("Item Editor > Item: " + nItemID + " Error: a_rare_index_" + i + " not exist.", Color.Red);
-				}
-
-				((Button)this.Controls.Find("btnRareIndex" + i, true)[0]).Text = strRateOptionID;
+				((TextBox)this.Controls.Find("tbRareIndex" + i, true)[0]).Text = pTempItemRow["a_rare_index_" + i].ToString();
 
 				((TextBox)this.Controls.Find("tbRareProb" + i, true)[0]).Text = nRateOptionProb.ToString();
 
 				((Label)this.Controls.Find("lRareProb" + i + "Percentage", true)[0]).Text = ((nRateOptionProb * 100.0f) / 10000.0f) + "%";
 			}
-
-			pRareOptionTableRow = null;
 
 			// Fortune
 			if (pMain.pSettings.ItemEditorAutoShowFortune == "true")
@@ -1362,7 +1294,7 @@ namespace LastChaos_ToolBox_2024.Editors
 					"a_num_3",
 					"a_num_4",
 					"a_need_sskill",
-#if NEED_SECOND_SKILL_TO_CRAFT
+#if ENABLE_SECOND_SKILL_TO_CRAFT
 					"a_need_sskill2",
 #endif
 					"a_need_item0",
@@ -1407,7 +1339,7 @@ namespace LastChaos_ToolBox_2024.Editors
 					"a_texture_col",
 					"a_wearing",
 					"a_need_sskill_level",
-#if NEED_SECOND_SKILL_TO_CRAFT
+#if ENABLE_SECOND_SKILL_TO_CRAFT
 					"a_need_sskill_level2"
 #endif
 				};
@@ -1533,7 +1465,7 @@ namespace LastChaos_ToolBox_2024.Editors
 					0,	// a_num_3
 					0,	// a_num_4
 					-1,	// a_need_sskill
-#if NEED_SECOND_SKILL_TO_CRAFT
+#if ENABLE_SECOND_SKILL_TO_CRAFT
 					-1,	// a_need_sskill2
 #endif
 					-1,	// a_need_item0
@@ -1580,7 +1512,7 @@ namespace LastChaos_ToolBox_2024.Editors
 					1,	// a_texture_col
 					-1,	// a_wearing
 					0,  // a_need_sskill_level
-#if NEED_SECOND_SKILL_TO_CRAFT
+#if ENABLE_SECOND_SKILL_TO_CRAFT
 					0,	// a_need_sskill_level2
 #endif
 					"Item\\Common\\ITEM_treasure02.smc",	// a_file_smc
@@ -2042,7 +1974,6 @@ namespace LastChaos_ToolBox_2024.Editors
 				{
 					if ((nFlag & 1L << i) != 0)
 						strTooltip.Append(pMain.pZoneTable.Rows[i]["a_name"] + "\n");
-
 				}
 
 				pToolTips[btnAllowedZoneFlag].SetToolTip(btnAllowedZoneFlag, strTooltip.ToString());
@@ -2087,54 +2018,6 @@ namespace LastChaos_ToolBox_2024.Editors
 				{
 					if ((nFlag & 1L << i) != 0)
 						strTooltip.Append(Defs.ItemFlag[i] + "\n");
-				}
-
-				// TODO: Add check for conflicts in flag config
-
-				if ((lFlag & 1L << 22 /*ITEM_FLAG_QUEST*/) != 0)
-				{
-					gbSetData.Visible = false;
-					gbQuestData.Visible = true;
-
-					if (strArrayZones != null)
-					{
-						int nZoneID = Convert.ToInt32(pTempItemRow["a_set_0"]);
-
-						if (nZoneID <= strArrayZones.Length)
-							cbSet0.SelectedIndex = nZoneID;
-						else
-							pMain.Logger("Item Editor > Item: " + pTempItemRow["a_index"].ToString() + " Error: a_set_0 out of range.", Color.Red);
-					}
-
-					for (int i = 1; i <= 4; i++)
-						((TextBox)this.Controls.Find("tbSet" + i, true)[0]).Text = pTempItemRow["a_set_" + i].ToString();
-				}
-				else
-				{
-					gbQuestData.Visible = false;
-					gbSetData.Visible = true;
-
-					DataRow pItemTableRow;
-
-					for (int i = 0; i <= 4; i++)
-					{
-						int nSetItemID = Convert.ToInt32(pTempItemRow["a_set_" + i]);
-						string strItemID = nSetItemID.ToString();
-
-						if (nSetItemID != 0)
-						{
-							pItemTableRow = pMain.pItemTable.Select("a_index = " + nSetItemID).FirstOrDefault();
-
-							if (pItemTableRow != null)
-								strItemID += " - " + pItemTableRow["a_name_" + pMain.pSettings.WorkLocale];
-							else
-								pMain.Logger("Item Editor > Item: " + nSetItemID + " Error: a_set_" + i + " not exist.", Color.Red);
-
-							pItemTableRow = null;
-						}
-
-						((Button)this.Controls.Find("btnSet" + i, true)[0]).Text = strItemID;
-					}
 				}
 
 				pToolTips[btnItemFlag].SetToolTip(btnItemFlag, strTooltip.ToString());
@@ -2293,33 +2176,6 @@ namespace LastChaos_ToolBox_2024.Editors
 		private void tbVariation5_TextChanged(object sender, EventArgs e) { ChangeVariationAction((TextBox)sender, 5); }
 		private void tbVariation6_TextChanged(object sender, EventArgs e) { ChangeVariationAction((TextBox)sender, 6); }
 		/****************************************/
-		private void cbQuestZoneID_SelectedIndexChanged(object sender, EventArgs e)
-		{
-
-			if (bUserAction)
-			{
-				int nType = cbSet0.SelectedIndex;
-
-				if (nType != -1)
-				{
-					pTempItemRow["a_set_0"] = nType.ToString();
-
-					bUnsavedChanges = true;
-				}
-			}
-		}
-
-		private void btnSetAction(int nNumber)
-		{
-			// TODO: Here have to do something depending on flag selected.
-		}
-
-		private void btnSet0_Click(object sender, EventArgs e) { btnSetAction(0); }
-		private void btnSet1_Click(object sender, EventArgs e) { btnSetAction(1); }
-		private void btnSet2_Click(object sender, EventArgs e) { btnSetAction(2); }
-		private void btnSet3_Click(object sender, EventArgs e) { btnSetAction(3); }
-		private void btnSet4_Click(object sender, EventArgs e) { btnSetAction(4); }
-		/****************************************/
 		private void ChangeSetAction(TextBox cTextBox, int nNumber)
 		{
 			if (bUserAction)
@@ -2330,6 +2186,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			}
 		}
 
+		private void tbSet0_TextChanged(object sender, EventArgs e) { ChangeSetAction((TextBox)sender, 0); }
 		private void tbSet1_TextChanged(object sender, EventArgs e) { ChangeSetAction((TextBox)sender, 1); }
 		private void tbSet2_TextChanged(object sender, EventArgs e) { ChangeSetAction((TextBox)sender, 2); }
 		private void tbSet3_TextChanged(object sender, EventArgs e) { ChangeSetAction((TextBox)sender, 3); }
@@ -2393,7 +2250,7 @@ namespace LastChaos_ToolBox_2024.Editors
 
 		private void btnSkill2RequiredID_Click(object sender, EventArgs e)
 		{
-#if NEED_SECOND_SKILL_TO_CRAFT
+#if ENABLE_SECOND_SKILL_TO_CRAFT
 			if (bUserAction)
 			{
 				string strIDColumn = "a_need_sskill";
@@ -2424,7 +2281,7 @@ namespace LastChaos_ToolBox_2024.Editors
 
 		private void tbSkill2RequiredLevel_TextChanged(object sender, EventArgs e)
 		{
-#if NEED_SECOND_SKILL_TO_CRAFT
+#if ENABLE_SECOND_SKILL_TO_CRAFT
 			if (bUserAction)
 			{
 				pTempRow["a_need_sskill_level2"] = tbSkill2RequiredLevel.Text;
@@ -2477,7 +2334,7 @@ namespace LastChaos_ToolBox_2024.Editors
 		private void btnItem7Required_Click(object sender, EventArgs e) { ChangeItemRequiredAction(7); }
 		private void btnItem8Required_Click(object sender, EventArgs e) { ChangeItemRequiredAction(8); }
 		private void btnItem9Required_Click(object sender, EventArgs e) { ChangeItemRequiredAction(9); }
-		/****************************************/
+		
 		private void ChangeItemRequiredAmountAction(TextBox cTextBox, int nNumber)
 		{
 			if (bUserAction)
@@ -2503,48 +2360,23 @@ namespace LastChaos_ToolBox_2024.Editors
 		{
 			if (bUserAction)
 			{
-				string strRareOptionIDColumn = "a_rare_index_" + nNumber;
-
-				ItemPicker pItemSelector = new ItemPicker(pMain, this, Convert.ToInt32(pTempItemRow[strRareOptionIDColumn]));
-
-				RareOptionPicker pRareOptionSelector = new RareOptionPicker(pMain, this, 512);
-
-				if (pRareOptionSelector.ShowDialog() != DialogResult.OK)
-					return;
-
-				int iRareOptionID = pRareOptionSelector.ReturnValues;
-				string strRareOptionName = iRareOptionID.ToString();
-
-				if (iRareOptionID != -1)
-				{
-					DataRow pRareOptionTableRow = pMain.pRareOptionTable.Select("a_index = " + iRareOptionID).FirstOrDefault();
-
-					strRareOptionName += " - " + pRareOptionTableRow["a_prefix_" + pMain.pSettings.WorkLocale];
-
-					pRareOptionTableRow = null;
-				}
-
-				((Button)this.Controls.Find("btnRareIndex" + nNumber, true)[0]).Text = strRareOptionName;
-
-				((TextBox)this.Controls.Find("tbRareProb" + nNumber, true)[0]).Focus();
-
-				pTempItemRow[strRareOptionIDColumn] = iRareOptionID.ToString();
+				pTempItemRow["a_rare_index_" + nNumber] = ((TextBox)this.Controls.Find("tbRareIndex" + nNumber, true)[0]).Text.ToString();
 
 				bUnsavedChanges = true;
 			}
 		}
 
-		private void btnRareIndex0_Click(object sender, EventArgs e) { ChangeRareOptionAction(0); }
-		private void btnRareIndex1_Click(object sender, EventArgs e) { ChangeRareOptionAction(1); }
-		private void btnRareIndex2_Click(object sender, EventArgs e) { ChangeRareOptionAction(2); }
-		private void btnRareIndex3_Click(object sender, EventArgs e) { ChangeRareOptionAction(3); }
-		private void btnRareIndex4_Click(object sender, EventArgs e) { ChangeRareOptionAction(4); }
-		private void btnRareIndex5_Click(object sender, EventArgs e) { ChangeRareOptionAction(5); }
-		private void btnRareIndex6_Click(object sender, EventArgs e) { ChangeRareOptionAction(6); }
-		private void btnRareIndex7_Click(object sender, EventArgs e) { ChangeRareOptionAction(7); }
-		private void btnRareIndex8_Click(object sender, EventArgs e) { ChangeRareOptionAction(8); }
-		private void btnRareIndex9_Click(object sender, EventArgs e) { ChangeRareOptionAction(9); }
-		/****************************************/
+		private void tbRareIndex0_TextChanged(object sender, EventArgs e) { ChangeRareOptionAction(0); }
+		private void tbRareIndex1_TextChanged(object sender, EventArgs e) { ChangeRareOptionAction(1); }
+		private void tbRareIndex2_TextChanged(object sender, EventArgs e) { ChangeRareOptionAction(2); }
+		private void tbRareIndex3_TextChanged(object sender, EventArgs e) { ChangeRareOptionAction(3); }
+		private void tbRareIndex4_TextChanged(object sender, EventArgs e) { ChangeRareOptionAction(4); }
+		private void tbRareIndex5_TextChanged(object sender, EventArgs e) { ChangeRareOptionAction(5); }
+		private void tbRareIndex6_TextChanged(object sender, EventArgs e) { ChangeRareOptionAction(6); }
+		private void tbRareIndex7_TextChanged(object sender, EventArgs e) { ChangeRareOptionAction(7); }
+		private void tbRareIndex8_TextChanged(object sender, EventArgs e) { ChangeRareOptionAction(8); }
+		private void tbRareIndex9_TextChanged(object sender, EventArgs e) { ChangeRareOptionAction(9); }
+		
 		private void ChangeRareProbAction(TextBox cTextBox, int nNumber)
 		{
 			if (bUserAction)
@@ -2595,7 +2427,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			{
 				try
 				{
-					if (pMain.pItemFortuneHeadTable == null)    // NOTE: This condition theoretically should not be met, but just in case
+					if (pMain.pItemFortuneHeadTable == null)	// NOTE: This condition theoretically should not be met, but just in case
 						MakepItemFortuneHeadTableStructure();
 
 					pTempFortuneHeadRow = pMain.pItemFortuneHeadTable.NewRow();
@@ -2657,7 +2489,7 @@ namespace LastChaos_ToolBox_2024.Editors
 		{
 			if (bUserAction)
 			{
-				if (e.Button == MouseButtons.Left && e.ColumnIndex == 0 && e.RowIndex >= 0) // Skill Selector
+				if (e.Button == MouseButtons.Left && e.ColumnIndex == 0 && e.RowIndex >= 0)	// Skill Selector
 				{
 					int nSkillID = Convert.ToInt32(((DataGridViewButtonCell)gridFortune.Rows[e.RowIndex].Cells["skill"]).Tag);
 					string strSkillLevel = gridFortune.Rows[e.RowIndex].Cells["level"].Tag.ToString();
@@ -2696,7 +2528,7 @@ namespace LastChaos_ToolBox_2024.Editors
 
 					bUnsavedChanges = true;
 				}
-				else if (e.Button == MouseButtons.Left && e.ColumnIndex == 3 && e.RowIndex >= 0) // String Selector
+				else if (e.Button == MouseButtons.Left && e.ColumnIndex == 3 && e.RowIndex >= 0)	// String Selector
 				{
 					StringPicker pStringSelector = new StringPicker(pMain, this, 1, false);
 
@@ -2708,7 +2540,7 @@ namespace LastChaos_ToolBox_2024.Editors
 
 					bUnsavedChanges = true;
 				}
-				else if (e.Button == MouseButtons.Right && e.ColumnIndex == -1) // Header Column
+				else if (e.Button == MouseButtons.Right && e.ColumnIndex == -1)	// Header Column
 				{
 					ContextMenuStrip ContextMenu = new ContextMenuStrip();
 

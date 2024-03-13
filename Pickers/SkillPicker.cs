@@ -36,6 +36,12 @@ namespace LastChaos_ToolBox_2024
 		private int nSearchPosition = 0;
 		public object[] ReturnValues = new object[4];
 
+		public class ListBoxItem
+		{
+			public int ID { get; set; }
+			public string Text { get; set; }
+			public override string ToString() { return Text; }
+		}
 		public SkillPicker(Main mainForm, Form ParentForm, object[] iArray, bool bRemoveSkillEnable = true)
 		{
 			InitializeComponent();
@@ -48,13 +54,6 @@ namespace LastChaos_ToolBox_2024
 			ReturnValues[3] = "";
 
 			btnRemoveSkill.Enabled = bRemoveSkillEnable;
-		}
-
-		public class ListBoxItem
-		{
-			public int ID { get; set; }
-			public string Text { get; set; }
-			public override string ToString() { return Text; }
 		}
 
 		private async void SkillPicker_LoadAsync(object sender, EventArgs e)

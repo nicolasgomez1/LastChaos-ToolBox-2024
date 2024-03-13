@@ -34,6 +34,13 @@ namespace LastChaos_ToolBox_2024
 		private int nSearchPosition = 0;
 		public int ReturnValues = -1;
 
+		public class ListBoxItem
+		{
+			public int ID { get; set; }
+			public string Text { get; set; }
+			public override string ToString() { return Text; }
+		}
+
 		public ItemPicker(Main mainForm, Form ParentForm, int iActualItemID)
 		{
 			InitializeComponent();
@@ -41,13 +48,6 @@ namespace LastChaos_ToolBox_2024
 			pMain = mainForm;
 			pParentForm = ParentForm;
 			ReturnValues = iActualItemID;
-		}
-
-		public class ListBoxItem
-		{
-			public int ID { get; set; }
-			public string Text { get; set; }
-			public override string ToString() { return Text; }
 		}
 
 		private async void ItemPicker_LoadAsync(object sender, EventArgs e)

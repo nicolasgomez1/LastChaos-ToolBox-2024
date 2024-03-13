@@ -37,6 +37,13 @@ namespace LastChaos_ToolBox_2024
 		private bool bUserAction = false;
 		public object[] ReturnValues = new object[2];
 
+		public class ListBoxItem
+		{
+			public int ID { get; set; }
+			public string Text { get; set; }
+			public override string ToString() { return Text; }
+		}
+
 		public StringPicker(Main mainForm, Form ParentForm, int nStringID, bool bRemoveStringEnable = true)
 		{
 			InitializeComponent();
@@ -46,13 +53,6 @@ namespace LastChaos_ToolBox_2024
 			ReturnValues[0] = nStringID;
 
 			btnRemoveString.Enabled = bRemoveStringEnable;
-		}
-
-		public class ListBoxItem
-		{
-			public int ID { get; set; }
-			public string Text { get; set; }
-			public override string ToString() { return Text; }
 		}
 
 		private async void StringPicker_LoadAsync(object sender, EventArgs e)

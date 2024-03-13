@@ -1,31 +1,5 @@
 # LastChaos ToolBox <img align="left" src="https://user-images.githubusercontent.com/5092697/138568453-9cbbedb8-7889-4a9d-ac72-5d2dae9bae9f.png" width="100px">
-
-<br/>
-<br/>
-
 It provides the basics for creating tools to manage Databases and perhaps files related to LastChaos.
-
-In Item Editor there are notes and examples on how to manage the request, storage and management of data.
-
-
-# TODO
-~~~
-If Flag is: ITEM_FLAG_COSTUME2, a_rare_index_0/4 should be Item Picker.
-If Flag is: ITEM_FLAG_ORIGIN, a_rare_index_1/5 should be Item Picker, a_rare_index_6/9 Shold be Skill Picker, a_set_4 shoul be Item Picker.	¿And a_rare_index_0? Generic number Input...
-If Flag is: ITEM_FLAG_RARE, a_rare_index_0/9, should be Rare Option Picker.
-If Flag is: ITEM_FLAG_QUEST, a_set_0 should be Zone Selector, a_set_1/4 should be Generic number Input.
-If Flag is: ITEM_FLAG_RARE, a_rare_index_0/9 Should be Rare option Picker, a_rare_prob_0/9 should be Generic number Input, and required to show % labels.
-If Flag is: unknown, a_set_0 should be Flag Picker (JewelCompositePosition)
-	If a_set_0 is 0, a_rare_index_0 should be a Option Picker.
-
-If a_type_idx is 0 or 1, a_set_0 should be Generic number Input.
-This↑ is super common situation so...
-
-
-Analyzing the situation... the simplest thing would be to put TextBoxs and that's it, but I would like to make the tool foolproof.
-
-UPDATE: Podría más o menos intentar definir los tipos en base a las flags que ya conozco, y luego agregar una opción, permitir que al dar click derecho se pueda introducir un valor numérico.
-~~~
 
 # Concept of Global Tables
 * The idea behind the project is to have a fast and efficient tool in terms of requests to the database. With that in mind I designed a scheme in which there are __Global Tables__, these are populated for the first time by the Tool that requires the information, and later said information can be used by another tool, Avoiding constants requests each time some Tool open.
@@ -37,8 +11,13 @@ UPDATE: Podría más o menos intentar definir los tipos en base a las flags que 
 # Hardcoded definitions and information
 * This information is stored in [Definitions.cs](Definitions.cs)
 
+# Item Editor source code defines
+* In ItemEditor.cs, 2 directives can be found.
+1) ENABLE_SECOND_SKILL_TO_CRAFT Used to activate the controls for editing a_need_sskill2 & a_need_sskill_level2.
+2) ALLOWED_ZONE_SYSTEM It is used to have a Button to select the flag (It is necessary for a personal modification) this directive is disabled by default.
+
 # Help Dialogs
-* Pickers
+** Pickers
 1) [Flag Picker Implementation Example](Pickers/FlagPicker.cs)
 2) [Icon Picker Implementation Example](Pickers/IconPicker.cs)
 3) [Skill Picker Implementation Example](Pickers/SkillPicker.cs)
@@ -51,7 +30,6 @@ UPDATE: Podría más o menos intentar definir los tipos en base a las flags que 
 * Others
 1) [Progress Dialog Implementation Example](ProgressDialog.cs)
 2) [MessageBox with Text Input Dialog Implementation Example](MessageBox_Input.cs)
-
 
 # Practical examples
 * Example of requesting and storing t_item data in the __Global Table__: pItemTable. To later store information in a temporary variable to work with, to finally pass that temporary data to the __Global Table__.
@@ -150,4 +128,4 @@ private async Task LoadItemDataAsync()
 ```
 
 ##### Item Editor WiP
-![1](https://github.com/nicolasgomez1/LastChaos-ToolBox-2024/assets/5092697/c10e3961-4a2b-4602-b87a-81c6bbb26b3b)
+![1](https://github.com/nicolasgomez1/LastChaos-ToolBox-2024/assets/5092697/5cccea7a-1a94-449e-b2ca-1d0b4ff1efe6)
