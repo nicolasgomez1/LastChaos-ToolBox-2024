@@ -31,14 +31,26 @@ namespace LastChaos_ToolBox_2024.Editors
         /// </summary>
         private void InitializeComponent()
         {
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.btnReload = new System.Windows.Forms.Button();
 			this.btnAddNew = new System.Windows.Forms.Button();
 			this.MainList = new System.Windows.Forms.ListBox();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
 			this.btnUpdate = new System.Windows.Forms.Button();
 			this.GeneralPanel = new System.Windows.Forms.Panel();
+			this.btnRareIndex0 = new System.Windows.Forms.Button();
+			this.gbQuestData = new System.Windows.Forms.GroupBox();
+			this.cbSet0 = new System.Windows.Forms.ComboBox();
+			this.lSet4 = new System.Windows.Forms.Label();
+			this.textBox1 = new System.Windows.Forms.TextBox();
+			this.lSet3 = new System.Windows.Forms.Label();
+			this.textBox2 = new System.Windows.Forms.TextBox();
+			this.lSet2 = new System.Windows.Forms.Label();
+			this.textBox3 = new System.Windows.Forms.TextBox();
+			this.lSet1 = new System.Windows.Forms.Label();
+			this.textBox4 = new System.Windows.Forms.TextBox();
+			this.lSet0 = new System.Windows.Forms.Label();
 			this.cbGrade = new System.Windows.Forms.ComboBox();
 			this.gbFortune = new System.Windows.Forms.GroupBox();
 			this.rtFortuneWarning = new System.Windows.Forms.RichTextBox();
@@ -241,20 +253,9 @@ namespace LastChaos_ToolBox_2024.Editors
 			this.tbSearch = new System.Windows.Forms.TextBox();
 			this.cbRenderDialog = new System.Windows.Forms.CheckBox();
 			this.cbAutoLoadFortuneData = new System.Windows.Forms.CheckBox();
-			this.gbQuestData = new System.Windows.Forms.GroupBox();
-			this.cbSet0 = new System.Windows.Forms.ComboBox();
-			this.lSet4 = new System.Windows.Forms.Label();
-			this.textBox1 = new System.Windows.Forms.TextBox();
-			this.lSet3 = new System.Windows.Forms.Label();
-			this.textBox2 = new System.Windows.Forms.TextBox();
-			this.lSet2 = new System.Windows.Forms.Label();
-			this.textBox3 = new System.Windows.Forms.TextBox();
-			this.lSet1 = new System.Windows.Forms.Label();
-			this.textBox4 = new System.Windows.Forms.TextBox();
-			this.lSet0 = new System.Windows.Forms.Label();
-			this.btnRareIndex0 = new System.Windows.Forms.Button();
 			this.groupBox1.SuspendLayout();
 			this.GeneralPanel.SuspendLayout();
+			this.gbQuestData.SuspendLayout();
 			this.gbFortune.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.gridFortune)).BeginInit();
 			this.groupBox3.SuspendLayout();
@@ -266,7 +267,6 @@ namespace LastChaos_ToolBox_2024.Editors
 			this.groupBox6.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pbIcon)).BeginInit();
 			this.groupBox2.SuspendLayout();
-			this.gbQuestData.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// btnReload
@@ -410,6 +410,150 @@ namespace LastChaos_ToolBox_2024.Editors
 			this.GeneralPanel.Size = new System.Drawing.Size(1021, 528);
 			this.GeneralPanel.TabIndex = 0;
 			// 
+			// btnRareIndex0
+			// 
+			this.btnRareIndex0.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(85)))), ((int)(((byte)(76)))));
+			this.btnRareIndex0.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+			this.btnRareIndex0.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
+			this.btnRareIndex0.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.btnRareIndex0.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.btnRareIndex0.Location = new System.Drawing.Point(727, 353);
+			this.btnRareIndex0.Name = "btnRareIndex0";
+			this.btnRareIndex0.Size = new System.Drawing.Size(120, 23);
+			this.btnRareIndex0.TabIndex = 1103;
+			this.btnRareIndex0.UseVisualStyleBackColor = true;
+			// 
+			// gbQuestData
+			// 
+			this.gbQuestData.Controls.Add(this.cbSet0);
+			this.gbQuestData.Controls.Add(this.lSet4);
+			this.gbQuestData.Controls.Add(this.textBox1);
+			this.gbQuestData.Controls.Add(this.lSet3);
+			this.gbQuestData.Controls.Add(this.textBox2);
+			this.gbQuestData.Controls.Add(this.lSet2);
+			this.gbQuestData.Controls.Add(this.textBox3);
+			this.gbQuestData.Controls.Add(this.lSet1);
+			this.gbQuestData.Controls.Add(this.textBox4);
+			this.gbQuestData.Controls.Add(this.lSet0);
+			this.gbQuestData.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.gbQuestData.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.gbQuestData.Location = new System.Drawing.Point(714, 418);
+			this.gbQuestData.Name = "gbQuestData";
+			this.gbQuestData.Size = new System.Drawing.Size(256, 103);
+			this.gbQuestData.TabIndex = 1044;
+			this.gbQuestData.TabStop = false;
+			this.gbQuestData.Text = "Quest Data";
+			this.gbQuestData.Visible = false;
+			// 
+			// cbSet0
+			// 
+			this.cbSet0.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+			this.cbSet0.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.cbSet0.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.cbSet0.FormattingEnabled = true;
+			this.cbSet0.Location = new System.Drawing.Point(48, 19);
+			this.cbSet0.Name = "cbSet0";
+			this.cbSet0.Size = new System.Drawing.Size(195, 21);
+			this.cbSet0.TabIndex = 1042;
+			// 
+			// lSet4
+			// 
+			this.lSet4.AutoSize = true;
+			this.lSet4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.lSet4.Location = new System.Drawing.Point(10, 76);
+			this.lSet4.Name = "lSet4";
+			this.lSet4.Size = new System.Drawing.Size(39, 13);
+			this.lSet4.TabIndex = 1030;
+			this.lSet4.Text = "Range";
+			this.lSet4.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			// 
+			// textBox1
+			// 
+			this.textBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+			this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.textBox1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.textBox1.Location = new System.Drawing.Point(55, 72);
+			this.textBox1.Name = "textBox1";
+			this.textBox1.Size = new System.Drawing.Size(187, 20);
+			this.textBox1.TabIndex = 1031;
+			// 
+			// lSet3
+			// 
+			this.lSet3.AutoSize = true;
+			this.lSet3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.lSet3.Location = new System.Drawing.Point(184, 50);
+			this.lSet3.Name = "lSet3";
+			this.lSet3.Size = new System.Drawing.Size(14, 13);
+			this.lSet3.TabIndex = 1028;
+			this.lSet3.Text = "Y";
+			this.lSet3.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			// 
+			// textBox2
+			// 
+			this.textBox2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+			this.textBox2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.textBox2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.textBox2.Location = new System.Drawing.Point(203, 46);
+			this.textBox2.Name = "textBox2";
+			this.textBox2.Size = new System.Drawing.Size(40, 20);
+			this.textBox2.TabIndex = 1029;
+			this.textBox2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			// 
+			// lSet2
+			// 
+			this.lSet2.AutoSize = true;
+			this.lSet2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.lSet2.Location = new System.Drawing.Point(97, 50);
+			this.lSet2.Name = "lSet2";
+			this.lSet2.Size = new System.Drawing.Size(14, 13);
+			this.lSet2.TabIndex = 1026;
+			this.lSet2.Text = "Z";
+			this.lSet2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			// 
+			// textBox3
+			// 
+			this.textBox3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+			this.textBox3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.textBox3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.textBox3.Location = new System.Drawing.Point(116, 46);
+			this.textBox3.Name = "textBox3";
+			this.textBox3.Size = new System.Drawing.Size(40, 20);
+			this.textBox3.TabIndex = 1027;
+			this.textBox3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			// 
+			// lSet1
+			// 
+			this.lSet1.AutoSize = true;
+			this.lSet1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.lSet1.Location = new System.Drawing.Point(10, 50);
+			this.lSet1.Name = "lSet1";
+			this.lSet1.Size = new System.Drawing.Size(14, 13);
+			this.lSet1.TabIndex = 1024;
+			this.lSet1.Text = "X";
+			this.lSet1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			// 
+			// textBox4
+			// 
+			this.textBox4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+			this.textBox4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.textBox4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.textBox4.Location = new System.Drawing.Point(29, 46);
+			this.textBox4.Name = "textBox4";
+			this.textBox4.Size = new System.Drawing.Size(40, 20);
+			this.textBox4.TabIndex = 1025;
+			this.textBox4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			// 
+			// lSet0
+			// 
+			this.lSet0.AutoSize = true;
+			this.lSet0.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.lSet0.Location = new System.Drawing.Point(10, 23);
+			this.lSet0.Name = "lSet0";
+			this.lSet0.Size = new System.Drawing.Size(32, 13);
+			this.lSet0.TabIndex = 1022;
+			this.lSet0.Text = "Zone";
+			this.lSet0.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			// 
 			// cbGrade
 			// 
 			this.cbGrade.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
@@ -503,23 +647,23 @@ namespace LastChaos_ToolBox_2024.Editors
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.gridFortune.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
 			this.gridFortune.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
-			dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
-			dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
-			dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Red;
-			dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-			this.gridFortune.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
+			dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
+			dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+			dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
+			dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Red;
+			dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.gridFortune.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
 			this.gridFortune.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-			dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
-			dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText;
-			dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
-			dataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-			dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-			this.gridFortune.DefaultCellStyle = dataGridViewCellStyle4;
+			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+			dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+			dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
+			dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+			this.gridFortune.DefaultCellStyle = dataGridViewCellStyle2;
 			this.gridFortune.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
 			this.gridFortune.EnableHeadersVisualStyles = false;
 			this.gridFortune.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
@@ -2963,150 +3107,6 @@ namespace LastChaos_ToolBox_2024.Editors
 			this.cbAutoLoadFortuneData.UseVisualStyleBackColor = true;
 			this.cbAutoLoadFortuneData.CheckedChanged += new System.EventHandler(this.cbAutoLoadFortuneData_CheckedChanged);
 			// 
-			// gbQuestData
-			// 
-			this.gbQuestData.Controls.Add(this.cbSet0);
-			this.gbQuestData.Controls.Add(this.lSet4);
-			this.gbQuestData.Controls.Add(this.textBox1);
-			this.gbQuestData.Controls.Add(this.lSet3);
-			this.gbQuestData.Controls.Add(this.textBox2);
-			this.gbQuestData.Controls.Add(this.lSet2);
-			this.gbQuestData.Controls.Add(this.textBox3);
-			this.gbQuestData.Controls.Add(this.lSet1);
-			this.gbQuestData.Controls.Add(this.textBox4);
-			this.gbQuestData.Controls.Add(this.lSet0);
-			this.gbQuestData.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.gbQuestData.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-			this.gbQuestData.Location = new System.Drawing.Point(714, 418);
-			this.gbQuestData.Name = "gbQuestData";
-			this.gbQuestData.Size = new System.Drawing.Size(256, 103);
-			this.gbQuestData.TabIndex = 1044;
-			this.gbQuestData.TabStop = false;
-			this.gbQuestData.Text = "Quest Data";
-			this.gbQuestData.Visible = false;
-			// 
-			// cbSet0
-			// 
-			this.cbSet0.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
-			this.cbSet0.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.cbSet0.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-			this.cbSet0.FormattingEnabled = true;
-			this.cbSet0.Location = new System.Drawing.Point(48, 19);
-			this.cbSet0.Name = "cbSet0";
-			this.cbSet0.Size = new System.Drawing.Size(195, 21);
-			this.cbSet0.TabIndex = 1042;
-			// 
-			// lSet4
-			// 
-			this.lSet4.AutoSize = true;
-			this.lSet4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-			this.lSet4.Location = new System.Drawing.Point(10, 76);
-			this.lSet4.Name = "lSet4";
-			this.lSet4.Size = new System.Drawing.Size(39, 13);
-			this.lSet4.TabIndex = 1030;
-			this.lSet4.Text = "Range";
-			this.lSet4.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-			// 
-			// textBox1
-			// 
-			this.textBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
-			this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.textBox1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-			this.textBox1.Location = new System.Drawing.Point(55, 72);
-			this.textBox1.Name = "textBox1";
-			this.textBox1.Size = new System.Drawing.Size(187, 20);
-			this.textBox1.TabIndex = 1031;
-			// 
-			// lSet3
-			// 
-			this.lSet3.AutoSize = true;
-			this.lSet3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-			this.lSet3.Location = new System.Drawing.Point(184, 50);
-			this.lSet3.Name = "lSet3";
-			this.lSet3.Size = new System.Drawing.Size(14, 13);
-			this.lSet3.TabIndex = 1028;
-			this.lSet3.Text = "Y";
-			this.lSet3.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-			// 
-			// textBox2
-			// 
-			this.textBox2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
-			this.textBox2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.textBox2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-			this.textBox2.Location = new System.Drawing.Point(203, 46);
-			this.textBox2.Name = "textBox2";
-			this.textBox2.Size = new System.Drawing.Size(40, 20);
-			this.textBox2.TabIndex = 1029;
-			this.textBox2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			// 
-			// lSet2
-			// 
-			this.lSet2.AutoSize = true;
-			this.lSet2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-			this.lSet2.Location = new System.Drawing.Point(97, 50);
-			this.lSet2.Name = "lSet2";
-			this.lSet2.Size = new System.Drawing.Size(14, 13);
-			this.lSet2.TabIndex = 1026;
-			this.lSet2.Text = "Z";
-			this.lSet2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-			// 
-			// textBox3
-			// 
-			this.textBox3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
-			this.textBox3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.textBox3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-			this.textBox3.Location = new System.Drawing.Point(116, 46);
-			this.textBox3.Name = "textBox3";
-			this.textBox3.Size = new System.Drawing.Size(40, 20);
-			this.textBox3.TabIndex = 1027;
-			this.textBox3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			// 
-			// lSet1
-			// 
-			this.lSet1.AutoSize = true;
-			this.lSet1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-			this.lSet1.Location = new System.Drawing.Point(10, 50);
-			this.lSet1.Name = "lSet1";
-			this.lSet1.Size = new System.Drawing.Size(14, 13);
-			this.lSet1.TabIndex = 1024;
-			this.lSet1.Text = "X";
-			this.lSet1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-			// 
-			// textBox4
-			// 
-			this.textBox4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
-			this.textBox4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.textBox4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-			this.textBox4.Location = new System.Drawing.Point(29, 46);
-			this.textBox4.Name = "textBox4";
-			this.textBox4.Size = new System.Drawing.Size(40, 20);
-			this.textBox4.TabIndex = 1025;
-			this.textBox4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			// 
-			// lSet0
-			// 
-			this.lSet0.AutoSize = true;
-			this.lSet0.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-			this.lSet0.Location = new System.Drawing.Point(10, 23);
-			this.lSet0.Name = "lSet0";
-			this.lSet0.Size = new System.Drawing.Size(32, 13);
-			this.lSet0.TabIndex = 1022;
-			this.lSet0.Text = "Zone";
-			this.lSet0.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-			// 
-			// btnRareIndex0
-			// 
-			this.btnRareIndex0.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(85)))), ((int)(((byte)(76)))));
-			this.btnRareIndex0.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
-			this.btnRareIndex0.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
-			this.btnRareIndex0.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnRareIndex0.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-			this.btnRareIndex0.Location = new System.Drawing.Point(457, 513);
-			this.btnRareIndex0.Name = "btnRareIndex0";
-			this.btnRareIndex0.Size = new System.Drawing.Size(120, 23);
-			this.btnRareIndex0.TabIndex = 1103;
-			this.btnRareIndex0.UseVisualStyleBackColor = true;
-			// 
 			// ItemEditor
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -3131,6 +3131,8 @@ namespace LastChaos_ToolBox_2024.Editors
 			this.groupBox1.ResumeLayout(false);
 			this.GeneralPanel.ResumeLayout(false);
 			this.GeneralPanel.PerformLayout();
+			this.gbQuestData.ResumeLayout(false);
+			this.gbQuestData.PerformLayout();
 			this.gbFortune.ResumeLayout(false);
 			this.gbFortune.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.gridFortune)).EndInit();
@@ -3151,8 +3153,6 @@ namespace LastChaos_ToolBox_2024.Editors
 			((System.ComponentModel.ISupportInitialize)(this.pbIcon)).EndInit();
 			this.groupBox2.ResumeLayout(false);
 			this.groupBox2.PerformLayout();
-			this.gbQuestData.ResumeLayout(false);
-			this.gbQuestData.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
