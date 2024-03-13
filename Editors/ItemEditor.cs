@@ -1,5 +1,5 @@
 ﻿//#define ENABLE_SECOND_SKILL_TO_CRAFT	// NOTE: These values are required by the server, but are not actually used
-#define ALLOWED_ZONE_SYSTEM // NOTE: Custom system made by NicolasG, disable that to use normal a_zone_flag
+//#define ALLOWED_ZONE_SYSTEM // NOTE: Custom system made by NicolasG, disable that to use normal a_zone_flag
 
 using System;
 using System.Collections.Generic;
@@ -1990,7 +1990,7 @@ namespace LastChaos_ToolBox_2024.Editors
 #if !ALLOWED_ZONE_SYSTEM
 			if (bUserAction)
 			{
-				pTempRow["a_zone_flag"] = tbAllowedZoneFlag.Text;
+				pTempItemRow["a_zone_flag"] = tbAllowedZoneFlag.Text;
 
 				bUnsavedChanges = true;
 			}
