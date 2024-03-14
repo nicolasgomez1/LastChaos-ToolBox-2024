@@ -8,3 +8,11 @@ If Flag is: unknown, a_set_0 should be Flag Picker (JewelCompositePosition)
 
 
 UPDATE: Podría más o menos intentar definir los tipos en base a las flags que ya conozco, y luego agregar una opción, permitir que al dar click derecho se pueda introducir un valor numérico.
+
+Mapping all related to a_num_0/4
+
+If Item ID: 2859
+	a_num_0 (Skill Picker)
+If Item Type: ITYPE_ACCESSORY
+	a_num_0 (Skill Picker)
+	a_num_1 (Skill Level Selector)
