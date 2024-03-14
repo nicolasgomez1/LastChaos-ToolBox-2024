@@ -1051,6 +1051,8 @@ namespace LastChaos_ToolBox_2024.Editors
 			btnDelete.Enabled = true;
 		}
 
+		private void tbSearch_TextChanged(object sender, EventArgs e) { nSearchPosition = 0; }
+
 		private void tbSearch_KeyDown(object sender, KeyEventArgs e)
 		{
 			if (e.KeyCode == Keys.Enter)
@@ -2891,7 +2893,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			strbuilderQuery = null;
 #if DEBUG
 			stopwatch.Stop();
-			pMain.Logger($"Compose query, run it, and transfer Data from Temp to Global took: {stopwatch.ElapsedMilliseconds} ms or {stopwatch.ElapsedTicks} ticks");
+			pMain.Logger($"Compose query, run it and transfer Data from Temp to Global took: {stopwatch.ElapsedMilliseconds} ms or {stopwatch.ElapsedTicks} ticks");
 #endif
 		}
 	}
