@@ -77,41 +77,12 @@ namespace LastChaos_ToolBox_2024.Editors
 			/****************************************/
 			gridFortune.TopLeftHeaderCell.Value = "N°";
 
-			DataGridViewButtonColumn cSkill = new DataGridViewButtonColumn();
-			cSkill.Name = "skill";
-			cSkill.HeaderText = "Skill";
-			gridFortune.Columns.Add(cSkill);
-
-			DataGridViewComboBoxColumn cSkillLevel = new DataGridViewComboBoxColumn();
-			cSkillLevel.Name = "level";
-			cSkillLevel.HeaderText = "Skill Level";
-			gridFortune.Columns.Add(cSkillLevel);
-
-			gridFortune.Columns.Add("prob", "Probability");
-
-			DataGridViewButtonColumn cString = new DataGridViewButtonColumn();
-			cString.Name = "string";
-			cString.HeaderText = "String ID";
-			gridFortune.Columns.Add(cString);
-
-			gridFortune.AdvancedRowHeadersBorderStyle.All = DataGridViewAdvancedCellBorderStyle.Single;
-			gridFortune.RowHeadersDefaultCellStyle.BackColor = Color.FromArgb(28, 30, 31);
-			gridFortune.RowHeadersDefaultCellStyle.SelectionForeColor = gridFortune.RowHeadersDefaultCellStyle.ForeColor = Color.FromArgb(208, 203, 148);
-			gridFortune.RowHeadersDefaultCellStyle.SelectionBackColor = Color.FromArgb(60, 56, 54);
-
-			gridFortune.AdvancedColumnHeadersBorderStyle.All = DataGridViewAdvancedCellBorderStyle.Single;
-			gridFortune.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(28, 30, 31);
-			gridFortune.ColumnHeadersDefaultCellStyle.ForeColor = Color.FromArgb(208, 203, 148);
-			gridFortune.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+			gridFortune.RowHeadersDefaultCellStyle.BackColor = Color.FromArgb(166, 166, 166);
 
 			gridFortune.AdvancedCellBorderStyle.Bottom = DataGridViewAdvancedCellBorderStyle.Inset;
-			gridFortune.DefaultCellStyle.BackColor = Color.FromArgb(40, 40, 40);
-			gridFortune.DefaultCellStyle.ForeColor = Color.FromArgb(208, 203, 148);
-			gridFortune.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-
-			gridFortune.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
 			/****************************************/
 			cbRenderDialog.Checked = bool.Parse(pMain.pSettings.ShowRenderDialog[this.Name]);
+
 			cbAutoLoadFortuneData.Checked = bool.Parse(pMain.pSettings.ItemEditorAutoShowFortune);
 		}
 
@@ -525,7 +496,7 @@ namespace LastChaos_ToolBox_2024.Editors
 
 								gridFortune.Rows[i].Cells["prob"].Value = pFortuneRow["a_prob"].ToString();
 
-								gridFortune.Rows[i].Cells["string"].Value = pFortuneRow["a_string_index"].ToString();
+								gridFortune.Rows[i].Cells["string_id"].Value = pFortuneRow["a_string_index"].ToString();
 							}
 
 							pSkillRow = null;
@@ -2534,8 +2505,8 @@ namespace LastChaos_ToolBox_2024.Editors
 					if (pStringSelector.ShowDialog() != DialogResult.OK)
 						return;
 
-					gridFortune.Rows[e.RowIndex].Cells["string"].Value = pStringSelector.ReturnValues[0];
-					gridFortune.Rows[e.RowIndex].Cells["string"].ToolTipText = pStringSelector.ReturnValues[1].ToString();
+					gridFortune.Rows[e.RowIndex].Cells["string_id"].Value = pStringSelector.ReturnValues[0];
+					gridFortune.Rows[e.RowIndex].Cells["string_id"].ToolTipText = pStringSelector.ReturnValues[1].ToString();
 
 					bUnsavedChanges = true;
 				}
@@ -2603,7 +2574,7 @@ namespace LastChaos_ToolBox_2024.Editors
 
 								gridFortune.Rows[i].Cells["prob"].Value = nDefaultProb;
 
-								gridFortune.Rows[i].Cells["string"].Value = nDefaultStringID;
+								gridFortune.Rows[i].Cells["string_id"].Value = nDefaultStringID;
 							}
 
 							pSkillRow = null;
@@ -2693,7 +2664,7 @@ namespace LastChaos_ToolBox_2024.Editors
 					pRow["a_item_idx"] = pTempItemRow["a_index"];
 					pRow["a_skill_index"] = row.Cells["skill"].Tag;
 					pRow["a_skill_level"] = row.Cells["level"].Value.ToString().Split(new string[] { " - " }, StringSplitOptions.None)[0].Replace("Level: ", "").Trim(); // DUDE LOOK THAT SHIT HAHA, NOTE: in theory, the element index is equivalent to level, but i'm not trust so, by go in this way have not room to errors.	//row.Cells["level"].Tag;
-					pRow["a_string_index"] = row.Cells["string"].Value;
+					pRow["a_string_index"] = row.Cells["string_id"].Value;
 					pRow["a_prob"] = row.Cells["prob"].Value;
 
 					pTempFortuneDataRows[i] = pRow;

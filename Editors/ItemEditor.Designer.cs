@@ -253,6 +253,10 @@ namespace LastChaos_ToolBox_2024.Editors
 			this.tbSearch = new System.Windows.Forms.TextBox();
 			this.cbRenderDialog = new System.Windows.Forms.CheckBox();
 			this.cbAutoLoadFortuneData = new System.Windows.Forms.CheckBox();
+			this.skill = new System.Windows.Forms.DataGridViewButtonColumn();
+			this.level = new System.Windows.Forms.DataGridViewComboBoxColumn();
+			this.prob = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.string_id = new System.Windows.Forms.DataGridViewButtonColumn();
 			this.groupBox1.SuspendLayout();
 			this.GeneralPanel.SuspendLayout();
 			this.gbQuestData.SuspendLayout();
@@ -281,7 +285,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			this.btnReload.Location = new System.Drawing.Point(12, 545);
 			this.btnReload.Name = "btnReload";
 			this.btnReload.Size = new System.Drawing.Size(60, 23);
-			this.btnReload.TabIndex = 1;
+			this.btnReload.TabIndex = 0;
 			this.btnReload.Text = "Reload";
 			this.btnReload.UseVisualStyleBackColor = true;
 			this.btnReload.Click += new System.EventHandler(this.btnReload_Click);
@@ -298,7 +302,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			this.btnAddNew.Location = new System.Drawing.Point(78, 545);
 			this.btnAddNew.Name = "btnAddNew";
 			this.btnAddNew.Size = new System.Drawing.Size(60, 23);
-			this.btnAddNew.TabIndex = 2;
+			this.btnAddNew.TabIndex = 0;
 			this.btnAddNew.Text = "Add New";
 			this.btnAddNew.UseVisualStyleBackColor = true;
 			this.btnAddNew.Click += new System.EventHandler(this.btnAddNew_Click);
@@ -315,7 +319,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			this.MainList.Location = new System.Drawing.Point(12, 38);
 			this.MainList.Name = "MainList";
 			this.MainList.Size = new System.Drawing.Size(258, 496);
-			this.MainList.TabIndex = 0;
+			this.MainList.TabIndex = 1;
 			this.MainList.SelectedIndexChanged += new System.EventHandler(this.MainList_SelectedIndexChanged);
 			// 
 			// groupBox1
@@ -437,7 +441,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			this.gbQuestData.Controls.Add(this.lSet0);
 			this.gbQuestData.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.gbQuestData.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-			this.gbQuestData.Location = new System.Drawing.Point(714, 418);
+			this.gbQuestData.Location = new System.Drawing.Point(669, 417);
 			this.gbQuestData.Name = "gbQuestData";
 			this.gbQuestData.Size = new System.Drawing.Size(256, 103);
 			this.gbQuestData.TabIndex = 1044;
@@ -642,38 +646,43 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			this.gridFortune.AllowUserToAddRows = false;
 			this.gridFortune.AllowUserToDeleteRows = false;
-			this.gridFortune.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.gridFortune.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
 			this.gridFortune.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
-			this.gridFortune.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
+			this.gridFortune.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.gridFortune.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
+			dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+			dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(166)))), ((int)(((byte)(166)))), ((int)(((byte)(166)))));
 			dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-			dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
-			dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Red;
+			dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(166)))), ((int)(((byte)(166)))), ((int)(((byte)(166)))));
+			dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.WindowText;
 			dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
 			this.gridFortune.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
 			this.gridFortune.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+			this.gridFortune.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.skill,
+            this.level,
+            this.prob,
+            this.string_id});
+			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+			dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
 			dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-			dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
-			dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
+			dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
+			dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.WindowText;
 			dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
 			this.gridFortune.DefaultCellStyle = dataGridViewCellStyle2;
 			this.gridFortune.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
 			this.gridFortune.EnableHeadersVisualStyles = false;
-			this.gridFortune.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+			this.gridFortune.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
 			this.gridFortune.Location = new System.Drawing.Point(6, 44);
 			this.gridFortune.MultiSelect = false;
 			this.gridFortune.Name = "gridFortune";
+			this.gridFortune.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
 			this.gridFortune.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
 			this.gridFortune.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
 			this.gridFortune.Size = new System.Drawing.Size(986, 238);
-			this.gridFortune.TabIndex = 2;
+			this.gridFortune.TabIndex = 0;
 			this.gridFortune.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.gridFortune_CellMouseClick);
 			// 
 			// btnAddFortune
@@ -747,7 +756,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			this.groupBox3.Controls.Add(this.label65);
 			this.groupBox3.Controls.Add(this.tbRareProb3);
 			this.groupBox3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-			this.groupBox3.Location = new System.Drawing.Point(398, 192);
+			this.groupBox3.Location = new System.Drawing.Point(348, 193);
 			this.groupBox3.Name = "groupBox3";
 			this.groupBox3.Size = new System.Drawing.Size(308, 315);
 			this.groupBox3.TabIndex = 1039;
@@ -3048,7 +3057,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			this.btnCopy.Location = new System.Drawing.Point(144, 545);
 			this.btnCopy.Name = "btnCopy";
 			this.btnCopy.Size = new System.Drawing.Size(60, 23);
-			this.btnCopy.TabIndex = 3;
+			this.btnCopy.TabIndex = 0;
 			this.btnCopy.Text = "Copy";
 			this.btnCopy.UseVisualStyleBackColor = true;
 			this.btnCopy.Click += new System.EventHandler(this.btnCopy_Click);
@@ -3065,7 +3074,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			this.btnDelete.Location = new System.Drawing.Point(210, 545);
 			this.btnDelete.Name = "btnDelete";
 			this.btnDelete.Size = new System.Drawing.Size(60, 23);
-			this.btnDelete.TabIndex = 4;
+			this.btnDelete.TabIndex = 0;
 			this.btnDelete.Text = "Delete";
 			this.btnDelete.UseVisualStyleBackColor = true;
 			this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
@@ -3078,7 +3087,8 @@ namespace LastChaos_ToolBox_2024.Editors
 			this.tbSearch.Location = new System.Drawing.Point(12, 12);
 			this.tbSearch.Name = "tbSearch";
 			this.tbSearch.Size = new System.Drawing.Size(258, 20);
-			this.tbSearch.TabIndex = 1025;
+			this.tbSearch.TabIndex = 0;
+			this.tbSearch.Text = "11016";
 			this.tbSearch.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tbSearch_KeyDown);
 			// 
 			// cbRenderDialog
@@ -3089,7 +3099,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			this.cbRenderDialog.Location = new System.Drawing.Point(12, 574);
 			this.cbRenderDialog.Name = "cbRenderDialog";
 			this.cbRenderDialog.Size = new System.Drawing.Size(94, 17);
-			this.cbRenderDialog.TabIndex = 1044;
+			this.cbRenderDialog.TabIndex = 0;
 			this.cbRenderDialog.Text = "Render Dialog";
 			this.cbRenderDialog.UseVisualStyleBackColor = true;
 			this.cbRenderDialog.CheckedChanged += new System.EventHandler(this.cbRenderDialog_CheckedChanged);
@@ -3102,10 +3112,31 @@ namespace LastChaos_ToolBox_2024.Editors
 			this.cbAutoLoadFortuneData.Location = new System.Drawing.Point(130, 574);
 			this.cbAutoLoadFortuneData.Name = "cbAutoLoadFortuneData";
 			this.cbAutoLoadFortuneData.Size = new System.Drawing.Size(140, 17);
-			this.cbAutoLoadFortuneData.TabIndex = 1045;
+			this.cbAutoLoadFortuneData.TabIndex = 0;
 			this.cbAutoLoadFortuneData.Text = "Auto Load Fortune Data";
 			this.cbAutoLoadFortuneData.UseVisualStyleBackColor = true;
 			this.cbAutoLoadFortuneData.CheckedChanged += new System.EventHandler(this.cbAutoLoadFortuneData_CheckedChanged);
+			// 
+			// skill
+			// 
+			this.skill.HeaderText = "Skill";
+			this.skill.Name = "skill";
+			// 
+			// level
+			// 
+			this.level.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.ComboBox;
+			this.level.HeaderText = "Skill Level";
+			this.level.Name = "level";
+			// 
+			// prob
+			// 
+			this.prob.HeaderText = "Probability";
+			this.prob.Name = "prob";
+			// 
+			// string_id
+			// 
+			this.string_id.HeaderText = "String ID";
+			this.string_id.Name = "string_id";
 			// 
 			// ItemEditor
 			// 
@@ -3380,5 +3411,9 @@ namespace LastChaos_ToolBox_2024.Editors
 		private TextBox textBox4;
 		private Label lSet0;
 		private Button btnRareIndex0;
+		private DataGridViewButtonColumn skill;
+		private DataGridViewComboBoxColumn level;
+		private DataGridViewTextBoxColumn prob;
+		private DataGridViewButtonColumn string_id;
 	}
 }

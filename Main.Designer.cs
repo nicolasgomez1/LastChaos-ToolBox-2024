@@ -163,6 +163,6 @@ namespace LastChaos_ToolBox_2024
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.RichTextBox rtbConsole;
         private System.Windows.Forms.Button button4;
-    }
+	}
 }
 
