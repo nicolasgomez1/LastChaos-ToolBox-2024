@@ -108,8 +108,9 @@ namespace Definitions
 					"Socket Creation (PROCESS_SCROLL)",
 					"Mercenary (MONSTER_MERCENARY_CARD)",
 					"Guild Mark",
-					"Reformer (CHAOSJEWEL)",
-					"Function (FUNCTIONS)",
+					"Reformer",
+					"Chaos Jewel",
+					"Functions",
 					"RvR Jewel"
 				}
 			},
