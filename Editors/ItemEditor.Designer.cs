@@ -58,6 +58,10 @@ namespace LastChaos_ToolBox_2024.Editors
 			this.cbFortuneEnable = new System.Windows.Forms.CheckBox();
 			this.lProbType = new System.Windows.Forms.Label();
 			this.gridFortune = new System.Windows.Forms.DataGridView();
+			this.skill = new System.Windows.Forms.DataGridViewButtonColumn();
+			this.level = new System.Windows.Forms.DataGridViewComboBoxColumn();
+			this.prob = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.string_id = new System.Windows.Forms.DataGridViewButtonColumn();
 			this.btnAddFortune = new System.Windows.Forms.Button();
 			this.groupBox3 = new System.Windows.Forms.GroupBox();
 			this.tbRareIndex9 = new System.Windows.Forms.TextBox();
@@ -253,10 +257,6 @@ namespace LastChaos_ToolBox_2024.Editors
 			this.tbSearch = new System.Windows.Forms.TextBox();
 			this.cbRenderDialog = new System.Windows.Forms.CheckBox();
 			this.cbAutoLoadFortuneData = new System.Windows.Forms.CheckBox();
-			this.skill = new System.Windows.Forms.DataGridViewButtonColumn();
-			this.level = new System.Windows.Forms.DataGridViewComboBoxColumn();
-			this.prob = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.string_id = new System.Windows.Forms.DataGridViewButtonColumn();
 			this.groupBox1.SuspendLayout();
 			this.GeneralPanel.SuspendLayout();
 			this.gbQuestData.SuspendLayout();
@@ -580,6 +580,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			this.gbFortune.Controls.Add(this.lProbType);
 			this.gbFortune.Controls.Add(this.gridFortune);
 			this.gbFortune.Controls.Add(this.btnAddFortune);
+			this.gbFortune.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
 			this.gbFortune.Location = new System.Drawing.Point(0, 543);
 			this.gbFortune.Name = "gbFortune";
 			this.gbFortune.Size = new System.Drawing.Size(998, 288);
@@ -667,7 +668,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
 			dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
 			dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
+			dataGridViewCellStyle2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
 			dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
 			dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.WindowText;
 			dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
@@ -684,6 +685,27 @@ namespace LastChaos_ToolBox_2024.Editors
 			this.gridFortune.Size = new System.Drawing.Size(986, 238);
 			this.gridFortune.TabIndex = 0;
 			this.gridFortune.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.gridFortune_CellMouseClick);
+			// 
+			// skill
+			// 
+			this.skill.HeaderText = "Skill";
+			this.skill.Name = "skill";
+			// 
+			// level
+			// 
+			this.level.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.ComboBox;
+			this.level.HeaderText = "Skill Level";
+			this.level.Name = "level";
+			// 
+			// prob
+			// 
+			this.prob.HeaderText = "Probability";
+			this.prob.Name = "prob";
+			// 
+			// string_id
+			// 
+			this.string_id.HeaderText = "String ID";
+			this.string_id.Name = "string_id";
 			// 
 			// btnAddFortune
 			// 
@@ -3116,27 +3138,6 @@ namespace LastChaos_ToolBox_2024.Editors
 			this.cbAutoLoadFortuneData.Text = "Auto Load Fortune Data";
 			this.cbAutoLoadFortuneData.UseVisualStyleBackColor = true;
 			this.cbAutoLoadFortuneData.CheckedChanged += new System.EventHandler(this.cbAutoLoadFortuneData_CheckedChanged);
-			// 
-			// skill
-			// 
-			this.skill.HeaderText = "Skill";
-			this.skill.Name = "skill";
-			// 
-			// level
-			// 
-			this.level.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.ComboBox;
-			this.level.HeaderText = "Skill Level";
-			this.level.Name = "level";
-			// 
-			// prob
-			// 
-			this.prob.HeaderText = "Probability";
-			this.prob.Name = "prob";
-			// 
-			// string_id
-			// 
-			this.string_id.HeaderText = "String ID";
-			this.string_id.Name = "string_id";
 			// 
 			// ItemEditor
 			// 
