@@ -26,11 +26,14 @@ namespace LastChaos_ToolBox_2024
 	public partial class MessageBox_Input : Form
 	{
 		private Form pParentForm;
+		private System.Windows.Forms.ToolTip pToolTip;
 		public string strOutput = "";
 
 		public MessageBox_Input(Form pParentForm, string strCaption)
 		{
 			InitializeComponent();
+
+			this.FormClosing += MessageBox_Input_FormClosing;
 
 			rtbMessage.Text = strCaption;
 
@@ -43,6 +46,9 @@ namespace LastChaos_ToolBox_2024
 			this.Location = new Point((int)pParentForm.Location.X + (pParentForm.Width - this.Width) / 2, (int)pParentForm.Location.Y + (pParentForm.Height - this.Height) / 2);
 
 			tbInput.Text = "";
+
+			pToolTip = new ToolTip();
+			pToolTip.SetToolTip(tbInput, "Press enter to close this window");
 		}
 
 		private void btnOk_Click(object sender, EventArgs e)
@@ -54,7 +60,14 @@ namespace LastChaos_ToolBox_2024
 			Close();
 		}
 
-		private void textBox1_KeyDown(object sender, KeyEventArgs e)
+		private void MessageBox_Input_FormClosing(object sender, FormClosingEventArgs e)
+		{
+			pToolTip.Dispose();
+
+			pToolTip = null;
+		}
+
+		private void tbInput_KeyDown(object sender, KeyEventArgs e)
 		{
 			if (e.KeyCode == Keys.Enter)
 				btnOk_Click(sender, e);

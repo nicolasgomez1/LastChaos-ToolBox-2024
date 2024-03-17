@@ -60,6 +60,7 @@
 			this.tbInput.Name = "tbInput";
 			this.tbInput.Size = new System.Drawing.Size(260, 20);
 			this.tbInput.TabIndex = 1013;
+			this.tbInput.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tbInput_KeyDown);
 			// 
 			// rtbMessage
 			// 

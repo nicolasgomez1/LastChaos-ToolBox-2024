@@ -39,18 +39,6 @@ namespace LastChaos_ToolBox_2024.Editors
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
 			this.btnUpdate = new System.Windows.Forms.Button();
 			this.GeneralPanel = new System.Windows.Forms.Panel();
-			this.btnRareIndex0 = new System.Windows.Forms.Button();
-			this.gbQuestData = new System.Windows.Forms.GroupBox();
-			this.cbSet0 = new System.Windows.Forms.ComboBox();
-			this.lSet4 = new System.Windows.Forms.Label();
-			this.textBox1 = new System.Windows.Forms.TextBox();
-			this.lSet3 = new System.Windows.Forms.Label();
-			this.textBox2 = new System.Windows.Forms.TextBox();
-			this.lSet2 = new System.Windows.Forms.Label();
-			this.textBox3 = new System.Windows.Forms.TextBox();
-			this.lSet1 = new System.Windows.Forms.Label();
-			this.textBox4 = new System.Windows.Forms.TextBox();
-			this.lSet0 = new System.Windows.Forms.Label();
 			this.cbGrade = new System.Windows.Forms.ComboBox();
 			this.gbFortune = new System.Windows.Forms.GroupBox();
 			this.rtFortuneWarning = new System.Windows.Forms.RichTextBox();
@@ -259,7 +247,6 @@ namespace LastChaos_ToolBox_2024.Editors
 			this.cbAutoLoadFortuneData = new System.Windows.Forms.CheckBox();
 			this.groupBox1.SuspendLayout();
 			this.GeneralPanel.SuspendLayout();
-			this.gbQuestData.SuspendLayout();
 			this.gbFortune.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.gridFortune)).BeginInit();
 			this.groupBox3.SuspendLayout();
@@ -276,12 +263,12 @@ namespace LastChaos_ToolBox_2024.Editors
 			// btnReload
 			// 
 			this.btnReload.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.btnReload.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
 			this.btnReload.Enabled = false;
-			this.btnReload.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(85)))), ((int)(((byte)(76)))));
-			this.btnReload.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
-			this.btnReload.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
+			this.btnReload.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(160)))), ((int)(((byte)(160)))), ((int)(((byte)(160)))));
+			this.btnReload.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+			this.btnReload.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(251)))), ((int)(((byte)(251)))));
 			this.btnReload.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnReload.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
 			this.btnReload.Location = new System.Drawing.Point(12, 545);
 			this.btnReload.Name = "btnReload";
 			this.btnReload.Size = new System.Drawing.Size(60, 23);
@@ -293,12 +280,12 @@ namespace LastChaos_ToolBox_2024.Editors
 			// btnAddNew
 			// 
 			this.btnAddNew.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.btnAddNew.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
 			this.btnAddNew.Enabled = false;
-			this.btnAddNew.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(85)))), ((int)(((byte)(76)))));
-			this.btnAddNew.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
-			this.btnAddNew.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
+			this.btnAddNew.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(160)))), ((int)(((byte)(160)))), ((int)(((byte)(160)))));
+			this.btnAddNew.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+			this.btnAddNew.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(251)))), ((int)(((byte)(251)))));
 			this.btnAddNew.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnAddNew.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
 			this.btnAddNew.Location = new System.Drawing.Point(78, 545);
 			this.btnAddNew.Name = "btnAddNew";
 			this.btnAddNew.Size = new System.Drawing.Size(60, 23);
@@ -311,10 +298,10 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			this.MainList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-			this.MainList.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+			this.MainList.BackColor = System.Drawing.Color.White;
 			this.MainList.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.MainList.Enabled = false;
-			this.MainList.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.MainList.ForeColor = System.Drawing.Color.Black;
 			this.MainList.FormattingEnabled = true;
 			this.MainList.Location = new System.Drawing.Point(12, 38);
 			this.MainList.Name = "MainList";
@@ -329,7 +316,7 @@ namespace LastChaos_ToolBox_2024.Editors
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.groupBox1.Controls.Add(this.btnUpdate);
 			this.groupBox1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.groupBox1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.groupBox1.ForeColor = System.Drawing.Color.Black;
 			this.groupBox1.Location = new System.Drawing.Point(276, 6);
 			this.groupBox1.Name = "groupBox1";
 			this.groupBox1.Size = new System.Drawing.Size(1032, 582);
@@ -341,18 +328,18 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			this.btnUpdate.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnUpdate.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
 			this.btnUpdate.Enabled = false;
-			this.btnUpdate.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(85)))), ((int)(((byte)(76)))));
-			this.btnUpdate.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
-			this.btnUpdate.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
+			this.btnUpdate.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(160)))), ((int)(((byte)(160)))), ((int)(((byte)(160)))));
+			this.btnUpdate.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+			this.btnUpdate.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(251)))), ((int)(((byte)(251)))));
 			this.btnUpdate.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnUpdate.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
 			this.btnUpdate.Location = new System.Drawing.Point(6, 19);
 			this.btnUpdate.Name = "btnUpdate";
 			this.btnUpdate.Size = new System.Drawing.Size(1020, 23);
 			this.btnUpdate.TabIndex = 999;
 			this.btnUpdate.Text = "Update";
-			this.btnUpdate.UseVisualStyleBackColor = true;
+			this.btnUpdate.UseVisualStyleBackColor = false;
 			this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
 			// 
 			// GeneralPanel
@@ -361,8 +348,6 @@ namespace LastChaos_ToolBox_2024.Editors
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.GeneralPanel.AutoScroll = true;
-			this.GeneralPanel.Controls.Add(this.btnRareIndex0);
-			this.GeneralPanel.Controls.Add(this.gbQuestData);
 			this.GeneralPanel.Controls.Add(this.cbGrade);
 			this.GeneralPanel.Controls.Add(this.gbFortune);
 			this.GeneralPanel.Controls.Add(this.groupBox3);
@@ -414,155 +399,11 @@ namespace LastChaos_ToolBox_2024.Editors
 			this.GeneralPanel.Size = new System.Drawing.Size(1021, 528);
 			this.GeneralPanel.TabIndex = 0;
 			// 
-			// btnRareIndex0
-			// 
-			this.btnRareIndex0.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(85)))), ((int)(((byte)(76)))));
-			this.btnRareIndex0.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
-			this.btnRareIndex0.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
-			this.btnRareIndex0.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnRareIndex0.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-			this.btnRareIndex0.Location = new System.Drawing.Point(727, 353);
-			this.btnRareIndex0.Name = "btnRareIndex0";
-			this.btnRareIndex0.Size = new System.Drawing.Size(120, 23);
-			this.btnRareIndex0.TabIndex = 1103;
-			this.btnRareIndex0.UseVisualStyleBackColor = true;
-			// 
-			// gbQuestData
-			// 
-			this.gbQuestData.Controls.Add(this.cbSet0);
-			this.gbQuestData.Controls.Add(this.lSet4);
-			this.gbQuestData.Controls.Add(this.textBox1);
-			this.gbQuestData.Controls.Add(this.lSet3);
-			this.gbQuestData.Controls.Add(this.textBox2);
-			this.gbQuestData.Controls.Add(this.lSet2);
-			this.gbQuestData.Controls.Add(this.textBox3);
-			this.gbQuestData.Controls.Add(this.lSet1);
-			this.gbQuestData.Controls.Add(this.textBox4);
-			this.gbQuestData.Controls.Add(this.lSet0);
-			this.gbQuestData.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.gbQuestData.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-			this.gbQuestData.Location = new System.Drawing.Point(669, 417);
-			this.gbQuestData.Name = "gbQuestData";
-			this.gbQuestData.Size = new System.Drawing.Size(256, 103);
-			this.gbQuestData.TabIndex = 1044;
-			this.gbQuestData.TabStop = false;
-			this.gbQuestData.Text = "Quest Data";
-			this.gbQuestData.Visible = false;
-			// 
-			// cbSet0
-			// 
-			this.cbSet0.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
-			this.cbSet0.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.cbSet0.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-			this.cbSet0.FormattingEnabled = true;
-			this.cbSet0.Location = new System.Drawing.Point(48, 19);
-			this.cbSet0.Name = "cbSet0";
-			this.cbSet0.Size = new System.Drawing.Size(195, 21);
-			this.cbSet0.TabIndex = 1042;
-			// 
-			// lSet4
-			// 
-			this.lSet4.AutoSize = true;
-			this.lSet4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-			this.lSet4.Location = new System.Drawing.Point(10, 76);
-			this.lSet4.Name = "lSet4";
-			this.lSet4.Size = new System.Drawing.Size(39, 13);
-			this.lSet4.TabIndex = 1030;
-			this.lSet4.Text = "Range";
-			this.lSet4.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-			// 
-			// textBox1
-			// 
-			this.textBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
-			this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.textBox1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-			this.textBox1.Location = new System.Drawing.Point(55, 72);
-			this.textBox1.Name = "textBox1";
-			this.textBox1.Size = new System.Drawing.Size(187, 20);
-			this.textBox1.TabIndex = 1031;
-			// 
-			// lSet3
-			// 
-			this.lSet3.AutoSize = true;
-			this.lSet3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-			this.lSet3.Location = new System.Drawing.Point(184, 50);
-			this.lSet3.Name = "lSet3";
-			this.lSet3.Size = new System.Drawing.Size(14, 13);
-			this.lSet3.TabIndex = 1028;
-			this.lSet3.Text = "Y";
-			this.lSet3.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-			// 
-			// textBox2
-			// 
-			this.textBox2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
-			this.textBox2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.textBox2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-			this.textBox2.Location = new System.Drawing.Point(203, 46);
-			this.textBox2.Name = "textBox2";
-			this.textBox2.Size = new System.Drawing.Size(40, 20);
-			this.textBox2.TabIndex = 1029;
-			this.textBox2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			// 
-			// lSet2
-			// 
-			this.lSet2.AutoSize = true;
-			this.lSet2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-			this.lSet2.Location = new System.Drawing.Point(97, 50);
-			this.lSet2.Name = "lSet2";
-			this.lSet2.Size = new System.Drawing.Size(14, 13);
-			this.lSet2.TabIndex = 1026;
-			this.lSet2.Text = "Z";
-			this.lSet2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-			// 
-			// textBox3
-			// 
-			this.textBox3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
-			this.textBox3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.textBox3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-			this.textBox3.Location = new System.Drawing.Point(116, 46);
-			this.textBox3.Name = "textBox3";
-			this.textBox3.Size = new System.Drawing.Size(40, 20);
-			this.textBox3.TabIndex = 1027;
-			this.textBox3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			// 
-			// lSet1
-			// 
-			this.lSet1.AutoSize = true;
-			this.lSet1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-			this.lSet1.Location = new System.Drawing.Point(10, 50);
-			this.lSet1.Name = "lSet1";
-			this.lSet1.Size = new System.Drawing.Size(14, 13);
-			this.lSet1.TabIndex = 1024;
-			this.lSet1.Text = "X";
-			this.lSet1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-			// 
-			// textBox4
-			// 
-			this.textBox4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
-			this.textBox4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.textBox4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-			this.textBox4.Location = new System.Drawing.Point(29, 46);
-			this.textBox4.Name = "textBox4";
-			this.textBox4.Size = new System.Drawing.Size(40, 20);
-			this.textBox4.TabIndex = 1025;
-			this.textBox4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			// 
-			// lSet0
-			// 
-			this.lSet0.AutoSize = true;
-			this.lSet0.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-			this.lSet0.Location = new System.Drawing.Point(10, 23);
-			this.lSet0.Name = "lSet0";
-			this.lSet0.Size = new System.Drawing.Size(32, 13);
-			this.lSet0.TabIndex = 1022;
-			this.lSet0.Text = "Zone";
-			this.lSet0.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-			// 
 			// cbGrade
 			// 
-			this.cbGrade.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+			this.cbGrade.BackColor = System.Drawing.Color.White;
 			this.cbGrade.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.cbGrade.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.cbGrade.ForeColor = System.Drawing.Color.Black;
 			this.cbGrade.FormattingEnabled = true;
 			this.cbGrade.Location = new System.Drawing.Point(498, 30);
 			this.cbGrade.Name = "cbGrade";
@@ -580,7 +421,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			this.gbFortune.Controls.Add(this.lProbType);
 			this.gbFortune.Controls.Add(this.gridFortune);
 			this.gbFortune.Controls.Add(this.btnAddFortune);
-			this.gbFortune.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.gbFortune.ForeColor = System.Drawing.Color.Black;
 			this.gbFortune.Location = new System.Drawing.Point(0, 543);
 			this.gbFortune.Name = "gbFortune";
 			this.gbFortune.Size = new System.Drawing.Size(998, 288);
@@ -591,7 +432,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// rtFortuneWarning
 			// 
 			this.rtFortuneWarning.Anchor = System.Windows.Forms.AnchorStyles.Top;
-			this.rtFortuneWarning.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+			this.rtFortuneWarning.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
 			this.rtFortuneWarning.BorderStyle = System.Windows.Forms.BorderStyle.None;
 			this.rtFortuneWarning.Cursor = System.Windows.Forms.Cursors.Arrow;
 			this.rtFortuneWarning.DetectUrls = false;
@@ -610,9 +451,9 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			// cbFortuneProbType
 			// 
-			this.cbFortuneProbType.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+			this.cbFortuneProbType.BackColor = System.Drawing.Color.White;
 			this.cbFortuneProbType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.cbFortuneProbType.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.cbFortuneProbType.ForeColor = System.Drawing.Color.Black;
 			this.cbFortuneProbType.FormattingEnabled = true;
 			this.cbFortuneProbType.Location = new System.Drawing.Point(159, 17);
 			this.cbFortuneProbType.Name = "cbFortuneProbType";
@@ -623,7 +464,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// cbFortuneEnable
 			// 
 			this.cbFortuneEnable.AutoSize = true;
-			this.cbFortuneEnable.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.cbFortuneEnable.ForeColor = System.Drawing.Color.Black;
 			this.cbFortuneEnable.Location = new System.Drawing.Point(6, 19);
 			this.cbFortuneEnable.Name = "cbFortuneEnable";
 			this.cbFortuneEnable.Size = new System.Drawing.Size(59, 17);
@@ -635,7 +476,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// lProbType
 			// 
 			this.lProbType.AutoSize = true;
-			this.lProbType.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.lProbType.ForeColor = System.Drawing.Color.Black;
 			this.lProbType.Location = new System.Drawing.Point(71, 21);
 			this.lProbType.Name = "lProbType";
 			this.lProbType.Size = new System.Drawing.Size(82, 13);
@@ -647,8 +488,10 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			this.gridFortune.AllowUserToAddRows = false;
 			this.gridFortune.AllowUserToDeleteRows = false;
+			this.gridFortune.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.gridFortune.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-			this.gridFortune.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+			this.gridFortune.BackgroundColor = System.Drawing.Color.White;
 			this.gridFortune.BorderStyle = System.Windows.Forms.BorderStyle.None;
 			this.gridFortune.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
 			dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
@@ -666,10 +509,10 @@ namespace LastChaos_ToolBox_2024.Editors
             this.prob,
             this.string_id});
 			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-			dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
+			dataGridViewCellStyle2.BackColor = System.Drawing.Color.White;
 			dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			dataGridViewCellStyle2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-			dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
+			dataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black;
+			dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.White;
 			dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.WindowText;
 			dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
 			this.gridFortune.DefaultCellStyle = dataGridViewCellStyle2;
@@ -688,6 +531,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			// skill
 			// 
+			this.skill.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
 			this.skill.HeaderText = "Skill";
 			this.skill.Name = "skill";
 			// 
@@ -704,6 +548,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			// string_id
 			// 
+			this.string_id.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
 			this.string_id.HeaderText = "String ID";
 			this.string_id.Name = "string_id";
 			// 
@@ -711,11 +556,11 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			this.btnAddFortune.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnAddFortune.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(85)))), ((int)(((byte)(76)))));
-			this.btnAddFortune.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
-			this.btnAddFortune.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
+			this.btnAddFortune.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
+			this.btnAddFortune.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(160)))), ((int)(((byte)(160)))), ((int)(((byte)(160)))));
+			this.btnAddFortune.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+			this.btnAddFortune.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(251)))), ((int)(((byte)(251)))));
 			this.btnAddFortune.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnAddFortune.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
 			this.btnAddFortune.Location = new System.Drawing.Point(6, 16);
 			this.btnAddFortune.Name = "btnAddFortune";
 			this.btnAddFortune.Size = new System.Drawing.Size(986, 23);
@@ -777,7 +622,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			this.groupBox3.Controls.Add(this.lRareProbType3);
 			this.groupBox3.Controls.Add(this.label65);
 			this.groupBox3.Controls.Add(this.tbRareProb3);
-			this.groupBox3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.groupBox3.ForeColor = System.Drawing.Color.Black;
 			this.groupBox3.Location = new System.Drawing.Point(348, 193);
 			this.groupBox3.Name = "groupBox3";
 			this.groupBox3.Size = new System.Drawing.Size(308, 315);
@@ -787,9 +632,9 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			// tbRareIndex9
 			// 
-			this.tbRareIndex9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+			this.tbRareIndex9.BackColor = System.Drawing.Color.White;
 			this.tbRareIndex9.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.tbRareIndex9.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.tbRareIndex9.ForeColor = System.Drawing.Color.Black;
 			this.tbRareIndex9.Location = new System.Drawing.Point(59, 283);
 			this.tbRareIndex9.Name = "tbRareIndex9";
 			this.tbRareIndex9.Size = new System.Drawing.Size(120, 20);
@@ -799,9 +644,9 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			// tbRareIndex8
 			// 
-			this.tbRareIndex8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+			this.tbRareIndex8.BackColor = System.Drawing.Color.White;
 			this.tbRareIndex8.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.tbRareIndex8.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.tbRareIndex8.ForeColor = System.Drawing.Color.Black;
 			this.tbRareIndex8.Location = new System.Drawing.Point(59, 254);
 			this.tbRareIndex8.Name = "tbRareIndex8";
 			this.tbRareIndex8.Size = new System.Drawing.Size(120, 20);
@@ -811,9 +656,9 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			// tbRareIndex7
 			// 
-			this.tbRareIndex7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+			this.tbRareIndex7.BackColor = System.Drawing.Color.White;
 			this.tbRareIndex7.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.tbRareIndex7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.tbRareIndex7.ForeColor = System.Drawing.Color.Black;
 			this.tbRareIndex7.Location = new System.Drawing.Point(59, 225);
 			this.tbRareIndex7.Name = "tbRareIndex7";
 			this.tbRareIndex7.Size = new System.Drawing.Size(120, 20);
@@ -823,9 +668,9 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			// tbRareIndex6
 			// 
-			this.tbRareIndex6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+			this.tbRareIndex6.BackColor = System.Drawing.Color.White;
 			this.tbRareIndex6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.tbRareIndex6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.tbRareIndex6.ForeColor = System.Drawing.Color.Black;
 			this.tbRareIndex6.Location = new System.Drawing.Point(59, 196);
 			this.tbRareIndex6.Name = "tbRareIndex6";
 			this.tbRareIndex6.Size = new System.Drawing.Size(120, 20);
@@ -835,9 +680,9 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			// tbRareIndex5
 			// 
-			this.tbRareIndex5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+			this.tbRareIndex5.BackColor = System.Drawing.Color.White;
 			this.tbRareIndex5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.tbRareIndex5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.tbRareIndex5.ForeColor = System.Drawing.Color.Black;
 			this.tbRareIndex5.Location = new System.Drawing.Point(59, 167);
 			this.tbRareIndex5.Name = "tbRareIndex5";
 			this.tbRareIndex5.Size = new System.Drawing.Size(120, 20);
@@ -847,9 +692,9 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			// tbRareIndex4
 			// 
-			this.tbRareIndex4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+			this.tbRareIndex4.BackColor = System.Drawing.Color.White;
 			this.tbRareIndex4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.tbRareIndex4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.tbRareIndex4.ForeColor = System.Drawing.Color.Black;
 			this.tbRareIndex4.Location = new System.Drawing.Point(59, 138);
 			this.tbRareIndex4.Name = "tbRareIndex4";
 			this.tbRareIndex4.Size = new System.Drawing.Size(120, 20);
@@ -859,9 +704,9 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			// tbRareIndex3
 			// 
-			this.tbRareIndex3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+			this.tbRareIndex3.BackColor = System.Drawing.Color.White;
 			this.tbRareIndex3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.tbRareIndex3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.tbRareIndex3.ForeColor = System.Drawing.Color.Black;
 			this.tbRareIndex3.Location = new System.Drawing.Point(59, 109);
 			this.tbRareIndex3.Name = "tbRareIndex3";
 			this.tbRareIndex3.Size = new System.Drawing.Size(120, 20);
@@ -871,9 +716,9 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			// tbRareIndex2
 			// 
-			this.tbRareIndex2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+			this.tbRareIndex2.BackColor = System.Drawing.Color.White;
 			this.tbRareIndex2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.tbRareIndex2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.tbRareIndex2.ForeColor = System.Drawing.Color.Black;
 			this.tbRareIndex2.Location = new System.Drawing.Point(59, 80);
 			this.tbRareIndex2.Name = "tbRareIndex2";
 			this.tbRareIndex2.Size = new System.Drawing.Size(120, 20);
@@ -883,9 +728,9 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			// tbRareIndex1
 			// 
-			this.tbRareIndex1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+			this.tbRareIndex1.BackColor = System.Drawing.Color.White;
 			this.tbRareIndex1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.tbRareIndex1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.tbRareIndex1.ForeColor = System.Drawing.Color.Black;
 			this.tbRareIndex1.Location = new System.Drawing.Point(59, 51);
 			this.tbRareIndex1.Name = "tbRareIndex1";
 			this.tbRareIndex1.Size = new System.Drawing.Size(120, 20);
@@ -895,9 +740,9 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			// tbRareIndex0
 			// 
-			this.tbRareIndex0.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+			this.tbRareIndex0.BackColor = System.Drawing.Color.White;
 			this.tbRareIndex0.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.tbRareIndex0.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.tbRareIndex0.ForeColor = System.Drawing.Color.Black;
 			this.tbRareIndex0.Location = new System.Drawing.Point(59, 22);
 			this.tbRareIndex0.Name = "tbRareIndex0";
 			this.tbRareIndex0.Size = new System.Drawing.Size(120, 20);
@@ -908,7 +753,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// lRareProb9Percentage
 			// 
 			this.lRareProb9Percentage.AutoSize = true;
-			this.lRareProb9Percentage.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.lRareProb9Percentage.ForeColor = System.Drawing.Color.Black;
 			this.lRareProb9Percentage.Location = new System.Drawing.Point(266, 287);
 			this.lRareProb9Percentage.Name = "lRareProb9Percentage";
 			this.lRareProb9Percentage.Size = new System.Drawing.Size(10, 13);
@@ -919,7 +764,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// lRareProbType9
 			// 
 			this.lRareProbType9.AutoSize = true;
-			this.lRareProbType9.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.lRareProbType9.ForeColor = System.Drawing.Color.Black;
 			this.lRareProbType9.Location = new System.Drawing.Point(185, 287);
 			this.lRareProbType9.Name = "lRareProbType9";
 			this.lRareProbType9.Size = new System.Drawing.Size(33, 13);
@@ -930,7 +775,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// label81
 			// 
 			this.label81.AutoSize = true;
-			this.label81.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.label81.ForeColor = System.Drawing.Color.Black;
 			this.label81.Location = new System.Drawing.Point(6, 287);
 			this.label81.Name = "label81";
 			this.label81.Size = new System.Drawing.Size(47, 13);
@@ -940,9 +785,9 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			// tbRareProb9
 			// 
-			this.tbRareProb9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+			this.tbRareProb9.BackColor = System.Drawing.Color.White;
 			this.tbRareProb9.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.tbRareProb9.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.tbRareProb9.ForeColor = System.Drawing.Color.Black;
 			this.tbRareProb9.Location = new System.Drawing.Point(220, 283);
 			this.tbRareProb9.Name = "tbRareProb9";
 			this.tbRareProb9.Size = new System.Drawing.Size(40, 20);
@@ -953,7 +798,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// lRareProb5Percentage
 			// 
 			this.lRareProb5Percentage.AutoSize = true;
-			this.lRareProb5Percentage.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.lRareProb5Percentage.ForeColor = System.Drawing.Color.Black;
 			this.lRareProb5Percentage.Location = new System.Drawing.Point(266, 171);
 			this.lRareProb5Percentage.Name = "lRareProb5Percentage";
 			this.lRareProb5Percentage.Size = new System.Drawing.Size(10, 13);
@@ -964,7 +809,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// lRareProbType5
 			// 
 			this.lRareProbType5.AutoSize = true;
-			this.lRareProbType5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.lRareProbType5.ForeColor = System.Drawing.Color.Black;
 			this.lRareProbType5.Location = new System.Drawing.Point(185, 171);
 			this.lRareProbType5.Name = "lRareProbType5";
 			this.lRareProbType5.Size = new System.Drawing.Size(33, 13);
@@ -975,7 +820,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// label84
 			// 
 			this.label84.AutoSize = true;
-			this.label84.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.label84.ForeColor = System.Drawing.Color.Black;
 			this.label84.Location = new System.Drawing.Point(6, 171);
 			this.label84.Name = "label84";
 			this.label84.Size = new System.Drawing.Size(47, 13);
@@ -985,9 +830,9 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			// tbRareProb5
 			// 
-			this.tbRareProb5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+			this.tbRareProb5.BackColor = System.Drawing.Color.White;
 			this.tbRareProb5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.tbRareProb5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.tbRareProb5.ForeColor = System.Drawing.Color.Black;
 			this.tbRareProb5.Location = new System.Drawing.Point(220, 167);
 			this.tbRareProb5.Name = "tbRareProb5";
 			this.tbRareProb5.Size = new System.Drawing.Size(40, 20);
@@ -998,7 +843,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// lRareProb6Percentage
 			// 
 			this.lRareProb6Percentage.AutoSize = true;
-			this.lRareProb6Percentage.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.lRareProb6Percentage.ForeColor = System.Drawing.Color.Black;
 			this.lRareProb6Percentage.Location = new System.Drawing.Point(266, 200);
 			this.lRareProb6Percentage.Name = "lRareProb6Percentage";
 			this.lRareProb6Percentage.Size = new System.Drawing.Size(10, 13);
@@ -1009,7 +854,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// lRareProbType6
 			// 
 			this.lRareProbType6.AutoSize = true;
-			this.lRareProbType6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.lRareProbType6.ForeColor = System.Drawing.Color.Black;
 			this.lRareProbType6.Location = new System.Drawing.Point(185, 200);
 			this.lRareProbType6.Name = "lRareProbType6";
 			this.lRareProbType6.Size = new System.Drawing.Size(33, 13);
@@ -1020,7 +865,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// label87
 			// 
 			this.label87.AutoSize = true;
-			this.label87.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.label87.ForeColor = System.Drawing.Color.Black;
 			this.label87.Location = new System.Drawing.Point(6, 200);
 			this.label87.Name = "label87";
 			this.label87.Size = new System.Drawing.Size(47, 13);
@@ -1030,9 +875,9 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			// tbRareProb6
 			// 
-			this.tbRareProb6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+			this.tbRareProb6.BackColor = System.Drawing.Color.White;
 			this.tbRareProb6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.tbRareProb6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.tbRareProb6.ForeColor = System.Drawing.Color.Black;
 			this.tbRareProb6.Location = new System.Drawing.Point(220, 196);
 			this.tbRareProb6.Name = "tbRareProb6";
 			this.tbRareProb6.Size = new System.Drawing.Size(40, 20);
@@ -1043,7 +888,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// lRareProb7Percentage
 			// 
 			this.lRareProb7Percentage.AutoSize = true;
-			this.lRareProb7Percentage.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.lRareProb7Percentage.ForeColor = System.Drawing.Color.Black;
 			this.lRareProb7Percentage.Location = new System.Drawing.Point(266, 229);
 			this.lRareProb7Percentage.Name = "lRareProb7Percentage";
 			this.lRareProb7Percentage.Size = new System.Drawing.Size(10, 13);
@@ -1054,7 +899,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// lRareProbType7
 			// 
 			this.lRareProbType7.AutoSize = true;
-			this.lRareProbType7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.lRareProbType7.ForeColor = System.Drawing.Color.Black;
 			this.lRareProbType7.Location = new System.Drawing.Point(185, 229);
 			this.lRareProbType7.Name = "lRareProbType7";
 			this.lRareProbType7.Size = new System.Drawing.Size(33, 13);
@@ -1065,7 +910,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// label90
 			// 
 			this.label90.AutoSize = true;
-			this.label90.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.label90.ForeColor = System.Drawing.Color.Black;
 			this.label90.Location = new System.Drawing.Point(6, 229);
 			this.label90.Name = "label90";
 			this.label90.Size = new System.Drawing.Size(47, 13);
@@ -1075,9 +920,9 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			// tbRareProb7
 			// 
-			this.tbRareProb7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+			this.tbRareProb7.BackColor = System.Drawing.Color.White;
 			this.tbRareProb7.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.tbRareProb7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.tbRareProb7.ForeColor = System.Drawing.Color.Black;
 			this.tbRareProb7.Location = new System.Drawing.Point(220, 225);
 			this.tbRareProb7.Name = "tbRareProb7";
 			this.tbRareProb7.Size = new System.Drawing.Size(40, 20);
@@ -1088,7 +933,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// lRareProb8Percentage
 			// 
 			this.lRareProb8Percentage.AutoSize = true;
-			this.lRareProb8Percentage.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.lRareProb8Percentage.ForeColor = System.Drawing.Color.Black;
 			this.lRareProb8Percentage.Location = new System.Drawing.Point(266, 258);
 			this.lRareProb8Percentage.Name = "lRareProb8Percentage";
 			this.lRareProb8Percentage.Size = new System.Drawing.Size(10, 13);
@@ -1099,7 +944,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// lRareProbType8
 			// 
 			this.lRareProbType8.AutoSize = true;
-			this.lRareProbType8.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.lRareProbType8.ForeColor = System.Drawing.Color.Black;
 			this.lRareProbType8.Location = new System.Drawing.Point(185, 258);
 			this.lRareProbType8.Name = "lRareProbType8";
 			this.lRareProbType8.Size = new System.Drawing.Size(33, 13);
@@ -1110,7 +955,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// label93
 			// 
 			this.label93.AutoSize = true;
-			this.label93.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.label93.ForeColor = System.Drawing.Color.Black;
 			this.label93.Location = new System.Drawing.Point(6, 258);
 			this.label93.Name = "label93";
 			this.label93.Size = new System.Drawing.Size(47, 13);
@@ -1120,9 +965,9 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			// tbRareProb8
 			// 
-			this.tbRareProb8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+			this.tbRareProb8.BackColor = System.Drawing.Color.White;
 			this.tbRareProb8.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.tbRareProb8.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.tbRareProb8.ForeColor = System.Drawing.Color.Black;
 			this.tbRareProb8.Location = new System.Drawing.Point(220, 254);
 			this.tbRareProb8.Name = "tbRareProb8";
 			this.tbRareProb8.Size = new System.Drawing.Size(40, 20);
@@ -1133,7 +978,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// lRareProb4Percentage
 			// 
 			this.lRareProb4Percentage.AutoSize = true;
-			this.lRareProb4Percentage.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.lRareProb4Percentage.ForeColor = System.Drawing.Color.Black;
 			this.lRareProb4Percentage.Location = new System.Drawing.Point(266, 142);
 			this.lRareProb4Percentage.Name = "lRareProb4Percentage";
 			this.lRareProb4Percentage.Size = new System.Drawing.Size(10, 13);
@@ -1144,7 +989,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// lRareProbType4
 			// 
 			this.lRareProbType4.AutoSize = true;
-			this.lRareProbType4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.lRareProbType4.ForeColor = System.Drawing.Color.Black;
 			this.lRareProbType4.Location = new System.Drawing.Point(185, 142);
 			this.lRareProbType4.Name = "lRareProbType4";
 			this.lRareProbType4.Size = new System.Drawing.Size(33, 13);
@@ -1155,7 +1000,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// label78
 			// 
 			this.label78.AutoSize = true;
-			this.label78.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.label78.ForeColor = System.Drawing.Color.Black;
 			this.label78.Location = new System.Drawing.Point(6, 142);
 			this.label78.Name = "label78";
 			this.label78.Size = new System.Drawing.Size(47, 13);
@@ -1165,9 +1010,9 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			// tbRareProb4
 			// 
-			this.tbRareProb4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+			this.tbRareProb4.BackColor = System.Drawing.Color.White;
 			this.tbRareProb4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.tbRareProb4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.tbRareProb4.ForeColor = System.Drawing.Color.Black;
 			this.tbRareProb4.Location = new System.Drawing.Point(220, 138);
 			this.tbRareProb4.Name = "tbRareProb4";
 			this.tbRareProb4.Size = new System.Drawing.Size(40, 20);
@@ -1178,7 +1023,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// lRareProb0Percentage
 			// 
 			this.lRareProb0Percentage.AutoSize = true;
-			this.lRareProb0Percentage.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.lRareProb0Percentage.ForeColor = System.Drawing.Color.Black;
 			this.lRareProb0Percentage.Location = new System.Drawing.Point(266, 26);
 			this.lRareProb0Percentage.Name = "lRareProb0Percentage";
 			this.lRareProb0Percentage.Size = new System.Drawing.Size(10, 13);
@@ -1189,7 +1034,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// lRareProbType0
 			// 
 			this.lRareProbType0.AutoSize = true;
-			this.lRareProbType0.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.lRareProbType0.ForeColor = System.Drawing.Color.Black;
 			this.lRareProbType0.Location = new System.Drawing.Point(185, 26);
 			this.lRareProbType0.Name = "lRareProbType0";
 			this.lRareProbType0.Size = new System.Drawing.Size(33, 13);
@@ -1200,7 +1045,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// label72
 			// 
 			this.label72.AutoSize = true;
-			this.label72.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.label72.ForeColor = System.Drawing.Color.Black;
 			this.label72.Location = new System.Drawing.Point(6, 26);
 			this.label72.Name = "label72";
 			this.label72.Size = new System.Drawing.Size(47, 13);
@@ -1210,9 +1055,9 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			// tbRareProb0
 			// 
-			this.tbRareProb0.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+			this.tbRareProb0.BackColor = System.Drawing.Color.White;
 			this.tbRareProb0.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.tbRareProb0.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.tbRareProb0.ForeColor = System.Drawing.Color.Black;
 			this.tbRareProb0.Location = new System.Drawing.Point(220, 22);
 			this.tbRareProb0.Name = "tbRareProb0";
 			this.tbRareProb0.Size = new System.Drawing.Size(40, 20);
@@ -1223,7 +1068,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// lRareProb1Percentage
 			// 
 			this.lRareProb1Percentage.AutoSize = true;
-			this.lRareProb1Percentage.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.lRareProb1Percentage.ForeColor = System.Drawing.Color.Black;
 			this.lRareProb1Percentage.Location = new System.Drawing.Point(266, 55);
 			this.lRareProb1Percentage.Name = "lRareProb1Percentage";
 			this.lRareProb1Percentage.Size = new System.Drawing.Size(10, 13);
@@ -1234,7 +1079,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// lRareProbType1
 			// 
 			this.lRareProbType1.AutoSize = true;
-			this.lRareProbType1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.lRareProbType1.ForeColor = System.Drawing.Color.Black;
 			this.lRareProbType1.Location = new System.Drawing.Point(185, 55);
 			this.lRareProbType1.Name = "lRareProbType1";
 			this.lRareProbType1.Size = new System.Drawing.Size(33, 13);
@@ -1245,7 +1090,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// label75
 			// 
 			this.label75.AutoSize = true;
-			this.label75.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.label75.ForeColor = System.Drawing.Color.Black;
 			this.label75.Location = new System.Drawing.Point(6, 55);
 			this.label75.Name = "label75";
 			this.label75.Size = new System.Drawing.Size(47, 13);
@@ -1255,9 +1100,9 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			// tbRareProb1
 			// 
-			this.tbRareProb1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+			this.tbRareProb1.BackColor = System.Drawing.Color.White;
 			this.tbRareProb1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.tbRareProb1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.tbRareProb1.ForeColor = System.Drawing.Color.Black;
 			this.tbRareProb1.Location = new System.Drawing.Point(220, 51);
 			this.tbRareProb1.Name = "tbRareProb1";
 			this.tbRareProb1.Size = new System.Drawing.Size(40, 20);
@@ -1268,7 +1113,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// lRareProb2Percentage
 			// 
 			this.lRareProb2Percentage.AutoSize = true;
-			this.lRareProb2Percentage.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.lRareProb2Percentage.ForeColor = System.Drawing.Color.Black;
 			this.lRareProb2Percentage.Location = new System.Drawing.Point(266, 84);
 			this.lRareProb2Percentage.Name = "lRareProb2Percentage";
 			this.lRareProb2Percentage.Size = new System.Drawing.Size(10, 13);
@@ -1279,7 +1124,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// lRareProbType2
 			// 
 			this.lRareProbType2.AutoSize = true;
-			this.lRareProbType2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.lRareProbType2.ForeColor = System.Drawing.Color.Black;
 			this.lRareProbType2.Location = new System.Drawing.Point(185, 84);
 			this.lRareProbType2.Name = "lRareProbType2";
 			this.lRareProbType2.Size = new System.Drawing.Size(33, 13);
@@ -1290,7 +1135,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// label69
 			// 
 			this.label69.AutoSize = true;
-			this.label69.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.label69.ForeColor = System.Drawing.Color.Black;
 			this.label69.Location = new System.Drawing.Point(6, 84);
 			this.label69.Name = "label69";
 			this.label69.Size = new System.Drawing.Size(47, 13);
@@ -1300,9 +1145,9 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			// tbRareProb2
 			// 
-			this.tbRareProb2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+			this.tbRareProb2.BackColor = System.Drawing.Color.White;
 			this.tbRareProb2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.tbRareProb2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.tbRareProb2.ForeColor = System.Drawing.Color.Black;
 			this.tbRareProb2.Location = new System.Drawing.Point(220, 80);
 			this.tbRareProb2.Name = "tbRareProb2";
 			this.tbRareProb2.Size = new System.Drawing.Size(40, 20);
@@ -1313,7 +1158,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// lRareProb3Percentage
 			// 
 			this.lRareProb3Percentage.AutoSize = true;
-			this.lRareProb3Percentage.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.lRareProb3Percentage.ForeColor = System.Drawing.Color.Black;
 			this.lRareProb3Percentage.Location = new System.Drawing.Point(266, 113);
 			this.lRareProb3Percentage.Name = "lRareProb3Percentage";
 			this.lRareProb3Percentage.Size = new System.Drawing.Size(10, 13);
@@ -1324,7 +1169,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// lRareProbType3
 			// 
 			this.lRareProbType3.AutoSize = true;
-			this.lRareProbType3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.lRareProbType3.ForeColor = System.Drawing.Color.Black;
 			this.lRareProbType3.Location = new System.Drawing.Point(185, 113);
 			this.lRareProbType3.Name = "lRareProbType3";
 			this.lRareProbType3.Size = new System.Drawing.Size(33, 13);
@@ -1335,7 +1180,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// label65
 			// 
 			this.label65.AutoSize = true;
-			this.label65.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.label65.ForeColor = System.Drawing.Color.Black;
 			this.label65.Location = new System.Drawing.Point(6, 113);
 			this.label65.Name = "label65";
 			this.label65.Size = new System.Drawing.Size(47, 13);
@@ -1345,9 +1190,9 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			// tbRareProb3
 			// 
-			this.tbRareProb3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+			this.tbRareProb3.BackColor = System.Drawing.Color.White;
 			this.tbRareProb3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.tbRareProb3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.tbRareProb3.ForeColor = System.Drawing.Color.Black;
 			this.tbRareProb3.Location = new System.Drawing.Point(220, 109);
 			this.tbRareProb3.Name = "tbRareProb3";
 			this.tbRareProb3.Size = new System.Drawing.Size(40, 20);
@@ -1357,9 +1202,9 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			// tbAllowedZoneFlag
 			// 
-			this.tbAllowedZoneFlag.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+			this.tbAllowedZoneFlag.BackColor = System.Drawing.Color.White;
 			this.tbAllowedZoneFlag.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.tbAllowedZoneFlag.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.tbAllowedZoneFlag.ForeColor = System.Drawing.Color.Black;
 			this.tbAllowedZoneFlag.Location = new System.Drawing.Point(736, 58);
 			this.tbAllowedZoneFlag.Name = "tbAllowedZoneFlag";
 			this.tbAllowedZoneFlag.ReadOnly = true;
@@ -1372,7 +1217,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// label8
 			// 
 			this.label8.AutoSize = true;
-			this.label8.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.label8.ForeColor = System.Drawing.Color.Black;
 			this.label8.Location = new System.Drawing.Point(456, 34);
 			this.label8.Name = "label8";
 			this.label8.Size = new System.Drawing.Size(36, 13);
@@ -1431,7 +1276,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			this.groupBox9.Controls.Add(this.tbSkill2RequiredLevel);
 			this.groupBox9.Controls.Add(this.label44);
 			this.groupBox9.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.groupBox9.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.groupBox9.ForeColor = System.Drawing.Color.Black;
 			this.groupBox9.Location = new System.Drawing.Point(0, 192);
 			this.groupBox9.Name = "groupBox9";
 			this.groupBox9.Size = new System.Drawing.Size(342, 345);
@@ -1442,7 +1287,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// label62
 			// 
 			this.label62.AutoSize = true;
-			this.label62.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.label62.ForeColor = System.Drawing.Color.Black;
 			this.label62.Location = new System.Drawing.Point(240, 316);
 			this.label62.Name = "label62";
 			this.label62.Size = new System.Drawing.Size(43, 13);
@@ -1452,9 +1297,9 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			// tbItem9RequiredAmount
 			// 
-			this.tbItem9RequiredAmount.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+			this.tbItem9RequiredAmount.BackColor = System.Drawing.Color.White;
 			this.tbItem9RequiredAmount.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.tbItem9RequiredAmount.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.tbItem9RequiredAmount.ForeColor = System.Drawing.Color.Black;
 			this.tbItem9RequiredAmount.Location = new System.Drawing.Point(289, 312);
 			this.tbItem9RequiredAmount.Name = "tbItem9RequiredAmount";
 			this.tbItem9RequiredAmount.Size = new System.Drawing.Size(40, 20);
@@ -1464,11 +1309,11 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			// btnItem9Required
 			// 
-			this.btnItem9Required.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(85)))), ((int)(((byte)(76)))));
-			this.btnItem9Required.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
-			this.btnItem9Required.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
+			this.btnItem9Required.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
+			this.btnItem9Required.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(160)))), ((int)(((byte)(160)))), ((int)(((byte)(160)))));
+			this.btnItem9Required.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+			this.btnItem9Required.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(251)))), ((int)(((byte)(251)))));
 			this.btnItem9Required.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnItem9Required.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
 			this.btnItem9Required.Location = new System.Drawing.Point(84, 311);
 			this.btnItem9Required.Name = "btnItem9Required";
 			this.btnItem9Required.Size = new System.Drawing.Size(150, 23);
@@ -1479,7 +1324,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// label63
 			// 
 			this.label63.AutoSize = true;
-			this.label63.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.label63.ForeColor = System.Drawing.Color.Black;
 			this.label63.Location = new System.Drawing.Point(6, 316);
 			this.label63.Name = "label63";
 			this.label63.Size = new System.Drawing.Size(73, 13);
@@ -1490,7 +1335,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// label60
 			// 
 			this.label60.AutoSize = true;
-			this.label60.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.label60.ForeColor = System.Drawing.Color.Black;
 			this.label60.Location = new System.Drawing.Point(240, 287);
 			this.label60.Name = "label60";
 			this.label60.Size = new System.Drawing.Size(43, 13);
@@ -1500,9 +1345,9 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			// tbItem8RequiredAmount
 			// 
-			this.tbItem8RequiredAmount.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+			this.tbItem8RequiredAmount.BackColor = System.Drawing.Color.White;
 			this.tbItem8RequiredAmount.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.tbItem8RequiredAmount.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.tbItem8RequiredAmount.ForeColor = System.Drawing.Color.Black;
 			this.tbItem8RequiredAmount.Location = new System.Drawing.Point(289, 283);
 			this.tbItem8RequiredAmount.Name = "tbItem8RequiredAmount";
 			this.tbItem8RequiredAmount.Size = new System.Drawing.Size(40, 20);
@@ -1512,11 +1357,11 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			// btnItem8Required
 			// 
-			this.btnItem8Required.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(85)))), ((int)(((byte)(76)))));
-			this.btnItem8Required.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
-			this.btnItem8Required.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
+			this.btnItem8Required.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
+			this.btnItem8Required.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(160)))), ((int)(((byte)(160)))), ((int)(((byte)(160)))));
+			this.btnItem8Required.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+			this.btnItem8Required.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(251)))), ((int)(((byte)(251)))));
 			this.btnItem8Required.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnItem8Required.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
 			this.btnItem8Required.Location = new System.Drawing.Point(84, 282);
 			this.btnItem8Required.Name = "btnItem8Required";
 			this.btnItem8Required.Size = new System.Drawing.Size(150, 23);
@@ -1527,7 +1372,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// label61
 			// 
 			this.label61.AutoSize = true;
-			this.label61.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.label61.ForeColor = System.Drawing.Color.Black;
 			this.label61.Location = new System.Drawing.Point(6, 287);
 			this.label61.Name = "label61";
 			this.label61.Size = new System.Drawing.Size(73, 13);
@@ -1538,7 +1383,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// label58
 			// 
 			this.label58.AutoSize = true;
-			this.label58.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.label58.ForeColor = System.Drawing.Color.Black;
 			this.label58.Location = new System.Drawing.Point(240, 258);
 			this.label58.Name = "label58";
 			this.label58.Size = new System.Drawing.Size(43, 13);
@@ -1548,9 +1393,9 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			// tbItem7RequiredAmount
 			// 
-			this.tbItem7RequiredAmount.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+			this.tbItem7RequiredAmount.BackColor = System.Drawing.Color.White;
 			this.tbItem7RequiredAmount.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.tbItem7RequiredAmount.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.tbItem7RequiredAmount.ForeColor = System.Drawing.Color.Black;
 			this.tbItem7RequiredAmount.Location = new System.Drawing.Point(289, 254);
 			this.tbItem7RequiredAmount.Name = "tbItem7RequiredAmount";
 			this.tbItem7RequiredAmount.Size = new System.Drawing.Size(40, 20);
@@ -1560,11 +1405,11 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			// btnItem7Required
 			// 
-			this.btnItem7Required.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(85)))), ((int)(((byte)(76)))));
-			this.btnItem7Required.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
-			this.btnItem7Required.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
+			this.btnItem7Required.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
+			this.btnItem7Required.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(160)))), ((int)(((byte)(160)))), ((int)(((byte)(160)))));
+			this.btnItem7Required.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+			this.btnItem7Required.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(251)))), ((int)(((byte)(251)))));
 			this.btnItem7Required.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnItem7Required.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
 			this.btnItem7Required.Location = new System.Drawing.Point(84, 253);
 			this.btnItem7Required.Name = "btnItem7Required";
 			this.btnItem7Required.Size = new System.Drawing.Size(150, 23);
@@ -1575,7 +1420,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// label59
 			// 
 			this.label59.AutoSize = true;
-			this.label59.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.label59.ForeColor = System.Drawing.Color.Black;
 			this.label59.Location = new System.Drawing.Point(6, 258);
 			this.label59.Name = "label59";
 			this.label59.Size = new System.Drawing.Size(73, 13);
@@ -1586,7 +1431,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// label56
 			// 
 			this.label56.AutoSize = true;
-			this.label56.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.label56.ForeColor = System.Drawing.Color.Black;
 			this.label56.Location = new System.Drawing.Point(240, 229);
 			this.label56.Name = "label56";
 			this.label56.Size = new System.Drawing.Size(43, 13);
@@ -1596,9 +1441,9 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			// tbItem6RequiredAmount
 			// 
-			this.tbItem6RequiredAmount.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+			this.tbItem6RequiredAmount.BackColor = System.Drawing.Color.White;
 			this.tbItem6RequiredAmount.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.tbItem6RequiredAmount.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.tbItem6RequiredAmount.ForeColor = System.Drawing.Color.Black;
 			this.tbItem6RequiredAmount.Location = new System.Drawing.Point(289, 225);
 			this.tbItem6RequiredAmount.Name = "tbItem6RequiredAmount";
 			this.tbItem6RequiredAmount.Size = new System.Drawing.Size(40, 20);
@@ -1608,11 +1453,11 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			// btnItem6Required
 			// 
-			this.btnItem6Required.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(85)))), ((int)(((byte)(76)))));
-			this.btnItem6Required.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
-			this.btnItem6Required.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
+			this.btnItem6Required.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
+			this.btnItem6Required.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(160)))), ((int)(((byte)(160)))), ((int)(((byte)(160)))));
+			this.btnItem6Required.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+			this.btnItem6Required.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(251)))), ((int)(((byte)(251)))));
 			this.btnItem6Required.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnItem6Required.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
 			this.btnItem6Required.Location = new System.Drawing.Point(84, 224);
 			this.btnItem6Required.Name = "btnItem6Required";
 			this.btnItem6Required.Size = new System.Drawing.Size(150, 23);
@@ -1623,7 +1468,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// label57
 			// 
 			this.label57.AutoSize = true;
-			this.label57.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.label57.ForeColor = System.Drawing.Color.Black;
 			this.label57.Location = new System.Drawing.Point(6, 229);
 			this.label57.Name = "label57";
 			this.label57.Size = new System.Drawing.Size(73, 13);
@@ -1634,7 +1479,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// label50
 			// 
 			this.label50.AutoSize = true;
-			this.label50.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.label50.ForeColor = System.Drawing.Color.Black;
 			this.label50.Location = new System.Drawing.Point(240, 200);
 			this.label50.Name = "label50";
 			this.label50.Size = new System.Drawing.Size(43, 13);
@@ -1644,9 +1489,9 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			// tbItem5RequiredAmount
 			// 
-			this.tbItem5RequiredAmount.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+			this.tbItem5RequiredAmount.BackColor = System.Drawing.Color.White;
 			this.tbItem5RequiredAmount.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.tbItem5RequiredAmount.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.tbItem5RequiredAmount.ForeColor = System.Drawing.Color.Black;
 			this.tbItem5RequiredAmount.Location = new System.Drawing.Point(289, 196);
 			this.tbItem5RequiredAmount.Name = "tbItem5RequiredAmount";
 			this.tbItem5RequiredAmount.Size = new System.Drawing.Size(40, 20);
@@ -1656,11 +1501,11 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			// btnItem5Required
 			// 
-			this.btnItem5Required.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(85)))), ((int)(((byte)(76)))));
-			this.btnItem5Required.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
-			this.btnItem5Required.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
+			this.btnItem5Required.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
+			this.btnItem5Required.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(160)))), ((int)(((byte)(160)))), ((int)(((byte)(160)))));
+			this.btnItem5Required.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+			this.btnItem5Required.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(251)))), ((int)(((byte)(251)))));
 			this.btnItem5Required.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnItem5Required.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
 			this.btnItem5Required.Location = new System.Drawing.Point(84, 195);
 			this.btnItem5Required.Name = "btnItem5Required";
 			this.btnItem5Required.Size = new System.Drawing.Size(150, 23);
@@ -1671,7 +1516,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// label51
 			// 
 			this.label51.AutoSize = true;
-			this.label51.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.label51.ForeColor = System.Drawing.Color.Black;
 			this.label51.Location = new System.Drawing.Point(6, 200);
 			this.label51.Name = "label51";
 			this.label51.Size = new System.Drawing.Size(73, 13);
@@ -1682,7 +1527,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// label52
 			// 
 			this.label52.AutoSize = true;
-			this.label52.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.label52.ForeColor = System.Drawing.Color.Black;
 			this.label52.Location = new System.Drawing.Point(240, 171);
 			this.label52.Name = "label52";
 			this.label52.Size = new System.Drawing.Size(43, 13);
@@ -1692,9 +1537,9 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			// tbItem4RequiredAmount
 			// 
-			this.tbItem4RequiredAmount.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+			this.tbItem4RequiredAmount.BackColor = System.Drawing.Color.White;
 			this.tbItem4RequiredAmount.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.tbItem4RequiredAmount.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.tbItem4RequiredAmount.ForeColor = System.Drawing.Color.Black;
 			this.tbItem4RequiredAmount.Location = new System.Drawing.Point(289, 167);
 			this.tbItem4RequiredAmount.Name = "tbItem4RequiredAmount";
 			this.tbItem4RequiredAmount.Size = new System.Drawing.Size(40, 20);
@@ -1704,11 +1549,11 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			// btnItem4Required
 			// 
-			this.btnItem4Required.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(85)))), ((int)(((byte)(76)))));
-			this.btnItem4Required.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
-			this.btnItem4Required.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
+			this.btnItem4Required.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
+			this.btnItem4Required.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(160)))), ((int)(((byte)(160)))), ((int)(((byte)(160)))));
+			this.btnItem4Required.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+			this.btnItem4Required.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(251)))), ((int)(((byte)(251)))));
 			this.btnItem4Required.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnItem4Required.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
 			this.btnItem4Required.Location = new System.Drawing.Point(84, 166);
 			this.btnItem4Required.Name = "btnItem4Required";
 			this.btnItem4Required.Size = new System.Drawing.Size(150, 23);
@@ -1719,7 +1564,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// label53
 			// 
 			this.label53.AutoSize = true;
-			this.label53.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.label53.ForeColor = System.Drawing.Color.Black;
 			this.label53.Location = new System.Drawing.Point(6, 171);
 			this.label53.Name = "label53";
 			this.label53.Size = new System.Drawing.Size(73, 13);
@@ -1730,7 +1575,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// label54
 			// 
 			this.label54.AutoSize = true;
-			this.label54.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.label54.ForeColor = System.Drawing.Color.Black;
 			this.label54.Location = new System.Drawing.Point(240, 142);
 			this.label54.Name = "label54";
 			this.label54.Size = new System.Drawing.Size(43, 13);
@@ -1740,9 +1585,9 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			// tbItem3RequiredAmount
 			// 
-			this.tbItem3RequiredAmount.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+			this.tbItem3RequiredAmount.BackColor = System.Drawing.Color.White;
 			this.tbItem3RequiredAmount.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.tbItem3RequiredAmount.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.tbItem3RequiredAmount.ForeColor = System.Drawing.Color.Black;
 			this.tbItem3RequiredAmount.Location = new System.Drawing.Point(289, 138);
 			this.tbItem3RequiredAmount.Name = "tbItem3RequiredAmount";
 			this.tbItem3RequiredAmount.Size = new System.Drawing.Size(40, 20);
@@ -1752,11 +1597,11 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			// btnItem3Required
 			// 
-			this.btnItem3Required.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(85)))), ((int)(((byte)(76)))));
-			this.btnItem3Required.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
-			this.btnItem3Required.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
+			this.btnItem3Required.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
+			this.btnItem3Required.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(160)))), ((int)(((byte)(160)))), ((int)(((byte)(160)))));
+			this.btnItem3Required.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+			this.btnItem3Required.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(251)))), ((int)(((byte)(251)))));
 			this.btnItem3Required.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnItem3Required.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
 			this.btnItem3Required.Location = new System.Drawing.Point(84, 137);
 			this.btnItem3Required.Name = "btnItem3Required";
 			this.btnItem3Required.Size = new System.Drawing.Size(150, 23);
@@ -1767,7 +1612,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// label55
 			// 
 			this.label55.AutoSize = true;
-			this.label55.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.label55.ForeColor = System.Drawing.Color.Black;
 			this.label55.Location = new System.Drawing.Point(6, 142);
 			this.label55.Name = "label55";
 			this.label55.Size = new System.Drawing.Size(73, 13);
@@ -1778,7 +1623,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// label48
 			// 
 			this.label48.AutoSize = true;
-			this.label48.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.label48.ForeColor = System.Drawing.Color.Black;
 			this.label48.Location = new System.Drawing.Point(240, 113);
 			this.label48.Name = "label48";
 			this.label48.Size = new System.Drawing.Size(43, 13);
@@ -1788,9 +1633,9 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			// tbItem2RequiredAmount
 			// 
-			this.tbItem2RequiredAmount.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+			this.tbItem2RequiredAmount.BackColor = System.Drawing.Color.White;
 			this.tbItem2RequiredAmount.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.tbItem2RequiredAmount.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.tbItem2RequiredAmount.ForeColor = System.Drawing.Color.Black;
 			this.tbItem2RequiredAmount.Location = new System.Drawing.Point(289, 109);
 			this.tbItem2RequiredAmount.Name = "tbItem2RequiredAmount";
 			this.tbItem2RequiredAmount.Size = new System.Drawing.Size(40, 20);
@@ -1800,11 +1645,11 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			// btnItem2Required
 			// 
-			this.btnItem2Required.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(85)))), ((int)(((byte)(76)))));
-			this.btnItem2Required.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
-			this.btnItem2Required.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
+			this.btnItem2Required.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
+			this.btnItem2Required.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(160)))), ((int)(((byte)(160)))), ((int)(((byte)(160)))));
+			this.btnItem2Required.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+			this.btnItem2Required.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(251)))), ((int)(((byte)(251)))));
 			this.btnItem2Required.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnItem2Required.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
 			this.btnItem2Required.Location = new System.Drawing.Point(84, 108);
 			this.btnItem2Required.Name = "btnItem2Required";
 			this.btnItem2Required.Size = new System.Drawing.Size(150, 23);
@@ -1815,7 +1660,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// label49
 			// 
 			this.label49.AutoSize = true;
-			this.label49.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.label49.ForeColor = System.Drawing.Color.Black;
 			this.label49.Location = new System.Drawing.Point(6, 113);
 			this.label49.Name = "label49";
 			this.label49.Size = new System.Drawing.Size(73, 13);
@@ -1826,7 +1671,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// label46
 			// 
 			this.label46.AutoSize = true;
-			this.label46.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.label46.ForeColor = System.Drawing.Color.Black;
 			this.label46.Location = new System.Drawing.Point(240, 84);
 			this.label46.Name = "label46";
 			this.label46.Size = new System.Drawing.Size(43, 13);
@@ -1836,9 +1681,9 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			// tbItem1RequiredAmount
 			// 
-			this.tbItem1RequiredAmount.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+			this.tbItem1RequiredAmount.BackColor = System.Drawing.Color.White;
 			this.tbItem1RequiredAmount.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.tbItem1RequiredAmount.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.tbItem1RequiredAmount.ForeColor = System.Drawing.Color.Black;
 			this.tbItem1RequiredAmount.Location = new System.Drawing.Point(289, 80);
 			this.tbItem1RequiredAmount.Name = "tbItem1RequiredAmount";
 			this.tbItem1RequiredAmount.Size = new System.Drawing.Size(40, 20);
@@ -1848,11 +1693,11 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			// btnItem1Required
 			// 
-			this.btnItem1Required.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(85)))), ((int)(((byte)(76)))));
-			this.btnItem1Required.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
-			this.btnItem1Required.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
+			this.btnItem1Required.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
+			this.btnItem1Required.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(160)))), ((int)(((byte)(160)))), ((int)(((byte)(160)))));
+			this.btnItem1Required.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+			this.btnItem1Required.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(251)))), ((int)(((byte)(251)))));
 			this.btnItem1Required.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnItem1Required.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
 			this.btnItem1Required.Location = new System.Drawing.Point(84, 79);
 			this.btnItem1Required.Name = "btnItem1Required";
 			this.btnItem1Required.Size = new System.Drawing.Size(150, 23);
@@ -1863,7 +1708,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// label47
 			// 
 			this.label47.AutoSize = true;
-			this.label47.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.label47.ForeColor = System.Drawing.Color.Black;
 			this.label47.Location = new System.Drawing.Point(6, 84);
 			this.label47.Name = "label47";
 			this.label47.Size = new System.Drawing.Size(73, 13);
@@ -1874,7 +1719,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// label45
 			// 
 			this.label45.AutoSize = true;
-			this.label45.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.label45.ForeColor = System.Drawing.Color.Black;
 			this.label45.Location = new System.Drawing.Point(240, 55);
 			this.label45.Name = "label45";
 			this.label45.Size = new System.Drawing.Size(43, 13);
@@ -1884,9 +1729,9 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			// tbItem0RequiredAmount
 			// 
-			this.tbItem0RequiredAmount.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+			this.tbItem0RequiredAmount.BackColor = System.Drawing.Color.White;
 			this.tbItem0RequiredAmount.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.tbItem0RequiredAmount.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.tbItem0RequiredAmount.ForeColor = System.Drawing.Color.Black;
 			this.tbItem0RequiredAmount.Location = new System.Drawing.Point(289, 51);
 			this.tbItem0RequiredAmount.Name = "tbItem0RequiredAmount";
 			this.tbItem0RequiredAmount.Size = new System.Drawing.Size(40, 20);
@@ -1896,11 +1741,11 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			// btnItem0Required
 			// 
-			this.btnItem0Required.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(85)))), ((int)(((byte)(76)))));
-			this.btnItem0Required.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
-			this.btnItem0Required.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
+			this.btnItem0Required.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
+			this.btnItem0Required.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(160)))), ((int)(((byte)(160)))), ((int)(((byte)(160)))));
+			this.btnItem0Required.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+			this.btnItem0Required.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(251)))), ((int)(((byte)(251)))));
 			this.btnItem0Required.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnItem0Required.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
 			this.btnItem0Required.Location = new System.Drawing.Point(84, 50);
 			this.btnItem0Required.Name = "btnItem0Required";
 			this.btnItem0Required.Size = new System.Drawing.Size(150, 23);
@@ -1911,7 +1756,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// label24
 			// 
 			this.label24.AutoSize = true;
-			this.label24.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.label24.ForeColor = System.Drawing.Color.Black;
 			this.label24.Location = new System.Drawing.Point(6, 55);
 			this.label24.Name = "label24";
 			this.label24.Size = new System.Drawing.Size(73, 13);
@@ -1921,11 +1766,11 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			// btnSkill1RequiredID
 			// 
-			this.btnSkill1RequiredID.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(85)))), ((int)(((byte)(76)))));
-			this.btnSkill1RequiredID.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
-			this.btnSkill1RequiredID.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
+			this.btnSkill1RequiredID.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
+			this.btnSkill1RequiredID.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(160)))), ((int)(((byte)(160)))), ((int)(((byte)(160)))));
+			this.btnSkill1RequiredID.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+			this.btnSkill1RequiredID.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(251)))), ((int)(((byte)(251)))));
 			this.btnSkill1RequiredID.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnSkill1RequiredID.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
 			this.btnSkill1RequiredID.Location = new System.Drawing.Point(84, 19);
 			this.btnSkill1RequiredID.Name = "btnSkill1RequiredID";
 			this.btnSkill1RequiredID.Size = new System.Drawing.Size(150, 23);
@@ -1936,7 +1781,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// label42
 			// 
 			this.label42.AutoSize = true;
-			this.label42.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.label42.ForeColor = System.Drawing.Color.Black;
 			this.label42.Location = new System.Drawing.Point(240, 24);
 			this.label42.Name = "label42";
 			this.label42.Size = new System.Drawing.Size(33, 13);
@@ -1946,9 +1791,9 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			// tbSkill1RequiredLevel
 			// 
-			this.tbSkill1RequiredLevel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+			this.tbSkill1RequiredLevel.BackColor = System.Drawing.Color.White;
 			this.tbSkill1RequiredLevel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.tbSkill1RequiredLevel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.tbSkill1RequiredLevel.ForeColor = System.Drawing.Color.Black;
 			this.tbSkill1RequiredLevel.Location = new System.Drawing.Point(280, 20);
 			this.tbSkill1RequiredLevel.Name = "tbSkill1RequiredLevel";
 			this.tbSkill1RequiredLevel.Size = new System.Drawing.Size(40, 20);
@@ -1959,7 +1804,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// label9
 			// 
 			this.label9.AutoSize = true;
-			this.label9.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.label9.ForeColor = System.Drawing.Color.Black;
 			this.label9.Location = new System.Drawing.Point(6, 24);
 			this.label9.Name = "label9";
 			this.label9.Size = new System.Drawing.Size(72, 13);
@@ -1973,7 +1818,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			this.btnSkill2RequiredID.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
 			this.btnSkill2RequiredID.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
 			this.btnSkill2RequiredID.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnSkill2RequiredID.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.btnSkill2RequiredID.ForeColor = System.Drawing.Color.Black;
 			this.btnSkill2RequiredID.Location = new System.Drawing.Point(156, -4);
 			this.btnSkill2RequiredID.Name = "btnSkill2RequiredID";
 			this.btnSkill2RequiredID.Size = new System.Drawing.Size(35, 23);
@@ -1985,7 +1830,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// label43
 			// 
 			this.label43.AutoSize = true;
-			this.label43.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.label43.ForeColor = System.Drawing.Color.Black;
 			this.label43.Location = new System.Drawing.Point(197, 0);
 			this.label43.Name = "label43";
 			this.label43.Size = new System.Drawing.Size(55, 13);
@@ -1996,9 +1841,9 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			// tbSkill2RequiredLevel
 			// 
-			this.tbSkill2RequiredLevel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+			this.tbSkill2RequiredLevel.BackColor = System.Drawing.Color.White;
 			this.tbSkill2RequiredLevel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.tbSkill2RequiredLevel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.tbSkill2RequiredLevel.ForeColor = System.Drawing.Color.Black;
 			this.tbSkill2RequiredLevel.Location = new System.Drawing.Point(258, -4);
 			this.tbSkill2RequiredLevel.Name = "tbSkill2RequiredLevel";
 			this.tbSkill2RequiredLevel.Size = new System.Drawing.Size(40, 20);
@@ -2010,7 +1855,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// label44
 			// 
 			this.label44.AutoSize = true;
-			this.label44.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.label44.ForeColor = System.Drawing.Color.Black;
 			this.label44.Location = new System.Drawing.Point(69, 1);
 			this.label44.Name = "label44";
 			this.label44.Size = new System.Drawing.Size(81, 13);
@@ -2027,7 +1872,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			this.groupBox5.Controls.Add(this.label20);
 			this.groupBox5.Controls.Add(this.label19);
 			this.groupBox5.Controls.Add(this.tbEffectNormal);
-			this.groupBox5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.groupBox5.ForeColor = System.Drawing.Color.Black;
 			this.groupBox5.Location = new System.Drawing.Point(540, 83);
 			this.groupBox5.Name = "groupBox5";
 			this.groupBox5.Size = new System.Drawing.Size(196, 103);
@@ -2037,9 +1882,9 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			// tbEffectDamage
 			// 
-			this.tbEffectDamage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+			this.tbEffectDamage.BackColor = System.Drawing.Color.White;
 			this.tbEffectDamage.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.tbEffectDamage.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.tbEffectDamage.ForeColor = System.Drawing.Color.Black;
 			this.tbEffectDamage.Location = new System.Drawing.Point(52, 72);
 			this.tbEffectDamage.Name = "tbEffectDamage";
 			this.tbEffectDamage.Size = new System.Drawing.Size(135, 20);
@@ -2048,9 +1893,9 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			// tbEffectAttack
 			// 
-			this.tbEffectAttack.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+			this.tbEffectAttack.BackColor = System.Drawing.Color.White;
 			this.tbEffectAttack.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.tbEffectAttack.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.tbEffectAttack.ForeColor = System.Drawing.Color.Black;
 			this.tbEffectAttack.Location = new System.Drawing.Point(52, 46);
 			this.tbEffectAttack.Name = "tbEffectAttack";
 			this.tbEffectAttack.Size = new System.Drawing.Size(135, 20);
@@ -2060,7 +1905,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// label21
 			// 
 			this.label21.AutoSize = true;
-			this.label21.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.label21.ForeColor = System.Drawing.Color.Black;
 			this.label21.Location = new System.Drawing.Point(3, 76);
 			this.label21.Name = "label21";
 			this.label21.Size = new System.Drawing.Size(47, 13);
@@ -2071,7 +1916,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// label20
 			// 
 			this.label20.AutoSize = true;
-			this.label20.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.label20.ForeColor = System.Drawing.Color.Black;
 			this.label20.Location = new System.Drawing.Point(8, 50);
 			this.label20.Name = "label20";
 			this.label20.Size = new System.Drawing.Size(38, 13);
@@ -2082,7 +1927,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// label19
 			// 
 			this.label19.AutoSize = true;
-			this.label19.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.label19.ForeColor = System.Drawing.Color.Black;
 			this.label19.Location = new System.Drawing.Point(6, 23);
 			this.label19.Name = "label19";
 			this.label19.Size = new System.Drawing.Size(40, 13);
@@ -2092,9 +1937,9 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			// tbEffectNormal
 			// 
-			this.tbEffectNormal.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+			this.tbEffectNormal.BackColor = System.Drawing.Color.White;
 			this.tbEffectNormal.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.tbEffectNormal.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.tbEffectNormal.ForeColor = System.Drawing.Color.Black;
 			this.tbEffectNormal.Location = new System.Drawing.Point(52, 19);
 			this.tbEffectNormal.Name = "tbEffectNormal";
 			this.tbEffectNormal.Size = new System.Drawing.Size(135, 20);
@@ -2107,7 +1952,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			this.groupBox4.Controls.Add(this.label18);
 			this.groupBox4.Controls.Add(this.cbRvRValueSelector);
 			this.groupBox4.Controls.Add(this.label17);
-			this.groupBox4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.groupBox4.ForeColor = System.Drawing.Color.Black;
 			this.groupBox4.Location = new System.Drawing.Point(248, 110);
 			this.groupBox4.Name = "groupBox4";
 			this.groupBox4.Size = new System.Drawing.Size(161, 76);
@@ -2117,10 +1962,10 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			// cbRvRGradeSelector
 			// 
-			this.cbRvRGradeSelector.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+			this.cbRvRGradeSelector.BackColor = System.Drawing.Color.White;
 			this.cbRvRGradeSelector.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.cbRvRGradeSelector.Enabled = false;
-			this.cbRvRGradeSelector.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.cbRvRGradeSelector.ForeColor = System.Drawing.Color.Black;
 			this.cbRvRGradeSelector.FormattingEnabled = true;
 			this.cbRvRGradeSelector.Location = new System.Drawing.Point(48, 46);
 			this.cbRvRGradeSelector.Name = "cbRvRGradeSelector";
@@ -2131,7 +1976,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// label18
 			// 
 			this.label18.AutoSize = true;
-			this.label18.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.label18.ForeColor = System.Drawing.Color.Black;
 			this.label18.Location = new System.Drawing.Point(8, 50);
 			this.label18.Name = "label18";
 			this.label18.Size = new System.Drawing.Size(36, 13);
@@ -2141,9 +1986,9 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			// cbRvRValueSelector
 			// 
-			this.cbRvRValueSelector.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+			this.cbRvRValueSelector.BackColor = System.Drawing.Color.White;
 			this.cbRvRValueSelector.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.cbRvRValueSelector.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.cbRvRValueSelector.ForeColor = System.Drawing.Color.Black;
 			this.cbRvRValueSelector.FormattingEnabled = true;
 			this.cbRvRValueSelector.Location = new System.Drawing.Point(48, 19);
 			this.cbRvRValueSelector.Name = "cbRvRValueSelector";
@@ -2154,7 +1999,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// label17
 			// 
 			this.label17.AutoSize = true;
-			this.label17.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.label17.ForeColor = System.Drawing.Color.Black;
 			this.label17.Location = new System.Drawing.Point(8, 23);
 			this.label17.Name = "label17";
 			this.label17.Size = new System.Drawing.Size(34, 13);
@@ -2175,7 +2020,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			this.groupBox8.Controls.Add(this.label35);
 			this.groupBox8.Controls.Add(this.label36);
 			this.groupBox8.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.groupBox8.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.groupBox8.ForeColor = System.Drawing.Color.Black;
 			this.groupBox8.Location = new System.Drawing.Point(886, 83);
 			this.groupBox8.Name = "groupBox8";
 			this.groupBox8.Size = new System.Drawing.Size(82, 171);
@@ -2185,9 +2030,9 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			// tbSet4
 			// 
-			this.tbSet4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+			this.tbSet4.BackColor = System.Drawing.Color.White;
 			this.tbSet4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.tbSet4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.tbSet4.ForeColor = System.Drawing.Color.Black;
 			this.tbSet4.Location = new System.Drawing.Point(29, 135);
 			this.tbSet4.Name = "tbSet4";
 			this.tbSet4.Size = new System.Drawing.Size(40, 20);
@@ -2197,9 +2042,9 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			// tbSet3
 			// 
-			this.tbSet3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+			this.tbSet3.BackColor = System.Drawing.Color.White;
 			this.tbSet3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.tbSet3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.tbSet3.ForeColor = System.Drawing.Color.Black;
 			this.tbSet3.Location = new System.Drawing.Point(29, 106);
 			this.tbSet3.Name = "tbSet3";
 			this.tbSet3.Size = new System.Drawing.Size(40, 20);
@@ -2209,9 +2054,9 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			// tbSet2
 			// 
-			this.tbSet2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+			this.tbSet2.BackColor = System.Drawing.Color.White;
 			this.tbSet2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.tbSet2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.tbSet2.ForeColor = System.Drawing.Color.Black;
 			this.tbSet2.Location = new System.Drawing.Point(29, 77);
 			this.tbSet2.Name = "tbSet2";
 			this.tbSet2.Size = new System.Drawing.Size(40, 20);
@@ -2221,9 +2066,9 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			// tbSet1
 			// 
-			this.tbSet1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+			this.tbSet1.BackColor = System.Drawing.Color.White;
 			this.tbSet1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.tbSet1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.tbSet1.ForeColor = System.Drawing.Color.Black;
 			this.tbSet1.Location = new System.Drawing.Point(29, 48);
 			this.tbSet1.Name = "tbSet1";
 			this.tbSet1.Size = new System.Drawing.Size(40, 20);
@@ -2233,9 +2078,9 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			// tbSet0
 			// 
-			this.tbSet0.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+			this.tbSet0.BackColor = System.Drawing.Color.White;
 			this.tbSet0.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.tbSet0.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.tbSet0.ForeColor = System.Drawing.Color.Black;
 			this.tbSet0.Location = new System.Drawing.Point(29, 19);
 			this.tbSet0.Name = "tbSet0";
 			this.tbSet0.Size = new System.Drawing.Size(40, 20);
@@ -2246,7 +2091,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// label30
 			// 
 			this.label30.AutoSize = true;
-			this.label30.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.label30.ForeColor = System.Drawing.Color.Black;
 			this.label30.Location = new System.Drawing.Point(10, 81);
 			this.label30.Name = "label30";
 			this.label30.Size = new System.Drawing.Size(13, 13);
@@ -2257,7 +2102,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// label33
 			// 
 			this.label33.AutoSize = true;
-			this.label33.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.label33.ForeColor = System.Drawing.Color.Black;
 			this.label33.Location = new System.Drawing.Point(10, 139);
 			this.label33.Name = "label33";
 			this.label33.Size = new System.Drawing.Size(13, 13);
@@ -2268,7 +2113,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// label34
 			// 
 			this.label34.AutoSize = true;
-			this.label34.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.label34.ForeColor = System.Drawing.Color.Black;
 			this.label34.Location = new System.Drawing.Point(10, 110);
 			this.label34.Name = "label34";
 			this.label34.Size = new System.Drawing.Size(13, 13);
@@ -2279,7 +2124,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// label35
 			// 
 			this.label35.AutoSize = true;
-			this.label35.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.label35.ForeColor = System.Drawing.Color.Black;
 			this.label35.Location = new System.Drawing.Point(10, 52);
 			this.label35.Name = "label35";
 			this.label35.Size = new System.Drawing.Size(13, 13);
@@ -2290,7 +2135,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// label36
 			// 
 			this.label36.AutoSize = true;
-			this.label36.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.label36.ForeColor = System.Drawing.Color.Black;
 			this.label36.Location = new System.Drawing.Point(10, 23);
 			this.label36.Name = "label36";
 			this.label36.Size = new System.Drawing.Size(13, 13);
@@ -2311,7 +2156,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			this.groupBox7.Controls.Add(this.label39);
 			this.groupBox7.Controls.Add(this.tbOption2);
 			this.groupBox7.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.groupBox7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.groupBox7.ForeColor = System.Drawing.Color.Black;
 			this.groupBox7.Location = new System.Drawing.Point(886, 260);
 			this.groupBox7.Name = "groupBox7";
 			this.groupBox7.Size = new System.Drawing.Size(84, 156);
@@ -2322,7 +2167,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// label37
 			// 
 			this.label37.AutoSize = true;
-			this.label37.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.label37.ForeColor = System.Drawing.Color.Black;
 			this.label37.Location = new System.Drawing.Point(11, 129);
 			this.label37.Name = "label37";
 			this.label37.Size = new System.Drawing.Size(13, 13);
@@ -2332,9 +2177,9 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			// tbOption0
 			// 
-			this.tbOption0.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+			this.tbOption0.BackColor = System.Drawing.Color.White;
 			this.tbOption0.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.tbOption0.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.tbOption0.ForeColor = System.Drawing.Color.Black;
 			this.tbOption0.Location = new System.Drawing.Point(30, 19);
 			this.tbOption0.Name = "tbOption0";
 			this.tbOption0.Size = new System.Drawing.Size(40, 20);
@@ -2344,9 +2189,9 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			// tbOption4
 			// 
-			this.tbOption4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+			this.tbOption4.BackColor = System.Drawing.Color.White;
 			this.tbOption4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.tbOption4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.tbOption4.ForeColor = System.Drawing.Color.Black;
 			this.tbOption4.Location = new System.Drawing.Point(30, 125);
 			this.tbOption4.Name = "tbOption4";
 			this.tbOption4.Size = new System.Drawing.Size(40, 20);
@@ -2357,7 +2202,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// label41
 			// 
 			this.label41.AutoSize = true;
-			this.label41.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.label41.ForeColor = System.Drawing.Color.Black;
 			this.label41.Location = new System.Drawing.Point(11, 23);
 			this.label41.Name = "label41";
 			this.label41.Size = new System.Drawing.Size(13, 13);
@@ -2368,7 +2213,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// label38
 			// 
 			this.label38.AutoSize = true;
-			this.label38.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.label38.ForeColor = System.Drawing.Color.Black;
 			this.label38.Location = new System.Drawing.Point(11, 103);
 			this.label38.Name = "label38";
 			this.label38.Size = new System.Drawing.Size(13, 13);
@@ -2378,9 +2223,9 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			// tbOption1
 			// 
-			this.tbOption1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+			this.tbOption1.BackColor = System.Drawing.Color.White;
 			this.tbOption1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.tbOption1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.tbOption1.ForeColor = System.Drawing.Color.Black;
 			this.tbOption1.Location = new System.Drawing.Point(30, 46);
 			this.tbOption1.Name = "tbOption1";
 			this.tbOption1.Size = new System.Drawing.Size(40, 20);
@@ -2390,9 +2235,9 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			// tbOption3
 			// 
-			this.tbOption3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+			this.tbOption3.BackColor = System.Drawing.Color.White;
 			this.tbOption3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.tbOption3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.tbOption3.ForeColor = System.Drawing.Color.Black;
 			this.tbOption3.Location = new System.Drawing.Point(30, 99);
 			this.tbOption3.Name = "tbOption3";
 			this.tbOption3.Size = new System.Drawing.Size(40, 20);
@@ -2403,7 +2248,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// label40
 			// 
 			this.label40.AutoSize = true;
-			this.label40.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.label40.ForeColor = System.Drawing.Color.Black;
 			this.label40.Location = new System.Drawing.Point(11, 50);
 			this.label40.Name = "label40";
 			this.label40.Size = new System.Drawing.Size(13, 13);
@@ -2414,7 +2259,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// label39
 			// 
 			this.label39.AutoSize = true;
-			this.label39.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.label39.ForeColor = System.Drawing.Color.Black;
 			this.label39.Location = new System.Drawing.Point(11, 76);
 			this.label39.Name = "label39";
 			this.label39.Size = new System.Drawing.Size(13, 13);
@@ -2424,9 +2269,9 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			// tbOption2
 			// 
-			this.tbOption2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+			this.tbOption2.BackColor = System.Drawing.Color.White;
 			this.tbOption2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.tbOption2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.tbOption2.ForeColor = System.Drawing.Color.Black;
 			this.tbOption2.Location = new System.Drawing.Point(30, 72);
 			this.tbOption2.Name = "tbOption2";
 			this.tbOption2.Size = new System.Drawing.Size(40, 20);
@@ -2449,7 +2294,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			this.groupBox6.Controls.Add(this.label26);
 			this.groupBox6.Controls.Add(this.tbVariation1);
 			this.groupBox6.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.groupBox6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.groupBox6.ForeColor = System.Drawing.Color.Black;
 			this.groupBox6.Location = new System.Drawing.Point(742, 83);
 			this.groupBox6.Name = "groupBox6";
 			this.groupBox6.Size = new System.Drawing.Size(138, 103);
@@ -2460,7 +2305,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// label31
 			// 
 			this.label31.AutoSize = true;
-			this.label31.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.label31.ForeColor = System.Drawing.Color.Black;
 			this.label31.Location = new System.Drawing.Point(71, 76);
 			this.label31.Name = "label31";
 			this.label31.Size = new System.Drawing.Size(13, 13);
@@ -2470,9 +2315,9 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			// tbVariation6
 			// 
-			this.tbVariation6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+			this.tbVariation6.BackColor = System.Drawing.Color.White;
 			this.tbVariation6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.tbVariation6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.tbVariation6.ForeColor = System.Drawing.Color.Black;
 			this.tbVariation6.Location = new System.Drawing.Point(90, 72);
 			this.tbVariation6.Name = "tbVariation6";
 			this.tbVariation6.Size = new System.Drawing.Size(35, 20);
@@ -2483,7 +2328,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// label32
 			// 
 			this.label32.AutoSize = true;
-			this.label32.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.label32.ForeColor = System.Drawing.Color.Black;
 			this.label32.Location = new System.Drawing.Point(71, 50);
 			this.label32.Name = "label32";
 			this.label32.Size = new System.Drawing.Size(13, 13);
@@ -2493,9 +2338,9 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			// tbVariation5
 			// 
-			this.tbVariation5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+			this.tbVariation5.BackColor = System.Drawing.Color.White;
 			this.tbVariation5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.tbVariation5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.tbVariation5.ForeColor = System.Drawing.Color.Black;
 			this.tbVariation5.Location = new System.Drawing.Point(90, 46);
 			this.tbVariation5.Name = "tbVariation5";
 			this.tbVariation5.Size = new System.Drawing.Size(35, 20);
@@ -2506,7 +2351,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// label28
 			// 
 			this.label28.AutoSize = true;
-			this.label28.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.label28.ForeColor = System.Drawing.Color.Black;
 			this.label28.Location = new System.Drawing.Point(71, 23);
 			this.label28.Name = "label28";
 			this.label28.Size = new System.Drawing.Size(13, 13);
@@ -2516,9 +2361,9 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			// tbVariation4
 			// 
-			this.tbVariation4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+			this.tbVariation4.BackColor = System.Drawing.Color.White;
 			this.tbVariation4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.tbVariation4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.tbVariation4.ForeColor = System.Drawing.Color.Black;
 			this.tbVariation4.Location = new System.Drawing.Point(90, 19);
 			this.tbVariation4.Name = "tbVariation4";
 			this.tbVariation4.Size = new System.Drawing.Size(35, 20);
@@ -2529,7 +2374,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// label29
 			// 
 			this.label29.AutoSize = true;
-			this.label29.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.label29.ForeColor = System.Drawing.Color.Black;
 			this.label29.Location = new System.Drawing.Point(10, 76);
 			this.label29.Name = "label29";
 			this.label29.Size = new System.Drawing.Size(13, 13);
@@ -2539,9 +2384,9 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			// tbVariation3
 			// 
-			this.tbVariation3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+			this.tbVariation3.BackColor = System.Drawing.Color.White;
 			this.tbVariation3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.tbVariation3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.tbVariation3.ForeColor = System.Drawing.Color.Black;
 			this.tbVariation3.Location = new System.Drawing.Point(29, 72);
 			this.tbVariation3.Name = "tbVariation3";
 			this.tbVariation3.Size = new System.Drawing.Size(35, 20);
@@ -2552,7 +2397,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// label27
 			// 
 			this.label27.AutoSize = true;
-			this.label27.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.label27.ForeColor = System.Drawing.Color.Black;
 			this.label27.Location = new System.Drawing.Point(10, 50);
 			this.label27.Name = "label27";
 			this.label27.Size = new System.Drawing.Size(13, 13);
@@ -2562,9 +2407,9 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			// tbVariation2
 			// 
-			this.tbVariation2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+			this.tbVariation2.BackColor = System.Drawing.Color.White;
 			this.tbVariation2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.tbVariation2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.tbVariation2.ForeColor = System.Drawing.Color.Black;
 			this.tbVariation2.Location = new System.Drawing.Point(29, 46);
 			this.tbVariation2.Name = "tbVariation2";
 			this.tbVariation2.Size = new System.Drawing.Size(35, 20);
@@ -2575,7 +2420,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// label26
 			// 
 			this.label26.AutoSize = true;
-			this.label26.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.label26.ForeColor = System.Drawing.Color.Black;
 			this.label26.Location = new System.Drawing.Point(10, 23);
 			this.label26.Name = "label26";
 			this.label26.Size = new System.Drawing.Size(13, 13);
@@ -2585,9 +2430,9 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			// tbVariation1
 			// 
-			this.tbVariation1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+			this.tbVariation1.BackColor = System.Drawing.Color.White;
 			this.tbVariation1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.tbVariation1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.tbVariation1.ForeColor = System.Drawing.Color.Black;
 			this.tbVariation1.Location = new System.Drawing.Point(29, 19);
 			this.tbVariation1.Name = "tbVariation1";
 			this.tbVariation1.Size = new System.Drawing.Size(35, 20);
@@ -2598,7 +2443,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// label25
 			// 
 			this.label25.AutoSize = true;
-			this.label25.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.label25.ForeColor = System.Drawing.Color.Black;
 			this.label25.Location = new System.Drawing.Point(842, 62);
 			this.label25.Name = "label25";
 			this.label25.Size = new System.Drawing.Size(50, 13);
@@ -2608,11 +2453,11 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			// btnItemFlag
 			// 
-			this.btnItemFlag.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(85)))), ((int)(((byte)(76)))));
-			this.btnItemFlag.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
-			this.btnItemFlag.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
+			this.btnItemFlag.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
+			this.btnItemFlag.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(160)))), ((int)(((byte)(160)))), ((int)(((byte)(160)))));
+			this.btnItemFlag.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+			this.btnItemFlag.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(251)))), ((int)(((byte)(251)))));
 			this.btnItemFlag.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnItemFlag.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
 			this.btnItemFlag.Location = new System.Drawing.Point(898, 57);
 			this.btnItemFlag.Name = "btnItemFlag";
 			this.btnItemFlag.Size = new System.Drawing.Size(100, 23);
@@ -2623,7 +2468,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// lAllowedZone
 			// 
 			this.lAllowedZone.AutoSize = true;
-			this.lAllowedZone.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.lAllowedZone.ForeColor = System.Drawing.Color.Black;
 			this.lAllowedZone.Location = new System.Drawing.Point(658, 62);
 			this.lAllowedZone.Name = "lAllowedZone";
 			this.lAllowedZone.Size = new System.Drawing.Size(72, 13);
@@ -2633,12 +2478,13 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			// btnAllowedZoneFlag
 			// 
-			this.btnAllowedZoneFlag.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(85)))), ((int)(((byte)(76)))));
-			this.btnAllowedZoneFlag.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
-			this.btnAllowedZoneFlag.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
+			this.btnAllowedZoneFlag.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
+			this.btnAllowedZoneFlag.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(160)))), ((int)(((byte)(160)))), ((int)(((byte)(160)))));
+			this.btnAllowedZoneFlag.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+			this.btnAllowedZoneFlag.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(251)))), ((int)(((byte)(251)))));
 			this.btnAllowedZoneFlag.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnAllowedZoneFlag.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-			this.btnAllowedZoneFlag.Location = new System.Drawing.Point(736, 57);
+			this.btnAllowedZoneFlag.ForeColor = System.Drawing.Color.Black;
+			this.btnAllowedZoneFlag.Location = new System.Drawing.Point(736, 56);
 			this.btnAllowedZoneFlag.Name = "btnAllowedZoneFlag";
 			this.btnAllowedZoneFlag.Size = new System.Drawing.Size(100, 23);
 			this.btnAllowedZoneFlag.TabIndex = 1028;
@@ -2648,9 +2494,9 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			// cbCastleType
 			// 
-			this.cbCastleType.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+			this.cbCastleType.BackColor = System.Drawing.Color.White;
 			this.cbCastleType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.cbCastleType.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.cbCastleType.ForeColor = System.Drawing.Color.Black;
 			this.cbCastleType.FormattingEnabled = true;
 			this.cbCastleType.Location = new System.Drawing.Point(659, 30);
 			this.cbCastleType.Name = "cbCastleType";
@@ -2661,7 +2507,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// label23
 			// 
 			this.label23.AutoSize = true;
-			this.label23.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.label23.ForeColor = System.Drawing.Color.Black;
 			this.label23.Location = new System.Drawing.Point(590, 34);
 			this.label23.Name = "label23";
 			this.label23.Size = new System.Drawing.Size(63, 13);
@@ -2672,7 +2518,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// label22
 			// 
 			this.label22.AutoSize = true;
-			this.label22.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.label22.ForeColor = System.Drawing.Color.Black;
 			this.label22.Location = new System.Drawing.Point(524, 62);
 			this.label22.Name = "label22";
 			this.label22.Size = new System.Drawing.Size(72, 13);
@@ -2682,11 +2528,12 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			// btnClassFlag
 			// 
-			this.btnClassFlag.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(85)))), ((int)(((byte)(76)))));
-			this.btnClassFlag.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
-			this.btnClassFlag.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
+			this.btnClassFlag.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
+			this.btnClassFlag.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(160)))), ((int)(((byte)(160)))), ((int)(((byte)(160)))));
+			this.btnClassFlag.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+			this.btnClassFlag.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(251)))), ((int)(((byte)(251)))));
 			this.btnClassFlag.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnClassFlag.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.btnClassFlag.ForeColor = System.Drawing.Color.Black;
 			this.btnClassFlag.Location = new System.Drawing.Point(602, 57);
 			this.btnClassFlag.Name = "btnClassFlag";
 			this.btnClassFlag.Size = new System.Drawing.Size(50, 23);
@@ -2697,7 +2544,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// label16
 			// 
 			this.label16.AutoSize = true;
-			this.label16.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.label16.ForeColor = System.Drawing.Color.Black;
 			this.label16.Location = new System.Drawing.Point(345, 34);
 			this.label16.Name = "label16";
 			this.label16.Size = new System.Drawing.Size(49, 13);
@@ -2707,9 +2554,9 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			// tbMaxUse
 			// 
-			this.tbMaxUse.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+			this.tbMaxUse.BackColor = System.Drawing.Color.White;
 			this.tbMaxUse.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.tbMaxUse.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.tbMaxUse.ForeColor = System.Drawing.Color.Black;
 			this.tbMaxUse.Location = new System.Drawing.Point(400, 30);
 			this.tbMaxUse.Name = "tbMaxUse";
 			this.tbMaxUse.Size = new System.Drawing.Size(50, 20);
@@ -2720,7 +2567,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// label15
 			// 
 			this.label15.AutoSize = true;
-			this.label15.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.label15.ForeColor = System.Drawing.Color.Black;
 			this.label15.Location = new System.Drawing.Point(250, 34);
 			this.label15.Name = "label15";
 			this.label15.Size = new System.Drawing.Size(33, 13);
@@ -2730,9 +2577,9 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			// tbFame
 			// 
-			this.tbFame.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+			this.tbFame.BackColor = System.Drawing.Color.White;
 			this.tbFame.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.tbFame.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.tbFame.ForeColor = System.Drawing.Color.Black;
 			this.tbFame.Location = new System.Drawing.Point(289, 30);
 			this.tbFame.Name = "tbFame";
 			this.tbFame.Size = new System.Drawing.Size(50, 20);
@@ -2743,7 +2590,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// label14
 			// 
 			this.label14.AutoSize = true;
-			this.label14.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.label14.ForeColor = System.Drawing.Color.Black;
 			this.label14.Location = new System.Drawing.Point(892, 10);
 			this.label14.Name = "label14";
 			this.label14.Size = new System.Drawing.Size(50, 13);
@@ -2753,9 +2600,9 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			// tbDurability
 			// 
-			this.tbDurability.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+			this.tbDurability.BackColor = System.Drawing.Color.White;
 			this.tbDurability.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.tbDurability.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.tbDurability.ForeColor = System.Drawing.Color.Black;
 			this.tbDurability.Location = new System.Drawing.Point(948, 6);
 			this.tbDurability.Name = "tbDurability";
 			this.tbDurability.Size = new System.Drawing.Size(50, 20);
@@ -2766,7 +2613,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// label13
 			// 
 			this.label13.AutoSize = true;
-			this.label13.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.label13.ForeColor = System.Drawing.Color.Black;
 			this.label13.Location = new System.Drawing.Point(776, 10);
 			this.label13.Name = "label13";
 			this.label13.Size = new System.Drawing.Size(56, 13);
@@ -2776,9 +2623,9 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			// tbMaxLevel
 			// 
-			this.tbMaxLevel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+			this.tbMaxLevel.BackColor = System.Drawing.Color.White;
 			this.tbMaxLevel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.tbMaxLevel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.tbMaxLevel.ForeColor = System.Drawing.Color.Black;
 			this.tbMaxLevel.Location = new System.Drawing.Point(838, 6);
 			this.tbMaxLevel.Name = "tbMaxLevel";
 			this.tbMaxLevel.Size = new System.Drawing.Size(45, 20);
@@ -2789,7 +2636,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// label12
 			// 
 			this.label12.AutoSize = true;
-			this.label12.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.label12.ForeColor = System.Drawing.Color.Black;
 			this.label12.Location = new System.Drawing.Point(666, 10);
 			this.label12.Name = "label12";
 			this.label12.Size = new System.Drawing.Size(53, 13);
@@ -2799,9 +2646,9 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			// tbMinLevel
 			// 
-			this.tbMinLevel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+			this.tbMinLevel.BackColor = System.Drawing.Color.White;
 			this.tbMinLevel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.tbMinLevel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.tbMinLevel.ForeColor = System.Drawing.Color.Black;
 			this.tbMinLevel.Location = new System.Drawing.Point(725, 6);
 			this.tbMinLevel.Name = "tbMinLevel";
 			this.tbMinLevel.Size = new System.Drawing.Size(45, 20);
@@ -2812,7 +2659,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// label11
 			// 
 			this.label11.AutoSize = true;
-			this.label11.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.label11.ForeColor = System.Drawing.Color.Black;
 			this.label11.Location = new System.Drawing.Point(543, 10);
 			this.label11.Name = "label11";
 			this.label11.Size = new System.Drawing.Size(31, 13);
@@ -2822,9 +2669,9 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			// tbPrice
 			// 
-			this.tbPrice.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+			this.tbPrice.BackColor = System.Drawing.Color.White;
 			this.tbPrice.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.tbPrice.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.tbPrice.ForeColor = System.Drawing.Color.Black;
 			this.tbPrice.Location = new System.Drawing.Point(580, 6);
 			this.tbPrice.Name = "tbPrice";
 			this.tbPrice.Size = new System.Drawing.Size(80, 20);
@@ -2835,7 +2682,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// label10
 			// 
 			this.label10.AutoSize = true;
-			this.label10.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.label10.ForeColor = System.Drawing.Color.Black;
 			this.label10.Location = new System.Drawing.Point(423, 10);
 			this.label10.Name = "label10";
 			this.label10.Size = new System.Drawing.Size(58, 13);
@@ -2845,9 +2692,9 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			// tbMaxStack
 			// 
-			this.tbMaxStack.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+			this.tbMaxStack.BackColor = System.Drawing.Color.White;
 			this.tbMaxStack.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.tbMaxStack.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.tbMaxStack.ForeColor = System.Drawing.Color.Black;
 			this.tbMaxStack.Location = new System.Drawing.Point(487, 6);
 			this.tbMaxStack.Name = "tbMaxStack";
 			this.tbMaxStack.Size = new System.Drawing.Size(50, 20);
@@ -2857,9 +2704,9 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			// cbWearingPositionSelector
 			// 
-			this.cbWearingPositionSelector.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+			this.cbWearingPositionSelector.BackColor = System.Drawing.Color.White;
 			this.cbWearingPositionSelector.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.cbWearingPositionSelector.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.cbWearingPositionSelector.ForeColor = System.Drawing.Color.Black;
 			this.cbWearingPositionSelector.FormattingEnabled = true;
 			this.cbWearingPositionSelector.Location = new System.Drawing.Point(860, 30);
 			this.cbWearingPositionSelector.Name = "cbWearingPositionSelector";
@@ -2870,7 +2717,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// label7
 			// 
 			this.label7.AutoSize = true;
-			this.label7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.label7.ForeColor = System.Drawing.Color.Black;
 			this.label7.Location = new System.Drawing.Point(768, 34);
 			this.label7.Name = "label7";
 			this.label7.Size = new System.Drawing.Size(87, 13);
@@ -2880,10 +2727,10 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			// cbSubTypeSelector
 			// 
-			this.cbSubTypeSelector.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+			this.cbSubTypeSelector.BackColor = System.Drawing.Color.White;
 			this.cbSubTypeSelector.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.cbSubTypeSelector.Enabled = false;
-			this.cbSubTypeSelector.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.cbSubTypeSelector.ForeColor = System.Drawing.Color.Black;
 			this.cbSubTypeSelector.FormattingEnabled = true;
 			this.cbSubTypeSelector.Location = new System.Drawing.Point(305, 83);
 			this.cbSubTypeSelector.Name = "cbSubTypeSelector";
@@ -2894,7 +2741,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// label6
 			// 
 			this.label6.AutoSize = true;
-			this.label6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.label6.ForeColor = System.Drawing.Color.Black;
 			this.label6.Location = new System.Drawing.Point(246, 87);
 			this.label6.Name = "label6";
 			this.label6.Size = new System.Drawing.Size(53, 13);
@@ -2904,9 +2751,9 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			// cbTypeSelector
 			// 
-			this.cbTypeSelector.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+			this.cbTypeSelector.BackColor = System.Drawing.Color.White;
 			this.cbTypeSelector.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.cbTypeSelector.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.cbTypeSelector.ForeColor = System.Drawing.Color.Black;
 			this.cbTypeSelector.FormattingEnabled = true;
 			this.cbTypeSelector.Location = new System.Drawing.Point(305, 56);
 			this.cbTypeSelector.Name = "cbTypeSelector";
@@ -2917,7 +2764,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// label5
 			// 
 			this.label5.AutoSize = true;
-			this.label5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.label5.ForeColor = System.Drawing.Color.Black;
 			this.label5.Location = new System.Drawing.Point(268, 60);
 			this.label5.Name = "label5";
 			this.label5.Size = new System.Drawing.Size(31, 13);
@@ -2928,7 +2775,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// label4
 			// 
 			this.label4.AutoSize = true;
-			this.label4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.label4.ForeColor = System.Drawing.Color.Black;
 			this.label4.Location = new System.Drawing.Point(185, 10);
 			this.label4.Name = "label4";
 			this.label4.Size = new System.Drawing.Size(30, 13);
@@ -2938,9 +2785,9 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			// tbSMC
 			// 
-			this.tbSMC.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+			this.tbSMC.BackColor = System.Drawing.Color.White;
 			this.tbSMC.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.tbSMC.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.tbSMC.ForeColor = System.Drawing.Color.Black;
 			this.tbSMC.Location = new System.Drawing.Point(221, 6);
 			this.tbSMC.Name = "tbSMC";
 			this.tbSMC.ReadOnly = true;
@@ -2963,7 +2810,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// cbEnable
 			// 
 			this.cbEnable.AutoSize = true;
-			this.cbEnable.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.cbEnable.ForeColor = System.Drawing.Color.Black;
 			this.cbEnable.Location = new System.Drawing.Point(82, 8);
 			this.cbEnable.Name = "cbEnable";
 			this.cbEnable.Size = new System.Drawing.Size(59, 17);
@@ -2975,7 +2822,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// label1
 			// 
 			this.label1.AutoSize = true;
-			this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.label1.ForeColor = System.Drawing.Color.Black;
 			this.label1.Location = new System.Drawing.Point(2, 10);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(18, 13);
@@ -2985,9 +2832,9 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			// tbID
 			// 
-			this.tbID.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+			this.tbID.BackColor = System.Drawing.Color.White;
 			this.tbID.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.tbID.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.tbID.ForeColor = System.Drawing.Color.Black;
 			this.tbID.Location = new System.Drawing.Point(26, 6);
 			this.tbID.Name = "tbID";
 			this.tbID.ReadOnly = true;
@@ -3011,9 +2858,9 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			// cbNationSelector
 			// 
-			this.cbNationSelector.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+			this.cbNationSelector.BackColor = System.Drawing.Color.White;
 			this.cbNationSelector.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.cbNationSelector.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.cbNationSelector.ForeColor = System.Drawing.Color.Black;
 			this.cbNationSelector.FormattingEnabled = true;
 			this.cbNationSelector.Location = new System.Drawing.Point(6, 13);
 			this.cbNationSelector.Name = "cbNationSelector";
@@ -3023,9 +2870,9 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			// tbName
 			// 
-			this.tbName.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+			this.tbName.BackColor = System.Drawing.Color.White;
 			this.tbName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.tbName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.tbName.ForeColor = System.Drawing.Color.Black;
 			this.tbName.Location = new System.Drawing.Point(39, 40);
 			this.tbName.Name = "tbName";
 			this.tbName.Size = new System.Drawing.Size(196, 20);
@@ -3035,7 +2882,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// label2
 			// 
 			this.label2.AutoSize = true;
-			this.label2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.label2.ForeColor = System.Drawing.Color.Black;
 			this.label2.Location = new System.Drawing.Point(3, 44);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(35, 13);
@@ -3045,9 +2892,9 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			// tbDescription
 			// 
-			this.tbDescription.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+			this.tbDescription.BackColor = System.Drawing.Color.White;
 			this.tbDescription.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.tbDescription.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.tbDescription.ForeColor = System.Drawing.Color.Black;
 			this.tbDescription.Location = new System.Drawing.Point(6, 79);
 			this.tbDescription.Multiline = true;
 			this.tbDescription.Name = "tbDescription";
@@ -3059,7 +2906,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// label3
 			// 
 			this.label3.AutoSize = true;
-			this.label3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.label3.ForeColor = System.Drawing.Color.Black;
 			this.label3.Location = new System.Drawing.Point(3, 63);
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(60, 13);
@@ -3070,12 +2917,12 @@ namespace LastChaos_ToolBox_2024.Editors
 			// btnCopy
 			// 
 			this.btnCopy.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.btnCopy.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
 			this.btnCopy.Enabled = false;
-			this.btnCopy.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(85)))), ((int)(((byte)(76)))));
-			this.btnCopy.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
-			this.btnCopy.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
+			this.btnCopy.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(160)))), ((int)(((byte)(160)))), ((int)(((byte)(160)))));
+			this.btnCopy.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+			this.btnCopy.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(251)))), ((int)(((byte)(251)))));
 			this.btnCopy.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnCopy.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
 			this.btnCopy.Location = new System.Drawing.Point(144, 545);
 			this.btnCopy.Name = "btnCopy";
 			this.btnCopy.Size = new System.Drawing.Size(60, 23);
@@ -3087,12 +2934,12 @@ namespace LastChaos_ToolBox_2024.Editors
 			// btnDelete
 			// 
 			this.btnDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.btnDelete.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
 			this.btnDelete.Enabled = false;
-			this.btnDelete.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(85)))), ((int)(((byte)(76)))));
-			this.btnDelete.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
-			this.btnDelete.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
+			this.btnDelete.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(160)))), ((int)(((byte)(160)))), ((int)(((byte)(160)))));
+			this.btnDelete.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+			this.btnDelete.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(251)))), ((int)(((byte)(251)))));
 			this.btnDelete.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnDelete.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
 			this.btnDelete.Location = new System.Drawing.Point(210, 545);
 			this.btnDelete.Name = "btnDelete";
 			this.btnDelete.Size = new System.Drawing.Size(60, 23);
@@ -3103,21 +2950,22 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			// tbSearch
 			// 
-			this.tbSearch.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(31)))));
+			this.tbSearch.BackColor = System.Drawing.Color.White;
 			this.tbSearch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.tbSearch.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.tbSearch.ForeColor = System.Drawing.Color.Black;
 			this.tbSearch.Location = new System.Drawing.Point(12, 12);
 			this.tbSearch.Name = "tbSearch";
 			this.tbSearch.Size = new System.Drawing.Size(258, 20);
 			this.tbSearch.TabIndex = 0;
 			this.tbSearch.Text = "11016";
+			this.tbSearch.TextChanged += new System.EventHandler(this.tbSearch_TextChanged);
 			this.tbSearch.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tbSearch_KeyDown);
 			// 
 			// cbRenderDialog
 			// 
 			this.cbRenderDialog.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.cbRenderDialog.AutoSize = true;
-			this.cbRenderDialog.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.cbRenderDialog.ForeColor = System.Drawing.Color.Black;
 			this.cbRenderDialog.Location = new System.Drawing.Point(12, 574);
 			this.cbRenderDialog.Name = "cbRenderDialog";
 			this.cbRenderDialog.Size = new System.Drawing.Size(94, 17);
@@ -3130,7 +2978,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			this.cbAutoLoadFortuneData.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.cbAutoLoadFortuneData.AutoSize = true;
-			this.cbAutoLoadFortuneData.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.cbAutoLoadFortuneData.ForeColor = System.Drawing.Color.Black;
 			this.cbAutoLoadFortuneData.Location = new System.Drawing.Point(130, 574);
 			this.cbAutoLoadFortuneData.Name = "cbAutoLoadFortuneData";
 			this.cbAutoLoadFortuneData.Size = new System.Drawing.Size(140, 17);
@@ -3143,7 +2991,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+			this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
 			this.ClientSize = new System.Drawing.Size(1320, 600);
 			this.Controls.Add(this.cbAutoLoadFortuneData);
 			this.Controls.Add(this.cbRenderDialog);
@@ -3163,8 +3011,6 @@ namespace LastChaos_ToolBox_2024.Editors
 			this.groupBox1.ResumeLayout(false);
 			this.GeneralPanel.ResumeLayout(false);
 			this.GeneralPanel.PerformLayout();
-			this.gbQuestData.ResumeLayout(false);
-			this.gbQuestData.PerformLayout();
 			this.gbFortune.ResumeLayout(false);
 			this.gbFortune.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.gridFortune)).EndInit();
@@ -3400,18 +3246,6 @@ namespace LastChaos_ToolBox_2024.Editors
 		private TextBox tbRareIndex3;
 		private TextBox tbRareIndex2;
 		private TextBox tbRareIndex1;
-		private GroupBox gbQuestData;
-		private ComboBox cbSet0;
-		private Label lSet4;
-		private TextBox textBox1;
-		private Label lSet3;
-		private TextBox textBox2;
-		private Label lSet2;
-		private TextBox textBox3;
-		private Label lSet1;
-		private TextBox textBox4;
-		private Label lSet0;
-		private Button btnRareIndex0;
 		private DataGridViewButtonColumn skill;
 		private DataGridViewComboBoxColumn level;
 		private DataGridViewTextBoxColumn prob;
