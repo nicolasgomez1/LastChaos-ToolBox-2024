@@ -2,12 +2,14 @@
 using IniParser.Model;
 using LastChaos_ToolBox_2024.Editors;
 using MySql.Data.MySqlClient;
+using SlimDX.Direct3D9;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -15,6 +17,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static LastChaos_ToolBox_2024.RenderDialog;
 
 namespace LastChaos_ToolBox_2024
 {

@@ -21,13 +21,13 @@ namespace LastChaos_ToolBox_2024
 	{
 		private static Main pMain;
 		private tMeshContainer pMeshContainer = new tMeshContainer();
-		public static tMeshContainer pMesh;
+		private static tMeshContainer pMesh;
 		private readonly ASCIIEncoding pEnc = new ASCIIEncoding();
-		public Direct3D pDirect3D;
-		public Device pDevice;
-		public List<tMesh> pModel;
-		public float fZoom, fUpDown, fRotation;
-		public tTexture pLCTexture;
+		private Direct3D pDirect3D;
+		private Device pDevice;
+		private List<tMesh> pModel;
+		private float fZoom, fUpDown, fRotation;
+		private tTexture pLCTexture;
 		private Vector3 vecCameraPosition = new Vector3(0.0f, -2.0f, 4f);
 		private Vector3 vecEntityPosition = new Vector3(0f, 0.0f, 0.0f);
 		private static string pstrFilePath;

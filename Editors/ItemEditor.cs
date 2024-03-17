@@ -50,8 +50,6 @@ namespace LastChaos_ToolBox_2024.Editors
 
 		public ItemEditor(Main mainForm)
 		{
-			this.FormClosing += ItemEditor_FormClosing;
-
 			InitializeComponent();
 
 #if ENABLE_SECOND_SKILL_TO_CRAFT
@@ -72,6 +70,8 @@ namespace LastChaos_ToolBox_2024.Editors
 			tbAllowedZoneFlag.Visible = true;
 #endif
 			pMain = mainForm;
+
+			this.FormClosing += ItemEditor_FormClosing;
 
 			gbFortune.MouseEnter += gbFortune_MouseEnter;
 			/****************************************/

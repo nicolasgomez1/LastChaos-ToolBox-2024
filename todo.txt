@@ -7,17 +7,26 @@ If Flag is: unknown, a_set_0 should be Flag Picker (JewelCompositePosition)
 	If a_set_0 is 0, a_rare_index_0 should be a Option Picker.
 
 
-UPDATE: Podría más o menos intentar definir los tipos en base a las flags que ya conozco, y luego agregar una opción, permitir que al dar click derecho se pueda introducir un valor numérico.
-
 Mapping all related to a_num_0/4
 
+If Flag: ITEM_FLAG_LORD
+	a_num_2 (Numeric Input)
+	
 If Flag: ITEM_FLAG_COMPOSITE & FLAG_ITEM_COMPOSITION
 	a_num_0 (Numeric Input)
 	a_num_1 (Numeric Input)
+
 If Item ID: 2859
 	a_num_0 (Skill Picker)
+
 If Item Type: ITYPE_ACCESSORY
 	a_num_0 (Skill Picker)
 	a_num_1 (Skill Level Selector)
+
 If Item Type: ITYPE_ETC SubType: IETC_RVR_JEWEL
 	a_num_0 (Numeric Input)
+
+
+
+
+										HAVE NO WAY HAHA, I GONNA ADD A CONTEXT MENU ON EACH TEXTBOX TO SELECT SOME PICKER.
