@@ -31,6 +31,7 @@ namespace LastChaos_ToolBox_2024.Editors
         /// </summary>
         private void InitializeComponent()
         {
+			this.components = new System.ComponentModel.Container();
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.btnReload = new System.Windows.Forms.Button();
@@ -245,6 +246,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			this.tbSearch = new System.Windows.Forms.TextBox();
 			this.cbRenderDialog = new System.Windows.Forms.CheckBox();
 			this.cbAutoLoadFortuneData = new System.Windows.Forms.CheckBox();
+			this.CommonContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.groupBox1.SuspendLayout();
 			this.GeneralPanel.SuspendLayout();
 			this.gbFortune.SuspendLayout();
@@ -634,6 +636,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			this.tbRareIndex9.BackColor = System.Drawing.Color.White;
 			this.tbRareIndex9.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.tbRareIndex9.ContextMenuStrip = this.CommonContextMenu;
 			this.tbRareIndex9.ForeColor = System.Drawing.Color.Black;
 			this.tbRareIndex9.Location = new System.Drawing.Point(59, 283);
 			this.tbRareIndex9.Name = "tbRareIndex9";
@@ -646,6 +649,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			this.tbRareIndex8.BackColor = System.Drawing.Color.White;
 			this.tbRareIndex8.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.tbRareIndex8.ContextMenuStrip = this.CommonContextMenu;
 			this.tbRareIndex8.ForeColor = System.Drawing.Color.Black;
 			this.tbRareIndex8.Location = new System.Drawing.Point(59, 254);
 			this.tbRareIndex8.Name = "tbRareIndex8";
@@ -658,6 +662,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			this.tbRareIndex7.BackColor = System.Drawing.Color.White;
 			this.tbRareIndex7.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.tbRareIndex7.ContextMenuStrip = this.CommonContextMenu;
 			this.tbRareIndex7.ForeColor = System.Drawing.Color.Black;
 			this.tbRareIndex7.Location = new System.Drawing.Point(59, 225);
 			this.tbRareIndex7.Name = "tbRareIndex7";
@@ -670,6 +675,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			this.tbRareIndex6.BackColor = System.Drawing.Color.White;
 			this.tbRareIndex6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.tbRareIndex6.ContextMenuStrip = this.CommonContextMenu;
 			this.tbRareIndex6.ForeColor = System.Drawing.Color.Black;
 			this.tbRareIndex6.Location = new System.Drawing.Point(59, 196);
 			this.tbRareIndex6.Name = "tbRareIndex6";
@@ -682,6 +688,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			this.tbRareIndex5.BackColor = System.Drawing.Color.White;
 			this.tbRareIndex5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.tbRareIndex5.ContextMenuStrip = this.CommonContextMenu;
 			this.tbRareIndex5.ForeColor = System.Drawing.Color.Black;
 			this.tbRareIndex5.Location = new System.Drawing.Point(59, 167);
 			this.tbRareIndex5.Name = "tbRareIndex5";
@@ -694,6 +701,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			this.tbRareIndex4.BackColor = System.Drawing.Color.White;
 			this.tbRareIndex4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.tbRareIndex4.ContextMenuStrip = this.CommonContextMenu;
 			this.tbRareIndex4.ForeColor = System.Drawing.Color.Black;
 			this.tbRareIndex4.Location = new System.Drawing.Point(59, 138);
 			this.tbRareIndex4.Name = "tbRareIndex4";
@@ -706,6 +714,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			this.tbRareIndex3.BackColor = System.Drawing.Color.White;
 			this.tbRareIndex3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.tbRareIndex3.ContextMenuStrip = this.CommonContextMenu;
 			this.tbRareIndex3.ForeColor = System.Drawing.Color.Black;
 			this.tbRareIndex3.Location = new System.Drawing.Point(59, 109);
 			this.tbRareIndex3.Name = "tbRareIndex3";
@@ -718,6 +727,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			this.tbRareIndex2.BackColor = System.Drawing.Color.White;
 			this.tbRareIndex2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.tbRareIndex2.ContextMenuStrip = this.CommonContextMenu;
 			this.tbRareIndex2.ForeColor = System.Drawing.Color.Black;
 			this.tbRareIndex2.Location = new System.Drawing.Point(59, 80);
 			this.tbRareIndex2.Name = "tbRareIndex2";
@@ -730,6 +740,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			this.tbRareIndex1.BackColor = System.Drawing.Color.White;
 			this.tbRareIndex1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.tbRareIndex1.ContextMenuStrip = this.CommonContextMenu;
 			this.tbRareIndex1.ForeColor = System.Drawing.Color.Black;
 			this.tbRareIndex1.Location = new System.Drawing.Point(59, 51);
 			this.tbRareIndex1.Name = "tbRareIndex1";
@@ -742,6 +753,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			this.tbRareIndex0.BackColor = System.Drawing.Color.White;
 			this.tbRareIndex0.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.tbRareIndex0.ContextMenuStrip = this.CommonContextMenu;
 			this.tbRareIndex0.ForeColor = System.Drawing.Color.Black;
 			this.tbRareIndex0.Location = new System.Drawing.Point(59, 22);
 			this.tbRareIndex0.Name = "tbRareIndex0";
@@ -2032,6 +2044,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			this.tbSet4.BackColor = System.Drawing.Color.White;
 			this.tbSet4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.tbSet4.ContextMenuStrip = this.CommonContextMenu;
 			this.tbSet4.ForeColor = System.Drawing.Color.Black;
 			this.tbSet4.Location = new System.Drawing.Point(29, 135);
 			this.tbSet4.Name = "tbSet4";
@@ -2044,6 +2057,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			this.tbSet3.BackColor = System.Drawing.Color.White;
 			this.tbSet3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.tbSet3.ContextMenuStrip = this.CommonContextMenu;
 			this.tbSet3.ForeColor = System.Drawing.Color.Black;
 			this.tbSet3.Location = new System.Drawing.Point(29, 106);
 			this.tbSet3.Name = "tbSet3";
@@ -2056,6 +2070,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			this.tbSet2.BackColor = System.Drawing.Color.White;
 			this.tbSet2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.tbSet2.ContextMenuStrip = this.CommonContextMenu;
 			this.tbSet2.ForeColor = System.Drawing.Color.Black;
 			this.tbSet2.Location = new System.Drawing.Point(29, 77);
 			this.tbSet2.Name = "tbSet2";
@@ -2068,6 +2083,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			this.tbSet1.BackColor = System.Drawing.Color.White;
 			this.tbSet1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.tbSet1.ContextMenuStrip = this.CommonContextMenu;
 			this.tbSet1.ForeColor = System.Drawing.Color.Black;
 			this.tbSet1.Location = new System.Drawing.Point(29, 48);
 			this.tbSet1.Name = "tbSet1";
@@ -2080,6 +2096,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			this.tbSet0.BackColor = System.Drawing.Color.White;
 			this.tbSet0.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.tbSet0.ContextMenuStrip = this.CommonContextMenu;
 			this.tbSet0.ForeColor = System.Drawing.Color.Black;
 			this.tbSet0.Location = new System.Drawing.Point(29, 19);
 			this.tbSet0.Name = "tbSet0";
@@ -2179,6 +2196,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			this.tbOption0.BackColor = System.Drawing.Color.White;
 			this.tbOption0.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.tbOption0.ContextMenuStrip = this.CommonContextMenu;
 			this.tbOption0.ForeColor = System.Drawing.Color.Black;
 			this.tbOption0.Location = new System.Drawing.Point(30, 19);
 			this.tbOption0.Name = "tbOption0";
@@ -2191,6 +2209,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			this.tbOption4.BackColor = System.Drawing.Color.White;
 			this.tbOption4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.tbOption4.ContextMenuStrip = this.CommonContextMenu;
 			this.tbOption4.ForeColor = System.Drawing.Color.Black;
 			this.tbOption4.Location = new System.Drawing.Point(30, 125);
 			this.tbOption4.Name = "tbOption4";
@@ -2225,6 +2244,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			this.tbOption1.BackColor = System.Drawing.Color.White;
 			this.tbOption1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.tbOption1.ContextMenuStrip = this.CommonContextMenu;
 			this.tbOption1.ForeColor = System.Drawing.Color.Black;
 			this.tbOption1.Location = new System.Drawing.Point(30, 46);
 			this.tbOption1.Name = "tbOption1";
@@ -2237,13 +2257,14 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			this.tbOption3.BackColor = System.Drawing.Color.White;
 			this.tbOption3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.tbOption3.ContextMenuStrip = this.CommonContextMenu;
 			this.tbOption3.ForeColor = System.Drawing.Color.Black;
 			this.tbOption3.Location = new System.Drawing.Point(30, 99);
 			this.tbOption3.Name = "tbOption3";
 			this.tbOption3.Size = new System.Drawing.Size(40, 20);
 			this.tbOption3.TabIndex = 1039;
 			this.tbOption3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			this.tbOption3.TextChanged += new System.EventHandler(this.tbOption2_TextChanged);
+			this.tbOption3.TextChanged += new System.EventHandler(this.tbOption3_TextChanged);
 			// 
 			// label40
 			// 
@@ -2271,6 +2292,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			this.tbOption2.BackColor = System.Drawing.Color.White;
 			this.tbOption2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.tbOption2.ContextMenuStrip = this.CommonContextMenu;
 			this.tbOption2.ForeColor = System.Drawing.Color.Black;
 			this.tbOption2.Location = new System.Drawing.Point(30, 72);
 			this.tbOption2.Name = "tbOption2";
@@ -2317,6 +2339,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			this.tbVariation6.BackColor = System.Drawing.Color.White;
 			this.tbVariation6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.tbVariation6.ContextMenuStrip = this.CommonContextMenu;
 			this.tbVariation6.ForeColor = System.Drawing.Color.Black;
 			this.tbVariation6.Location = new System.Drawing.Point(90, 72);
 			this.tbVariation6.Name = "tbVariation6";
@@ -2340,6 +2363,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			this.tbVariation5.BackColor = System.Drawing.Color.White;
 			this.tbVariation5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.tbVariation5.ContextMenuStrip = this.CommonContextMenu;
 			this.tbVariation5.ForeColor = System.Drawing.Color.Black;
 			this.tbVariation5.Location = new System.Drawing.Point(90, 46);
 			this.tbVariation5.Name = "tbVariation5";
@@ -2363,6 +2387,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			this.tbVariation4.BackColor = System.Drawing.Color.White;
 			this.tbVariation4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.tbVariation4.ContextMenuStrip = this.CommonContextMenu;
 			this.tbVariation4.ForeColor = System.Drawing.Color.Black;
 			this.tbVariation4.Location = new System.Drawing.Point(90, 19);
 			this.tbVariation4.Name = "tbVariation4";
@@ -2386,6 +2411,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			this.tbVariation3.BackColor = System.Drawing.Color.White;
 			this.tbVariation3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.tbVariation3.ContextMenuStrip = this.CommonContextMenu;
 			this.tbVariation3.ForeColor = System.Drawing.Color.Black;
 			this.tbVariation3.Location = new System.Drawing.Point(29, 72);
 			this.tbVariation3.Name = "tbVariation3";
@@ -2409,6 +2435,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			this.tbVariation2.BackColor = System.Drawing.Color.White;
 			this.tbVariation2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.tbVariation2.ContextMenuStrip = this.CommonContextMenu;
 			this.tbVariation2.ForeColor = System.Drawing.Color.Black;
 			this.tbVariation2.Location = new System.Drawing.Point(29, 46);
 			this.tbVariation2.Name = "tbVariation2";
@@ -2432,6 +2459,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			// 
 			this.tbVariation1.BackColor = System.Drawing.Color.White;
 			this.tbVariation1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.tbVariation1.ContextMenuStrip = this.CommonContextMenu;
 			this.tbVariation1.ForeColor = System.Drawing.Color.Black;
 			this.tbVariation1.Location = new System.Drawing.Point(29, 19);
 			this.tbVariation1.Name = "tbVariation1";
@@ -2957,7 +2985,6 @@ namespace LastChaos_ToolBox_2024.Editors
 			this.tbSearch.Name = "tbSearch";
 			this.tbSearch.Size = new System.Drawing.Size(258, 20);
 			this.tbSearch.TabIndex = 0;
-			this.tbSearch.Text = "11016";
 			this.tbSearch.TextChanged += new System.EventHandler(this.tbSearch_TextChanged);
 			this.tbSearch.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tbSearch_KeyDown);
 			// 
@@ -2986,6 +3013,12 @@ namespace LastChaos_ToolBox_2024.Editors
 			this.cbAutoLoadFortuneData.Text = "Auto Load Fortune Data";
 			this.cbAutoLoadFortuneData.UseVisualStyleBackColor = true;
 			this.cbAutoLoadFortuneData.CheckedChanged += new System.EventHandler(this.cbAutoLoadFortuneData_CheckedChanged);
+			// 
+			// CommonContextMenu
+			// 
+			this.CommonContextMenu.Name = "CommonContextMenu";
+			this.CommonContextMenu.Size = new System.Drawing.Size(61, 4);
+			this.CommonContextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStrip1_Opening);
 			// 
 			// ItemEditor
 			// 
@@ -3250,5 +3283,6 @@ namespace LastChaos_ToolBox_2024.Editors
 		private DataGridViewComboBoxColumn level;
 		private DataGridViewTextBoxColumn prob;
 		private DataGridViewButtonColumn string_id;
+		private ContextMenuStrip CommonContextMenu;
 	}
 }

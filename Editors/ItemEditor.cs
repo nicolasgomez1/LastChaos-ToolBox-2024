@@ -40,6 +40,8 @@ namespace LastChaos_ToolBox_2024.Editors
 		private string[] strArrayZones;
 		private System.Windows.Forms.ToolTip pToolTip;
 		private Dictionary<Control, ToolTip> pToolTips = new Dictionary<Control, ToolTip>();
+		ContextMenuStrip cmFortune;
+		ContextMenuStrip cmCommonInput;
 
 		public class ListBoxItem
 		{
@@ -51,6 +53,8 @@ namespace LastChaos_ToolBox_2024.Editors
 		public ItemEditor(Main mainForm)
 		{
 			InitializeComponent();
+
+			this.FormClosing += ItemEditor_FormClosing;
 
 #if ENABLE_SECOND_SKILL_TO_CRAFT
 			label44.Visible = true;
@@ -71,8 +75,6 @@ namespace LastChaos_ToolBox_2024.Editors
 #endif
 			pMain = mainForm;
 
-			this.FormClosing += ItemEditor_FormClosing;
-
 			gbFortune.MouseEnter += gbFortune_MouseEnter;
 			/****************************************/
 			gridFortune.TopLeftHeaderCell.Value = "N°";
@@ -84,6 +86,83 @@ namespace LastChaos_ToolBox_2024.Editors
 			cbRenderDialog.Checked = bool.Parse(pMain.pSettings.ShowRenderDialog[this.Name]);
 
 			cbAutoLoadFortuneData.Checked = bool.Parse(pMain.pSettings.ItemEditorAutoShowFortune);
+		}
+
+		private void contextMenuStrip1_Opening(object sender, CancelEventArgs e)
+		{
+			Control cControl = (sender as ContextMenuStrip)?.SourceControl;
+
+			if (cControl != null)
+			{
+				string strControlName = cControl.Name;
+				int nActualValue = Convert.ToInt32(cControl.Text);
+
+				/*if (strControlName.Substring(0, 5) == "tbSet")
+				else if (strControlName.Substring(0, 8) == "tbOption")
+				else if (strControlName.Substring(0, 11) == "tbVariation")
+				else if (strControlName.Substring(0, 11) == "tbRareIndex")*/
+
+				ToolStripMenuItem menuItemPicker = new ToolStripMenuItem("Item Picker");
+				menuItemPicker.Click += (menuItemSender, menuItemEventArgs) =>
+				{
+					ItemPicker pItemSelector = new ItemPicker(pMain, this, nActualValue);
+
+					if (pItemSelector.ShowDialog() != DialogResult.OK)
+						return;
+
+					cControl.Text = pItemSelector.ReturnValues.ToString();
+				};
+
+				ToolStripMenuItem menuSkillPicker = new ToolStripMenuItem("Skill Picker");
+				menuSkillPicker.Click += (menuItemSender, menuItemEventArgs) =>
+				{
+					int nSkillLevel = 0;
+					TextBox tbSecondInputObject = null;
+
+					if (strControlName.Length >= 11 && strControlName.Substring(0, 11) == "tbRareIndex")
+					{
+						tbSecondInputObject = ((TextBox)this.Controls.Find("tbRareProb" + strControlName[strControlName.Length - 1], true)[0]);
+						nSkillLevel = Convert.ToInt32(tbSecondInputObject.Text);
+					}
+
+					SkillPicker pSkillSelector = new SkillPicker(pMain, this, new object[] { nActualValue, nSkillLevel }, false);
+
+					if (pSkillSelector.ShowDialog() != DialogResult.OK)
+						return;
+
+					cControl.Text = pSkillSelector.ReturnValues[0].ToString();
+
+					if (tbSecondInputObject != null)
+						tbSecondInputObject.Text = pSkillSelector.ReturnValues[1].ToString();
+				};
+
+				ToolStripMenuItem menuOptionPicker = new ToolStripMenuItem("Option Picker");
+				menuOptionPicker.Click += (menuItemSender, menuItemEventArgs) =>
+				{
+					// TODO: Option Picker
+				};
+
+				ToolStripMenuItem menuRarePicker = new ToolStripMenuItem("Rare Picker");
+				menuRarePicker.Click += (menuItemSender, menuItemEventArgs) =>
+				{
+					RareOptionPicker pRareOptionSelector = new RareOptionPicker(pMain, this, nActualValue);
+
+					if (pRareOptionSelector.ShowDialog() != DialogResult.OK)
+						return;
+
+					cControl.Text = pRareOptionSelector.ReturnValues.ToString();
+				};
+
+				ToolStripMenuItem menuZonePicker = new ToolStripMenuItem("Zone Picker");
+				menuZonePicker.Click += (menuItemSender, menuItemEventArgs) =>
+				{
+					// TODO: Zone Picker
+				};
+
+				cmCommonInput = new ContextMenuStrip();
+				cmCommonInput.Items.AddRange(new ToolStripItem[] { menuItemPicker, menuSkillPicker, menuOptionPicker, menuRarePicker, menuZonePicker });
+				cmCommonInput.Show(Cursor.Position);
+			}
 		}
 
 		private (bool bProceed, bool bDeleteActual) CheckUnsavedChanges()
@@ -674,12 +753,23 @@ namespace LastChaos_ToolBox_2024.Editors
 					pRenderDialog = null;
 				}
 
-				// TODO: Add here all used tables, arrays, etc
 				pTempItemRow = null;
 				pTempFortuneHeadRow = null;
 				pTempFortuneDataRows = null;
 
 				strArrayZones = null;
+
+				if (cmFortune != null)
+				{
+					cmFortune.Dispose();
+					cmFortune = null;
+				}
+
+				if (cmCommonInput != null)
+				{
+					cmCommonInput.Dispose();
+					cmCommonInput = null;
+				}
 			}
 
 			if (bUnsavedChanges)
@@ -2461,7 +2551,7 @@ namespace LastChaos_ToolBox_2024.Editors
 		{
 			if (bUserAction)
 			{
-				if (e.Button == MouseButtons.Left && e.ColumnIndex == 0 && e.RowIndex >= 0)	// Skill Selector
+				if (e.Button == MouseButtons.Left && e.ColumnIndex == 0 && e.RowIndex >= 0) // Skill Selector
 				{
 					int nSkillID = Convert.ToInt32(((DataGridViewButtonCell)gridFortune.Rows[e.RowIndex].Cells["skill"]).Tag);
 					string strSkillLevel = gridFortune.Rows[e.RowIndex].Cells["level"].Tag.ToString();
@@ -2500,7 +2590,7 @@ namespace LastChaos_ToolBox_2024.Editors
 
 					bUnsavedChanges = true;
 				}
-				else if (e.Button == MouseButtons.Left && e.ColumnIndex == 3 && e.RowIndex >= 0)	// String Selector
+				else if (e.Button == MouseButtons.Left && e.ColumnIndex == 3 && e.RowIndex >= 0)    // String Selector
 				{
 					StringPicker pStringSelector = new StringPicker(pMain, this, 1, false);
 
@@ -2512,10 +2602,8 @@ namespace LastChaos_ToolBox_2024.Editors
 
 					bUnsavedChanges = true;
 				}
-				else if (e.Button == MouseButtons.Right && e.ColumnIndex == -1)	// Header Column
+				else if (e.Button == MouseButtons.Right && e.ColumnIndex == -1) // Header Column
 				{
-					ContextMenuStrip ContextMenu = new ContextMenuStrip();
-
 					ToolStripMenuItem addItem = new ToolStripMenuItem("Add New");
 					addItem.Click += (menuItemSender, menuItemEventArgs) =>
 					{
@@ -2620,9 +2708,9 @@ namespace LastChaos_ToolBox_2024.Editors
 						}
 					};
 
-					ContextMenu.Items.AddRange(new ToolStripItem[] { addItem, deleteItem });
-
-					ContextMenu.Show(Cursor.Position);
+					cmFortune = new ContextMenuStrip();
+					cmFortune.Items.AddRange(new ToolStripItem[] { addItem, deleteItem });
+					cmFortune.Show(Cursor.Position);
 				}
 			}
 		}
