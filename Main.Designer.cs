@@ -112,7 +112,7 @@ namespace LastChaos_ToolBox_2024
 			this.rtbConsole.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.rtbConsole.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(166)))), ((int)(((byte)(166)))), ((int)(((byte)(166)))));
+			this.rtbConsole.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
 			this.rtbConsole.Location = new System.Drawing.Point(12, 291);
 			this.rtbConsole.Name = "rtbConsole";
 			this.rtbConsole.ReadOnly = true;
