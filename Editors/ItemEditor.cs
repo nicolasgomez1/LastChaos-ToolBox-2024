@@ -156,7 +156,12 @@ namespace LastChaos_ToolBox_2024.Editors
 				ToolStripMenuItem menuZonePicker = new ToolStripMenuItem("Zone Picker");
 				menuZonePicker.Click += (menuItemSender, menuItemEventArgs) =>
 				{
-					// TODO: Zone Picker
+					ZonePicker pZoneSelector = new ZonePicker(pMain, this, nActualValue);
+
+					if (pZoneSelector.ShowDialog() != DialogResult.OK)
+						return;
+
+					cControl.Text = pZoneSelector.ReturnValues[0].ToString();
 				};
 
 				cmCommonInput = new ContextMenuStrip();

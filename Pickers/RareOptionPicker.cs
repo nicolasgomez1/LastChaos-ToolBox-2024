@@ -82,6 +82,8 @@ namespace LastChaos_ToolBox_2024
 				});
 			}
 
+			listQueryCompose = null;
+
 			if (pMain.pRareOptionTable != null)
 			{
 				bUserAction = false;
@@ -188,5 +190,7 @@ namespace LastChaos_ToolBox_2024
 
 			Close();
 		}
+
+		private void tbSearch_TextChanged(object sender, EventArgs e) { nSearchPosition = 0; }
 	}
 }
