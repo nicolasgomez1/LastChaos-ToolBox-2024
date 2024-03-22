@@ -64,6 +64,7 @@
 			this.tbSearch.Name = "tbSearch";
 			this.tbSearch.Size = new System.Drawing.Size(280, 20);
 			this.tbSearch.TabIndex = 1026;
+			this.tbSearch.TextChanged += new System.EventHandler(this.tbSearch_TextChanged);
 			this.tbSearch.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tbSearch_KeyDown);
 			// 
 			// MainList

@@ -16,20 +16,19 @@ namespace LastChaos_ToolBox_2024
 	/* Args:
 	 *	Main<Pointer to Main Form>
 	 *	Form<Parent Form to center the Window>
-	 *	Int<String ID>
-	 *	Boolean<Enable/Disable "Remove String" Button>
+	 *	Int<Zone ID>
 	 * Returns:
-	 *		Array<Int<String ID>, String<String>>
+	 *		Array<Int<Zone ID>, String<Zone Name>>
 	// Call and receive implementation
-	StringPicker pStringSelector = new StringPicker(pMain, this, 1, false);
+	ZonePicker pZoneSelector = new ZonePicker(pMain, this, 1);
 
-	if (pStringSelector.ShowDialog() != DialogResult.OK)
+	if (pZoneSelector.ShowDialog() != DialogResult.OK)
 		return;
 
-	int iStringID = Convert.ToInt32(pStringSelector.ReturnValues[0]);
-	string strString = pStringSelector.ReturnValues[1].ToString();
+	int iZoneID = Convert.ToInt32(pZoneSelector.ReturnValues[0]);
+	string strZoneName = pZoneSelector.ReturnValues[1].ToString();
 	/****************************************/
-	public partial class StringPicker : Form
+	public partial class ZonePicker : Form
 	{
 		private Form pParentForm;
 		private Main pMain;
@@ -44,30 +43,49 @@ namespace LastChaos_ToolBox_2024
 			public override string ToString() { return Text; }
 		}
 
-		public StringPicker(Main mainForm, Form ParentForm, int nStringID, bool bRemoveStringEnable = true)
+		public ZonePicker(Main mainForm, Form ParentForm, int nStringID, bool bRemoveStringEnable = true)
 		{
 			InitializeComponent();
 
 			pMain = mainForm;
 			pParentForm = ParentForm;
 			ReturnValues[0] = nStringID;
-
-			btnRemoveString.Enabled = bRemoveStringEnable;
 		}
 
-		private async void StringPicker_LoadAsync(object sender, EventArgs e)
+		private async void ZonePicker_LoadAsync(object sender, EventArgs e)
 		{
 			this.Location = new Point((int)pParentForm.Location.X + (pParentForm.Width - this.Width) / 2, (int)pParentForm.Location.Y + (pParentForm.Height - this.Height) / 2);
 
-			if (pMain.pStringTable == null)
+			bool bRequestNeeded = false;
+
+			List<string> listQueryCompose = new List<string> { "a_name" };
+
+			if (pMain.pZoneTable == null)
 			{
-				pMain.pStringTable = await Task.Run(() =>
+				bRequestNeeded = true;
+			}
+			else
+			{
+				foreach (string strColumnName in listQueryCompose.ToList())
 				{
-					return pMain.QuerySelect(pMain.pSettings.DBCharset, $"SELECT a_index, a_string_{pMain.pSettings.WorkLocale} FROM {pMain.pSettings.DBData}.t_string ORDER BY a_index;");
+					if (!pMain.pZoneTable.Columns.Contains(strColumnName))
+						bRequestNeeded = true;
+					else
+						listQueryCompose.Remove(strColumnName);
+				}
+			}
+
+			if (bRequestNeeded)
+			{
+				pMain.pZoneTable = await Task.Run(() =>
+				{
+					return pMain.QuerySelect(pMain.pSettings.DBCharset, $"SELECT a_zone_index, {string.Join(",", listQueryCompose)} FROM {pMain.pSettings.DBData}.t_zonedata ORDER BY a_zone_index;");
 				});
 			}
 
-			if (pMain.pStringTable != null)
+			listQueryCompose = null;
+
+			if (pMain.pZoneTable != null)
 			{
 				bUserAction = false;
 
@@ -77,14 +95,14 @@ namespace LastChaos_ToolBox_2024
 
 				int nActualStringID = Convert.ToInt32(ReturnValues[0]);
 
-				foreach (DataRow pRow in pMain.pStringTable.Rows)
+				foreach (DataRow pRow in pMain.pZoneTable.Rows)
 				{
-					int nStringID = Convert.ToInt32(pRow["a_index"]);
+					int nStringID = Convert.ToInt32(pRow["a_zone_index"]);
 
 					MainList.Items.Add(new ListBoxItem
 					{
 						ID = nStringID,
-						Text = pRow["a_index"] + " - " + pRow["a_string_" + pMain.pSettings.WorkLocale].ToString()
+						Text = pRow["a_zone_index"] + " - " + pRow["a_name"].ToString()
 					});
 
 					if (nStringID == nActualStringID)
@@ -164,15 +182,6 @@ namespace LastChaos_ToolBox_2024
 					Close();
 				}
 			}
-		}
-
-		private void btnRemoveString_Click(object sender, EventArgs e)
-		{
-			DialogResult = DialogResult.OK;
-
-			ReturnValues = new object[] { -1, "" };
-
-			Close();
 		}
 
 		private void tbSearch_TextChanged(object sender, EventArgs e) { nSearchPosition = 0; }
