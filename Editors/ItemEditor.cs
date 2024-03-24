@@ -139,7 +139,15 @@ namespace LastChaos_ToolBox_2024.Editors
 				ToolStripMenuItem menuOptionPicker = new ToolStripMenuItem("Option Picker");
 				menuOptionPicker.Click += (menuItemSender, menuItemEventArgs) =>
 				{
-					// TODO: Option Picker
+					OptionPicker pOptionSelector = new OptionPicker(pMain, this, new int[] { 512, 1 });
+
+					if (pOptionSelector.ShowDialog() != DialogResult.OK)
+						return;
+
+					int iOptionID = pOptionSelector.ReturnValues[0];
+					int iOptionLevel = pOptionSelector.ReturnValues[1];
+
+					// TODO: Pasar los valores a los correspondientes textboxs.
 				};
 
 				ToolStripMenuItem menuRarePicker = new ToolStripMenuItem("Rare Picker");
@@ -289,8 +297,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			bool bRequestNeeded = false;
 
 			// NOTE: Here you must define the columns that you want to request from the database.
-			List<string> listQueryCompose = new List<string>
-			{
+			List<string> listQueryCompose = new List<string> {
 				"a_enable", "a_texture_id", "a_texture_row", "a_texture_col", "a_file_smc", "a_weight", "a_price", "a_level", "a_level2", "a_durability", "a_fame",
 				"a_max_use", "a_grade", "a_type_idx", "a_subtype_idx", "a_wearing", "a_rvr_value", "a_rvr_grade", "a_effect_name", "a_attack_effect_name",
 				"a_damage_effect_name", "a_castle_war", "a_job_flag", "a_zone_flag", "a_flag", "a_origin_variation1", "a_origin_variation2", "a_origin_variation3",

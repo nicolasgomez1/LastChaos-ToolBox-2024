@@ -143,10 +143,6 @@
         }
         #endregion
 
-        private System.Windows.Forms.ComboBox cbFileSelector;
-        private System.Windows.Forms.PictureBox pbImageViewer;
-        private System.Windows.Forms.Label lbLocation;
-        private System.Windows.Forms.PictureBox pbIcon;
         private System.Windows.Forms.Button btnCheckAll;
         private System.Windows.Forms.CheckedListBox clbFlagList;
         private System.Windows.Forms.TextBox tbFlag;

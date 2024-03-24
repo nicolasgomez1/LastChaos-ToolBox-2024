@@ -42,13 +42,13 @@ namespace LastChaos_ToolBox_2024
 			public string Text { get; set; }
 			public override string ToString() { return Text; }
 		}
-		public SkillPicker(Main mainForm, Form ParentForm, object[] iArray, bool bRemoveSkillEnable = true)
+		public SkillPicker(Main mainForm, Form ParentForm, object[] objArray, bool bRemoveSkillEnable = true)
 		{
 			InitializeComponent();
 
 			pMain = mainForm;
 			pParentForm = ParentForm;
-			ReturnValues = iArray;
+			ReturnValues = objArray;
 			Array.Resize(ref ReturnValues, 4);
 			ReturnValues[2] = "";
 			ReturnValues[3] = "";
