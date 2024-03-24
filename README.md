@@ -17,7 +17,7 @@ It provides the basics for creating tools to manage Databases and perhaps files 
 2) ALLOWED_ZONE_SYSTEM It is used to have a Button to select the flag (It is necessary for a personal modification) this directive is disabled by default.
 
 # Help Dialogs
-** Pickers
+* Pickers
 1) [Flag Picker Implementation Example](Pickers/FlagPicker.cs)
 2) [Icon Picker Implementation Example](Pickers/IconPicker.cs)
 3) [Skill Picker Implementation Example](Pickers/SkillPicker.cs)
