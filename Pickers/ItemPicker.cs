@@ -199,7 +199,7 @@ namespace LastChaos_ToolBox_2024
 			}
 		}
 
-		private void btnRemoveSkill_Click(object sender, EventArgs e)
+		private void btnRemoveItem_Click(object sender, EventArgs e)
 		{
 			DialogResult = DialogResult.OK;
 

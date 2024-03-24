@@ -42,13 +42,13 @@ namespace LastChaos_ToolBox_2024
 			public override string ToString() { return Text; }
 		}
 
-		public RareOptionPicker(Main mainForm, Form ParentForm, int iActualRareOptionID)
+		public RareOptionPicker(Main mainForm, Form ParentForm, int nActualRareOptionID)
 		{
 			InitializeComponent();
 
 			pMain = mainForm;
 			pParentForm = ParentForm;
-			ReturnValues = iActualRareOptionID;
+			ReturnValues = nActualRareOptionID;
 		}
 
 		private async void RareOptionPicker_LoadAsync(object sender, EventArgs e)

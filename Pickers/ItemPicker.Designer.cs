@@ -52,7 +52,7 @@
 			this.btnRemoveItem.TabIndex = 1014;
 			this.btnRemoveItem.Text = "Remove Item";
 			this.btnRemoveItem.UseVisualStyleBackColor = true;
-			this.btnRemoveItem.Click += new System.EventHandler(this.btnRemoveSkill_Click);
+			this.btnRemoveItem.Click += new System.EventHandler(this.btnRemoveItem_Click);
 			// 
 			// tbSearch
 			// 
@@ -124,6 +124,7 @@
 			// 
 			this.tbDescription.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
 			this.tbDescription.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.tbDescription.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
 			this.tbDescription.Location = new System.Drawing.Point(6, 57);
 			this.tbDescription.Multiline = true;
 			this.tbDescription.Name = "tbDescription";
@@ -157,9 +158,6 @@
         }
         #endregion
 
-        private System.Windows.Forms.ComboBox cbFileSelector;
-        private System.Windows.Forms.PictureBox pbImageViewer;
-        private System.Windows.Forms.Label lbLocation;
         private System.Windows.Forms.Button btnRemoveItem;
         private System.Windows.Forms.TextBox tbSearch;
         private System.Windows.Forms.ListBox MainList;
