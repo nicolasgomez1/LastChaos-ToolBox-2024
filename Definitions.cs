@@ -429,5 +429,260 @@ namespace Definitions
 			"OPTION_SUSTAINER",
 			"OPTION_REGEN_EP"
 		};
+
+		public static Dictionary<string, List<string>> MagicTypes = new Dictionary<string, List<string>>
+		{
+			{
+				"Stat", new List<string>
+				{
+					// Standards
+					"Attack",
+					"Defense",
+					"Magic",
+					"Resist",
+					"Hit Rate",
+					"Avoid",
+					"Critical",
+					"Attack Speed",
+					"Magic Speed",
+					"Move Speed",
+					"Recover HP",
+					"Recover MP",
+					"Max HP",
+					"Max MP",
+					"Deadldy",
+					"Magic Hit Rate",
+					"Magic Avoid",
+					"Attack Distance",
+					"Attack Melee",
+					"Attack Range",
+					"Hit Rate Skill",
+					"Attack 80",
+					"Max HP 450",
+					"Skill Speed",
+					"Valor",
+					"Statpall",
+					"Attack Per",
+					"Defense Per",
+					"Statpall Per",
+					"STR",
+					"DEX",
+					"INT",
+					"CON",
+					"Hard",
+					"Strong",
+					"NPC Attack",
+					"NPC Magic",
+					"Skill Cool Time",
+					"Decrase Mana Spend"
+				}
+			},
+			{
+				"Attribute", new List<string>
+				{
+					// Standards
+					"None",
+					"Fire",
+					"Water",
+					"Earth",
+					"Wind",
+					"Dark",
+					"Light",
+					"Random?"
+				}
+			},
+			{
+				"Assist", new List<string>
+				{
+					// Standards
+					"Poison",
+					"Hold",
+					"Confusion",
+					"Stone",
+					"Silent",
+					"Blood",
+					"Blind",
+					"Sturn",
+					"Sleep",
+					"HP",
+					"MP",
+					"Move Speed",
+					"HP Cancel",
+					"MP Cancel",
+					"Dizzy",
+					"Invisible",
+					"Sloth",
+					"Fear",
+					"Fake Death",
+					"Perfect Body",
+					"Frenzy",
+					"Damage Link",
+					"Berserk",
+					"Despair",
+					"Mana Screen",
+					"Bless",
+					"Safeguard",
+					"Mantle",
+					"Guard",
+					"Charge Attack",
+					"Charge Magic",
+					"Disease",
+					"Curse",
+					"Confused",
+					"Taming",
+					"Freeze",
+					"Inverse Damage",
+					"HP Dot",
+					"Rebirth",
+					"Darkness Mode",
+					"Aura Darkness",
+					"Aura Weakness",
+					"Aura Illusion",
+					"Mercenary",
+					"Soul Totem Buff",
+					"Soul Totem Attack",
+					"Trap",
+					"Parasite",
+					"Suicide",
+					"Invincibilty",
+					"GPS"
+				}
+			},
+			{
+				"Attack", new List<string>
+				{
+					// Standards
+					"Normal",
+					"Critical",
+					"Drain",
+					"One Shot Kill",
+					"Deadly",
+					"Hard"
+				}
+			},
+			{
+				"Recover", new List<string>
+				{
+					// Standards
+					"HP",
+					"MP",
+					"STM",
+					"Faith",
+					"EXP",
+					"SP"
+				}
+			},
+			{
+				"Cure", new List<string>
+				{
+					// Standards
+					"Posion",
+					"Hold",
+					"Confusion",
+					"Stone",
+					"Silent",
+					"Blood",
+					"Rebirth",
+					"Invisible",
+					"Sturn",
+					"Sloth",
+					"Not Help",
+					"Blind",
+					"Disease",
+					"Curse",
+					"All",
+					"Instant Death"
+				}
+			},
+			{
+				"Other", new List<string>
+				{
+					// Standards
+					"Instant Death",
+					"Skill Cancel",
+					"Tackle",
+					"Tackle 2",
+					"Reflex",
+					"Death EXP Plus",
+					"Death SP Plus",
+					"Telekinesis",
+					"Tount",
+					"Summon",
+					"Evocation",
+					"Target Free",
+					"Curse",
+					"Peace",
+					"Soul Drain",
+					"Knockback",
+					"Warp",
+					"Fly",
+					"EXP",
+					"SP",
+					"Item Drop",
+					"Skill",
+					"PK Disposition",
+					"Affinity",
+					"Affinity Quest",
+					"Affinity Monster",
+					"Affinity Item",
+					"Quest Exp",
+					"Guild Party Exp",
+					"Guild Party Sp",
+					"Summon NPC"
+				}
+			},
+			{
+				"Reduce", new List<string>
+				{
+					// Standards
+					"Melee",
+					"Range",
+					"Magic",
+					"Skill"
+				}
+			},
+			{
+				"Immune", new List<string>
+				{
+					// Standards
+					"Blind"
+				}
+			},
+			{
+				"Castle", new List<string>
+				{
+					// Standards
+					"Melee",
+					"Range",
+					"Magic",
+					"Max HP",
+					"Defense",
+					"Resist",
+					"Tower Attack"
+				}
+			},
+			{
+				"Money", new List<string>
+				{
+					// Standards
+					"Buy",
+					"Sell",
+					"Nas"
+				}
+			}
+		};
+
+		public static string[] MagicDamageTypes = {
+			// Standards
+			"Only Power",
+			"Addition",
+			"Rate"
+		};
+
+		public static string[] MagicHitTypes = {
+			// Standards
+			"Constant",
+			"Variable"
+		};
 	}
 }

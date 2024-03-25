@@ -25,6 +25,7 @@ It provides the basics for creating tools to manage Databases and perhaps files 
 5) [Rare Option Picker Implementation Example](Pickers/RareOptionPicker.cs)
 6) [String Picker Implementation Example](Pickers/StringPicker.cs)
 7) [Option Picker Implementation Example](Pickers/OptionPicker.cs)
+8) [Magic Picker Implementation Example](Pickers/MagicPicker.cs)
 
 - NOTE: Picker Dialogs are intended to complement larger Tools, however, they have the ability to request information autonomously. This means that you can make the decision to load, for example, t_skill names to be able to display them in your Tool, which will increase loading times. On the other hand, you could not request this information and work only with IDS, but when invoking the Skill Picker Dialog, it will request data such as the name and description of the skills automatically if necessary.
 
