@@ -30,6 +30,7 @@
 		{
 			this.tbSearch = new System.Windows.Forms.TextBox();
 			this.MainList = new System.Windows.Forms.ListBox();
+			this.btnRemoveZone = new System.Windows.Forms.Button();
 			this.SuspendLayout();
 			// 
 			// tbSearch
@@ -57,9 +58,26 @@
 			this.MainList.FormattingEnabled = true;
 			this.MainList.Location = new System.Drawing.Point(12, 44);
 			this.MainList.Name = "MainList";
-			this.MainList.Size = new System.Drawing.Size(210, 444);
+			this.MainList.Size = new System.Drawing.Size(210, 405);
 			this.MainList.TabIndex = 1027;
 			this.MainList.SelectedIndexChanged += new System.EventHandler(this.MainList_SelectedIndexChanged);
+			// 
+			// btnRemoveZone
+			// 
+			this.btnRemoveZone.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnRemoveZone.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(85)))), ((int)(((byte)(76)))));
+			this.btnRemoveZone.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+			this.btnRemoveZone.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
+			this.btnRemoveZone.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.btnRemoveZone.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.btnRemoveZone.Location = new System.Drawing.Point(12, 465);
+			this.btnRemoveZone.Name = "btnRemoveZone";
+			this.btnRemoveZone.Size = new System.Drawing.Size(210, 23);
+			this.btnRemoveZone.TabIndex = 1028;
+			this.btnRemoveZone.Text = "Remove Zone";
+			this.btnRemoveZone.UseVisualStyleBackColor = true;
+			this.btnRemoveZone.Click += new System.EventHandler(this.btnRemoveZone_Click);
 			// 
 			// ZonePicker
 			// 
@@ -67,6 +85,7 @@
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
 			this.ClientSize = new System.Drawing.Size(234, 500);
+			this.Controls.Add(this.btnRemoveZone);
 			this.Controls.Add(this.MainList);
 			this.Controls.Add(this.tbSearch);
 			this.Icon = global::LastChaos_ToolBox_2024.Properties.Resources.NG;
@@ -83,5 +102,6 @@
 
 		private System.Windows.Forms.TextBox tbSearch;
 		private System.Windows.Forms.ListBox MainList;
+		private System.Windows.Forms.Button btnRemoveZone;
 	}
 }

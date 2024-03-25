@@ -21,8 +21,8 @@ namespace LastChaos_ToolBox_2024
 	if (pOptionSelector.ShowDialog() != DialogResult.OK)
 		return;
 
-	int iOptionType = pOptionSelector.ReturnValues[0];
-	int iOptionLevel = pOptionSelector.ReturnValues[1];
+	int nOptionType = pOptionSelector.ReturnValues[0];
+	int nOptionLevel = pOptionSelector.ReturnValues[1];
 	/****************************************/
 	public partial class OptionPicker : Form
 	{
@@ -110,8 +110,6 @@ namespace LastChaos_ToolBox_2024
 
 				MainList.BeginUpdate();
 
-				int nOriginalOptionID = ReturnValues[0];
-
 				foreach (DataRow pRow in pMain.pOptionTable.Rows)
 				{
 					int nItemID = Convert.ToInt32(pRow["a_index"]);
@@ -122,7 +120,7 @@ namespace LastChaos_ToolBox_2024
 						Text = pRow["a_type"] + " - " + pRow["a_name_" + pMain.pSettings.WorkLocale].ToString()
 					});
 
-					if (nItemID == nOriginalOptionID)
+					if (nItemID == ReturnValues[0])
 						MainList.SelectedIndex = MainList.Items.Count - 1;
 				}
 
@@ -198,11 +196,11 @@ namespace LastChaos_ToolBox_2024
 
 				pRowOption = pMain.pOptionTable.Select("a_index = " + nItemID).FirstOrDefault();
 
-				AddInfo("Type: ", true);
+				AddInfo("Type:", true);
 
 				AddInfo(Defs.OptionTypes[Convert.ToInt32(pRowOption["a_type"])]);
 
-				AddInfo("Weapon Types: ", true);
+				AddInfo("Weapon Types:", true);
 
 				// NOTE: I'm not sure of all this >>
 				int nFlag = Convert.ToInt32(pRowOption["a_weapon_type"]);
@@ -223,7 +221,7 @@ namespace LastChaos_ToolBox_2024
 					AddInfo("0");
 				}
 
-				AddInfo("Wear Types: ", true);
+				AddInfo("Wear Types:", true);
 
 				nFlag = Convert.ToInt32(pRowOption["a_wear_type"]);
 
@@ -243,7 +241,7 @@ namespace LastChaos_ToolBox_2024
 					AddInfo("0");
 				}
 
-				AddInfo("Accesory Types: ", true);
+				AddInfo("Accesory Types:", true);
 
 				nFlag = Convert.ToInt32(pRowOption["a_accessory_type"]);
 
@@ -293,7 +291,7 @@ namespace LastChaos_ToolBox_2024
 							cbLevelSelector.Items.Add("[" + (i + 1) + "] Lvl: " + strLevelB + " Prob: " + strArrayProb[i]);
 
 							if (Convert.ToInt32(strLevelB) == ReturnValues[1])
-								MainList.SelectedIndex = MainList.Items.Count - 1;
+								cbLevelSelector.SelectedIndex = cbLevelSelector.Items.Count - 1;
 						}
 						else
 						{
@@ -304,7 +302,7 @@ namespace LastChaos_ToolBox_2024
 					}
 
 					if (cbLevelSelector.SelectedIndex == -1)
-						cbLevelSelector.SelectedIndex = 1;
+						cbLevelSelector.SelectedIndex = 0;
 				}
 
 				cbLevelSelector.Enabled = true;
@@ -319,12 +317,6 @@ namespace LastChaos_ToolBox_2024
 
 			if (pSelectedItem != null && nSelectedOptionLevel != -1)
 			{
-				cbLevelSelector.Enabled = false;
-
-				cbLevelSelector.Items.Clear();
-
-				cbLevelSelector.BeginUpdate();
-
 				DialogResult = DialogResult.OK;
 
 				ReturnValues[0] = Convert.ToInt32(pRowOption["a_type"]);

@@ -19,7 +19,7 @@ namespace LastChaos_ToolBox_2024
 	if (pStringSelector.ShowDialog() != DialogResult.OK)
 		return;
 
-	int iStringID = Convert.ToInt32(pStringSelector.ReturnValues[0]);
+	int nStringID = Convert.ToInt32(pStringSelector.ReturnValues[0]);
 	string strString = pStringSelector.ReturnValues[1].ToString();
 	/****************************************/
 	public partial class StringPicker : Form
@@ -68,8 +68,6 @@ namespace LastChaos_ToolBox_2024
 
 				MainList.BeginUpdate();
 
-				int nActualStringID = Convert.ToInt32(ReturnValues[0]);
-
 				foreach (DataRow pRow in pMain.pStringTable.Rows)
 				{
 					int nStringID = Convert.ToInt32(pRow["a_index"]);
@@ -80,7 +78,7 @@ namespace LastChaos_ToolBox_2024
 						Text = pRow["a_index"] + " - " + pRow["a_string_" + pMain.pSettings.WorkLocale].ToString()
 					});
 
-					if (nStringID == nActualStringID)
+					if (nStringID == Convert.ToInt32(ReturnValues[0]))
 						MainList.SelectedIndex = MainList.Items.Count - 1;
 				}
 

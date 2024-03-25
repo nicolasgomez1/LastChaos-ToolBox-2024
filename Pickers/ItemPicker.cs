@@ -20,7 +20,7 @@ namespace LastChaos_ToolBox_2024
 	if (pItemSelector.ShowDialog() != DialogResult.OK)
 		return;
 
-	int iItemID = pItemSelector.ReturnValues;
+	int nItemID = pItemSelector.ReturnValues;
 	/****************************************/
 	public partial class ItemPicker : Form
 	{
@@ -85,8 +85,6 @@ namespace LastChaos_ToolBox_2024
 
 				MainList.BeginUpdate();
 
-				int nOriginalItemID = ReturnValues;
-
 				foreach (DataRow pRow in pMain.pItemTable.Rows)
 				{
 					int nItemID = Convert.ToInt32(pRow["a_index"]);
@@ -97,7 +95,7 @@ namespace LastChaos_ToolBox_2024
 						Text = pRow["a_index"] + " - " + pRow["a_name_" + pMain.pSettings.WorkLocale].ToString()
 					});
 
-					if (nItemID == nOriginalItemID)
+					if (nItemID == ReturnValues)
 						MainList.SelectedIndex = MainList.Items.Count - 1;
 				}
 

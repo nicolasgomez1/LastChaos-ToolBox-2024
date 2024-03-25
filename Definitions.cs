@@ -672,17 +672,29 @@ namespace Definitions
 			}
 		};
 
-		public static string[] MagicDamageTypes = {
+		public static string[] MagicDamageTypes =
+		{
 			// Standards
 			"Only Power",
 			"Addition",
 			"Rate"
 		};
 
-		public static string[] MagicHitTypes = {
+		public static string[] MagicHitTypes =
+		{
 			// Standards
 			"Constant",
 			"Variable"
+		};
+
+		public static string[] MagicParamTypes =
+		{
+			// Standards
+			"None",
+			"Strength",
+			"Dexterity",
+			"Intelligence",
+			"Constitution"
 		};
 	}
 }

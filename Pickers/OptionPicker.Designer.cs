@@ -32,9 +32,9 @@
 			this.tbSearch = new System.Windows.Forms.TextBox();
 			this.MainList = new System.Windows.Forms.ListBox();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
+			this.rtbInformation = new System.Windows.Forms.RichTextBox();
 			this.btnSelect = new System.Windows.Forms.Button();
 			this.cbLevelSelector = new System.Windows.Forms.ComboBox();
-			this.rtbInformation = new System.Windows.Forms.RichTextBox();
 			this.groupBox1.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -47,7 +47,7 @@
 			this.btnRemoveOption.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
 			this.btnRemoveOption.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.btnRemoveOption.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-			this.btnRemoveOption.Location = new System.Drawing.Point(298, 476);
+			this.btnRemoveOption.Location = new System.Drawing.Point(298, 478);
 			this.btnRemoveOption.Name = "btnRemoveOption";
 			this.btnRemoveOption.Size = new System.Drawing.Size(224, 23);
 			this.btnRemoveOption.TabIndex = 1014;
@@ -92,10 +92,27 @@
 			this.groupBox1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
 			this.groupBox1.Location = new System.Drawing.Point(298, 12);
 			this.groupBox1.Name = "groupBox1";
-			this.groupBox1.Size = new System.Drawing.Size(224, 458);
+			this.groupBox1.Size = new System.Drawing.Size(224, 460);
 			this.groupBox1.TabIndex = 1032;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Option Data";
+			// 
+			// rtbInformation
+			// 
+			this.rtbInformation.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.rtbInformation.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+			this.rtbInformation.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.rtbInformation.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
+			this.rtbInformation.Location = new System.Drawing.Point(6, 19);
+			this.rtbInformation.Name = "rtbInformation";
+			this.rtbInformation.ReadOnly = true;
+			this.rtbInformation.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedVertical;
+			this.rtbInformation.Size = new System.Drawing.Size(212, 379);
+			this.rtbInformation.TabIndex = 1030;
+			this.rtbInformation.Text = "";
+			this.rtbInformation.ZoomFactor = 1.2F;
 			// 
 			// btnSelect
 			// 
@@ -106,7 +123,7 @@
 			this.btnSelect.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
 			this.btnSelect.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.btnSelect.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-			this.btnSelect.Location = new System.Drawing.Point(6, 429);
+			this.btnSelect.Location = new System.Drawing.Point(6, 431);
 			this.btnSelect.Name = "btnSelect";
 			this.btnSelect.Size = new System.Drawing.Size(212, 23);
 			this.btnSelect.TabIndex = 1028;
@@ -122,27 +139,10 @@
 			this.cbLevelSelector.Enabled = false;
 			this.cbLevelSelector.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
 			this.cbLevelSelector.FormattingEnabled = true;
-			this.cbLevelSelector.Location = new System.Drawing.Point(6, 402);
+			this.cbLevelSelector.Location = new System.Drawing.Point(6, 404);
 			this.cbLevelSelector.Name = "cbLevelSelector";
 			this.cbLevelSelector.Size = new System.Drawing.Size(212, 21);
 			this.cbLevelSelector.TabIndex = 1029;
-			// 
-			// rtbInformation
-			// 
-			this.rtbInformation.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.rtbInformation.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
-			this.rtbInformation.BorderStyle = System.Windows.Forms.BorderStyle.None;
-			this.rtbInformation.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-			this.rtbInformation.Location = new System.Drawing.Point(6, 19);
-			this.rtbInformation.Name = "rtbInformation";
-			this.rtbInformation.ReadOnly = true;
-			this.rtbInformation.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedVertical;
-			this.rtbInformation.Size = new System.Drawing.Size(212, 377);
-			this.rtbInformation.TabIndex = 1030;
-			this.rtbInformation.Text = "";
-			this.rtbInformation.ZoomFactor = 1.2F;
 			// 
 			// OptionPicker
 			// 

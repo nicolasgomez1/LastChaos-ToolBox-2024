@@ -21,7 +21,7 @@ namespace LastChaos_ToolBox_2024
 	if (pSkillSelector.ShowDialog() != DialogResult.OK)
 		return;
 
-	int iSkillNeededID = Convert.ToInt32(pSkillSelector.ReturnValues[0]);
+	int nSkillNeededID = Convert.ToInt32(pSkillSelector.ReturnValues[0]);
 	string strSkillLevelNeeded = pSkillSelector.ReturnValues[1].ToString();
 	/****************************************/
 	public partial class SkillPicker : Form
@@ -120,8 +120,6 @@ namespace LastChaos_ToolBox_2024
 
 				MainList.BeginUpdate();
 
-				int nOriginalSkillID = Convert.ToInt32(ReturnValues[0]);
-
 				foreach (DataRow pRow in pMain.pSkillTable.Rows)
 				{
 					int nSkillID = Convert.ToInt32(pRow["a_index"]);
@@ -132,7 +130,7 @@ namespace LastChaos_ToolBox_2024
 						Text = pRow["a_index"] + " - " + pRow["a_name_" + pMain.pSettings.WorkLocale].ToString()
 					});
 
-					if (nSkillID == nOriginalSkillID)
+					if (nSkillID == Convert.ToInt32(ReturnValues[0]))
 						MainList.SelectedIndex = MainList.Items.Count - 1;
 				}
 
@@ -219,7 +217,6 @@ namespace LastChaos_ToolBox_2024
 				ReturnValues[2] = pRowSkill["a_name_" + pMain.pSettings.WorkLocale].ToString();
 				ReturnValues[3] = strSkillDescription;
 
-				string strOriginalSkillLevel = ReturnValues[1].ToString();
 				List<DataRow> listSkillLevels = pMain.pSkillLevelTable.AsEnumerable().Where(row => row.RowState != DataRowState.Deleted && row.Field<int>("a_index") == nItemID).ToList();
 
 				foreach (var pRowSkillLevel in listSkillLevels)
@@ -228,7 +225,7 @@ namespace LastChaos_ToolBox_2024
 
 					cbLevelSelector.Items.Add("Level: " + strSkillLevel + " - Power: " + pRowSkillLevel["a_dummypower"].ToString());
 
-					if (strOriginalSkillLevel == strSkillLevel)
+					if (ReturnValues[1].ToString() == strSkillLevel)
 						cbLevelSelector.SelectedIndex = cbLevelSelector.Items.Count - 1;
 				}
 
@@ -252,12 +249,6 @@ namespace LastChaos_ToolBox_2024
 
 			if (pSelectedItem != null && nSelectedSkillLevel != -1)
 			{
-				cbLevelSelector.Enabled = false;
-
-				cbLevelSelector.Items.Clear();
-
-				cbLevelSelector.BeginUpdate();
-
 				DialogResult = DialogResult.OK;
 
 				ReturnValues[0] = pSelectedItem.ID;

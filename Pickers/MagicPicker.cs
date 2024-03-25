@@ -21,16 +21,16 @@ namespace LastChaos_ToolBox_2024
 	if (pMagicSelector.ShowDialog() != DialogResult.OK)
 		return;
 
-	int iMagicType = pMagicSelector.ReturnValues[0];
-	int iMagicLevel = pMagicSelector.ReturnValues[1];
+	int nMagicType = pMagicSelector.ReturnValues[0];
+	int nMagicLevel = pMagicSelector.ReturnValues[1];
 	/****************************************/
 	public partial class MagicPicker : Form
 	{
 		private Form pParentForm;
 		private Main pMain;
 		private int nSearchPosition = 0;
-		//private DataRow pRowOption;
-		private string[] strArrayLevel;
+		private DataRow pRowMagic;
+		private List<DataRow> listMagicLevels;
 		public int[] ReturnValues = { -1, 0 };
 
 		public class ListBoxItem
@@ -51,7 +51,12 @@ namespace LastChaos_ToolBox_2024
 			ReturnValues = nArray;
 		}
 
-		private void MagicPicker_FormClosing(object sender, FormClosingEventArgs e) { /*pRowMagic = null;*/ }
+		private void MagicPicker_FormClosing(object sender, FormClosingEventArgs e) {
+			pRowMagic = null;
+
+			listMagicLevels.Clear();
+			listMagicLevels = null;
+		}
 
 		public void AddInfo(string strText, bool bHead = false)
 		{
@@ -138,8 +143,6 @@ namespace LastChaos_ToolBox_2024
 
 				MainList.BeginUpdate();
 
-				int nOriginalSkillID = Convert.ToInt32(ReturnValues[0]);
-
 				foreach (DataRow pRow in pMain.pMagicTable.Rows)
 				{
 					int nSkillID = Convert.ToInt32(pRow["a_index"]);
@@ -150,7 +153,7 @@ namespace LastChaos_ToolBox_2024
 						Text = pRow["a_index"] + " - " + pRow["a_name"].ToString()
 					});
 
-					if (nSkillID == nOriginalSkillID)
+					if (nSkillID == Convert.ToInt32(ReturnValues[0]))
 						MainList.SelectedIndex = MainList.Items.Count - 1;
 				}
 
@@ -223,109 +226,122 @@ namespace LastChaos_ToolBox_2024
 				btnSelect.Enabled = false;
 
 				int nItemID = pSelectedItem.ID;
-				/*
-				pRowOption = pMain.pOptionTable.Select("a_index = " + nItemID).FirstOrDefault();
 
-				AddInfo("Type: ", true);
+				pRowMagic = pMain.pMagicTable.Select("a_index = " + nItemID).FirstOrDefault();
 
-				AddInfo(Defs.OptionTypes[Convert.ToInt32(pRowOption["a_type"])]);
+				AddInfo("Type:", true);
 
-				AddInfo("Weapon Types: ", true);
-
-				// NOTE: I'm not sure of all this >>
-				int nFlag = Convert.ToInt32(pRowOption["a_weapon_type"]);
-
-				if (nFlag != 0)
+				var varType = Defs.MagicTypes.ElementAtOrDefault(Convert.ToInt32(pRowMagic["a_type"]));
+				if (varType.Value == null)
 				{
-					int i = 0;
-					foreach (string strSubType in Defs.ItemTypesNSubTypes["Weapon"])
-					{
-						if ((nFlag & 1L << i) != 0)
-							AddInfo(strSubType);
-
-						i++;
-					}
+					pMain.Logger("Magic Picker > Magic: " + nItemID + " Error: a_type out of range.", Color.Red);
+					return;
 				}
-				else
+				
+				AddInfo(varType.Key);
+
+				AddInfo("Sub Type:", true);
+
+				if (varType.Value.Count < Convert.ToInt32(pRowMagic["a_subtype"]))
 				{
-					AddInfo("0");
+					pMain.Logger("Magic Picker > Magic: " + nItemID + " Error: a_subtype out of range.", Color.Red);
+					return;
 				}
 
-				AddInfo("Wear Types: ", true);
+				AddInfo(varType.Value[Convert.ToInt32(pRowMagic["a_subtype"])]);
 
-				nFlag = Convert.ToInt32(pRowOption["a_wear_type"]);
+				AddInfo("Damage Type:", true);
 
-				if (nFlag != 0)
+				string strDamageType = Defs.MagicDamageTypes[Convert.ToInt32(pRowMagic["a_damagetype"])];
+				if (strDamageType == null)
 				{
-					int i = 0;
-					foreach (string strSubType in Defs.ItemTypesNSubTypes["Armor"])
-					{
-						if ((nFlag & 1L << i) != 0)
-							AddInfo(strSubType);
-
-						i++;
-					}
-				}
-				else
-				{
-					AddInfo("0");
+					pMain.Logger("Magic Picker > Magic: " + nItemID + " Error: a_damagetype out of range.", Color.Red);
+					return;
 				}
 
-				AddInfo("Accesory Types: ", true);
+				AddInfo(strDamageType);
 
-				nFlag = Convert.ToInt32(pRowOption["a_accessory_type"]);
+				AddInfo("Hit Type:", true);
 
-				if (nFlag != 0)
+				string strHitType = Defs.MagicHitTypes[Convert.ToInt32(pRowMagic["a_hittype"])];
+				if (strHitType == null)
 				{
-					int i = 0;
-					foreach (string strSubType in Defs.ItemTypesNSubTypes["Accesory"])
-					{
-						if ((nFlag & 1L << i) != 0)
-							AddInfo(strSubType);
-
-						i++;
-					}
+					pMain.Logger("Magic Picker > Magic: " + nItemID + " Error: a_hittype out of range.", Color.Red);
+					return;
 				}
-				else
+
+				AddInfo(strHitType);
+
+				AddInfo("Attribute:", true);
+				AddInfo(pRowMagic["a_attribute"].ToString());
+
+				AddInfo("Self Power Parameter:", true);
+
+				string strParam = Defs.MagicParamTypes[Convert.ToInt32(pRowMagic["a_psp"])];
+				if (strParam == null)
 				{
-					AddInfo("0");
+					pMain.Logger("Magic Picker > Magic: " + nItemID + " Error: a_psp out of range.", Color.Red);
+					return;
 				}
-				// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
+				AddInfo(strParam);
+
+				AddInfo("Target Power Parameter:", true);
+
+				strParam = Defs.MagicParamTypes[Convert.ToInt32(pRowMagic["a_ptp"])];
+				if (strParam == null)
 				{
-					string strLevel = pRowOption["a_level"].ToString();
-					if (strLevel.IndexOf(' ') >= 0)
-						strLevel = strLevel.TrimStart();
+					pMain.Logger("Magic Picker > Magic: " + nItemID + " Error: a_ptp out of range.", Color.Red);
+					return;
+				}
 
-					strArrayLevel = strLevel.Split(' ');
+				AddInfo(strParam);
 
-					string strProb = pRowOption["a_prob"].ToString();
-					if (strProb.IndexOf(' ') >= 0)
-						strProb = strProb.TrimStart();
+				AddInfo("Self Hit Rate:", true);
 
-					string[] strArrayProb = strProb.Split(' ');
+				strParam = Defs.MagicParamTypes[Convert.ToInt32(pRowMagic["a_hsp"])];
+				if (strParam == null)
+				{
+					pMain.Logger("Magic Picker > Magic: " + nItemID + " Error: a_hsp out of range.", Color.Red);
+					return;
+				}
 
-					int i = 0;
-					foreach (string strLevelB in strArrayLevel)
-					{
-						if (i < strArrayProb.Length)
-						{
-							cbLevelSelector.Items.Add("[" + (i + 1) + "] Lvl: " + strLevelB + " Prob: " + strArrayProb[i]);
+				AddInfo(strParam);
 
-							if (Convert.ToInt32(strLevelB) == ReturnValues[1])
-								MainList.SelectedIndex = MainList.Items.Count - 1;
-						}
-						else
-						{
-							pMain.Logger("option Picker > Option: " + nItemID + " Error: a_prob mismatched with a_level.", Color.Red);
-						}
+				AddInfo("Target Hit Rate:", true);
 
-						i++;
-					}
+				strParam = Defs.MagicParamTypes[Convert.ToInt32(pRowMagic["a_htp"])];
+				if (strParam == null)
+				{
+					pMain.Logger("Magic Picker > Magic: " + nItemID + " Error: a_htp out of range.", Color.Red);
+					return;
+				}
 
-					if (cbLevelSelector.SelectedIndex == -1)
-						cbLevelSelector.SelectedIndex = 1;
-				}*/
+				AddInfo(strParam);
+
+				AddInfo("Toggle:", true);
+
+				string strToggle = "False";
+
+				if (pRowMagic["a_togle"].ToString() == "1")
+					strToggle = "True";
+
+				AddInfo(strToggle);
+
+				listMagicLevels = pMain.pMagicLevelTable.AsEnumerable().Where(row => row.RowState != DataRowState.Deleted && row.Field<int>("a_index") == nItemID).ToList();
+
+				foreach (var pRowMagicLevel in listMagicLevels)
+				{
+					int nLevel = Convert.ToInt32(pRowMagicLevel["a_level"]);
+
+					cbLevelSelector.Items.Add("Lvl: " + nLevel + " Power: " + pRowMagicLevel["a_power"] + " Hit Rate: " + pRowMagicLevel["a_hitrate"]);
+
+					if (nLevel == ReturnValues[1])
+						cbLevelSelector.SelectedIndex = cbLevelSelector.Items.Count - 1;
+				}
+
+				if (cbLevelSelector.SelectedIndex == -1)
+					cbLevelSelector.SelectedIndex = 0;
 
 				cbLevelSelector.Enabled = true;
 				btnSelect.Enabled = true;
@@ -335,26 +351,20 @@ namespace LastChaos_ToolBox_2024
 		private void btnSelect_Click(object sender, EventArgs e)
 		{
 			ListBoxItem pSelectedItem = (ListBoxItem)MainList.SelectedItem;
-			int nSelectedOptionLevel = cbLevelSelector.SelectedIndex;
+			int nSelectedMagicLevel = cbLevelSelector.SelectedIndex;
 
-			if (pSelectedItem != null && nSelectedOptionLevel != -1)
+			if (pSelectedItem != null && nSelectedMagicLevel != -1)
 			{
-				cbLevelSelector.Enabled = false;
-
-				cbLevelSelector.Items.Clear();
-
-				cbLevelSelector.BeginUpdate();
-
 				DialogResult = DialogResult.OK;
 
-				//ReturnValues[0] = Convert.ToInt32(pRowOption["a_type"]);	// TODO
-				ReturnValues[1] = Convert.ToInt32(strArrayLevel[nSelectedOptionLevel]);
+				ReturnValues[0] = Convert.ToInt32(pRowMagic["a_index"]);
+				ReturnValues[1] = Convert.ToInt32(listMagicLevels[nSelectedMagicLevel]["a_level"]);
 
 				Close();
 			}
 		}
 
-		private void btnRemoveOption_Click(object sender, EventArgs e)
+		private void btnRemoveMagic_Click(object sender, EventArgs e)
 		{
 			DialogResult = DialogResult.OK;
 

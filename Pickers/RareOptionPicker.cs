@@ -20,7 +20,7 @@ namespace LastChaos_ToolBox_2024
 	if (pRareOptionSelector.ShowDialog() != DialogResult.OK)
 		return;
 
-	int iRareOptionID = pRareOptionSelector.ReturnValues;
+	int nRareOptionID = pRareOptionSelector.ReturnValues;
 	/****************************************/
 	public partial class RareOptionPicker : Form
 	{
@@ -87,8 +87,6 @@ namespace LastChaos_ToolBox_2024
 
 				MainList.BeginUpdate();
 
-				int nOriginalRareOptionID = ReturnValues;
-
 				foreach (DataRow pRow in pMain.pRareOptionTable.Rows)
 				{
 					int nItemID = Convert.ToInt32(pRow["a_index"]);
@@ -99,7 +97,7 @@ namespace LastChaos_ToolBox_2024
 						Text = pRow["a_index"] + " - " + pRow["a_prefix_" + pMain.pSettings.WorkLocale].ToString()
 					});
 
-					if (nItemID == nOriginalRareOptionID)
+					if (nItemID == ReturnValues)
 						MainList.SelectedIndex = MainList.Items.Count - 1;
 				}
 

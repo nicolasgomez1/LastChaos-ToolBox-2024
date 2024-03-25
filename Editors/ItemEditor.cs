@@ -84,15 +84,11 @@ namespace LastChaos_ToolBox_2024.Editors
 		private void contextMenuStrip1_Opening(object sender, CancelEventArgs e)
 		{
 			Control cControl = (sender as ContextMenuStrip)?.SourceControl;
-
+			// TODO: NOTE: Some pickers return 0, others -1, I don't know how the update or insert action will behave, it could fail completely.
 			if (cControl != null)
 			{
 				string strControlName = cControl.Name;
 				int nActualValue = Convert.ToInt32(cControl.Text);
-
-				/*if (strControlName.Substring(0, 5) == "tbSet")
-				else if (strControlName.Substring(0, 8) == "tbOption")
-				else if (strControlName.Substring(0, 11) == "tbVariation")*/
 
 				ToolStripMenuItem menuItemPicker = new ToolStripMenuItem("Item Picker");
 				menuItemPicker.Click += (menuItemSender, menuItemEventArgs) =>
@@ -126,6 +122,12 @@ namespace LastChaos_ToolBox_2024.Editors
 					if (strControlName.Length >= 11 && strControlName.Substring(0, 11) == "tbRareIndex")
 					{
 						tbSecondInputObject = ((TextBox)this.Controls.Find("tbRareProb" + strControlName[strControlName.Length - 1], true)[0]);
+						nSkillLevel = Convert.ToInt32(tbSecondInputObject.Text);
+					}
+
+					if (strControlName.Length >= 9 && strControlName == "tbOption0")
+					{
+						tbSecondInputObject = ((TextBox)this.Controls.Find("tbOption1", true)[0]);
 						nSkillLevel = Convert.ToInt32(tbSecondInputObject.Text);
 					}
 
@@ -178,15 +180,30 @@ namespace LastChaos_ToolBox_2024.Editors
 				ToolStripMenuItem menuMagicPicker = new ToolStripMenuItem("Magic Picker");
 				menuMagicPicker.Click += (menuItemSender, menuItemEventArgs) =>
 				{
-					MagicPicker pMagicSelector = new MagicPicker(pMain, this, new int[] { 0, 1 });
+					int nMagicLevel = 0;
+					TextBox tbSecondInputObject = null;
+
+					if (strControlName.Length >= 11 && strControlName.Substring(0, 11) == "tbRareIndex")
+					{
+						tbSecondInputObject = ((TextBox)this.Controls.Find("tbRareProb" + strControlName[strControlName.Length - 1], true)[0]);
+						nMagicLevel = Convert.ToInt32(tbSecondInputObject.Text);
+					}
+
+					if (strControlName.Length >= 6 && strControlName == "tbSet0")
+					{
+						tbSecondInputObject = ((TextBox)this.Controls.Find("tbSet1", true)[0]);
+						nMagicLevel = Convert.ToInt32(tbSecondInputObject.Text);
+					}
+
+					MagicPicker pMagicSelector = new MagicPicker(pMain, this, new int[] { nActualValue, nMagicLevel });
 
 					if (pMagicSelector.ShowDialog() != DialogResult.OK)
 						return;
 
-					int iMagicType = pMagicSelector.ReturnValues[0];
-					int iMagicLevel = pMagicSelector.ReturnValues[1];
-					// TODO: Si es tbSet y es magic picker hay que poner el segundo valor en: tbSet1. Investigar el resto. Tambien verificar que onda con tbVariation
-					//if (strControlName.Substring(0, 5) == "tbSet")
+					cControl.Text = pMagicSelector.ReturnValues[0].ToString();
+
+					if (tbSecondInputObject != null)
+						tbSecondInputObject.Text = pMagicSelector.ReturnValues[1].ToString();
 				};
 
 				cmCommonInput = new ContextMenuStrip();
@@ -2311,18 +2328,18 @@ namespace LastChaos_ToolBox_2024.Editors
 				if (pSkillSelector.ShowDialog() != DialogResult.OK)
 					return;
 
-				int iSkillNeededID = Convert.ToInt32(pSkillSelector.ReturnValues[0]);
+				int nSkillNeededID = Convert.ToInt32(pSkillSelector.ReturnValues[0]);
 				string strSkillLevelNeeded = pSkillSelector.ReturnValues[1].ToString();
-				string strSkillName = iSkillNeededID.ToString();
+				string strSkillName = nSkillNeededID.ToString();
 
-				if (iSkillNeededID != -1)
+				if (nSkillNeededID != -1)
 					strSkillName += " - " + pSkillSelector.ReturnValues[2];
 
 				btnSkill1RequiredID.Text = strSkillName;
 
 				tbSkill1RequiredLevel.Text = strSkillLevelNeeded;
 
-				pTempItemRow[strIDColumn] = iSkillNeededID.ToString();
+				pTempItemRow[strIDColumn] = nSkillNeededID.ToString();
 				pTempItemRow[strLevelColumn] = strSkillLevelNeeded;
 
 				bUnsavedChanges = true;
@@ -2352,17 +2369,17 @@ namespace LastChaos_ToolBox_2024.Editors
 				if (pSkillSelector.ShowDialog() != DialogResult.OK)
 					return;
 
-				int iSkillNeededID = Convert.ToInt32(pSkillSelector.ReturnValues[0]);
+				int nSkillNeededID = Convert.ToInt32(pSkillSelector.ReturnValues[0]);
 				string strSkillLevelNeeded = pSkillSelector.ReturnValues[1].ToString();
-				string strSkillName = iSkillNeededID.ToString();
+				string strSkillName = nSkillNeededID.ToString();
 
-				if (iSkillNeededID != -1)
+				if (nSkillNeededID != -1)
 					strSkillName += " - " + pSkillSelector.ReturnValues[2];
 
 				btnSkill2RequiredID.Text = strSkillName;
 				tbSkill2RequiredLevel.Text = strSkillLevelNeeded;
 
-				pTempRow[strIDColumn] = iSkillNeededID.ToString();
+				pTempRow[strIDColumn] = nSkillNeededID.ToString();
 				pTempRow[strLevelColumn] = strSkillLevelNeeded;
 
 				bUnsavedChanges = true;
@@ -2393,12 +2410,12 @@ namespace LastChaos_ToolBox_2024.Editors
 				if (pItemSelector.ShowDialog() != DialogResult.OK)
 					return;
 
-				int iItemNeededID = pItemSelector.ReturnValues;
-				string strItemName = iItemNeededID.ToString();
+				int nItemNeededID = pItemSelector.ReturnValues;
+				string strItemName = nItemNeededID.ToString();
 
-				if (iItemNeededID != -1)
+				if (nItemNeededID != -1)
 				{
-					DataRow pItemTableRow = pMain.pItemTable.Select("a_index = " + iItemNeededID).FirstOrDefault();
+					DataRow pItemTableRow = pMain.pItemTable.Select("a_index = " + nItemNeededID).FirstOrDefault();
 
 					strItemName += " - " + pItemTableRow["a_name_" + pMain.pSettings.WorkLocale];
 
@@ -2409,7 +2426,7 @@ namespace LastChaos_ToolBox_2024.Editors
 
 				((TextBox)this.Controls.Find("tbItem" + nNumber + "RequiredAmount", true)[0]).Focus();
 
-				pTempItemRow[strItemIDColumn] = iItemNeededID.ToString();
+				pTempItemRow[strItemIDColumn] = nItemNeededID.ToString();
 
 				bUnsavedChanges = true;
 			}
@@ -2591,7 +2608,7 @@ namespace LastChaos_ToolBox_2024.Editors
 						return;
 
 					nSkillID = Convert.ToInt32(pSkillSelector.ReturnValues[0]);
-					int iSelectedSkillLevel = Convert.ToInt32(pSkillSelector.ReturnValues[1]);
+					int nSelectedSkillLevel = Convert.ToInt32(pSkillSelector.ReturnValues[1]);
 					strSkillLevel = pSkillSelector.ReturnValues[1].ToString();
 
 					gridFortune.Rows[e.RowIndex].Cells["skill"].Value = nSkillID + " - " + pSkillSelector.ReturnValues[2];
@@ -2608,14 +2625,14 @@ namespace LastChaos_ToolBox_2024.Editors
 
 							cSkillLevel.Items.Add("Level: " + iSkillLevel + " - Power: " + pRowSkillLevel["a_dummypower"].ToString());
 
-							if (iSelectedSkillLevel == iSkillLevel)
+							if (nSelectedSkillLevel == iSkillLevel)
 								cSkillLevel.Value = cSkillLevel.Items[cSkillLevel.Items.Count - 1];
 						}
 
 						listSkillLevels = null;
 					}
 
-					gridFortune.Rows[e.RowIndex].Cells["level"].Tag = iSelectedSkillLevel;
+					gridFortune.Rows[e.RowIndex].Cells["level"].Tag = nSelectedSkillLevel;
 
 					bUnsavedChanges = true;
 				}

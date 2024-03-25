@@ -82,13 +82,14 @@
 			// 
 			// btnSelect
 			// 
+			this.btnSelect.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.btnSelect.Enabled = false;
 			this.btnSelect.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(85)))), ((int)(((byte)(76)))));
 			this.btnSelect.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
 			this.btnSelect.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(56)))), ((int)(((byte)(54)))));
 			this.btnSelect.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.btnSelect.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
-			this.btnSelect.Location = new System.Drawing.Point(6, 217);
+			this.btnSelect.Location = new System.Drawing.Point(6, 223);
 			this.btnSelect.Name = "btnSelect";
 			this.btnSelect.Size = new System.Drawing.Size(212, 23);
 			this.btnSelect.TabIndex = 1028;
@@ -115,13 +116,15 @@
 			this.groupBox1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
 			this.groupBox1.Location = new System.Drawing.Point(298, 12);
 			this.groupBox1.Name = "groupBox1";
-			this.groupBox1.Size = new System.Drawing.Size(224, 246);
+			this.groupBox1.Size = new System.Drawing.Size(224, 252);
 			this.groupBox1.TabIndex = 1030;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Item Data";
 			// 
 			// tbDescription
 			// 
+			this.tbDescription.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
 			this.tbDescription.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
 			this.tbDescription.BorderStyle = System.Windows.Forms.BorderStyle.None;
 			this.tbDescription.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(203)))), ((int)(((byte)(148)))));
@@ -129,7 +132,7 @@
 			this.tbDescription.Multiline = true;
 			this.tbDescription.Name = "tbDescription";
 			this.tbDescription.ReadOnly = true;
-			this.tbDescription.Size = new System.Drawing.Size(212, 154);
+			this.tbDescription.Size = new System.Drawing.Size(212, 160);
 			this.tbDescription.TabIndex = 1030;
 			// 
 			// ItemPicker
