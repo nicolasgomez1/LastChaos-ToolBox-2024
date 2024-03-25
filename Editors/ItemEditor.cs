@@ -96,11 +96,12 @@ namespace LastChaos_ToolBox_2024.Editors
 			{
 				string strControlName = cControl.Name;
 				int nActualValue = Convert.ToInt32(cControl.Text);
+				// TODO: Si es tbSet y es magic picker hay que poner el segundo valor en: tbSet1. Investigar el resto. Tambien verificar que onda con tbVariation
+				// TODO: Si es tbOption y es ??? ¿hay que poner el segundo valor en tbOption 4?
 
 				/*if (strControlName.Substring(0, 5) == "tbSet")
 				else if (strControlName.Substring(0, 8) == "tbOption")
-				else if (strControlName.Substring(0, 11) == "tbVariation")
-				else if (strControlName.Substring(0, 11) == "tbRareIndex")*/
+				else if (strControlName.Substring(0, 11) == "tbVariation")*/
 
 				ToolStripMenuItem menuItemPicker = new ToolStripMenuItem("Item Picker");
 				menuItemPicker.Click += (menuItemSender, menuItemEventArgs) =>
@@ -111,6 +112,17 @@ namespace LastChaos_ToolBox_2024.Editors
 						return;
 
 					cControl.Text = pItemSelector.ReturnValues.ToString();
+				};
+
+				ToolStripMenuItem menuZonePicker = new ToolStripMenuItem("Zone Picker");
+				menuZonePicker.Click += (menuItemSender, menuItemEventArgs) =>
+				{
+					ZonePicker pZoneSelector = new ZonePicker(pMain, this, nActualValue);
+
+					if (pZoneSelector.ShowDialog() != DialogResult.OK)
+						return;
+
+					cControl.Text = pZoneSelector.ReturnValues[0].ToString();
 				};
 
 				ToolStripMenuItem menuSkillPicker = new ToolStripMenuItem("Skill Picker");
@@ -136,20 +148,6 @@ namespace LastChaos_ToolBox_2024.Editors
 						tbSecondInputObject.Text = pSkillSelector.ReturnValues[1].ToString();
 				};
 
-				ToolStripMenuItem menuOptionPicker = new ToolStripMenuItem("Option Picker");
-				menuOptionPicker.Click += (menuItemSender, menuItemEventArgs) =>
-				{
-					OptionPicker pOptionSelector = new OptionPicker(pMain, this, new int[] { 512, 1 });
-
-					if (pOptionSelector.ShowDialog() != DialogResult.OK)
-						return;
-
-					int iOptionID = pOptionSelector.ReturnValues[0];
-					int iOptionLevel = pOptionSelector.ReturnValues[1];
-
-					// TODO: Pasar los valores a los correspondientes textboxs.
-				};
-
 				ToolStripMenuItem menuRarePicker = new ToolStripMenuItem("Rare Picker");
 				menuRarePicker.Click += (menuItemSender, menuItemEventArgs) =>
 				{
@@ -161,19 +159,37 @@ namespace LastChaos_ToolBox_2024.Editors
 					cControl.Text = pRareOptionSelector.ReturnValues.ToString();
 				};
 
-				ToolStripMenuItem menuZonePicker = new ToolStripMenuItem("Zone Picker");
-				menuZonePicker.Click += (menuItemSender, menuItemEventArgs) =>
+				ToolStripMenuItem menuOptionPicker = new ToolStripMenuItem("Option Picker");
+				menuOptionPicker.Click += (menuItemSender, menuItemEventArgs) =>
 				{
-					ZonePicker pZoneSelector = new ZonePicker(pMain, this, nActualValue);
+					int nOptionLevel = 0;
+					TextBox tbSecondInputObject = null;
 
-					if (pZoneSelector.ShowDialog() != DialogResult.OK)
+					if (strControlName.Length >= 11 && strControlName.Substring(0, 11) == "tbRareIndex")
+					{
+						tbSecondInputObject = ((TextBox)this.Controls.Find("tbRareProb" + strControlName[strControlName.Length - 1], true)[0]);
+						nOptionLevel = Convert.ToInt32(tbSecondInputObject.Text);
+					}
+
+					OptionPicker pOptionSelector = new OptionPicker(pMain, this, new int[] { nActualValue, nOptionLevel });
+
+					if (pOptionSelector.ShowDialog() != DialogResult.OK)
 						return;
 
-					cControl.Text = pZoneSelector.ReturnValues[0].ToString();
+					cControl.Text = pOptionSelector.ReturnValues[0].ToString();
+
+					if (tbSecondInputObject != null)
+						tbSecondInputObject.Text = pOptionSelector.ReturnValues[1].ToString();
+				};
+
+				ToolStripMenuItem menuMagicPicker = new ToolStripMenuItem("Magic Picker");
+				menuSkillPicker.Click += (menuItemSender, menuItemEventArgs) =>
+				{
+					// TODO: Magic Picker
 				};
 
 				cmCommonInput = new ContextMenuStrip();
-				cmCommonInput.Items.AddRange(new ToolStripItem[] { menuItemPicker, menuSkillPicker, menuOptionPicker, menuRarePicker, menuZonePicker });
+				cmCommonInput.Items.AddRange(new ToolStripItem[] { menuItemPicker, menuZonePicker, menuSkillPicker, menuOptionPicker, menuRarePicker, menuMagicPicker });
 				cmCommonInput.Show(Cursor.Position);
 			}
 		}

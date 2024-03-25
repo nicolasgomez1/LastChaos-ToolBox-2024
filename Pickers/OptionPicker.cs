@@ -12,17 +12,15 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Definitions;
-using K4os.Compression.LZ4.Streams.Abstractions;
-using SlimDX.RawInput;
 
 namespace LastChaos_ToolBox_2024
 {
 	/* Args:
 	 *	Main<Pointer to Main Form>
 	 *	Form<Parent Form to center the Window>
-	 *	Int <Actual Rare Option ID>
+	 *	Int <Actual Option ID>
 	 * Returns:
-	 *		Int<Rare Option ID>
+	 *		Int Array<Option Type, Option Level>
 	// Call and receive implementation
 	OptionPicker pOptionSelector = new OptionPicker(pMain, this, { 512, 1 });
 
@@ -38,6 +36,7 @@ namespace LastChaos_ToolBox_2024
 		private Main pMain;
 		private int nSearchPosition = 0;
 		private DataRow pRowOption;
+		private string[] strArrayLevel;
 		public int[] ReturnValues = { -1, 0 };
 
 		public class ListBoxItem
@@ -126,7 +125,7 @@ namespace LastChaos_ToolBox_2024
 					MainList.Items.Add(new ListBoxItem
 					{
 						ID = nItemID,
-						Text = pRow["a_index"] + " - " + pRow["a_name_" + pMain.pSettings.WorkLocale].ToString()
+						Text = pRow["a_type"] + " - " + pRow["a_name_" + pMain.pSettings.WorkLocale].ToString()
 					});
 
 					if (nItemID == nOriginalOptionID)
@@ -196,7 +195,9 @@ namespace LastChaos_ToolBox_2024
 			{
 				rtbInformation.Clear();
 
+				cbLevelSelector.Items.Clear();
 				cbLevelSelector.Enabled = false;
+
 				btnSelect.Enabled = false;
 
 				int nItemID = pSelectedItem.ID;
@@ -269,6 +270,41 @@ namespace LastChaos_ToolBox_2024
 				}
 				// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
+				{
+					string strLevel = pRowOption["a_level"].ToString();
+					if (strLevel.IndexOf(' ') >= 0)
+						strLevel = strLevel.TrimStart();
+
+					strArrayLevel = strLevel.Split(' ');
+
+					string strProb = pRowOption["a_prob"].ToString();
+					if (strProb.IndexOf(' ') >= 0)
+						strProb = strProb.TrimStart();
+
+					string[] strArrayProb = strProb.Split(' ');
+
+					int i = 0;
+					foreach (string strLevelB in strArrayLevel)
+					{
+						if (i < strArrayProb.Length)
+						{
+							cbLevelSelector.Items.Add("[" + (i + 1) + "] Lvl: " + strLevelB + " Prob: " + strArrayProb[i]);
+
+							if (Convert.ToInt32(strLevelB) == ReturnValues[1])
+								MainList.SelectedIndex = MainList.Items.Count - 1;
+						}
+						else
+						{
+							pMain.Logger("option Picker > Option: " + nItemID + " Error: a_prob mismatched with a_level.", Color.Red);
+						}
+
+						i++;
+					}
+
+					if (cbLevelSelector.SelectedIndex == -1)
+						cbLevelSelector.SelectedIndex = 1;
+				}
+
 				cbLevelSelector.Enabled = true;
 				btnSelect.Enabled = true;
 			}
@@ -277,9 +313,9 @@ namespace LastChaos_ToolBox_2024
 		private void btnSelect_Click(object sender, EventArgs e)
 		{
 			ListBoxItem pSelectedItem = (ListBoxItem)MainList.SelectedItem;
-			int nSelectedSkillLevel = cbLevelSelector.SelectedIndex;
+			int nSelectedOptionLevel = cbLevelSelector.SelectedIndex;
 
-			if (pSelectedItem != null && nSelectedSkillLevel != -1)
+			if (pSelectedItem != null && nSelectedOptionLevel != -1)
 			{
 				cbLevelSelector.Enabled = false;
 
@@ -289,9 +325,8 @@ namespace LastChaos_ToolBox_2024
 
 				DialogResult = DialogResult.OK;
 
-				ReturnValues[0] = pSelectedItem.ID;
-				// TODO:↓
-				ReturnValues[1] = 0;//(nSelectedSkillLevel + 1).ToString();
+				ReturnValues[0] = Convert.ToInt32(pRowOption["a_type"]);
+				ReturnValues[1] = Convert.ToInt32(strArrayLevel[nSelectedOptionLevel]);
 
 				Close();
 			}
