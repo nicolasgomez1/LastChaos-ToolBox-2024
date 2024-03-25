@@ -1,15 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using SlimDX;
 using SlimDX.Direct3D9;
@@ -27,7 +23,7 @@ namespace LastChaos_ToolBox_2024
 		private Device pDevice;
 		private List<tMesh> pModel;
 		private float fZoom, fUpDown, fRotation;
-		private tTexture pLCTexture;
+		//private tTexture pLCTexture;
 		private Vector3 vecCameraPosition = new Vector3(0.0f, -2.0f, 4f);
 		private Vector3 vecEntityPosition = new Vector3(0f, 0.0f, 0.0f);
 		private static string pstrFilePath;
@@ -96,12 +92,12 @@ namespace LastChaos_ToolBox_2024
 
 		private void panel3DView_Zoom(object sender, MouseEventArgs e)
 		{
-			if (Control.ModifierKeys.HasFlag(Keys.Control))
+			if (ModifierKeys.HasFlag(Keys.Control))
 			{
 				fUpDown += Math.Sign(e.Delta) * 0.2f;
 				fUpDown = Math.Max(-5, Math.Min(5.0f, fUpDown));
 			}
-			else if (Control.ModifierKeys.HasFlag(Keys.Shift))
+			else if (ModifierKeys.HasFlag(Keys.Shift))
 			{
 				fRotation += Math.Sign(e.Delta) * 0.1f;
 				fRotation = fRotation % 360;
@@ -401,7 +397,7 @@ namespace LastChaos_ToolBox_2024
 
 				int index1 = -1;
 				List<smcMesh> smcMeshList = new List<smcMesh>();
-				for (int index2 = 0; index2 < list.Count<string>(); ++index2)
+				for (int index2 = 0; index2 < list.Count(); ++index2)
 				{
 					if (list[index2].Substring(0, 4) == "MESH")
 					{
@@ -531,16 +527,18 @@ namespace LastChaos_ToolBox_2024
 				this.V = V;
 			}
 		}
+
 		public class tMeshUVMap
 		{
 			public tTextCoord[] Coords { get; set; }
 
 			public byte[] Name { get; set; }
 		}
-		public class pwTextures
+
+		/*public class pwTextures
 		{
 			public byte[] TexFileName { get; set; }
-		}
+		}*/
 
 		public struct tMeshWeightsMap
 		{
@@ -598,14 +596,14 @@ namespace LastChaos_ToolBox_2024
 		}
 		public class tMeshContainer
 		{
-			private static LCMeshReader pMesh;
+			//private static LCMeshReader pMesh;
 			public byte[] FileName { get; set; }
 			public string FilePath { get; set; }
 			public tHeaderInfo HeaderInfo { get; set; }
 			public tMeshMorphMap[] MorphMap { get; set; }
 			public tVertex3f[] Normals { get; set; }
 			public tMeshObject[] Objects { get; set; }
-			public pwTextures[] PWTextureList { get; set; }
+			//public pwTextures[] PWTextureList { get; set; }
 			public float Scale { get; set; }
 			public tMeshUVMap[] UVMaps { get; set; }
 			public uint Value1 { get; set; }
@@ -615,9 +613,8 @@ namespace LastChaos_ToolBox_2024
 
 		public class LCMeshReader
 		{
-			private static readonly ASCIIEncoding Enc = new ASCIIEncoding();
+			//private static readonly ASCIIEncoding Enc = new ASCIIEncoding();
 			public static string OpenedFile = "";
-
 
 			public static bool ReadFile(string FileName)
 			{
@@ -668,30 +665,30 @@ namespace LastChaos_ToolBox_2024
 				pMesh.HeaderInfo = headerInfo;
 				pMesh.Vertices = new tVertex3f[(int)pMesh.HeaderInfo.VertexCount];
 
-				for (int index = 0; (long)index < (long)pMesh.HeaderInfo.VertexCount; ++index)
+				for (int index = 0; index < pMesh.HeaderInfo.VertexCount; ++index)
 					pMesh.Vertices[index] = new tVertex3f(b.ReadSingle(), b.ReadSingle(), b.ReadSingle());
 
 				pMesh.Normals = new tVertex3f[(int)pMesh.HeaderInfo.VertexCount];
 
-				for (int index = 0; (long)index < (long)pMesh.HeaderInfo.VertexCount; ++index)
+				for (int index = 0; index < pMesh.HeaderInfo.VertexCount; ++index)
 					pMesh.Normals[index] = new tVertex3f(b.ReadSingle(), b.ReadSingle(), b.ReadSingle());
 
 				if (pMesh.HeaderInfo.TextureMaps > 0U)
 				{
 					pMesh.UVMaps = new tMeshUVMap[(int)pMesh.HeaderInfo.TextureMaps];
-					for (int index1 = 0; (long)index1 > (long)pMesh.HeaderInfo.TextureMaps; ++index1)
+					for (int index1 = 0; index1 > pMesh.HeaderInfo.TextureMaps; ++index1)
 					{
 						pMesh.UVMaps[index1] = new tMeshUVMap();
 						pMesh.UVMaps[index1].Name = b.ReadBytes(b.ReadInt32());
 						pMesh.UVMaps[index1].Coords = new tTextCoord[(int)pMesh.HeaderInfo.VertexCount];
-						for (int index2 = 0; (long)index2 < (long)pMesh.HeaderInfo.VertexCount; ++index2)
+						for (int index2 = 0; index2 < pMesh.HeaderInfo.VertexCount; ++index2)
 							pMesh.UVMaps[index1].Coords[index2] = new tTextCoord(b.ReadSingle(), b.ReadSingle());
 					}
 				}
 
 				pMesh.Objects = new tMeshObject[(int)pMesh.HeaderInfo.ObjCount];
 
-				for (int index1 = 0; (long)index1 < (long)pMesh.HeaderInfo.ObjCount; ++index1)
+				for (int index1 = 0; index1 < pMesh.HeaderInfo.ObjCount; ++index1)
 				{
 					tMeshObject tMeshObject = new tMeshObject();
 					tMeshObject.MaterialName = b.ReadBytes(b.ReadInt32());
@@ -701,13 +698,13 @@ namespace LastChaos_ToolBox_2024
 					tMeshObject.FaceCount = b.ReadUInt32();
 					tMeshObject.Faces = new tFace[(int)tMeshObject.FaceCount];
 
-					for (int index2 = 0; (long)index2 < (long)tMeshObject.FaceCount; ++index2)
+					for (int index2 = 0; index2 < tMeshObject.FaceCount; ++index2)
 						tMeshObject.Faces[index2] = new tFace(b.ReadInt16(), b.ReadInt16(), b.ReadInt16());
 
 					tMeshObject.JValue = b.ReadUInt32();
 					tMeshObject.JData = new byte[(int)tMeshObject.JValue];
 
-					for (int index2 = 0; (long)index2 < (long)tMeshObject.JValue; ++index2)
+					for (int index2 = 0; index2 < tMeshObject.JValue; ++index2)
 						tMeshObject.JData[index2] = b.ReadByte();
 
 					tMeshObject.ShaderFlag = b.ReadUInt32();
@@ -731,7 +728,7 @@ namespace LastChaos_ToolBox_2024
 						tMeshObject.ShaderData.ShaderName = b.ReadBytes(b.ReadInt32());
 						tMeshObject.Textures = new tMeshTexture[(int)tMeshObject.ShaderInfo.cTextureUnits];
 
-						for (int index2 = 0; (long)index2 < (long)tMeshObject.ShaderInfo.cTextureUnits; ++index2)
+						for (int index2 = 0; index2 < tMeshObject.ShaderInfo.cTextureUnits; ++index2)
 							tMeshObject.Textures[index2] = new tMeshTexture(b.ReadBytes(b.ReadInt32()));
 
 						if (tMeshObject.ShaderInfo.cParam1 > 0U)
@@ -745,13 +742,13 @@ namespace LastChaos_ToolBox_2024
 
 						tMeshObject.ShaderData.cParam0 = b.ReadUInt32();
 
-						for (int index2 = 0; (long)index2 < (long)tMeshObject.ShaderInfo.cParam2; ++index2)
+						for (int index2 = 0; index2 < tMeshObject.ShaderInfo.cParam2; ++index2)
 							tMeshObject.ShaderData.Param2[index2] = b.ReadUInt32();
 
-						for (int index2 = 0; (long)index2 < (long)tMeshObject.ShaderInfo.cParamFloats; ++index2)
+						for (int index2 = 0; index2 < tMeshObject.ShaderInfo.cParamFloats; ++index2)
 							tMeshObject.ShaderData.ParamFloats[index2] = b.ReadSingle();
 
-						for (int index2 = 0; (long)index2 < (long)tMeshObject.ShaderInfo.cParam1; ++index2)
+						for (int index2 = 0; index2 < tMeshObject.ShaderInfo.cParam1; ++index2)
 							tMeshObject.ShaderData.Param1[index2] = b.ReadUInt32();
 
 						pMesh.Objects[index1] = tMeshObject;
@@ -760,23 +757,23 @@ namespace LastChaos_ToolBox_2024
 
 				pMesh.Weights = new tMeshJointWeights[(int)pMesh.HeaderInfo.JointCount];
 
-				for (int index1 = 0; (long)index1 < (long)pMesh.HeaderInfo.JointCount; ++index1)
+				for (int index1 = 0; index1 < pMesh.HeaderInfo.JointCount; ++index1)
 				{
 					pMesh.Weights[index1] = new tMeshJointWeights();
 					pMesh.Weights[index1].JointName = b.ReadBytes(b.ReadInt32());
 					pMesh.Weights[index1].Count = b.ReadUInt32();
 					pMesh.Weights[index1].WeightsMap = new tMeshWeightsMap[(int)pMesh.Weights[index1].Count];
 
-					for (int index2 = 0; (long)index2 < (long)pMesh.Weights[index1].Count; ++index2)
+					for (int index2 = 0; index2 < pMesh.Weights[index1].Count; ++index2)
 						pMesh.Weights[index1].WeightsMap[index2] = new tMeshWeightsMap(b.ReadInt32(), b.ReadSingle());
 				}
 
 				pMesh.MorphMap = new tMeshMorphMap[(int)pMesh.HeaderInfo.VertexCount];
 
-				for (int index = 0; (long)index < (long)pMesh.HeaderInfo.VertexCount; ++index)
+				for (int index = 0; index < pMesh.HeaderInfo.VertexCount; ++index)
 					pMesh.MorphMap[index] = new tMeshMorphMap(b.ReadBytes(4), b.ReadBytes(4));
 
-				return b.BaseStream.Position == (long)(pMesh.HeaderInfo.MeshDataSize + 8);
+				return b.BaseStream.Position == (pMesh.HeaderInfo.MeshDataSize + 8);
 			}
 
 			public class Decoder
@@ -787,19 +784,17 @@ namespace LastChaos_ToolBox_2024
 				{
 					byte[] numArray = new byte[4];
 					byte[] bytes = BitConverter.GetBytes(Code);
+
 					for (int index = 0; index < 4; ++index)
 					{
-						bytes[index] = (byte)((uint)bytes[index] ^ (uint)Decoder.XorCode[index]);
-						Decoder.XorCode[index] = (byte)((uint)Decoder.XorCode[index] + 89U);
+						bytes[index] = (byte)(bytes[index] ^ XorCode[index]);
+						XorCode[index] = (byte)(XorCode[index] + 89U);
 					}
 
 					return BitConverter.ToUInt32(bytes, 0);
 				}
 
-				public static void Reset()
-				{
-					Decoder.XorCode = new byte[4] { (byte)101, (byte)72, (byte)53, (byte)30 };
-				}
+				public static void Reset() { XorCode = new byte[4] { 101, 72, 53, 30 }; }
 			}
 
 			private static bool ReadV11(BinaryReader b, long Pos)
@@ -816,25 +811,25 @@ namespace LastChaos_ToolBox_2024
 				pMesh.Value1 = Decoder.Decode(pMesh.Value1);
 				pMesh.Vertices = new tVertex3f[(int)pMesh.HeaderInfo.VertexCount];
 
-				for (int index = 0; (long)index < (long)pMesh.HeaderInfo.VertexCount; ++index)
+				for (int index = 0; index < pMesh.HeaderInfo.VertexCount; ++index)
 					pMesh.Vertices[index] = new tVertex3f(b.ReadSingle(), b.ReadSingle(), b.ReadSingle());
 
 				pMesh.Normals = new tVertex3f[(int)pMesh.HeaderInfo.NormalCount];
 
-				for (int index = 0; (long)index < (long)pMesh.HeaderInfo.NormalCount; ++index)
+				for (int index = 0; index < pMesh.HeaderInfo.NormalCount; ++index)
 					pMesh.Normals[index] = new tVertex3f(b.ReadSingle(), b.ReadSingle(), b.ReadSingle());
 
 				if (pMesh.HeaderInfo.TextureMaps > 0U)
 				{
 					pMesh.UVMaps = new tMeshUVMap[(int)pMesh.HeaderInfo.TextureMaps];
 
-					for (int index1 = 0; (long)index1 < (long)pMesh.HeaderInfo.TextureMaps; ++index1)
+					for (int index1 = 0; index1 < pMesh.HeaderInfo.TextureMaps; ++index1)
 					{
 						tMeshUVMap tMeshUvMap = new tMeshUVMap();
 						tMeshUvMap.Name = b.ReadBytes(b.ReadInt32());
 						tMeshUvMap.Coords = new tTextCoord[(int)pMesh.HeaderInfo.VertexCount];
 
-						for (int index2 = 0; (long)index2 < (long)pMesh.HeaderInfo.VertexCount; ++index2)
+						for (int index2 = 0; index2 < pMesh.HeaderInfo.VertexCount; ++index2)
 							tMeshUvMap.Coords[index2] = new tTextCoord(b.ReadSingle(), b.ReadSingle());
 
 						pMesh.UVMaps[index1] = tMeshUvMap;
@@ -843,7 +838,7 @@ namespace LastChaos_ToolBox_2024
 
 				pMesh.Objects = new tMeshObject[(int)pMesh.HeaderInfo.ObjCount];
 
-				for (int index1 = 0; (long)index1 < (long)pMesh.HeaderInfo.ObjCount; ++index1)
+				for (int index1 = 0;  index1 < pMesh.HeaderInfo.ObjCount; ++index1)
 				{
 					tMeshObject tMeshObject = new tMeshObject();
 					tMeshObject.FromVert = Decoder.Decode(b.ReadUInt32());
@@ -851,7 +846,7 @@ namespace LastChaos_ToolBox_2024
 					tMeshObject.FaceCount = Decoder.Decode(b.ReadUInt32());
 					tMeshObject.Faces = new tFace[(int)tMeshObject.FaceCount];
 
-					for (int index2 = 0; (long)index2 < (long)tMeshObject.FaceCount; ++index2)
+					for (int index2 = 0; index2 < tMeshObject.FaceCount; ++index2)
 						tMeshObject.Faces[index2] = new tFace(b.ReadInt16(), b.ReadInt16(), b.ReadInt16());
 
 					tMeshObject.MaterialName = b.ReadBytes(b.ReadInt32());
@@ -859,7 +854,7 @@ namespace LastChaos_ToolBox_2024
 					tMeshObject.JValue = Decoder.Decode(b.ReadUInt32());
 					tMeshObject.JData = new byte[(int)tMeshObject.JValue];
 
-					for (int index2 = 0; (long)index2 < (long)tMeshObject.JValue; ++index2)
+					for (int index2 = 0; index2 < tMeshObject.JValue; ++index2)
 						tMeshObject.JData[index2] = b.ReadByte();
 
 					tMeshObject.ShaderFlag = Decoder.Decode(b.ReadUInt32());
@@ -875,7 +870,7 @@ namespace LastChaos_ToolBox_2024
 						tMeshObject.ShaderData.ShaderName = b.ReadBytes(b.ReadInt32());
 						tMeshObject.Textures = new tMeshTexture[(int)tMeshObject.ShaderInfo.cTextureUnits];
 
-						for (int index2 = 0; (long)index2 < (long)tMeshObject.ShaderInfo.cTextureUnits; ++index2)
+						for (int index2 = 0; index2 < tMeshObject.ShaderInfo.cTextureUnits; ++index2)
 						{
 							tMeshObject.Textures[index2] = new tMeshTexture();
 							tMeshObject.Textures[index2].InternalName = b.ReadBytes(b.ReadInt32());
@@ -892,13 +887,13 @@ namespace LastChaos_ToolBox_2024
 
 						tMeshObject.ShaderData.cParam0 = Decoder.Decode(b.ReadUInt32());
 
-						for (int index2 = 0; (long)index2 < (long)tMeshObject.ShaderInfo.cParam2; ++index2)
+						for (int index2 = 0; index2 < tMeshObject.ShaderInfo.cParam2; ++index2)
 							tMeshObject.ShaderData.Param2[index2] = Decoder.Decode(b.ReadUInt32());
 
-						for (int index2 = 0; (long)index2 < (long)tMeshObject.ShaderInfo.cParamFloats; ++index2)
+						for (int index2 = 0; index2 < tMeshObject.ShaderInfo.cParamFloats; ++index2)
 							tMeshObject.ShaderData.ParamFloats[index2] = b.ReadSingle();
 
-						for (int index2 = 0; (long)index2 < (long)tMeshObject.ShaderInfo.cParam1; ++index2)
+						for (int index2 = 0; index2 < tMeshObject.ShaderInfo.cParam1; ++index2)
 							tMeshObject.ShaderData.Param1[index2] = Decoder.Decode(b.ReadUInt32());
 					}
 
@@ -907,25 +902,25 @@ namespace LastChaos_ToolBox_2024
 
 				pMesh.Weights = new tMeshJointWeights[(int)pMesh.HeaderInfo.JointCount];
 
-				for (int index1 = 0; (long)index1 < (long)pMesh.HeaderInfo.JointCount; ++index1)
+				for (int index1 = 0; index1 < pMesh.HeaderInfo.JointCount; ++index1)
 				{
 					pMesh.Weights[index1] = new tMeshJointWeights();
 					pMesh.Weights[index1].JointName = b.ReadBytes(b.ReadInt32());
 					pMesh.Weights[index1].Count = Decoder.Decode(b.ReadUInt32());
 					pMesh.Weights[index1].WeightsMap = new tMeshWeightsMap[(int)pMesh.Weights[index1].Count];
 
-					for (int index2 = 0; (long)index2 < (long)pMesh.Weights[index1].Count; ++index2)
+					for (int index2 = 0; index2 < pMesh.Weights[index1].Count; ++index2)
 						pMesh.Weights[index1].WeightsMap[index2] = new tMeshWeightsMap(b.ReadInt32(), b.ReadSingle());
 				}
 
 				pMesh.MorphMap = new tMeshMorphMap[(int)pMesh.HeaderInfo.VertexCount];
 
-				for (int index = 0; (long)index < (long)pMesh.HeaderInfo.VertexCount; ++index)
+				for (int index = 0; index < pMesh.HeaderInfo.VertexCount; ++index)
 					pMesh.MorphMap[index] = new tMeshMorphMap(b.ReadBytes(4), b.ReadBytes(4));
 
 				Pos = b.BaseStream.Position;
 
-				return Pos == (long)(pMesh.HeaderInfo.MeshDataSize + 8);
+				return Pos == (pMesh.HeaderInfo.MeshDataSize + 8);
 			}
 		}
 
@@ -936,56 +931,56 @@ namespace LastChaos_ToolBox_2024
 			fZoom = fRotation = 0.0f;
 		}
 
-		private static SlimDX.Direct3D9.Format ConvFormat(texFormat tFormat)
+		private static Format ConvFormat(texFormat tFormat)
 		{
-			SlimDX.Direct3D9.Format format = SlimDX.Direct3D9.Format.Unknown;
+			Format format = Format.Unknown;
 			switch (tFormat)
 			{
 				case texFormat.RGB:
-					return SlimDX.Direct3D9.Format.R8G8B8;
+					return Format.R8G8B8;
 				case texFormat.ARGB:
-					return SlimDX.Direct3D9.Format.A8R8G8B8;
+					return Format.A8R8G8B8;
 				case texFormat.DXT1:
-					return SlimDX.Direct3D9.Format.Dxt1;
+					return Format.Dxt1;
 				case texFormat.DXT3:
-					return SlimDX.Direct3D9.Format.Dxt3;
+					return Format.Dxt3;
 				default:
 					return format;
 			}
 		}
 
-		private Texture BuildTexture(byte[] imageData, SlimDX.Direct3D9.Format imageFormat, int width, int height)
+		private Texture BuildTexture(byte[] imageData, Format imageFormat, int width, int height)
 		{
-			if (imageFormat == SlimDX.Direct3D9.Format.R8G8B8)
+			if (imageFormat == Format.R8G8B8)
 			{
 				MemoryStream memoryStream;
 				using (memoryStream = new MemoryStream())
 				{
-					Tex.makeRGB8(imageData, width, height).Save((Stream)memoryStream, ImageFormat.Bmp);
+					Tex.makeRGB8(imageData, width, height).Save(memoryStream, ImageFormat.Bmp);
 					memoryStream.Write(imageData, 0, imageData.Length);
 					memoryStream.Position = 0L;
 
-					return Texture.FromStream(pDevice, (Stream)memoryStream, width, height, 0, Usage.SoftwareProcessing, SlimDX.Direct3D9.Format.A8B8G8R8, Pool.Default, Filter.None, Filter.None, 0);
+					return Texture.FromStream(pDevice, memoryStream, width, height, 0, Usage.SoftwareProcessing, Format.A8B8G8R8, Pool.Default, Filter.None, Filter.None, 0);
 				}
 			}
-			else if (imageFormat == SlimDX.Direct3D9.Format.A8R8G8B8)
+			else if (imageFormat == Format.A8R8G8B8)
 			{
 				MemoryStream memoryStream;
 				using (memoryStream = new MemoryStream())
 				{
-					Tex.makeRGB(imageData, width, height).Save((Stream)memoryStream, ImageFormat.Bmp);
+					Tex.makeRGB(imageData, width, height).Save(memoryStream, ImageFormat.Bmp);
 					memoryStream.Write(imageData, 0, imageData.Length);
 					memoryStream.Position = 0L;
 
-					return Texture.FromStream(pDevice, (Stream)memoryStream, width, height, 0, Usage.SoftwareProcessing, SlimDX.Direct3D9.Format.A8B8G8R8, Pool.Default, Filter.None, Filter.None, 0);
+					return Texture.FromStream(pDevice, memoryStream, width, height, 0, Usage.SoftwareProcessing, Format.A8B8G8R8, Pool.Default, Filter.None, Filter.None, 0);
 				}
 			}
 			else
 			{
 				Texture texture = new Texture(pDevice, width, height, 0, Usage.None, imageFormat, Pool.Managed);
-				using (Stream data = (Stream)texture.LockRectangle(0, LockFlags.None).Data)
+				using (Stream data = texture.LockRectangle(0, LockFlags.None).Data)
 				{
-					data.Write(imageData, 0, ((IEnumerable<byte>)imageData).Count<byte>());
+					data.Write(imageData, 0, (imageData).Count<byte>());
 					texture.UnlockRectangle(0);
 				}
 
@@ -995,7 +990,7 @@ namespace LastChaos_ToolBox_2024
 
 		private Texture GetTextureFromFile(string FileName)
 		{
-			Texture texture = (Texture)null;
+			Texture texture = null;
 			if (File.Exists(FileName))
 			{
 				Tex.ReadFile(FileName);
@@ -1136,7 +1131,7 @@ namespace LastChaos_ToolBox_2024
 			List<smcMesh> list = SMCReader.ReadFile(SMCFile);
 			pModel = new List<tMesh>();
 
-			for (int i = 0; i < list.Count<smcMesh>(); i++)
+			for (int i = 0; i < list.Count(); i++)
 			{
 				bool flag = (nWearingPosition != 0 ||
 				!list[i].FileName.Contains("_hair_000")) && (nWearingPosition != 1 ||
@@ -1147,7 +1142,7 @@ namespace LastChaos_ToolBox_2024
 
 				if (flag && LCMeshReader.ReadFile(list[i].FileName))
 				{
-					for (int j = 0; j < pMesh.Objects.Count<tMeshObject>(); j++)
+					for (int j = 0; j < pMesh.Objects.Count(); j++)
 					{
 						int toVert = (int)pMesh.Objects[j].ToVert;
 						short[] faces = pMesh.Objects[j].GetFaces();
@@ -1155,7 +1150,7 @@ namespace LastChaos_ToolBox_2024
 						int num3 = (int)pMesh.Objects[j].FromVert;
 						int k = 0;
 
-						while ((long)k < (long)((ulong)pMesh.Objects[j].ToVert))
+						while (k < (long)(ulong)pMesh.Objects[j].ToVert)
 						{
 							array[k].Position = new Vector3(pMesh.Vertices[num3].X, pMesh.Vertices[num3].Y, pMesh.Vertices[num3].Z);
 							array[k].Normal = new Vector3(pMesh.Normals[num3].X, pMesh.Normals[num3].Y, pMesh.Normals[num3].Z);
@@ -1175,14 +1170,14 @@ namespace LastChaos_ToolBox_2024
 
 						//new VertexBuffer(pDevice, array.Count<PositionNormalTextured>() * 32, Usage.None, VertexFormat.Position | VertexFormat.Texture1 | VertexFormat.Normal, Pool.Default);
 
-						Mesh mesh = new Mesh(pDevice, faces.Count<short>() / 3, array.Count<PositionNormalTextured>(), MeshFlags.Managed, VertexFormat.Position | VertexFormat.Texture1 | VertexFormat.Normal);
+						Mesh mesh = new Mesh(pDevice, faces.Count<short>() / 3, array.Count(), MeshFlags.Managed, VertexFormat.Position | VertexFormat.Texture1 | VertexFormat.Normal);
 
 						DataStream dataStream2;
-						DataStream dataStream = dataStream2 = mesh.VertexBuffer.Lock(0, array.Count<PositionNormalTextured>() * 32, LockFlags.None);
+						DataStream dataStream = dataStream2 = mesh.VertexBuffer.Lock(0, array.Count() * 32, LockFlags.None);
 
 						try
 						{
-							dataStream.WriteRange<PositionNormalTextured>(array);
+							dataStream.WriteRange(array);
 							mesh.VertexBuffer.Unlock();
 						}
 						finally
@@ -1194,11 +1189,11 @@ namespace LastChaos_ToolBox_2024
 						}
 
 						DataStream dataStream3;
-						dataStream = (dataStream3 = mesh.IndexBuffer.Lock(0, faces.Count<short>() * 2, LockFlags.None));
+						dataStream = (dataStream3 = mesh.IndexBuffer.Lock(0, faces.Count() * 2, LockFlags.None));
 
 						try
 						{
-							dataStream.WriteRange<short>(faces);
+							dataStream.WriteRange(faces);
 							mesh.IndexBuffer.Unlock();
 						}
 						finally
@@ -1209,28 +1204,28 @@ namespace LastChaos_ToolBox_2024
 							mesh.IndexBuffer.Dispose(); // TEST
 						}
 
-						if (pMesh.Weights.Count<tMeshJointWeights>() != 0)
+						if (pMesh.Weights.Count() != 0)
 						{
-							string[] array2 = new string[pMesh.Weights.Count<tMeshJointWeights>()];
-							List<int>[] array3 = new List<int>[pMesh.Weights.Count<tMeshJointWeights>()];
-							List<float>[] array4 = new List<float>[pMesh.Weights.Count<tMeshJointWeights>()];
+							string[] array2 = new string[pMesh.Weights.Count()];
+							List<int>[] array3 = new List<int>[pMesh.Weights.Count()];
+							List<float>[] array4 = new List<float>[pMesh.Weights.Count()];
 
-							for (int l = 0; l < pMesh.Weights.Count<tMeshJointWeights>(); l++)
+							for (int l = 0; l < pMesh.Weights.Count(); l++)
 							{
 								array2[l] = pEnc.GetString(pMesh.Weights[l].JointName);
 								array3[l] = new List<int>();
 								array4[l] = new List<float>();
 
-								for (int m = 0; m < pMesh.Weights[l].WeightsMap.Count<tMeshWeightsMap>(); m++)
+								for (int m = 0; m < pMesh.Weights[l].WeightsMap.Count(); m++)
 								{
 									array3[l].Add(pMesh.Weights[l].WeightsMap[m].Index);
 									array4[l].Add(pMesh.Weights[l].WeightsMap[m].Weight);
 								}
 							}
 
-							mesh.SkinInfo = new SkinInfo(array.Count<PositionNormalTextured>(), VertexFormat.Position | VertexFormat.Texture1 | VertexFormat.Normal, (int)pMesh.HeaderInfo.JointCount);
+							mesh.SkinInfo = new SkinInfo(array.Count(), VertexFormat.Position | VertexFormat.Texture1 | VertexFormat.Normal, (int)pMesh.HeaderInfo.JointCount);
 
-							for (k = 0; k < array3.Count<List<int>>(); k++)
+							for (k = 0; k < array3.Count(); k++)
 							{
 								mesh.SkinInfo.SetBoneName(k, array2[k]);
 
@@ -1281,12 +1276,12 @@ namespace LastChaos_ToolBox_2024
 			int height = panel3DView.Height;
 			presentParameters.BackBufferHeight = height;
 			int num4 = 21;
-			presentParameters.BackBufferFormat = (SlimDX.Direct3D9.Format)num4;
+			presentParameters.BackBufferFormat = (Format)num4;
 			presentParametersArray[index] = presentParameters;
 
 			pDevice = new Device(direct3D, adapter, (DeviceType)num1, handle1, (CreateFlags)num2, presentParametersArray);
-			pDevice.SetRenderState<Cull>(RenderState.CullMode, Cull.None);
-			pDevice.SetRenderState<FillMode>(RenderState.FillMode, FillMode.Solid);
+			pDevice.SetRenderState(RenderState.CullMode, Cull.None);
+			pDevice.SetRenderState(RenderState.FillMode, FillMode.Solid);
 			pDevice.SetRenderState(RenderState.Lighting, false);
 
 			CameraPositioning();
@@ -1307,10 +1302,10 @@ namespace LastChaos_ToolBox_2024
 
 			if (pModel != null)
 			{
-				for (int index = 0; index < pModel.Count<tMesh>(); ++index)
+				for (int index = 0; index < pModel.Count(); ++index)
 				{
 					if (pModel[index].TexData != null)
-						pDevice.SetTexture(0, (BaseTexture)pModel[index].TexData);
+						pDevice.SetTexture(0, pModel[index].TexData);
 
 					//for (int subset = 0; subset < 1; ++subset)
 					//     pModel[index].MeshData.DrawSubset(subset);

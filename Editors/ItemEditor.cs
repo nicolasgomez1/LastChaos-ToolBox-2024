@@ -5,18 +5,11 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
-using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Management;
-using System.Reflection;
-using System.Runtime.InteropServices;
-using System.Security.Cryptography;
-using System.Security.Policy;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Definitions;
@@ -38,7 +31,7 @@ namespace LastChaos_ToolBox_2024.Editors
 		private DataRow pTempFortuneHeadRow;
 		private DataRow[] pTempFortuneDataRows;
 		private string[] strArrayZones;
-		private System.Windows.Forms.ToolTip pToolTip;
+		private ToolTip pToolTip;
 		private Dictionary<Control, ToolTip> pToolTips = new Dictionary<Control, ToolTip>();
 		ContextMenuStrip cmFortune;
 		ContextMenuStrip cmCommonInput;
@@ -96,8 +89,6 @@ namespace LastChaos_ToolBox_2024.Editors
 			{
 				string strControlName = cControl.Name;
 				int nActualValue = Convert.ToInt32(cControl.Text);
-				// TODO: Si es tbSet y es magic picker hay que poner el segundo valor en: tbSet1. Investigar el resto. Tambien verificar que onda con tbVariation
-				// TODO: Si es tbOption y es ??? ¿hay que poner el segundo valor en tbOption 4?
 
 				/*if (strControlName.Substring(0, 5) == "tbSet")
 				else if (strControlName.Substring(0, 8) == "tbOption")
@@ -110,8 +101,9 @@ namespace LastChaos_ToolBox_2024.Editors
 
 					if (pItemSelector.ShowDialog() != DialogResult.OK)
 						return;
-
+#pragma warning disable
 					cControl.Text = pItemSelector.ReturnValues.ToString();
+#pragma warning restore
 				};
 
 				ToolStripMenuItem menuZonePicker = new ToolStripMenuItem("Zone Picker");
@@ -148,15 +140,16 @@ namespace LastChaos_ToolBox_2024.Editors
 						tbSecondInputObject.Text = pSkillSelector.ReturnValues[1].ToString();
 				};
 
-				ToolStripMenuItem menuRarePicker = new ToolStripMenuItem("Rare Picker");
+				ToolStripMenuItem menuRarePicker = new ToolStripMenuItem("Rare Option Picker");
 				menuRarePicker.Click += (menuItemSender, menuItemEventArgs) =>
 				{
 					RareOptionPicker pRareOptionSelector = new RareOptionPicker(pMain, this, nActualValue);
 
 					if (pRareOptionSelector.ShowDialog() != DialogResult.OK)
 						return;
-
+#pragma warning disable
 					cControl.Text = pRareOptionSelector.ReturnValues.ToString();
+#pragma warning restore
 				};
 
 				ToolStripMenuItem menuOptionPicker = new ToolStripMenuItem("Option Picker");
@@ -183,9 +176,17 @@ namespace LastChaos_ToolBox_2024.Editors
 				};
 
 				ToolStripMenuItem menuMagicPicker = new ToolStripMenuItem("Magic Picker");
-				menuSkillPicker.Click += (menuItemSender, menuItemEventArgs) =>
+				menuMagicPicker.Click += (menuItemSender, menuItemEventArgs) =>
 				{
-					// TODO: Magic Picker
+					MagicPicker pMagicSelector = new MagicPicker(pMain, this, new int[] { 0, 1 });
+
+					if (pMagicSelector.ShowDialog() != DialogResult.OK)
+						return;
+
+					int iMagicType = pMagicSelector.ReturnValues[0];
+					int iMagicLevel = pMagicSelector.ReturnValues[1];
+					// TODO: Si es tbSet y es magic picker hay que poner el segundo valor en: tbSet1. Investigar el resto. Tambien verificar que onda con tbVariation
+					//if (strControlName.Substring(0, 5) == "tbSet")
 				};
 
 				cmCommonInput = new ContextMenuStrip();
@@ -283,11 +284,11 @@ namespace LastChaos_ToolBox_2024.Editors
 			pMain.pItemFortuneHeadTable = new DataTable();
 
 			var columnsToAdd = new List<DataColumn>
-			{
-				new DataColumn("a_item_idx", typeof(int)),		// int
-				new DataColumn("a_prob_type", typeof(byte)),	// tinyint unsigned
-				new DataColumn("a_enable", typeof(byte))		// tinyint unsigned
-			};
+				{
+					new DataColumn("a_item_idx", typeof(int)),		// int
+					new DataColumn("a_prob_type", typeof(byte)),	// tinyint unsigned
+					new DataColumn("a_enable", typeof(byte))		// tinyint unsigned
+				};
 
 			pMain.pItemFortuneHeadTable.Columns.AddRange(columnsToAdd.ToArray());
 		}
@@ -297,13 +298,13 @@ namespace LastChaos_ToolBox_2024.Editors
 			pMain.pItemFortuneDataTable = new DataTable();
 
 			var columnsToAdd = new List<DataColumn>
-			{
-				new DataColumn("a_item_idx", typeof(int)),         // int
-				new DataColumn("a_skill_index", typeof(int)),      // int
-				new DataColumn("a_skill_level", typeof(sbyte)),    // tinyint
-				new DataColumn("a_string_index", typeof(int)),     // int
-				new DataColumn("a_prob", typeof(int))              // int
-			};
+				{
+					new DataColumn("a_item_idx", typeof(int)),         // int
+					new DataColumn("a_skill_index", typeof(int)),      // int
+					new DataColumn("a_skill_level", typeof(sbyte)),    // tinyint
+					new DataColumn("a_string_index", typeof(int)),     // int
+					new DataColumn("a_prob", typeof(int))              // int
+				};
 
 			pMain.pItemFortuneDataTable.Columns.AddRange(columnsToAdd.ToArray());
 		}
@@ -314,20 +315,20 @@ namespace LastChaos_ToolBox_2024.Editors
 
 			// NOTE: Here you must define the columns that you want to request from the database.
 			List<string> listQueryCompose = new List<string> {
-				"a_enable", "a_texture_id", "a_texture_row", "a_texture_col", "a_file_smc", "a_weight", "a_price", "a_level", "a_level2", "a_durability", "a_fame",
-				"a_max_use", "a_grade", "a_type_idx", "a_subtype_idx", "a_wearing", "a_rvr_value", "a_rvr_grade", "a_effect_name", "a_attack_effect_name",
-				"a_damage_effect_name", "a_castle_war", "a_job_flag", "a_zone_flag", "a_flag", "a_origin_variation1", "a_origin_variation2", "a_origin_variation3",
-				"a_origin_variation4", "a_origin_variation5", "a_origin_variation6", "a_set_0", "a_set_1", "a_set_2", "a_set_3", "a_set_4", "a_num_0", "a_num_1",
-				"a_num_2", "a_num_3", "a_num_4", "a_need_sskill", "a_need_sskill_level",
-#if ENABLE_SECOND_SKILL_TO_CRAFT
-				"a_need_sskill2", "a_need_sskill_level2",
-#endif
-				"a_need_item0", "a_need_item_count0", "a_need_item1", "a_need_item_count1", "a_need_item2", "a_need_item_count2", "a_need_item3", "a_need_item_count3",
-				"a_need_item4", "a_need_item_count4", "a_need_item5", "a_need_item_count5", "a_need_item6", "a_need_item_count6", "a_need_item7", "a_need_item_count7",
-				"a_need_item8", "a_need_item_count8", "a_need_item9", "a_need_item_count9", "a_rare_index_0", "a_rare_prob_0", "a_rare_index_1", "a_rare_prob_1",
-				"a_rare_index_2", "a_rare_prob_2", "a_rare_index_3", "a_rare_prob_3", "a_rare_index_4", "a_rare_prob_4", "a_rare_index_5", "a_rare_prob_5",
-				"a_rare_index_6", "a_rare_prob_6", "a_rare_index_7", "a_rare_prob_7", "a_rare_index_8", "a_rare_prob_8", "a_rare_index_9", "a_rare_prob_9"
-			};
+					"a_enable", "a_texture_id", "a_texture_row", "a_texture_col", "a_file_smc", "a_weight", "a_price", "a_level", "a_level2", "a_durability", "a_fame",
+					"a_max_use", "a_grade", "a_type_idx", "a_subtype_idx", "a_wearing", "a_rvr_value", "a_rvr_grade", "a_effect_name", "a_attack_effect_name",
+					"a_damage_effect_name", "a_castle_war", "a_job_flag", "a_zone_flag", "a_flag", "a_origin_variation1", "a_origin_variation2", "a_origin_variation3",
+					"a_origin_variation4", "a_origin_variation5", "a_origin_variation6", "a_set_0", "a_set_1", "a_set_2", "a_set_3", "a_set_4", "a_num_0", "a_num_1",
+					"a_num_2", "a_num_3", "a_num_4", "a_need_sskill", "a_need_sskill_level",
+	#if ENABLE_SECOND_SKILL_TO_CRAFT
+					"a_need_sskill2", "a_need_sskill_level2",
+	#endif
+					"a_need_item0", "a_need_item_count0", "a_need_item1", "a_need_item_count1", "a_need_item2", "a_need_item_count2", "a_need_item3", "a_need_item_count3",
+					"a_need_item4", "a_need_item_count4", "a_need_item5", "a_need_item_count5", "a_need_item6", "a_need_item_count6", "a_need_item7", "a_need_item_count7",
+					"a_need_item8", "a_need_item_count8", "a_need_item9", "a_need_item_count9", "a_rare_index_0", "a_rare_prob_0", "a_rare_index_1", "a_rare_prob_1",
+					"a_rare_index_2", "a_rare_prob_2", "a_rare_index_3", "a_rare_prob_3", "a_rare_index_4", "a_rare_prob_4", "a_rare_index_5", "a_rare_prob_5",
+					"a_rare_index_6", "a_rare_prob_6", "a_rare_index_7", "a_rare_prob_7", "a_rare_index_8", "a_rare_prob_8", "a_rare_index_9", "a_rare_prob_9"
+				};
 
 			// NOTE: If columns related to locale are required, they must be defined here.
 			for (int i = 0; i < pMain.pSettings.NationSupported.Length; i++)
@@ -335,10 +336,10 @@ namespace LastChaos_ToolBox_2024.Editors
 				string strNation = pMain.pSettings.NationSupported[i].ToLower();
 
 				listQueryCompose.AddRange(new List<string>
-				{
-					"a_name_" + strNation,
-					"a_descr_" + strNation
-				});
+					{
+						"a_name_" + strNation,
+						"a_descr_" + strNation
+					});
 			}
 
 			if (pMain.pItemTable == null)   // NOTE: If the global table is empty, directly indicate that a query must be executed requesting all previously defined columns.
@@ -406,8 +407,8 @@ namespace LastChaos_ToolBox_2024.Editors
 			bool bRequestNeeded = false;
 
 			List<string> listQueryCompose = new List<string> {
-				"a_name_" + pMain.pSettings.WorkLocale, "a_client_description_" + pMain.pSettings.WorkLocale, "a_client_icon_texid", "a_client_icon_row", "a_client_icon_col"
-			};
+					"a_name_" + pMain.pSettings.WorkLocale, "a_client_description_" + pMain.pSettings.WorkLocale, "a_client_icon_texid", "a_client_icon_row", "a_client_icon_col"
+				};
 
 			if (pMain.pSkillTable == null)
 			{
@@ -716,10 +717,10 @@ namespace LastChaos_ToolBox_2024.Editors
 			stopwatch.Start();
 #endif
 			await Task.WhenAll( // NOTE: Here information is requested from the mysql server asynchronously, thus reducing waiting times to the minimum possible.
-				LoadItemDataAsync(),	// Populate pItemTable.
-				LoadZoneDataAsync(),	// Populate pZoneTable.
-				LoadSkillDataAsync(),	// Populate pSkillTable & pSkillLevelTable.
-				LoadRareOptionDataAsync()	// Populate pRateoptionTable.
+				LoadItemDataAsync(),    // Populate pItemTable.
+				LoadZoneDataAsync(),    // Populate pZoneTable.
+				LoadSkillDataAsync(),   // Populate pSkillTable & pSkillLevelTable.
+				LoadRareOptionDataAsync()   // Populate pRateoptionTable.
 			);
 #if DEBUG
 			stopwatch.Stop();
@@ -839,7 +840,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			/****************************************/
 			if (bLoadFrompItemTable)
 			{
-				pTempItemRow = pMain.pItemTable.NewRow();	// Replicate struct in temp row val.
+				pTempItemRow = pMain.pItemTable.NewRow();   // Replicate struct in temp row val.
 				pTempItemRow.ItemArray = (object[])pMain.pItemTable.Select("a_index = " + nItemID)[0].ItemArray.Clone();    // Copy data from main table to temp one.
 			}
 
@@ -1734,7 +1735,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			int nItemID = Convert.ToInt32(pTempItemRow["a_index"]);
 
 			DataRow pItemTableRow = pMain.pItemTable.Select("a_index = " + nItemID).FirstOrDefault();
-			
+
 			if (pItemTableRow != null)
 			{
 				StringBuilder strbuilderQuery = new StringBuilder();
@@ -2021,9 +2022,9 @@ namespace LastChaos_ToolBox_2024.Editors
 
 				if (pFlagSelector.ShowDialog() != DialogResult.OK)
 					return;
-
+#pragma warning disable
 				string strFlag = pFlagSelector.ReturnValues.ToString();
-
+#pragma warning restore
 				btnClassFlag.Text = strFlag;
 
 				StringBuilder strTooltip = new StringBuilder();
@@ -2052,9 +2053,9 @@ namespace LastChaos_ToolBox_2024.Editors
 
 				if (pFlagSelector.ShowDialog() != DialogResult.OK)
 					return;
-
+#pragma warning disable
 				string strFlag = pFlagSelector.ReturnValues.ToString();
-
+#pragma warning restore
 				btnAllowedZoneFlag.Text = strFlag;
 
 				StringBuilder strTooltip = new StringBuilder();
@@ -2424,7 +2425,7 @@ namespace LastChaos_ToolBox_2024.Editors
 		private void btnItem7Required_Click(object sender, EventArgs e) { ChangeItemRequiredAction(7); }
 		private void btnItem8Required_Click(object sender, EventArgs e) { ChangeItemRequiredAction(8); }
 		private void btnItem9Required_Click(object sender, EventArgs e) { ChangeItemRequiredAction(9); }
-		
+
 		private void ChangeItemRequiredAmountAction(TextBox cTextBox, int nNumber)
 		{
 			if (bUserAction)
@@ -2466,7 +2467,7 @@ namespace LastChaos_ToolBox_2024.Editors
 		private void tbRareIndex7_TextChanged(object sender, EventArgs e) { ChangeRareOptionAction(7); }
 		private void tbRareIndex8_TextChanged(object sender, EventArgs e) { ChangeRareOptionAction(8); }
 		private void tbRareIndex9_TextChanged(object sender, EventArgs e) { ChangeRareOptionAction(9); }
-		
+
 		private void ChangeRareProbAction(TextBox cTextBox, int nNumber)
 		{
 			if (bUserAction)
@@ -2517,7 +2518,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			{
 				try
 				{
-					if (pMain.pItemFortuneHeadTable == null)	// NOTE: This condition theoretically should not be met, but just in case
+					if (pMain.pItemFortuneHeadTable == null)    // NOTE: This condition theoretically should not be met, but just in case
 						MakepItemFortuneHeadTableStructure();
 
 					pTempFortuneHeadRow = pMain.pItemFortuneHeadTable.NewRow();
@@ -2778,7 +2779,7 @@ namespace LastChaos_ToolBox_2024.Editors
 				foreach (DataGridViewRow row in gridFortune.Rows)
 				{
 					DataRow pRow = pMain.pItemFortuneDataTable.NewRow();
-					
+
 					pRow["a_item_idx"] = pTempItemRow["a_index"];
 					pRow["a_skill_index"] = row.Cells["skill"].Tag;
 					pRow["a_skill_level"] = row.Cells["level"].Value.ToString().Split(new string[] { " - " }, StringSplitOptions.None)[0].Replace("Level: ", "").Trim(); // DUDE LOOK THAT SHIT HAHA, NOTE: in theory, the element index is equivalent to level, but i'm not trust so, by go in this way have not room to errors.	//row.Cells["level"].Tag;

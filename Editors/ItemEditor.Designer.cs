@@ -630,7 +630,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			this.groupBox3.Size = new System.Drawing.Size(308, 315);
 			this.groupBox3.TabIndex = 1039;
 			this.groupBox3.TabStop = false;
-			this.groupBox3.Text = "Origin / Rare / Costume Suit Options Data";
+			this.groupBox3.Text = "Rare Data";
 			// 
 			// tbRareIndex9
 			// 
@@ -2898,7 +2898,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			this.cbNationSelector.FormattingEnabled = true;
 			this.cbNationSelector.Location = new System.Drawing.Point(6, 13);
 			this.cbNationSelector.Name = "cbNationSelector";
-			this.cbNationSelector.Size = new System.Drawing.Size(229, 21);
+			this.cbNationSelector.Size = new System.Drawing.Size(230, 21);
 			this.cbNationSelector.TabIndex = 11;
 			this.cbNationSelector.SelectedIndexChanged += new System.EventHandler(this.cbNationSelector_SelectedIndexChanged);
 			// 

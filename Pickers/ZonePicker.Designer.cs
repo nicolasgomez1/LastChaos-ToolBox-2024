@@ -81,7 +81,6 @@
 		}
 		#endregion
 
-		private System.Windows.Forms.Label lbLocation;
 		private System.Windows.Forms.TextBox tbSearch;
 		private System.Windows.Forms.ListBox MainList;
 	}
