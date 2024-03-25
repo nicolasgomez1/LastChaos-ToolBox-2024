@@ -12,24 +12,24 @@ namespace LastChaos_ToolBox_2024
 	/* Args:
 	 *	Main<Pointer to Main Form>
 	 *	Form<Parent Form to center the Window>
-	 *	Int <Actual Option ID>
+	 *	Int <Actual Magic ID>
 	 * Returns:
-	 *		Int Array<Option Type, Option Level>
+	 *		Int Array<Magic Type, Magic Level>
 	// Call and receive implementation
-	OptionPicker pOptionSelector = new OptionPicker(pMain, this, new int[] { 0, 1 });
+	MagicPicker pMagicSelector = new MagicPicker(pMain, this, new int[] { 0, 1 });
 
-	if (pOptionSelector.ShowDialog() != DialogResult.OK)
+	if (pMagicSelector.ShowDialog() != DialogResult.OK)
 		return;
 
-	int iOptionType = pOptionSelector.ReturnValues[0];
-	int iOptionLevel = pOptionSelector.ReturnValues[1];
+	int iMagicType = pMagicSelector.ReturnValues[0];
+	int iMagicLevel = pMagicSelector.ReturnValues[1];
 	/****************************************/
-	public partial class OptionPicker : Form
+	public partial class MagicPicker : Form
 	{
 		private Form pParentForm;
 		private Main pMain;
 		private int nSearchPosition = 0;
-		private DataRow pRowOption;
+		//private DataRow pRowOption;
 		private string[] strArrayLevel;
 		public int[] ReturnValues = { -1, 0 };
 
@@ -40,18 +40,18 @@ namespace LastChaos_ToolBox_2024
 			public override string ToString() { return Text; }
 		}
 
-		public OptionPicker(Main mainForm, Form ParentForm, int[] nArray)
+		public MagicPicker(Main mainForm, Form ParentForm, int[] nArray)
 		{
 			InitializeComponent();
 
-			this.FormClosing += OptionPicker_FormClosing;
+			this.FormClosing += MagicPicker_FormClosing;
 
 			pMain = mainForm;
 			pParentForm = ParentForm;
 			ReturnValues = nArray;
 		}
 
-		private void OptionPicker_FormClosing(object sender, FormClosingEventArgs e) { pRowOption = null; }
+		private void MagicPicker_FormClosing(object sender, FormClosingEventArgs e) { /*pRowMagic = null;*/ }
 
 		public void AddInfo(string strText, bool bHead = false)
 		{
@@ -69,17 +69,17 @@ namespace LastChaos_ToolBox_2024
 			});
 		}
 
-		private async void OptionPicker_LoadAsync(object sender, EventArgs e)
+		private async void MagicPicker_LoadAsync(object sender, EventArgs e)
 		{
 			this.Location = new Point((int)pParentForm.Location.X + (pParentForm.Width - this.Width) / 2, (int)pParentForm.Location.Y + (pParentForm.Height - this.Height) / 2);
 
 			bool bRequestNeeded = false;
 
 			List<string> listQueryCompose = new List<string> {
-				"a_type", "a_level", "a_prob", "a_weapon_type", "a_wear_type", "a_accessory_type", "a_name_" + pMain.pSettings.WorkLocale
+				"a_name", "a_maxlevel", "a_type", "a_subtype", "a_damagetype", "a_hittype", "a_attribute", "a_psp", "a_ptp", "a_hsp", "a_htp", "a_togle"
 			};
 
-			if (pMain.pOptionTable == null)
+			if (pMain.pMagicTable == null)
 			{
 				bRequestNeeded = true;
 			}
@@ -87,7 +87,7 @@ namespace LastChaos_ToolBox_2024
 			{
 				foreach (var column in listQueryCompose.ToList())
 				{
-					if (!pMain.pOptionTable.Columns.Contains(column))
+					if (!pMain.pMagicTable.Columns.Contains(column))
 						bRequestNeeded = true;
 					else
 						listQueryCompose.Remove(column);
@@ -96,33 +96,61 @@ namespace LastChaos_ToolBox_2024
 
 			if (bRequestNeeded)
 			{
-				pMain.pOptionTable = await Task.Run(() =>
+				pMain.pMagicTable = await Task.Run(() =>
 				{
-					return pMain.QuerySelect(pMain.pSettings.DBCharset, $"SELECT a_index, {string.Join(",", listQueryCompose)} FROM {pMain.pSettings.DBData}.t_option ORDER BY a_index;");
+					return pMain.QuerySelect(pMain.pSettings.DBCharset, $"SELECT a_index, {string.Join(",", listQueryCompose)} FROM {pMain.pSettings.DBData}.t_magic ORDER BY a_index;");
 				});
+
+				bRequestNeeded = false;
+				listQueryCompose.Clear();
+
+				listQueryCompose = new List<string> { "a_level", "a_power", "a_hitrate" };
+
+				if (pMain.pMagicLevelTable == null)
+				{
+					bRequestNeeded = true;
+				}
+				else
+				{
+					foreach (var column in listQueryCompose.ToList())
+					{
+						if (!pMain.pMagicLevelTable.Columns.Contains(column))
+							bRequestNeeded = true;
+						else
+							listQueryCompose.Remove(column);
+					}
+				}
+
+				if (bRequestNeeded)
+				{
+					pMain.pMagicLevelTable = await Task.Run(() =>
+					{
+						return pMain.QuerySelect(pMain.pSettings.DBCharset, $"SELECT a_index, {string.Join(",", listQueryCompose)} FROM {pMain.pSettings.DBData}.t_magiclevel ORDER BY a_level");
+					});
+				}
 			}
 
 			listQueryCompose = null;
 
-			if (pMain.pOptionTable != null)
+			if (pMain.pMagicTable != null && pMain.pMagicLevelTable != null)
 			{
 				MainList.Items.Clear();
 
 				MainList.BeginUpdate();
 
-				int nOriginalOptionID = ReturnValues[0];
+				int nOriginalSkillID = Convert.ToInt32(ReturnValues[0]);
 
-				foreach (DataRow pRow in pMain.pOptionTable.Rows)
+				foreach (DataRow pRow in pMain.pMagicTable.Rows)
 				{
-					int nItemID = Convert.ToInt32(pRow["a_index"]);
+					int nSkillID = Convert.ToInt32(pRow["a_index"]);
 
 					MainList.Items.Add(new ListBoxItem
 					{
-						ID = nItemID,
-						Text = pRow["a_type"] + " - " + pRow["a_name_" + pMain.pSettings.WorkLocale].ToString()
+						ID = nSkillID,
+						Text = pRow["a_index"] + " - " + pRow["a_name"].ToString()
 					});
 
-					if (nItemID == nOriginalOptionID)
+					if (nSkillID == nOriginalSkillID)
 						MainList.SelectedIndex = MainList.Items.Count - 1;
 				}
 
@@ -195,7 +223,7 @@ namespace LastChaos_ToolBox_2024
 				btnSelect.Enabled = false;
 
 				int nItemID = pSelectedItem.ID;
-
+				/*
 				pRowOption = pMain.pOptionTable.Select("a_index = " + nItemID).FirstOrDefault();
 
 				AddInfo("Type: ", true);
@@ -267,21 +295,13 @@ namespace LastChaos_ToolBox_2024
 				{
 					string strLevel = pRowOption["a_level"].ToString();
 					if (strLevel.IndexOf(' ') >= 0)
-					{
-						pMain.Logger("Option Picker > Option: " + nItemID + " Error: have extra blank space in a_level.", Color.Red);
-
 						strLevel = strLevel.TrimStart();
-					}
 
 					strArrayLevel = strLevel.Split(' ');
 
 					string strProb = pRowOption["a_prob"].ToString();
 					if (strProb.IndexOf(' ') >= 0)
-					{
-						pMain.Logger("Option Picker > Option: " + nItemID + " Error: have extra blank space in a_prob.", Color.Red);
-
 						strProb = strProb.TrimStart();
-					}
 
 					string[] strArrayProb = strProb.Split(' ');
 
@@ -297,7 +317,7 @@ namespace LastChaos_ToolBox_2024
 						}
 						else
 						{
-							pMain.Logger("Option Picker > Option: " + nItemID + " Error: a_prob mismatched with a_level.", Color.Red);
+							pMain.Logger("option Picker > Option: " + nItemID + " Error: a_prob mismatched with a_level.", Color.Red);
 						}
 
 						i++;
@@ -305,7 +325,7 @@ namespace LastChaos_ToolBox_2024
 
 					if (cbLevelSelector.SelectedIndex == -1)
 						cbLevelSelector.SelectedIndex = 1;
-				}
+				}*/
 
 				cbLevelSelector.Enabled = true;
 				btnSelect.Enabled = true;
@@ -327,7 +347,7 @@ namespace LastChaos_ToolBox_2024
 
 				DialogResult = DialogResult.OK;
 
-				ReturnValues[0] = Convert.ToInt32(pRowOption["a_type"]);
+				//ReturnValues[0] = Convert.ToInt32(pRowOption["a_type"]);	// TODO
 				ReturnValues[1] = Convert.ToInt32(strArrayLevel[nSelectedOptionLevel]);
 
 				Close();
