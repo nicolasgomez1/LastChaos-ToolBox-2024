@@ -12,7 +12,7 @@ namespace LastChaos_ToolBox_2024
 	 *	Form<Parent Form to center the Window>
 	 *	String<name the image type>
 	 * Returns:
-	 *		String<Array of 3 elements>
+	 *		String Array<File Number, Row, Col>
 	// Call and receive implementation
 	IconPicker pIconSelector = new IconPicker(pMain, this, "ItemBtn");
 

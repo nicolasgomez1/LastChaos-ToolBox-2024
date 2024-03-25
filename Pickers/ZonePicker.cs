@@ -20,7 +20,7 @@ namespace LastChaos_ToolBox_2024
 	if (pZoneSelector.ShowDialog() != DialogResult.OK)
 		return;
 
-	int iZoneID = Convert.ToInt32(pZoneSelector.ReturnValues[0]);
+	int nZoneID = Convert.ToInt32(pZoneSelector.ReturnValues[0]);
 	string strZoneName = pZoneSelector.ReturnValues[1].ToString();
 	/****************************************/
 	public partial class ZonePicker : Form
@@ -88,8 +88,6 @@ namespace LastChaos_ToolBox_2024
 
 				MainList.BeginUpdate();
 
-				int nActualStringID = Convert.ToInt32(ReturnValues[0]);
-
 				foreach (DataRow pRow in pMain.pZoneTable.Rows)
 				{
 					int nStringID = Convert.ToInt32(pRow["a_zone_index"]);
@@ -100,7 +98,7 @@ namespace LastChaos_ToolBox_2024
 						Text = pRow["a_zone_index"] + " - " + pRow["a_name"].ToString()
 					});
 
-					if (nStringID == nActualStringID)
+					if (nStringID == Convert.ToInt32(ReturnValues[0]))
 						MainList.SelectedIndex = MainList.Items.Count - 1;
 				}
 
@@ -177,6 +175,16 @@ namespace LastChaos_ToolBox_2024
 					Close();
 				}
 			}
+		}
+
+		private void btnRemoveZone_Click(object sender, EventArgs e)
+		{
+			DialogResult = DialogResult.OK;
+
+			ReturnValues[0] = -1;
+			ReturnValues[1] = "";
+
+			Close();
 		}
 
 		private void tbSearch_TextChanged(object sender, EventArgs e) { nSearchPosition = 0; }
