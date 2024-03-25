@@ -54,6 +54,7 @@ namespace LastChaos_ToolBox_2024.Editors
 			this.btnAddFortune = new System.Windows.Forms.Button();
 			this.groupBox3 = new System.Windows.Forms.GroupBox();
 			this.tbRareIndex9 = new System.Windows.Forms.TextBox();
+			this.CommonContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.tbRareIndex8 = new System.Windows.Forms.TextBox();
 			this.tbRareIndex7 = new System.Windows.Forms.TextBox();
 			this.tbRareIndex6 = new System.Windows.Forms.TextBox();
@@ -246,7 +247,6 @@ namespace LastChaos_ToolBox_2024.Editors
 			this.tbSearch = new System.Windows.Forms.TextBox();
 			this.cbRenderDialog = new System.Windows.Forms.CheckBox();
 			this.cbAutoLoadFortuneData = new System.Windows.Forms.CheckBox();
-			this.CommonContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.groupBox1.SuspendLayout();
 			this.GeneralPanel.SuspendLayout();
 			this.gbFortune.SuspendLayout();
@@ -644,6 +644,12 @@ namespace LastChaos_ToolBox_2024.Editors
 			this.tbRareIndex9.TabIndex = 1145;
 			this.tbRareIndex9.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			this.tbRareIndex9.TextChanged += new System.EventHandler(this.tbRareIndex9_TextChanged);
+			// 
+			// CommonContextMenu
+			// 
+			this.CommonContextMenu.Name = "CommonContextMenu";
+			this.CommonContextMenu.Size = new System.Drawing.Size(61, 4);
+			this.CommonContextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStrip1_Opening);
 			// 
 			// tbRareIndex8
 			// 
@@ -3013,12 +3019,6 @@ namespace LastChaos_ToolBox_2024.Editors
 			this.cbAutoLoadFortuneData.Text = "Auto Load Fortune Data";
 			this.cbAutoLoadFortuneData.UseVisualStyleBackColor = true;
 			this.cbAutoLoadFortuneData.CheckedChanged += new System.EventHandler(this.cbAutoLoadFortuneData_CheckedChanged);
-			// 
-			// CommonContextMenu
-			// 
-			this.CommonContextMenu.Name = "CommonContextMenu";
-			this.CommonContextMenu.Size = new System.Drawing.Size(61, 4);
-			this.CommonContextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStrip1_Opening);
 			// 
 			// ItemEditor
 			// 

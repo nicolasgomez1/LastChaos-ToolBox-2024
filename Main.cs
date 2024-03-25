@@ -28,7 +28,7 @@ namespace LastChaos_ToolBox_2024
 
 		// Global Vals
 		public Settings pSettings = new Settings();
-
+		
 		// { get; set; }
 		public DataTable pItemTable = null;
 		public DataTable pZoneTable = null;

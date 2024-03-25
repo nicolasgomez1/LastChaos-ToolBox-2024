@@ -177,6 +177,8 @@ namespace LastChaos_ToolBox_2024
 
 					ReturnValues = pSelectedItem.ID;
 
+					// TODO: Rare Option should have a option index selector?
+
 					Close();
 				}
 			}
