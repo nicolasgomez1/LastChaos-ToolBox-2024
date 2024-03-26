@@ -225,8 +225,8 @@ namespace LastChaos_ToolBox_2024
 													move /y """ + strFolderPath + @"\*"" """"
 													rmdir /s /q """ + strFolderPath + @"""
 													del """ + strFileName + @"""
-													::del Updater.bat
 													""" + pAssembly.GetName().Name + @""".exe
+													del Updater.bat
 												";
 
 												File.WriteAllText(strFilePath, strCMD);
