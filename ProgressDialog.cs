@@ -1,11 +1,14 @@
-﻿using System.Drawing;
+﻿//#define ENABLE_PROGRESSBAR
+
+using System;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace LastChaos_ToolBox_2024
 {
-	/*
+	/* TODO: fix this↓ description
 	// For call new Instance
-	ProgressDialog pProgressDialog = new ProgressDialog(this, "Loading Data, Please Wait...");
+	ProgressDialog pProgressDialog = new ProgressDialog(this, "Loading Data, Please Wait...", false);
 
 	// For Update text from existing Instance
 	pProgressDialog.UpdateText("Spoon");
@@ -18,9 +21,16 @@ namespace LastChaos_ToolBox_2024
 		private Form pDialogForm;
 		private Label pLabel;
 
+#if ENABLE_PROGRESSBAR
+		private ProgressBar pProgressBar;
+
+		public ProgressDialog(Form pParentForm, string strMsg, bool bProgressBar = false)
+#else
 		public ProgressDialog(Form pParentForm, string strMsg)
+#endif
 		{
 			pDialogForm = new Form();
+			pDialogForm.ShowInTaskbar = false;
 			pDialogForm.FormBorderStyle = FormBorderStyle.None;
 			pDialogForm.StartPosition = FormStartPosition.Manual;
 			pDialogForm.ControlBox = false;
@@ -41,6 +51,15 @@ namespace LastChaos_ToolBox_2024
 			pLabel.Font = new Font(pLabel.Font.FontFamily, 12);
 
 			panel.Controls.Add(pLabel);
+#if ENABLE_PROGRESSBAR
+			if (bProgressBar)
+			{
+				pProgressBar = new ProgressBar();
+				pProgressBar.Dock = DockStyle.Bottom;
+				pProgressBar.Style = ProgressBarStyle.Continuous;
+				panel.Controls.Add(pProgressBar);
+			}
+#endif
 			pDialogForm.Controls.Add(panel);
 
 			pDialogForm.Show();
@@ -49,7 +68,7 @@ namespace LastChaos_ToolBox_2024
 		}
 
 		private void ResizeForm() { pDialogForm.Size = new Size((int)pLabel.CreateGraphics().MeasureString(pLabel.Text, pLabel.Font).Width + 2 * 9, pDialogForm.Height); }
-
+#if ENABLE_PROGRESSBAR
 		public void UpdateText(string strText)
 		{
 			pLabel.Invoke((MethodInvoker)delegate
@@ -60,6 +79,17 @@ namespace LastChaos_ToolBox_2024
 			});
 		}
 
+		public void UpdateProgress(int progress)
+		{
+			if (pProgressBar != null)
+			{
+				pProgressBar.Invoke((MethodInvoker)delegate
+				{
+					pProgressBar.Value = Math.Min(Math.Max(progress, 0), 100);
+				});
+			}
+		}
+#endif
 		public void Close()
 		{
 			if (pDialogForm != null && !pDialogForm.IsDisposed)

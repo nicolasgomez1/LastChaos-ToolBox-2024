@@ -301,11 +301,11 @@ namespace LastChaos_ToolBox_2024.Editors
 			pMain.pItemFortuneHeadTable = new DataTable();
 
 			var columnsToAdd = new List<DataColumn>
-				{
-					new DataColumn("a_item_idx", typeof(int)),		// int
-					new DataColumn("a_prob_type", typeof(byte)),	// tinyint unsigned
-					new DataColumn("a_enable", typeof(byte))		// tinyint unsigned
-				};
+			{
+				new DataColumn("a_item_idx", typeof(int)),		// int
+				new DataColumn("a_prob_type", typeof(byte)),	// tinyint unsigned
+				new DataColumn("a_enable", typeof(byte))		// tinyint unsigned
+			};
 
 			pMain.pItemFortuneHeadTable.Columns.AddRange(columnsToAdd.ToArray());
 		}
@@ -315,13 +315,13 @@ namespace LastChaos_ToolBox_2024.Editors
 			pMain.pItemFortuneDataTable = new DataTable();
 
 			var columnsToAdd = new List<DataColumn>
-				{
-					new DataColumn("a_item_idx", typeof(int)),         // int
-					new DataColumn("a_skill_index", typeof(int)),      // int
-					new DataColumn("a_skill_level", typeof(sbyte)),    // tinyint
-					new DataColumn("a_string_index", typeof(int)),     // int
-					new DataColumn("a_prob", typeof(int))              // int
-				};
+			{
+				new DataColumn("a_item_idx", typeof(int)),         // int
+				new DataColumn("a_skill_index", typeof(int)),      // int
+				new DataColumn("a_skill_level", typeof(sbyte)),    // tinyint
+				new DataColumn("a_string_index", typeof(int)),     // int
+				new DataColumn("a_prob", typeof(int))              // int
+			};
 
 			pMain.pItemFortuneDataTable.Columns.AddRange(columnsToAdd.ToArray());
 		}
@@ -331,21 +331,22 @@ namespace LastChaos_ToolBox_2024.Editors
 			bool bRequestNeeded = false;
 
 			// NOTE: Here you must define the columns that you want to request from the database.
-			List<string> listQueryCompose = new List<string> {
-					"a_enable", "a_texture_id", "a_texture_row", "a_texture_col", "a_file_smc", "a_weight", "a_price", "a_level", "a_level2", "a_durability", "a_fame",
-					"a_max_use", "a_grade", "a_type_idx", "a_subtype_idx", "a_wearing", "a_rvr_value", "a_rvr_grade", "a_effect_name", "a_attack_effect_name",
-					"a_damage_effect_name", "a_castle_war", "a_job_flag", "a_zone_flag", "a_flag", "a_origin_variation1", "a_origin_variation2", "a_origin_variation3",
-					"a_origin_variation4", "a_origin_variation5", "a_origin_variation6", "a_set_0", "a_set_1", "a_set_2", "a_set_3", "a_set_4", "a_num_0", "a_num_1",
-					"a_num_2", "a_num_3", "a_num_4", "a_need_sskill", "a_need_sskill_level",
-	#if ENABLE_SECOND_SKILL_TO_CRAFT
-					"a_need_sskill2", "a_need_sskill_level2",
-	#endif
-					"a_need_item0", "a_need_item_count0", "a_need_item1", "a_need_item_count1", "a_need_item2", "a_need_item_count2", "a_need_item3", "a_need_item_count3",
-					"a_need_item4", "a_need_item_count4", "a_need_item5", "a_need_item_count5", "a_need_item6", "a_need_item_count6", "a_need_item7", "a_need_item_count7",
-					"a_need_item8", "a_need_item_count8", "a_need_item9", "a_need_item_count9", "a_rare_index_0", "a_rare_prob_0", "a_rare_index_1", "a_rare_prob_1",
-					"a_rare_index_2", "a_rare_prob_2", "a_rare_index_3", "a_rare_prob_3", "a_rare_index_4", "a_rare_prob_4", "a_rare_index_5", "a_rare_prob_5",
-					"a_rare_index_6", "a_rare_prob_6", "a_rare_index_7", "a_rare_prob_7", "a_rare_index_8", "a_rare_prob_8", "a_rare_index_9", "a_rare_prob_9"
-				};
+			List<string> listQueryCompose = new List<string>
+			{
+				"a_enable", "a_texture_id", "a_texture_row", "a_texture_col", "a_file_smc", "a_weight", "a_price", "a_level", "a_level2", "a_durability", "a_fame",
+				"a_max_use", "a_grade", "a_type_idx", "a_subtype_idx", "a_wearing", "a_rvr_value", "a_rvr_grade", "a_effect_name", "a_attack_effect_name",
+				"a_damage_effect_name", "a_castle_war", "a_job_flag", "a_zone_flag", "a_flag", "a_origin_variation1", "a_origin_variation2", "a_origin_variation3",
+				"a_origin_variation4", "a_origin_variation5", "a_origin_variation6", "a_set_0", "a_set_1", "a_set_2", "a_set_3", "a_set_4", "a_num_0", "a_num_1",
+				"a_num_2", "a_num_3", "a_num_4", "a_need_sskill", "a_need_sskill_level",
+#if ENABLE_SECOND_SKILL_TO_CRAFT
+				"a_need_sskill2", "a_need_sskill_level2",
+#endif
+				"a_need_item0", "a_need_item_count0", "a_need_item1", "a_need_item_count1", "a_need_item2", "a_need_item_count2", "a_need_item3", "a_need_item_count3",
+				"a_need_item4", "a_need_item_count4", "a_need_item5", "a_need_item_count5", "a_need_item6", "a_need_item_count6", "a_need_item7", "a_need_item_count7",
+				"a_need_item8", "a_need_item_count8", "a_need_item9", "a_need_item_count9", "a_rare_index_0", "a_rare_prob_0", "a_rare_index_1", "a_rare_prob_1",
+				"a_rare_index_2", "a_rare_prob_2", "a_rare_index_3", "a_rare_prob_3", "a_rare_index_4", "a_rare_prob_4", "a_rare_index_5", "a_rare_prob_5",
+				"a_rare_index_6", "a_rare_prob_6", "a_rare_index_7", "a_rare_prob_7", "a_rare_index_8", "a_rare_prob_8", "a_rare_index_9", "a_rare_prob_9"
+			};
 
 			// NOTE: If columns related to locale are required, they must be defined here.
 			for (int i = 0; i < pMain.pSettings.NationSupported.Length; i++)
@@ -353,10 +354,10 @@ namespace LastChaos_ToolBox_2024.Editors
 				string strNation = pMain.pSettings.NationSupported[i].ToLower();
 
 				listQueryCompose.AddRange(new List<string>
-					{
-						"a_name_" + strNation,
-						"a_descr_" + strNation
-					});
+				{
+					"a_name_" + strNation,
+					"a_descr_" + strNation
+				});
 			}
 
 			if (pMain.pItemTable == null)   // NOTE: If the global table is empty, directly indicate that a query must be executed requesting all previously defined columns.
@@ -423,9 +424,10 @@ namespace LastChaos_ToolBox_2024.Editors
 		{
 			bool bRequestNeeded = false;
 
-			List<string> listQueryCompose = new List<string> {
-					"a_name_" + pMain.pSettings.WorkLocale, "a_client_description_" + pMain.pSettings.WorkLocale, "a_client_icon_texid", "a_client_icon_row", "a_client_icon_col"
-				};
+			List<string> listQueryCompose = new List<string>
+			{
+				"a_name_" + pMain.pSettings.WorkLocale, "a_client_description_" + pMain.pSettings.WorkLocale, "a_client_icon_texid", "a_client_icon_row", "a_client_icon_col"
+			};
 
 			if (pMain.pSkillTable == null)
 			{

@@ -8,8 +8,12 @@ using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using System.IO.Compression;
+using System.Net.Http;
 using System.Reflection;
 using System.Text;
+using System.Text.Json;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace LastChaos_ToolBox_2024
@@ -76,7 +80,7 @@ namespace LastChaos_ToolBox_2024
 
 		private void monitor_Tick(object sender, EventArgs e) { this.Text = strWindowsTitle + " (Ram Usage: " + (GC.GetTotalMemory(true) / 1024) + "KB's)"; }
 
-		private void ReloadSettings_Click(object sender, EventArgs e) { LoadSettings(); }
+		private void btnReloadSettings_Click(object sender, EventArgs e) { LoadSettings(); }
 
 		private void ClearGlobalTables()
 		{
@@ -159,7 +163,7 @@ namespace LastChaos_ToolBox_2024
 				form.Close();
 		}
 
-		private void Reconnect_Click(object sender, EventArgs e)
+		private void btnReconnect_Click(object sender, EventArgs e)
 		{
 			if (mysqlConn.State == ConnectionState.Open)
 			{
@@ -171,7 +175,93 @@ namespace LastChaos_ToolBox_2024
 			ConnectToDatabase();
 		}
 
-		private void ItemEditor_Click(object sender, EventArgs e)
+		private async void btnCheckUpdates_ClickAsync(object sender, EventArgs e)
+		{
+			using (var httpClient = new HttpClient())
+			{
+				httpClient.DefaultRequestHeaders.Add("User-Agent", "C# HttpClient");
+
+				using (HttpResponseMessage httpResponse = await httpClient.GetAsync("https://api.github.com/repos/nicolasgomez1/LastChaos-ToolBox-2024/releases"))
+				{
+					if (httpResponse.IsSuccessStatusCode)
+					{
+						using (JsonDocument jsonData = JsonDocument.Parse(await httpResponse.Content.ReadAsStringAsync()))
+						{
+							JsonElement root = jsonData.RootElement[0];
+							Assembly pAssembly = Assembly.GetAssembly(typeof(Main));
+							int nRevisionVersion = Convert.ToInt32(root.GetProperty("tag_name").GetString());
+
+							if (pAssembly.GetName().Version.Revision < nRevisionVersion + 200)
+							{
+								if (MessageBox.Show("Newer Version: " + nRevisionVersion + "\n\nChangeLog:\n" + root.GetProperty("body").GetString() + "\n\n Want upgrade?", "Update available!", MessageBoxButtons.YesNo) == DialogResult.Yes)
+								{
+									root = root.GetProperty("assets")[0];
+
+									ProgressDialog pProgressDialog = new ProgressDialog(this, "Downloading, Please Wait...");
+
+									using (HttpResponseMessage httpDownloadUrlResponse = await httpClient.GetAsync(root.GetProperty("browser_download_url").GetString()))
+									{
+										if (httpDownloadUrlResponse.IsSuccessStatusCode)
+										{
+											using (var stream = await httpDownloadUrlResponse.Content.ReadAsStreamAsync())
+											{
+												string strFileName = root.GetProperty("name").GetString();
+												string strFolderPath = strFileName.Substring(0, strFileName.Length - 4);
+
+												using (var fileStreamOutput = File.Create(strFileName))
+												{
+													await stream.CopyToAsync(fileStreamOutput);
+												}
+
+												if (Directory.Exists(strFolderPath))
+													Directory.Delete(strFolderPath, true);
+
+												ZipFile.ExtractToDirectory(strFileName, ".");
+
+												string strFilePath = "Updater.bat";
+
+												string strCMD = @"
+													timeout /t 2 /nobreak >nul
+													move /y """ + strFolderPath + @"\*"" """"
+													rmdir /s /q """ + strFolderPath + @"""
+													del """ + strFileName + @"""
+													::del Updater.bat
+													""" + pAssembly.GetName().Name + @""".exe
+												";
+
+												File.WriteAllText(strFilePath, strCMD);
+
+												ProcessStartInfo psi = new ProcessStartInfo();
+												psi.FileName = strFilePath;
+												psi.UseShellExecute = false;
+												psi.CreateNoWindow = true;
+												psi.WindowStyle = ProcessWindowStyle.Hidden;
+
+												Process.Start(psi);
+
+												Application.Exit();
+											}
+										}
+										else
+										{
+											Logger("Main > HTTP Request failed: " + httpDownloadUrlResponse.StatusCode, Color.Red);
+										}
+									}
+
+									pProgressDialog.Close();
+								}
+							}
+						}
+					}
+					else
+					{
+						Logger("Main > HTTP Request failed: " + httpResponse.StatusCode, Color.Red);
+					}
+				}
+			}
+		}
+
+		private void btnItemEditor_Click(object sender, EventArgs e)
 		{
 			ItemEditor pItemEditor = new ItemEditor(this);
 			pItemEditor.Show();
