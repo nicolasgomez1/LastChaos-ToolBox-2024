@@ -191,7 +191,7 @@ namespace LastChaos_ToolBox_2024
 							Assembly pAssembly = Assembly.GetAssembly(typeof(Main));
 							int nRevisionVersion = Convert.ToInt32(root.GetProperty("tag_name").GetString());
 
-							if (pAssembly.GetName().Version.Revision < nRevisionVersion + 200)
+							if (pAssembly.GetName().Version.Revision < nRevisionVersion)
 							{
 								if (MessageBox.Show("Newer Version: " + nRevisionVersion + "\n\nChangeLog:\n" + root.GetProperty("body").GetString() + "\n\n Want upgrade?", "Update available!", MessageBoxButtons.YesNo) == DialogResult.Yes)
 								{
