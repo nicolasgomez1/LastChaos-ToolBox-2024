@@ -397,7 +397,7 @@ namespace LastChaos_ToolBox_2024
 
 				int index1 = -1;
 				List<smcMesh> smcMeshList = new List<smcMesh>();
-				for (int index2 = 0; index2 < list.Count(); ++index2)
+				for (int index2 = 0; index2 < list.Count; ++index2)
 				{
 					if (list[index2].Substring(0, 4) == "MESH")
 					{
@@ -1131,7 +1131,7 @@ namespace LastChaos_ToolBox_2024
 			List<smcMesh> list = SMCReader.ReadFile(SMCFile);
 			pModel = new List<tMesh>();
 
-			for (int i = 0; i < list.Count(); i++)
+			for (int i = 0; i < list.Count; i++)
 			{
 				bool flag = (nWearingPosition != 0 ||
 				!list[i].FileName.Contains("_hair_000")) && (nWearingPosition != 1 ||
@@ -1142,7 +1142,7 @@ namespace LastChaos_ToolBox_2024
 
 				if (flag && LCMeshReader.ReadFile(list[i].FileName))
 				{
-					for (int j = 0; j < pMesh.Objects.Count(); j++)
+					for (int j = 0; j < pMesh.Objects.Length; j++)
 					{
 						int toVert = (int)pMesh.Objects[j].ToVert;
 						short[] faces = pMesh.Objects[j].GetFaces();
@@ -1170,10 +1170,10 @@ namespace LastChaos_ToolBox_2024
 
 						//new VertexBuffer(pDevice, array.Count<PositionNormalTextured>() * 32, Usage.None, VertexFormat.Position | VertexFormat.Texture1 | VertexFormat.Normal, Pool.Default);
 
-						Mesh mesh = new Mesh(pDevice, faces.Count<short>() / 3, array.Count(), MeshFlags.Managed, VertexFormat.Position | VertexFormat.Texture1 | VertexFormat.Normal);
+						Mesh mesh = new Mesh(pDevice, faces.Count<short>() / 3, array.Length, MeshFlags.Managed, VertexFormat.Position | VertexFormat.Texture1 | VertexFormat.Normal);
 
 						DataStream dataStream2;
-						DataStream dataStream = dataStream2 = mesh.VertexBuffer.Lock(0, array.Count() * 32, LockFlags.None);
+						DataStream dataStream = dataStream2 = mesh.VertexBuffer.Lock(0, array.Length * 32, LockFlags.None);
 
 						try
 						{
@@ -1189,7 +1189,7 @@ namespace LastChaos_ToolBox_2024
 						}
 
 						DataStream dataStream3;
-						dataStream = (dataStream3 = mesh.IndexBuffer.Lock(0, faces.Count() * 2, LockFlags.None));
+						dataStream = (dataStream3 = mesh.IndexBuffer.Lock(0, faces.Length * 2, LockFlags.None));
 
 						try
 						{
@@ -1204,28 +1204,28 @@ namespace LastChaos_ToolBox_2024
 							mesh.IndexBuffer.Dispose(); // TEST
 						}
 
-						if (pMesh.Weights.Count() != 0)
+						if (pMesh.Weights.Length != 0)
 						{
-							string[] array2 = new string[pMesh.Weights.Count()];
-							List<int>[] array3 = new List<int>[pMesh.Weights.Count()];
-							List<float>[] array4 = new List<float>[pMesh.Weights.Count()];
+							string[] array2 = new string[pMesh.Weights.Length];
+							List<int>[] array3 = new List<int>[pMesh.Weights.Length];
+							List<float>[] array4 = new List<float>[pMesh.Weights.Length];
 
-							for (int l = 0; l < pMesh.Weights.Count(); l++)
+							for (int l = 0; l < pMesh.Weights.Length; l++)
 							{
 								array2[l] = pEnc.GetString(pMesh.Weights[l].JointName);
 								array3[l] = new List<int>();
 								array4[l] = new List<float>();
 
-								for (int m = 0; m < pMesh.Weights[l].WeightsMap.Count(); m++)
+								for (int m = 0; m < pMesh.Weights[l].WeightsMap.Length; m++)
 								{
 									array3[l].Add(pMesh.Weights[l].WeightsMap[m].Index);
 									array4[l].Add(pMesh.Weights[l].WeightsMap[m].Weight);
 								}
 							}
 
-							mesh.SkinInfo = new SkinInfo(array.Count(), VertexFormat.Position | VertexFormat.Texture1 | VertexFormat.Normal, (int)pMesh.HeaderInfo.JointCount);
+							mesh.SkinInfo = new SkinInfo(array.Length, VertexFormat.Position | VertexFormat.Texture1 | VertexFormat.Normal, (int)pMesh.HeaderInfo.JointCount);
 
-							for (k = 0; k < array3.Count(); k++)
+							for (k = 0; k < array3.Length; k++)
 							{
 								mesh.SkinInfo.SetBoneName(k, array2[k]);
 
@@ -1302,7 +1302,7 @@ namespace LastChaos_ToolBox_2024
 
 			if (pModel != null)
 			{
-				for (int index = 0; index < pModel.Count(); ++index)
+				for (int index = 0; index < pModel.Count; ++index)
 				{
 					if (pModel[index].TexData != null)
 						pDevice.SetTexture(0, pModel[index].TexData);

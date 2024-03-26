@@ -240,6 +240,57 @@ namespace LastChaos_ToolBox_2024.Editors
 			return (bProceed, bDeleteActual);
 		}
 
+		private void SetSetDataTexts()
+		{
+			int nType = cbTypeSelector.SelectedIndex;
+			string[] strArrayTexts = { "0", "1", "2", "3", "4" };
+
+			if (nType == 2 /*ITYPE_ONCE*/ && ((Convert.ToInt64(pTempItemRow["a_flag"]) & (1 << 22 /*ITEM_FLAG_QUEST*/)) != 0))
+			{
+				strArrayTexts[0] = "Zone ID";
+				strArrayTexts[1] = "Position X";
+				strArrayTexts[2] = "Position X";
+				strArrayTexts[3] = "Quest Range";
+			}
+
+			for (int i = 0; i < strArrayTexts.Length; i++)
+				((Label)this.Controls.Find("lSet" + i, true)[0]).Text = strArrayTexts[i];
+
+			strArrayTexts = null;
+		}
+
+		private void SetOptionDataTexts()
+		{
+			int nType = cbTypeSelector.SelectedIndex;
+			int nSubType = cbSubTypeSelector.SelectedIndex;
+			string[] strArrayTexts = { "0", "1", "2", "3", "4" };
+
+			if (nType == 0 /*ITYPE_WEAPON*/)
+			{
+				strArrayTexts[0] = "Physical Attack";
+				strArrayTexts[1] = "Magic Attack";
+				strArrayTexts[2] = "Attack Speed";
+			}
+			else if (nType == 1 /*ITYPE_WEAR*/)
+			{
+				strArrayTexts[0] = "Physical Defense";
+				strArrayTexts[1] = "Magic Defense";
+
+				if (nSubType == 6 /*IWEAR_BACKWING*/)
+					strArrayTexts[2] = "Fly Speed";
+				else
+					strArrayTexts[2] = "???";	// NOTE: Some items have values here
+
+				if (nSubType == 7 /*IWEAR_SUIT*/ || ((Convert.ToInt64(pTempItemRow["a_flag"]) & (1 << 26 /*ITEM_FLAG_COSTUME2*/)) != 0))
+					strArrayTexts[4] = "Duration Time";
+			}
+
+			for (int i = 0; i < strArrayTexts.Length; i++)
+				((Label)this.Controls.Find("lOption" + i, true)[0]).Text = strArrayTexts[i];
+
+			strArrayTexts = null;
+		}
+
 		private void AddItemToList(int nItemID, string strItemName, bool bIsTemp)
 		{
 			MainList.Items.Add(new ListBoxItem
@@ -1085,6 +1136,8 @@ namespace LastChaos_ToolBox_2024.Editors
 			for (int i = 1; i <= 6; i++)
 				((TextBox)this.Controls.Find("tbVariation" + i, true)[0]).Text = pTempItemRow["a_origin_variation" + i].ToString();
 			/****************************************/
+			SetSetDataTexts();
+
 			for (int i = 0; i <= 4; i++)
 				((TextBox)this.Controls.Find("tbSet" + i, true)[0]).Text = pTempItemRow["a_set_" + i].ToString();
 			/****************************************/
@@ -2136,6 +2189,8 @@ namespace LastChaos_ToolBox_2024.Editors
 
 				bUnsavedChanges = true;
 			}
+
+			SetSetDataTexts();
 		}
 
 		private void cbTypeSelector_SelectedIndexChanged(object sender, EventArgs e)
@@ -2156,7 +2211,9 @@ namespace LastChaos_ToolBox_2024.Editors
 				cbSubTypeSelector.EndUpdate();
 
 				cbSubTypeSelector.Enabled = true;
-
+				
+				SetOptionDataTexts();
+				
 				if (bUserAction)
 				{
 					pTempItemRow["a_type_idx"] = nType.ToString();
@@ -2168,6 +2225,7 @@ namespace LastChaos_ToolBox_2024.Editors
 
 		private void cbSubTypeSelector_SelectedIndexChanged(object sender, EventArgs e)
 		{
+			
 			if (bUserAction)
 			{
 				int nType = cbSubTypeSelector.SelectedIndex;
@@ -2179,6 +2237,8 @@ namespace LastChaos_ToolBox_2024.Editors
 					bUnsavedChanges = true;
 				}
 			}
+
+			SetOptionDataTexts();
 		}
 
 		private void cbWearingPositionSelector_SelectedIndexChanged(object sender, EventArgs e)
