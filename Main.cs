@@ -13,7 +13,6 @@ using System.Net.Http;
 using System.Reflection;
 using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace LastChaos_ToolBox_2024
@@ -191,7 +190,7 @@ namespace LastChaos_ToolBox_2024
 							Assembly pAssembly = Assembly.GetAssembly(typeof(Main));
 							int nRevisionVersion = Convert.ToInt32(root.GetProperty("tag_name").GetString());
 
-							if (pAssembly.GetName().Version.Revision < nRevisionVersion)
+							if (pAssembly.GetName().Version.Revision < nRevisionVersion+200)
 							{
 								if (MessageBox.Show("Newer Version: " + nRevisionVersion + "\n\nChangeLog:\n" + root.GetProperty("body").GetString() + "\n\n Want upgrade?", "Update available!", MessageBoxButtons.YesNo) == DialogResult.Yes)
 								{
@@ -209,27 +208,25 @@ namespace LastChaos_ToolBox_2024
 												string strFolderPath = strFileName.Substring(0, strFileName.Length - 4);
 
 												using (var fileStreamOutput = File.Create(strFileName))
-												{
 													await stream.CopyToAsync(fileStreamOutput);
-												}
 
 												if (Directory.Exists(strFolderPath))
 													Directory.Delete(strFolderPath, true);
 
 												ZipFile.ExtractToDirectory(strFileName, ".");
 
-												string strFilePath = "Updater.bat";
+												File.Delete(strFileName);
 
-												string strCMD = @"
+												string strFilePath = "Updater.bat";
+												string strFileContent = @"
 													timeout /t 2 /nobreak >nul
 													move /y """ + strFolderPath + @"\*"" """"
 													rmdir /s /q """ + strFolderPath + @"""
-													del """ + strFileName + @"""
 													""" + pAssembly.GetName().Name + @""".exe
 													del Updater.bat
 												";
 
-												File.WriteAllText(strFilePath, strCMD);
+												File.WriteAllText(strFilePath, strFileContent);
 
 												ProcessStartInfo psi = new ProcessStartInfo();
 												psi.FileName = strFilePath;
@@ -296,44 +293,40 @@ namespace LastChaos_ToolBox_2024
 		{
 			Logger("Loading Settings...");
 
-			if (File.Exists(pSettings.SettingsFile))
-			{
-				FileIniDataParser pParser = new FileIniDataParser();
-				IniData pData = pParser.ReadFile(pSettings.SettingsFile);
+			if (!File.Exists(pSettings.SettingsFile))
+				File.Copy(pSettings.SettingsFile + ".dummy", pSettings.SettingsFile);
 
-				// Database Settings
-				pSettings.DBHost = pData["Settings"]["MySQLHost"];
-				pSettings.DBUsername = pData["Settings"]["MySQLUsername"];
-				pSettings.DBPassword = pData["Settings"]["MySQLPassword"];
-				pSettings.DBAuth = pData["Settings"]["MySQLDBAuth"];
-				pSettings.DBData = pData["Settings"]["MySQLDBData"];
-				pSettings.DBUser = pData["Settings"]["MySQLDBUser"];
-				pSettings.DBCharset = pData["Settings"]["Charset"];
-				pSettings.WorkLocale = pData["Settings"]["Nation"].ToLower();
+			FileIniDataParser pParser = new FileIniDataParser();
+			IniData pData = pParser.ReadFile(pSettings.SettingsFile);
 
-				// General Settings
-				pSettings.ClientPath = pData["Settings"]["ClientPath"];
-				/****************************************/
-				string[] strArrayNations = pData["Settings"]["NationSupported"].Split(',');
+			// Database Settings
+			pSettings.DBHost = pData["Settings"]["MySQLHost"];
+			pSettings.DBUsername = pData["Settings"]["MySQLUsername"];
+			pSettings.DBPassword = pData["Settings"]["MySQLPassword"];
+			pSettings.DBAuth = pData["Settings"]["MySQLDBAuth"];
+			pSettings.DBData = pData["Settings"]["MySQLDBData"];
+			pSettings.DBUser = pData["Settings"]["MySQLDBUser"];
+			pSettings.DBCharset = pData["Settings"]["Charset"];
+			pSettings.WorkLocale = pData["Settings"]["Nation"].ToLower();
 
-				pSettings.NationSupported = new string[strArrayNations.Length];
+			// General Settings
+			pSettings.ClientPath = pData["Settings"]["ClientPath"];
+			/****************************************/
+			string[] strArrayNations = pData["Settings"]["NationSupported"].Split(',');
 
-				for (int i = 0; i < strArrayNations.Length; i++)
-					pSettings.NationSupported[i] = strArrayNations[i];
-				/****************************************/
-				pSettings.ItemEditorAutoShowFortune = pData["Settings"]["ItemEditorAutoLoadFortune"].ToLower();
-				/****************************************/
-				KeyDataCollection arrayKeys = pData["RenderDialog"];
+			pSettings.NationSupported = new string[strArrayNations.Length];
 
-				foreach (KeyData pKey in arrayKeys)
-					pSettings.ShowRenderDialog[pKey.KeyName] = pKey.Value.ToLower();
-				/****************************************/
-				Logger("Settings load finished.", Color.Lime);
-			}
-			else
-			{
-				Logger($"Settings load failed ({pSettings.SettingsFile} not exist).", Color.Red);
-			}
+			for (int i = 0; i < strArrayNations.Length; i++)
+				pSettings.NationSupported[i] = strArrayNations[i];
+			/****************************************/
+			pSettings.ItemEditorAutoShowFortune = pData["Settings"]["ItemEditorAutoLoadFortune"].ToLower();
+			/****************************************/
+			KeyDataCollection arrayKeys = pData["RenderDialog"];
+
+			foreach (KeyData pKey in arrayKeys)
+				pSettings.ShowRenderDialog[pKey.KeyName] = pKey.Value.ToLower();
+			/****************************************/
+			Logger("Settings load finished.", Color.Lime);
 		}
 
 		// General Help Functions
