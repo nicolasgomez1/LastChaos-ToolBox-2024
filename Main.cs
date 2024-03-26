@@ -190,7 +190,7 @@ namespace LastChaos_ToolBox_2024
 							Assembly pAssembly = Assembly.GetAssembly(typeof(Main));
 							int nRevisionVersion = Convert.ToInt32(root.GetProperty("tag_name").GetString());
 
-							if (pAssembly.GetName().Version.Revision < nRevisionVersion+200)
+							if (pAssembly.GetName().Version.Revision < nRevisionVersion)
 							{
 								if (MessageBox.Show("Newer Version: " + nRevisionVersion + "\n\nChangeLog:\n" + root.GetProperty("body").GetString() + "\n\n Want upgrade?", "Update available!", MessageBoxButtons.YesNo) == DialogResult.Yes)
 								{
@@ -222,7 +222,7 @@ namespace LastChaos_ToolBox_2024
 													timeout /t 2 /nobreak >nul
 													move /y """ + strFolderPath + @"\*"" """"
 													rmdir /s /q """ + strFolderPath + @"""
-													""" + pAssembly.GetName().Name + @""".exe
+													""" + pAssembly.GetName().Name + @".exe""
 													del Updater.bat
 												";
 
@@ -296,8 +296,7 @@ namespace LastChaos_ToolBox_2024
 			if (!File.Exists(pSettings.SettingsFile))
 				File.Copy(pSettings.SettingsFile + ".dummy", pSettings.SettingsFile);
 
-			FileIniDataParser pParser = new FileIniDataParser();
-			IniData pData = pParser.ReadFile(pSettings.SettingsFile);
+			IniData pData = (new FileIniDataParser()).ReadFile(pSettings.SettingsFile);
 
 			// Database Settings
 			pSettings.DBHost = pData["Settings"]["MySQLHost"];
@@ -341,26 +340,30 @@ namespace LastChaos_ToolBox_2024
 			return strInput;
 		}
 
-		public Bitmap GetIcon(string BtnType, string nImage, int nRow, int nCol)
+		public Bitmap GetIcon(string BtnType, string nImage, int nRow, int nCol, bool bBigIcon = false)
 		{
+			int nSize = 32;
 			string strComposePath = BtnType + "/" + BtnType + nImage + ".png";
+
+			if (bBigIcon)
+				nSize = 60;
 
 			if (File.Exists(strComposePath))
 			{
 				using (Image pImage = Image.FromFile(strComposePath))
 				{
 					// Create new Bitmap
-					Bitmap pBitmap = new Bitmap(32, 32);
+					Bitmap pBitmap = new Bitmap(nSize, nSize);
 					// Generate Bitmap content
 					using (Graphics pGraphics = Graphics.FromImage((Image)pBitmap))
-						pGraphics.DrawImage(pImage, 0, 0, (new Rectangle(nCol * 32, nRow * 32, 32, 32)), GraphicsUnit.Pixel);
+						pGraphics.DrawImage(pImage, 0, 0, new Rectangle(nCol * nSize, nRow * nSize, nSize, nSize), GraphicsUnit.Pixel);
 
 					return pBitmap;
 				}
 			}
 			else
 			{
-				Logger("Error while trying to get Icon. Path: " + strComposePath, Color.Red);
+				Logger("Error while trying to get Icon, Path: " + strComposePath, Color.Red);
 
 				return null;
 			}
@@ -384,7 +387,7 @@ namespace LastChaos_ToolBox_2024
 
 						mysqlConnection.Close();
 
-						Logger("MySql Query (Charset: " + strCharset + ")\n" + strQuery + "\nExecute successfully.", Color.Lime);
+						Logger($"MySql Query (Charset: {strCharset})\n{strQuery}\nExecute successfully.", Color.Lime);
 
 						return pTable;
 					}
@@ -414,7 +417,7 @@ namespace LastChaos_ToolBox_2024
 
 						mysqlConnection.Close();
 
-						Logger("MySql Query (Charset: " + strCharset + ")\n" + strQuery + "\nExecute successfully.", Color.Lime);
+						Logger($"MySql Query (Charset: {strCharset})\n{strQuery}\nExecute successfully.", Color.Lime);
 
 						return true;
 					}
@@ -427,68 +430,6 @@ namespace LastChaos_ToolBox_2024
 				return false;
 			}
 		}
-
-		// NOTE: I try with pMain.pItemTable = await pMain.QuerySelectAsync(pMain.pSettings.DBCharset, $"SELECT {string.Join(",", listQueryCompose)} FROM {pMain.pSettings.DBData}.t_item ORDER BY a_index;"); and took 300ms more
-		/*public async Task<DataTable> QuerySelectAsync(string strCharset, string strQuery)
-		{
-			try
-			{
-				string strConnect = $"SERVER={pSettings.DBHost};DATABASE={pSettings.DBData};UID={pSettings.DBUsername};PASSWORD={pSettings.DBPassword};CHARSET=" + strCharset;
-
-				using (MySqlConnection mysqlConnection = new MySqlConnection(strConnect))
-				{
-					await mysqlConnection.OpenAsync(); //mysqlConnection.Open();
-
-					using (MySqlCommand mysqlCommand = new MySqlCommand(strQuery, mysqlConnection))
-					{
-						DataTable pTable = new DataTable();
-						pTable.Load(await mysqlCommand.ExecuteReaderAsync());   //pTable.Load(mysqlCommand.ExecuteReader());
-
-						mysqlConnection.Close();
-
-						PrintLog("MySql Query (Charset: " + strCharset + ")\n" + strQuery + "\nExecute successfully.", Color.Lime);
-
-						return pTable;
-					}
-				}
-			}
-			catch (Exception ex)
-			{
-				PrintLog($"MySql Query (Charset: {strCharset})\n{strQuery}\nFail > {ex.Message}", Color.Red);
-
-				return null;
-			}
-		}
-
-		public async Task<bool> QueryUpdateInsertAsync(string strCharset, string strQuery)
-		{
-			try
-			{
-				string strConnect = $"SERVER={pSettings.DBHost};DATABASE={pSettings.DBData};UID={pSettings.DBUsername};PASSWORD={pSettings.DBPassword};CHARSET=" + strCharset;
-
-				using (MySqlConnection mysqlConnection = new MySqlConnection(strConnect))
-				{
-					await mysqlConnection.OpenAsync();  //mysqlConnection.Open();
-
-					using (MySqlCommand mysqlCommand = new MySqlCommand(strQuery, mysqlConnection))
-					{
-						await mysqlCommand.ExecuteNonQueryAsync(); //mysqlCommand.ExecuteReader();
-
-						mysqlConnection.Close();
-
-						PrintLog("MySql Query (Charset: " + strCharset + ")\n" + strQuery + "\nExecute successfully.", Color.Lime);
-
-						return true;
-					}
-				}
-			}
-			catch (Exception ex)
-			{
-				PrintLog($"MySql Query (Charset: {strCharset})\n{strQuery}\nFail > {ex.Message}", Color.Red);
-
-				return false;
-			}
-		}*/
 
 		void ConnectToDatabase()
 		{
