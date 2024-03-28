@@ -696,5 +696,22 @@ namespace Definitions
 			"Intelligence",
 			"Constitution"
 		};
+
+		public static string[] IETCTypes =
+		{
+			// Standards
+			"IETC_UPGRADE_GENERAL",
+			"IETC_UPGRADE_SPECIAL",
+			"IETC_UPGRADE_SPECIAL_SUPER",
+			"IETC_UPGRADE_BOOSTER",
+			"IETC_UPGRADE_LUCKY",
+			"IETC_UPGRADE_PLATINUM",
+			"IETC_UPGRADE_CHAOS",
+			"IETC_UPGRADE_PURITY_RUNE",
+			"IETC_UPGRADE_DEVIL_RUNE",
+			"IETC_UPGRADE_CHAOS_RUNE",
+			"IETC_UPGRADE_SUPER_RUNE",
+			"IETC_UPGRADE_LUCKY_RUNE"
+		};
 	}
 }

@@ -206,8 +206,28 @@ namespace LastChaos_ToolBox_2024.Editors
 						tbSecondInputObject.Text = pMagicSelector.ReturnValues[1].ToString();
 				};
 
+				ToolStripMenuItem menuGenericTypePicker = new ToolStripMenuItem("Generic Type Picker");
+				menuGenericTypePicker.Click += (menuItemSender, menuItemEventArgs) =>
+				{
+					GenericTypePicker pGenericTypeSelector = new GenericTypePicker(pMain, this);
+
+					if (pGenericTypeSelector.ShowDialog() != DialogResult.OK)
+						return;
+#pragma warning disable
+					cControl.Text = pGenericTypeSelector.ReturnValues.ToString();
+#pragma warning restore
+				};
+
 				cmCommonInput = new ContextMenuStrip();
-				cmCommonInput.Items.AddRange(new ToolStripItem[] { menuItemPicker, menuZonePicker, menuSkillPicker, menuOptionPicker, menuRarePicker, menuMagicPicker });
+				cmCommonInput.Items.AddRange(new ToolStripItem[] {
+					menuItemPicker,
+					menuZonePicker,
+					menuSkillPicker,
+					menuOptionPicker,
+					menuRarePicker,
+					menuMagicPicker,
+					menuGenericTypePicker
+				});
 				cmCommonInput.Show(Cursor.Position);
 			}
 		}
@@ -245,12 +265,13 @@ namespace LastChaos_ToolBox_2024.Editors
 			int nType = cbTypeSelector.SelectedIndex;
 			string[] strArrayTexts = { "0", "1", "2", "3", "4" };
 
-			if (nType == 2 /*ITYPE_ONCE*/ && ((Convert.ToInt64(pTempItemRow["a_flag"]) & (1 << 22 /*ITEM_FLAG_QUEST*/)) != 0))
+			if ((nType == 2 /*ITYPE_ONCE*/ || nType == 6 /*ITYPE_POTION*/) && ((Convert.ToInt64(pTempItemRow["a_flag"]) & (1 << 22 /*ITEM_FLAG_QUEST*/)) != 0))
 			{
 				strArrayTexts[0] = "Zone ID";
 				strArrayTexts[1] = "Position X";
-				strArrayTexts[2] = "Position X";
-				strArrayTexts[3] = "Quest Range";
+				strArrayTexts[2] = "Position Z";
+				strArrayTexts[3] = "Position Y";
+				strArrayTexts[4] = "Range Limit";
 			}
 
 			for (int i = 0; i < strArrayTexts.Length; i++)
